@@ -159,6 +159,8 @@
 		66F107EF1F42F1DA0035C888 /* MTTMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107EE1F42F1DA0035C888 /* MTTMessageEntity.swift */; };
 		66F107F11F42FE490035C888 /* MTTUserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F01F42FE490035C888 /* MTTUserEntity.swift */; };
 		66F107F31F4308D60035C888 /* MTTGroupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F21F4308D60035C888 /* MTTGroupEntity.swift */; };
+		66F107F51F4333720035C888 /* MTTSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F41F4333720035C888 /* MTTSessionEntity.swift */; };
+		66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -389,6 +391,8 @@
 		66F107EE1F42F1DA0035C888 /* MTTMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTMessageEntity.swift; sourceTree = "<group>"; };
 		66F107F01F42FE490035C888 /* MTTUserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTUserEntity.swift; sourceTree = "<group>"; };
 		66F107F21F4308D60035C888 /* MTTGroupEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTGroupEntity.swift; sourceTree = "<group>"; };
+		66F107F41F4333720035C888 /* MTTSessionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTSessionEntity.swift; sourceTree = "<group>"; };
+		66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTDepartmentEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -783,6 +787,8 @@
 				66F107EE1F42F1DA0035C888 /* MTTMessageEntity.swift */,
 				66F107F01F42FE490035C888 /* MTTUserEntity.swift */,
 				66F107F21F4308D60035C888 /* MTTGroupEntity.swift */,
+				66F107F41F4333720035C888 /* MTTSessionEntity.swift */,
+				66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */,
 			);
 			path = Entitys;
 			sourceTree = "<group>";
@@ -885,6 +891,7 @@
 				66E6D3BE1F428C38008E9590 /* HSL.swift in Sources */,
 				66F107ED1F42F0750035C888 /* MTTBaseEntity.swift in Sources */,
 				66E6D3741F4289D0008E9590 /* CodedOutputStream.swift in Sources */,
+				66F107F51F4333720035C888 /* MTTSessionEntity.swift in Sources */,
 				66E6D3551F428922008E9590 /* ZQViewController.swift in Sources */,
 				66E6D34E1F428922008E9590 /* UIScrollView+Extention.swift in Sources */,
 				66E6D3A31F428BE8008E9590 /* DBScrollBannerView.swift in Sources */,
@@ -953,6 +960,7 @@
 				66E6D3DF1F4292CC008E9590 /* NSStream+NSStreamAddition.m in Sources */,
 				66E6D3831F4289D0008E9590 /* Google.Protobuf.SwiftDescriptor.proto.swift in Sources */,
 				66E6D3791F4289D0008E9590 /* GeneratedMessage.swift in Sources */,
+				66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */,
 				66E6D37B1F4289D0008E9590 /* Google.Protobuf.Api.proto.swift in Sources */,
 				66E6D3BD1F428C38008E9590 /* DynamicGradient.swift in Sources */,
 				66E6D34D1F428922008E9590 /* UIImageView+Extention.swift in Sources */,

@@ -8,6 +8,9 @@
 
 import UIKit
 
+/*
+ *基础类，不可直接使用
+ */
 class MTTBaseEntity: NSObject {
     var lastUpdateTime:Int32 = 0
     var objID:String = ""
@@ -21,5 +24,14 @@ class MTTBaseEntity: NSObject {
         }else{
             return 0
         }
+    }
+}
+
+extension MTTBaseEntity {
+    class func pbIDFrom(localID:String)->UInt32{
+        return UInt32((localID as NSString).integerValue)
+    }
+    class func localIDFrom(pbID:UInt32)->String {
+        return "\(pbID)"
     }
 }

@@ -40,7 +40,7 @@ class AddMemberToGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                         return array
                     }else {
                         for obj in res.curUserIdList {
-                            let userID:String = MTTUtil.changeOriginal(toLocalID: obj, sessionType: Im.BaseDefine.SessionType.sessionTypeSingle.rawValue)
+                            let userID:String = MTTUserEntity.localIDFrom(pbID: obj)
                             array.append(userID)
                         }
                         return array

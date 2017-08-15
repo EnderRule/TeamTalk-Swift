@@ -116,11 +116,11 @@ extension MTTUserEntity{
     public convenience init(userinfo:Im.BaseDefine.UserInfo){
         self.init()
         
-        self.objID = self.classForCoder.localIDFrom(pbID: NSInteger( userinfo.userId))
+        self.objID = MTTUserEntity.localIDFrom(pbID: userinfo.userId)
         self.name  = userinfo.userRealName
         self.nick  = userinfo.userNickName
         self.avatar = userinfo.avatarUrl
-        self.department = "\(userinfo.departmentId)"// @(pbUser.departmentId).stringValue;
+        self.department = "\(userinfo.departmentId)"
         self.departId = "\(userinfo.departmentId)"
         self.telphone = userinfo.userTel
         self.sex =  Int( userinfo.userGender)
@@ -130,14 +130,14 @@ extension MTTUserEntity{
         self.signature = userinfo.signInfo
     }
     
-    class func pbIDFrom(localID:String)->UInt32{
+    override class func pbIDFrom(localID:String)->UInt32{
         if localID.hasPrefix(USER_PRE){
            return  UInt32((localID.replacingOccurrences(of: USER_PRE, with: "") as NSString).intValue)
         }else {
             return 0
         }
     }
-    class func localIDFrom(pbID:NSInteger)->String {
+    override class func localIDFrom(pbID:UInt32)->String {
         return "\(USER_PRE)\(pbID)"
     }
 }

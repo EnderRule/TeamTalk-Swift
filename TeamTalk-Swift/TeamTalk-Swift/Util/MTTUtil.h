@@ -26,7 +26,6 @@
 
 +(UInt32)changeIDToOriginal:(NSString *)sessionID;
 
-+(NSString *)changeOriginalToLocalID:(UInt32)orignalID SessionType:(int)sessionType;
 
 #pragma mark - fiexed top
 
