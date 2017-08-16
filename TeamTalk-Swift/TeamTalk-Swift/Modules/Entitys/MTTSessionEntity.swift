@@ -8,9 +8,44 @@
 
 import UIKit
 
+@objc public enum SessionType_Objc:Int32 {
+    ///单个用户会话
+    case sessionTypeSingle = 1
+    
+    ///群会话
+    case sessionTypeGroup = 2
+    public func toString() -> String {
+        switch self {
+        case .sessionTypeSingle: return "SESSION_TYPE_SINGLE"
+        case .sessionTypeGroup: return "SESSION_TYPE_GROUP"
+        }
+    }
+    public static func fromString(_ str:String) throws -> SessionType_Objc {
+        switch str {
+        case "SESSION_TYPE_SINGLE":    return .sessionTypeSingle
+        case "SESSION_TYPE_GROUP":    return .sessionTypeGroup
+        default: return .sessionTypeSingle
+        }
+    }
+    public var debugDescription:String { return getDescription() }
+    public var description:String { return getDescription() }
+    private func getDescription() -> String {
+        switch self {
+        case .sessionTypeSingle: return ".sessionTypeSingle"
+        case .sessionTypeGroup: return ".sessionTypeGroup"
+        }
+    }
+    public var hashValue:Int {
+        return self.rawValue.hashValue
+    }
+    public static func ==(lhs:SessionType_Objc, rhs:SessionType_Objc) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+}
+
 class MTTSessionEntity: NSObject {
     var sessionID:String = ""
-    var sessionType:Im.BaseDefine.SessionType = .sessionTypeGroup
+    var sessionType:SessionType_Objc = .sessionTypeGroup
     
     private var s_name:String = ""
     var name:String {
@@ -73,7 +108,10 @@ class MTTSessionEntity: NSObject {
     var sessionUsers:[String] {
         get{
             if self.sessionType == .sessionTypeGroup{
-                //Fixme:  fsfk
+                //Fixme:  重写这里
+//                MTTGroupEntity* group = [[DDGroupModule instance] getGroupByGId:_sessionID];
+//                return group.groupUserIds;
+
                 return []
             }else{
                 return []
@@ -88,7 +126,7 @@ class MTTSessionEntity: NSObject {
     }
     
     
-    public convenience init(sessionID:String,sessionName:String?,type:Im.BaseDefine.SessionType){
+    public convenience init(sessionID:String,sessionName:String?,type:SessionType_Objc){
         self.init()
         
         self.sessionID = sessionID

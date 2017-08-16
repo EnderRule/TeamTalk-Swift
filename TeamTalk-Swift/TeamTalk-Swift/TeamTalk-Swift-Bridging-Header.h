@@ -32,3 +32,8 @@
 
 //Categorys from TeamTalk-Objc
 #import "NSString+Additions.h"
+
+//GlobalData
+#import "DDClientState.h"
+#import "DDClientStateMaintenanceManager.h"
+#import "RuntimeStatus.h"

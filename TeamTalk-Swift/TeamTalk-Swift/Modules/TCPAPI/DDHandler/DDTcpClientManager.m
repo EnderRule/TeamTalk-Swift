@@ -10,12 +10,12 @@
 #import "NSStream+NSStreamAddition.h"
 #import "DDSendBuffer.h"
 #import "DDTcpProtocolHeader.h"
-//#import "DDDispatchTask.h"
+
 #import "DDDataInputStream.h"
 #import "DDDataOutputStream.h"
 #import "DDAPISchedule.h"
-//#import "DDClientState.h"
-//#import "MTTNotification.h"
+#import "DDClientState.h"
+
 
 @interface DDTcpClientManager(PrivateAPI)
 
@@ -93,7 +93,7 @@
 	_sendBuffers = nil;
 	_lastSendBuffer = nil;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"DDNotificationTcpLinkDisconnect" object:nil  userInfo:nil ];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkDisconnect object:nil  userInfo:nil ];
     
 
 }
@@ -172,9 +172,9 @@
     DDLog(@"handleConntectOpenCompleted");
     if (aStream == _outStream) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"DDNotificationTcpLinkConnectComplete" object:nil  userInfo:nil ];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkConnectComplete object:nil  userInfo:nil ];
 
-//         [DDClientState shareInstance].userState = DDUserOnline;
+         [DDClientState shareInstance].userState = DDUserOnline;
     }
 }
 
@@ -255,7 +255,7 @@
     DDLog(@"handle eventErrorOccurred");
     [self disconnect];
     
-//    [DDClientState shareInstance].userState = DDUserOffLine;
+    [DDClientState shareInstance].userState = DDUserOffLine;
 }
 
 - (void)p_handleEventEndEncounteredStream:(NSStream *)aStream
@@ -317,7 +317,7 @@
                 if (payloadData.length >0) {
                     [[DDAPISchedule instance] receiveServerData:payloadData forDataType:dataType];
                 }
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"DDNotificationServerHeartBeat" object:nil ];
+                [[NSNotificationCenter defaultCenter]postNotificationName:DDNotificationServerHeartBeat object:nil ];
             }
             
             [_receiveLock unlock];

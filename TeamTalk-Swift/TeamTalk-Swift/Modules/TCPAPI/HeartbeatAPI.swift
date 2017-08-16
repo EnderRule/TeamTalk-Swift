@@ -40,7 +40,7 @@ class HeartbeatAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
             
-            let heartbeatBuilder = Im.Other.ImheartBeat.Builder()//.UnreadInfo.Builder()
+            let heartbeatBuilder = Im.Other.ImheartBeat.Builder()
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

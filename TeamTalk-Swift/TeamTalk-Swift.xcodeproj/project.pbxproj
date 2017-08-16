@@ -161,6 +161,28 @@
 		66F107F31F4308D60035C888 /* MTTGroupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F21F4308D60035C888 /* MTTGroupEntity.swift */; };
 		66F107F51F4333720035C888 /* MTTSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F41F4333720035C888 /* MTTSessionEntity.swift */; };
 		66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */; };
+		66F107FF1F43D9510035C888 /* DDClientState.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F107FC1F43D9510035C888 /* DDClientState.m */; };
+		66F108001F43D9510035C888 /* DDClientStateMaintenanceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F107FE1F43D9510035C888 /* DDClientStateMaintenanceManager.m */; };
+		66F108031F43D9DB0035C888 /* DDReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108021F43D9DB0035C888 /* DDReachability.m */; };
+		66F108061F43DE4B0035C888 /* MTTConstant.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108051F43DE4B0035C888 /* MTTConstant.m */; };
+		66F108091F43E2380035C888 /* RuntimeStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108081F43E2380035C888 /* RuntimeStatus.m */; };
+		66F108101F43E7180035C888 /* DDHttpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1080B1F43E7180035C888 /* DDHttpServer.m */; };
+		66F108111F43E7180035C888 /* DDMsgServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1080D1F43E7180035C888 /* DDMsgServer.m */; };
+		66F108121F43E7180035C888 /* DDTcpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1080F1F43E7180035C888 /* DDTcpServer.m */; };
+		66F108151F43E77D0035C888 /* MTTAFNetworkingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108141F43E77D0035C888 /* MTTAFNetworkingClient.m */; };
+		66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108171F43E7E40035C888 /* MTTSundriesCenter.m */; };
+		66F10A621F43F14B0035C888 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A581F43F14B0035C888 /* FMDatabase.m */; };
+		66F10A631F43F14B0035C888 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A5A1F43F14B0035C888 /* FMDatabaseAdditions.m */; };
+		66F10A641F43F14B0035C888 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A5C1F43F14B0035C888 /* FMDatabasePool.m */; };
+		66F10A651F43F14B0035C888 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A5E1F43F14B0035C888 /* FMDatabaseQueue.m */; };
+		66F10A661F43F14B0035C888 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A611F43F14B0035C888 /* FMResultSet.m */; };
+		66F10A6A1F43F2D70035C888 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10A681F43F2D70035C888 /* libsqlite3.0.tbd */; };
+		66F10A6B1F43F2D70035C888 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10A691F43F2D70035C888 /* libsqlite3.tbd */; };
+		66F10A6E1F43F5BC0035C888 /* MTTDatabaseUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A521F43F11C0035C888 /* MTTDatabaseUtil.m */; };
+		66F10A6F1F43F7FC0035C888 /* LoginModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A4F1F43EF990035C888 /* LoginModule.m */; };
+		66F10A721F43F8840035C888 /* DDUserModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A711F43F8840035C888 /* DDUserModule.m */; };
+		66F10A751F43F8DA0035C888 /* SpellLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A741F43F8DA0035C888 /* SpellLibrary.m */; };
+		66F10A781F43F9CE0035C888 /* DDGroupModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A771F43F9CE0035C888 /* DDGroupModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -262,7 +284,6 @@
 		66E6D3DB1F4292CC008E9590 /* NSStream+NSStreamAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStream+NSStreamAddition.m"; sourceTree = "<group>"; };
 		66E6D3E01F4292E4008E9590 /* DDTcpClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTcpClientManager.h; sourceTree = "<group>"; };
 		66E6D3E11F4292E4008E9590 /* DDTcpClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTcpClientManager.m; sourceTree = "<group>"; };
-		66E6D3E31F429447008E9590 /* Prefix-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Prefix-Header.h"; sourceTree = "<group>"; };
 		66F1070A1F429CB80035C888 /* DDSuperAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSuperAPI.h; sourceTree = "<group>"; };
 		66F1070B1F429CB80035C888 /* DDSuperAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDSuperAPI.m; sourceTree = "<group>"; };
 		66F1070D1F429D7B0035C888 /* DDUnrequestSuperAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDUnrequestSuperAPI.h; sourceTree = "<group>"; };
@@ -393,6 +414,49 @@
 		66F107F21F4308D60035C888 /* MTTGroupEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTGroupEntity.swift; sourceTree = "<group>"; };
 		66F107F41F4333720035C888 /* MTTSessionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTSessionEntity.swift; sourceTree = "<group>"; };
 		66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTDepartmentEntity.swift; sourceTree = "<group>"; };
+		66F107FB1F43D9510035C888 /* DDClientState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDClientState.h; sourceTree = "<group>"; };
+		66F107FC1F43D9510035C888 /* DDClientState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDClientState.m; sourceTree = "<group>"; };
+		66F107FD1F43D9510035C888 /* DDClientStateMaintenanceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDClientStateMaintenanceManager.h; sourceTree = "<group>"; };
+		66F107FE1F43D9510035C888 /* DDClientStateMaintenanceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDClientStateMaintenanceManager.m; sourceTree = "<group>"; };
+		66F108011F43D9DB0035C888 /* DDReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDReachability.h; sourceTree = "<group>"; };
+		66F108021F43D9DB0035C888 /* DDReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDReachability.m; sourceTree = "<group>"; };
+		66F108041F43DE4B0035C888 /* MTTConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTConstant.h; sourceTree = "<group>"; };
+		66F108051F43DE4B0035C888 /* MTTConstant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTConstant.m; sourceTree = "<group>"; };
+		66F108071F43E2380035C888 /* RuntimeStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeStatus.h; sourceTree = "<group>"; };
+		66F108081F43E2380035C888 /* RuntimeStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuntimeStatus.m; sourceTree = "<group>"; };
+		66F1080A1F43E7180035C888 /* DDHttpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHttpServer.h; sourceTree = "<group>"; };
+		66F1080B1F43E7180035C888 /* DDHttpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHttpServer.m; sourceTree = "<group>"; };
+		66F1080C1F43E7180035C888 /* DDMsgServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMsgServer.h; sourceTree = "<group>"; };
+		66F1080D1F43E7180035C888 /* DDMsgServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMsgServer.m; sourceTree = "<group>"; };
+		66F1080E1F43E7180035C888 /* DDTcpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTcpServer.h; sourceTree = "<group>"; };
+		66F1080F1F43E7180035C888 /* DDTcpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTcpServer.m; sourceTree = "<group>"; };
+		66F108131F43E77D0035C888 /* MTTAFNetworkingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTAFNetworkingClient.h; sourceTree = "<group>"; };
+		66F108141F43E77D0035C888 /* MTTAFNetworkingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTAFNetworkingClient.m; sourceTree = "<group>"; };
+		66F108161F43E7E40035C888 /* MTTSundriesCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTSundriesCenter.h; sourceTree = "<group>"; };
+		66F108171F43E7E40035C888 /* MTTSundriesCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTSundriesCenter.m; sourceTree = "<group>"; };
+		66F10A4E1F43EF990035C888 /* LoginModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginModule.h; sourceTree = "<group>"; };
+		66F10A4F1F43EF990035C888 /* LoginModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginModule.m; sourceTree = "<group>"; };
+		66F10A511F43F11C0035C888 /* MTTDatabaseUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTDatabaseUtil.h; sourceTree = "<group>"; };
+		66F10A521F43F11C0035C888 /* MTTDatabaseUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTDatabaseUtil.m; sourceTree = "<group>"; };
+		66F10A571F43F14B0035C888 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		66F10A581F43F14B0035C888 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		66F10A591F43F14B0035C888 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		66F10A5A1F43F14B0035C888 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		66F10A5B1F43F14B0035C888 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		66F10A5C1F43F14B0035C888 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		66F10A5D1F43F14B0035C888 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		66F10A5E1F43F14B0035C888 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		66F10A5F1F43F14B0035C888 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		66F10A601F43F14B0035C888 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		66F10A611F43F14B0035C888 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		66F10A681F43F2D70035C888 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		66F10A691F43F2D70035C888 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		66F10A701F43F8840035C888 /* DDUserModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDUserModule.h; sourceTree = "<group>"; };
+		66F10A711F43F8840035C888 /* DDUserModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDUserModule.m; sourceTree = "<group>"; };
+		66F10A731F43F8DA0035C888 /* SpellLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellLibrary.h; sourceTree = "<group>"; };
+		66F10A741F43F8DA0035C888 /* SpellLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpellLibrary.m; sourceTree = "<group>"; };
+		66F10A761F43F9CE0035C888 /* DDGroupModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDGroupModule.h; sourceTree = "<group>"; };
+		66F10A771F43F9CE0035C888 /* DDGroupModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDGroupModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,6 +464,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F10A6A1F43F2D70035C888 /* libsqlite3.0.tbd in Frameworks */,
+				66F10A6B1F43F2D70035C888 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +477,7 @@
 			children = (
 				66E6D3101F428700008E9590 /* TeamTalk-Swift */,
 				66E6D30F1F428700008E9590 /* Products */,
+				66F10A671F43F2D70035C888 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -427,6 +494,7 @@
 			children = (
 				66F107211F42C97A0035C888 /* Util */,
 				66F107131F42A3270035C888 /* Exist */,
+				66F107F81F43D6250035C888 /* GlobalData */,
 				66E6D3C11F4290FB008E9590 /* Modules */,
 				66E6D3571F428990008E9590 /* ThridPartys */,
 				66E6D38A1F428A33008E9590 /* IMBaseDefine */,
@@ -440,7 +508,6 @@
 				66E6D39E1F428A60008E9590 /* TestObject.h */,
 				66E6D39F1F428A60008E9590 /* TestObject.m */,
 				66E6D39D1F428A5F008E9590 /* TeamTalk-Swift-Bridging-Header.h */,
-				66E6D3E31F429447008E9590 /* Prefix-Header.h */,
 			);
 			path = "TeamTalk-Swift";
 			sourceTree = "<group>";
@@ -476,6 +543,7 @@
 		66E6D3571F428990008E9590 /* ThridPartys */ = {
 			isa = PBXGroup;
 			children = (
+				66F10A541F43F14B0035C888 /* FMDB */,
 				66F107A51F42D4810035C888 /* SDWebImage */,
 				66F1072A1F42D1F50035C888 /* AFNetworking */,
 				66E6D3A51F428C38008E9590 /* DynamicColor */,
@@ -557,6 +625,14 @@
 		66E6D3C11F4290FB008E9590 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				66F10A4E1F43EF990035C888 /* LoginModule.h */,
+				66F10A4F1F43EF990035C888 /* LoginModule.m */,
+				66F10A701F43F8840035C888 /* DDUserModule.h */,
+				66F10A711F43F8840035C888 /* DDUserModule.m */,
+				66F10A761F43F9CE0035C888 /* DDGroupModule.h */,
+				66F10A771F43F9CE0035C888 /* DDGroupModule.m */,
+				66F10A731F43F8DA0035C888 /* SpellLibrary.h */,
+				66F10A741F43F8DA0035C888 /* SpellLibrary.m */,
 				66F107D91F42EEF70035C888 /* Entitys */,
 				66E6D3C21F4290FB008E9590 /* TCPAPI */,
 			);
@@ -579,6 +655,12 @@
 			children = (
 				66E6D3E01F4292E4008E9590 /* DDTcpClientManager.h */,
 				66E6D3E11F4292E4008E9590 /* DDTcpClientManager.m */,
+				66F1080A1F43E7180035C888 /* DDHttpServer.h */,
+				66F1080B1F43E7180035C888 /* DDHttpServer.m */,
+				66F1080C1F43E7180035C888 /* DDMsgServer.h */,
+				66F1080D1F43E7180035C888 /* DDMsgServer.m */,
+				66F1080E1F43E7180035C888 /* DDTcpServer.h */,
+				66F1080F1F43E7180035C888 /* DDTcpServer.m */,
 				66E6D3D41F4292CC008E9590 /* DataOutputStream+Addition.h */,
 				66E6D3D51F4292CC008E9590 /* DataOutputStream+Addition.m */,
 				66E6D3D61F4292CC008E9590 /* DDDataInputStream.h */,
@@ -641,6 +723,12 @@
 			children = (
 				66F107221F42C99E0035C888 /* MTTUtil.h */,
 				66F107231F42C99E0035C888 /* MTTUtil.m */,
+				66F108131F43E77D0035C888 /* MTTAFNetworkingClient.h */,
+				66F108141F43E77D0035C888 /* MTTAFNetworkingClient.m */,
+				66F108161F43E7E40035C888 /* MTTSundriesCenter.h */,
+				66F108171F43E7E40035C888 /* MTTSundriesCenter.m */,
+				66F10A511F43F11C0035C888 /* MTTDatabaseUtil.h */,
+				66F10A521F43F11C0035C888 /* MTTDatabaseUtil.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -793,6 +881,66 @@
 			path = Entitys;
 			sourceTree = "<group>";
 		};
+		66F107F81F43D6250035C888 /* GlobalData */ = {
+			isa = PBXGroup;
+			children = (
+				66F108041F43DE4B0035C888 /* MTTConstant.h */,
+				66F108051F43DE4B0035C888 /* MTTConstant.m */,
+				66F108011F43D9DB0035C888 /* DDReachability.h */,
+				66F108021F43D9DB0035C888 /* DDReachability.m */,
+				66F107FB1F43D9510035C888 /* DDClientState.h */,
+				66F107FC1F43D9510035C888 /* DDClientState.m */,
+				66F107FD1F43D9510035C888 /* DDClientStateMaintenanceManager.h */,
+				66F107FE1F43D9510035C888 /* DDClientStateMaintenanceManager.m */,
+				66F108071F43E2380035C888 /* RuntimeStatus.h */,
+				66F108081F43E2380035C888 /* RuntimeStatus.m */,
+			);
+			path = GlobalData;
+			sourceTree = "<group>";
+		};
+		66F10A541F43F14B0035C888 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				66F10A551F43F14B0035C888 /* src */,
+			);
+			path = FMDB;
+			sourceTree = "<group>";
+		};
+		66F10A551F43F14B0035C888 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				66F10A561F43F14B0035C888 /* fmdb */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		66F10A561F43F14B0035C888 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				66F10A571F43F14B0035C888 /* FMDatabase.h */,
+				66F10A581F43F14B0035C888 /* FMDatabase.m */,
+				66F10A591F43F14B0035C888 /* FMDatabaseAdditions.h */,
+				66F10A5A1F43F14B0035C888 /* FMDatabaseAdditions.m */,
+				66F10A5B1F43F14B0035C888 /* FMDatabasePool.h */,
+				66F10A5C1F43F14B0035C888 /* FMDatabasePool.m */,
+				66F10A5D1F43F14B0035C888 /* FMDatabaseQueue.h */,
+				66F10A5E1F43F14B0035C888 /* FMDatabaseQueue.m */,
+				66F10A5F1F43F14B0035C888 /* FMDB.h */,
+				66F10A601F43F14B0035C888 /* FMResultSet.h */,
+				66F10A611F43F14B0035C888 /* FMResultSet.m */,
+			);
+			path = fmdb;
+			sourceTree = "<group>";
+		};
+		66F10A671F43F2D70035C888 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				66F10A681F43F2D70035C888 /* libsqlite3.0.tbd */,
+				66F10A691F43F2D70035C888 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -888,9 +1036,11 @@
 				66E6D3821F4289D0008E9590 /* Google.Protobuf.Struct.proto.swift in Sources */,
 				66F107581F42D1F50035C888 /* UIImageView+AFNetworking.m in Sources */,
 				66E6D3D11F42929B008E9590 /* DDAPISchedule.m in Sources */,
+				66F10A6E1F43F5BC0035C888 /* MTTDatabaseUtil.m in Sources */,
 				66E6D3BE1F428C38008E9590 /* HSL.swift in Sources */,
 				66F107ED1F42F0750035C888 /* MTTBaseEntity.swift in Sources */,
 				66E6D3741F4289D0008E9590 /* CodedOutputStream.swift in Sources */,
+				66F10A751F43F8DA0035C888 /* SpellLibrary.m in Sources */,
 				66F107F51F4333720035C888 /* MTTSessionEntity.swift in Sources */,
 				66E6D3551F428922008E9590 /* ZQViewController.swift in Sources */,
 				66E6D34E1F428922008E9590 /* UIScrollView+Extention.swift in Sources */,
@@ -902,21 +1052,25 @@
 				66F107D61F42E5560035C888 /* AllUserAPI.swift in Sources */,
 				66F107C91F42D4810035C888 /* SDWebImageManager.m in Sources */,
 				66F107A11F42D3A90035C888 /* NSObject+Block.m in Sources */,
+				66F108031F43D9DB0035C888 /* DDReachability.m in Sources */,
 				66F107571F42D1F50035C888 /* UIButton+AFNetworking.m in Sources */,
 				66F107511F42D1F50035C888 /* AFURLResponseSerialization.m in Sources */,
 				66F107121F42A0F30035C888 /* HeartbeatAPI.swift in Sources */,
 				66F107C61F42D4810035C888 /* SDWebImageDecoder.m in Sources */,
+				66F108101F43E7180035C888 /* DDHttpServer.m in Sources */,
 				66E6D3871F4289D0008E9590 /* RingBuffer.swift in Sources */,
 				66E6D3881F4289D0008E9590 /* UnknownFieldSet.swift in Sources */,
 				66F1074D1F42D1F50035C888 /* AFHTTPSessionManager.m in Sources */,
 				66F1075B1F42D1F50035C888 /* UIWebView+AFNetworking.m in Sources */,
 				66E6D3BA1F428C38008E9590 /* DynamicColor+XYZ.swift in Sources */,
 				66E6D3471F428922008E9590 /* NSString+Extention.swift in Sources */,
+				66F10A721F43F8840035C888 /* DDUserModule.m in Sources */,
 				66E6D3941F428A33008E9590 /* Im.BaseDefine.ImbaseDefine.proto.swift in Sources */,
 				66E6D37F1F4289D0008E9590 /* Google.Protobuf.Empty.proto.swift in Sources */,
 				66F107D01F42D4810035C888 /* UIView+WebCacheOperation.m in Sources */,
 				66E6D3B91F428C38008E9590 /* DynamicColor+RGBA.swift in Sources */,
 				66E6D3861F4289D0008E9590 /* Google.Protobuf.Wrappers.proto.swift in Sources */,
+				66F108121F43E7180035C888 /* DDTcpServer.m in Sources */,
 				66E6D3761F4289D0008E9590 /* ExtendableMessage.swift in Sources */,
 				66F107151F42A36E0035C888 /* LoginAPI.swift in Sources */,
 				66F107CD1F42D4810035C888 /* UIImage+MultiFormat.m in Sources */,
@@ -934,13 +1088,16 @@
 				66E6D3411F428922008E9590 /* LKNineImgvContainerView.swift in Sources */,
 				66F107D21F42DB520035C888 /* AddMemberToGroupAPI.swift in Sources */,
 				66F107CA1F42D4810035C888 /* SDWebImagePrefetcher.m in Sources */,
+				66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */,
 				66F107911F42D3A90035C888 /* NSDictionary+JSON.m in Sources */,
+				66F10A621F43F14B0035C888 /* FMDatabase.m in Sources */,
 				66E6D3D21F42929B008E9590 /* DDSendBuffer.m in Sources */,
 				66E6D3451F428922008E9590 /* NSObject+String.swift in Sources */,
 				66F107501F42D1F50035C888 /* AFURLRequestSerialization.m in Sources */,
 				66F1071B1F42C3090035C888 /* ReceiveKickOffAPI.swift in Sources */,
 				66E6D3811F4289D0008E9590 /* Google.Protobuf.SourceContext.proto.swift in Sources */,
 				66E6D34B1F428922008E9590 /* UIColor+Extentions.swift in Sources */,
+				66F108061F43DE4B0035C888 /* MTTConstant.m in Sources */,
 				66E6D3A01F428A60008E9590 /* TestObject.m in Sources */,
 				66F1070F1F429D7B0035C888 /* DDUnrequestSuperAPI.m in Sources */,
 				66F107CF1F42D4810035C888 /* UIImageView+WebCache.m in Sources */,
@@ -956,10 +1113,12 @@
 				66E6D3BC1F428C38008E9590 /* DynamicColorSpace.swift in Sources */,
 				66E6D3B41F428C38008E9590 /* DynamicColor+Deriving.swift in Sources */,
 				66F107F31F4308D60035C888 /* MTTGroupEntity.swift in Sources */,
+				66F10A6F1F43F7FC0035C888 /* LoginModule.m in Sources */,
 				66E6D3951F428A33008E9590 /* Im.Buddy.Imbuddy.proto.swift in Sources */,
 				66E6D3DF1F4292CC008E9590 /* NSStream+NSStreamAddition.m in Sources */,
 				66E6D3831F4289D0008E9590 /* Google.Protobuf.SwiftDescriptor.proto.swift in Sources */,
 				66E6D3791F4289D0008E9590 /* GeneratedMessage.swift in Sources */,
+				66F10A641F43F14B0035C888 /* FMDatabasePool.m in Sources */,
 				66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */,
 				66E6D37B1F4289D0008E9590 /* Google.Protobuf.Api.proto.swift in Sources */,
 				66E6D3BD1F428C38008E9590 /* DynamicGradient.swift in Sources */,
@@ -969,11 +1128,14 @@
 				66E6D3B61F428C38008E9590 /* DynamicColor+HSL.swift in Sources */,
 				66F1079C1F42D3A90035C888 /* UIImage+UIImageAddition.m in Sources */,
 				66F107531F42D1F50035C888 /* AFAutoPurgingImageCache.m in Sources */,
+				66F10A631F43F14B0035C888 /* FMDatabaseAdditions.m in Sources */,
 				66E6D3511F428922008E9590 /* UIViewController+Extention.swift in Sources */,
+				66F108001F43D9510035C888 /* DDClientStateMaintenanceManager.m in Sources */,
 				66F1079A1F42D3A90035C888 /* UIColor+JSMessagesView.m in Sources */,
 				66F107C81F42D4810035C888 /* SDWebImageDownloaderOperation.m in Sources */,
 				66E6D3981F428A33008E9590 /* Im.Login.Imlogin.proto.swift in Sources */,
 				66F1071E1F42C3F50035C888 /* ReceiveMessageACKAPI.swift in Sources */,
+				66F107FF1F43D9510035C888 /* DDClientState.m in Sources */,
 				66F1079F1F42D3A90035C888 /* UIView+PointBadge.m in Sources */,
 				66E6D39B1F428A33008E9590 /* Im.Server.Imserver.proto.swift in Sources */,
 				66E6D37D1F4289D0008E9590 /* Google.Protobuf.Descriptor.proto.swift in Sources */,
@@ -981,6 +1143,7 @@
 				66F107CC1F42D4810035C888 /* UIImage+GIF.m in Sources */,
 				66F107591F42D1F50035C888 /* UIProgressView+AFNetworking.m in Sources */,
 				66E6D3531F428922008E9590 /* ZQTextField.swift in Sources */,
+				66F10A661F43F14B0035C888 /* FMResultSet.m in Sources */,
 				66E6D37A1F4289D0008E9590 /* Google.Protobuf.Any.proto.swift in Sources */,
 				66F107F11F42FE490035C888 /* MTTUserEntity.swift in Sources */,
 				66F107D81F42EAC30035C888 /* CreateGroupAPI.swift in Sources */,
@@ -995,6 +1158,7 @@
 				66E6D33E1F428922008E9590 /* DBScrollBannerView+LKExtention.swift in Sources */,
 				66F1078F1F42D3A90035C888 /* NSData+Conversion.m in Sources */,
 				66F107971F42D3A90035C888 /* NSString+JSMessagesView.m in Sources */,
+				66F108151F43E77D0035C888 /* MTTAFNetworkingClient.m in Sources */,
 				66E6D3461F428922008E9590 /* NSObject+UpdateValues.swift in Sources */,
 				66F1079B1F42D3A90035C888 /* UIImage+JSMessagesView.m in Sources */,
 				66E6D3541F428922008E9590 /* ZQTipSwitch.swift in Sources */,
@@ -1010,8 +1174,10 @@
 				66F1074F1F42D1F50035C888 /* AFSecurityPolicy.m in Sources */,
 				66E6D39A1F428A33008E9590 /* Im.Other.Imother.proto.swift in Sources */,
 				66E6D3DE1F4292CC008E9590 /* DDDataOutputStream.m in Sources */,
+				66F108091F43E2380035C888 /* RuntimeStatus.m in Sources */,
 				66E6D3751F4289D0008E9590 /* ConcreateExtensionField.swift in Sources */,
 				66E6D37E1F4289D0008E9590 /* Google.Protobuf.Duration.proto.swift in Sources */,
+				66F108111F43E7180035C888 /* DDMsgServer.m in Sources */,
 				66E6D3991F428A33008E9590 /* Im.Message.Immessage.proto.swift in Sources */,
 				66E6D3501F428922008E9590 /* UIView+Extention.swift in Sources */,
 				66F107921F42D3A90035C888 /* NSDictionary+Safe.m in Sources */,
@@ -1019,10 +1185,12 @@
 				66F107171F42A9D90035C888 /* LoginStatusNotifyAPI.swift in Sources */,
 				66E6D3971F428A33008E9590 /* Im.Group.Imgroup.proto.swift in Sources */,
 				66E6D3731F4289D0008E9590 /* CodedInputStream.swift in Sources */,
+				66F10A651F43F14B0035C888 /* FMDatabaseQueue.m in Sources */,
 				66F107241F42C99E0035C888 /* MTTUtil.m in Sources */,
 				66F107A41F42D3A90035C888 /* UIImage+Rotate_Flip.m in Sources */,
 				66E6D3961F428A33008E9590 /* Im.File.Imfile.proto.swift in Sources */,
 				66E6D3141F428700008E9590 /* ViewController.swift in Sources */,
+				66F10A781F43F9CE0035C888 /* DDGroupModule.m in Sources */,
 				66E6D3D31F42929B008E9590 /* DDTcpProtocolHeader.m in Sources */,
 				66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */,
 				66F1075A1F42D1F50035C888 /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -1162,7 +1330,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = F9M2T7SUYF;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TeamTalk-Swift/Prefix-Header.h";
+				GCC_PREFIX_HEADER = "TeamTalk-Swift/GlobalData/MTTConstant.h";
 				INFOPLIST_FILE = "TeamTalk-Swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fulladvantage.linking.talk.TeamTalk-Swift";
@@ -1180,7 +1348,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = F9M2T7SUYF;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TeamTalk-Swift/Prefix-Header.h";
+				GCC_PREFIX_HEADER = "TeamTalk-Swift/GlobalData/MTTConstant.h";
 				INFOPLIST_FILE = "TeamTalk-Swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fulladvantage.linking.talk.TeamTalk-Swift";

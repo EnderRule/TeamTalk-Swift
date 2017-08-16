@@ -10,7 +10,7 @@
 #import "DDSuperAPI.h"
 #import "DDUnrequestSuperAPI.h"
 
-//#import "MTTSundriesCenter.h"
+#import "MTTSundriesCenter.h"
 
 #define MAP_REQUEST_KEY(api)                                [NSString stringWithFormat:@"%i-%i-%i",[api requestServiceID],[api requestCommendID],[(DDSuperAPI*)api seqNo]]
 
@@ -43,7 +43,7 @@ typedef NS_ENUM(NSInteger, APIErrorCode){
     NSMutableDictionary* _unrequestMap;
     NSMutableDictionary* _timeoutMap;
     
-    NSTimer* _timeOutTimer;
+//    NSTimer* _timeOutTimer;
 }
 + (instancetype)instance
 {
@@ -111,16 +111,16 @@ typedef NS_ENUM(NSInteger, APIErrorCode){
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         if ([[_apiRequestMap allKeys] containsObject:MAP_REQUEST_KEY(api)])
         {
-//            [[MTTSundriesCenter instance] pushTaskToSerialQueue:^{
-//                RequestCompletion completion = [(DDSuperAPI*)api completion];
-//                NSError* error = [NSError errorWithDomain:@"请求超时" code:Timeout userInfo:nil];
-//                dispatch_sync(dispatch_get_main_queue(), ^{
-//                    if (completion) {
-//                        completion(nil,error);
-//                    }
-//                });
-//                [self p_requestCompletion:api];
-//            }];
+            [[MTTSundriesCenter instance] pushTaskToSerialQueue:^{
+                RequestCompletion completion = [(DDSuperAPI*)api completion];
+                NSError* error = [NSError errorWithDomain:@"请求超时" code:Timeout userInfo:nil];
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    if (completion) {
+                        completion(nil,error);
+                    }
+                });
+                [self p_requestCompletion:api];
+            }];
         }
     });
 }
@@ -141,23 +141,14 @@ typedef NS_ENUM(NSInteger, APIErrorCode){
             
             if (response != nil ){
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    @try {
+//                    @try {
                         completion(response,nil);
-                    }
-                    @catch (NSException *exception) {
-                        DDLog(@"completion,response is nil");
-                    }
+//                    }
+//                    @catch (NSException *exception) {
+//                        DDLog(@"completion,response is nil");
+//                    }
                 });
             }
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                @try {
-                     completion(response,nil);
-                }
-                @catch (NSException *exception) {
-                    DDLog(@"completion,response is nil");
-                }
-            });
         }
         else
         {

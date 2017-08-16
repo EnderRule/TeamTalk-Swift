@@ -38,19 +38,20 @@ class CreateGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 if let res = try? builder.build() {
                     let resultcode = res.resultCode
                     
-                    //Fixme: should return MTTGroupEntity here 
                     if resultcode != 0 {
                         return nil
                     }else {
-//                        let groupid = res.groupId
-//                        let groupName = res.groupName
-//                        let groupEntity =
+                        let entity:MTTGroupEntity = MTTGroupEntity.init()
+                        entity.objID = MTTGroupEntity.localIDFrom(pbID: res.groupId)
+                        entity.name = res.groupName
                         
-//                        for uid in  res.userIdList {
-//                            
-//                        }
+                        for intUID in  res.userIdList {
+                            let uidStr = MTTUserEntity.localIDFrom(pbID: intUID)
+                            entity.groupUserIds.append(uidStr)
+                            entity.addFixOrderGroupUserIDs(uID: uidStr)
+                        }
                         
-                        return nil
+                        return entity
                     }
                     
                 }else {

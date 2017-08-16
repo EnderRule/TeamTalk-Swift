@@ -36,12 +36,10 @@ class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
                     var userAndVersion:[String:Any] = [:]
                     userAndVersion.updateValue(res.latestUpdateTime, forKey: "alllastupdatetime")
                     
-                    var userList:[Any] = []
+                    var userList:[MTTUserEntity] = []
                     for userinfo in res.userList {
-                        //Fixme: should insert userEntity here
-//                        MTTUserEntity *user = [[MTTUserEntity alloc] initWithPB:userInfo];
-
-                        userList.append(userinfo.userNickName.appending(userinfo.userRealName))
+                        let userEntity = MTTUserEntity.init(userinfo: userinfo)
+                        userList.append(userEntity)
                     }
                     userAndVersion.updateValue(userList, forKey: "userlist")
                     

@@ -42,12 +42,11 @@ class LoginAPI: DDSuperAPI,DDAPIScheduleProtocol {
                     }else {
                         let serverTime:UInt32 = loginres.serverTime
                         let resultString:String = loginres.resultString
-
-//                        MTTUserEntity *user = [[MTTUserEntity alloc] initWithPB:res.userInfo];
-
+                        let user = MTTUserEntity.init(userinfo: loginres.userInfo)
+                        
                         result.updateValue(serverTime, forKey: "serverTime")
                         result.updateValue(resultString, forKey: "result")
-//                        result.updateValue("user", forKey: "user")
+                        result.updateValue(user, forKey: "user")
                         return result
                     }
                 }else {

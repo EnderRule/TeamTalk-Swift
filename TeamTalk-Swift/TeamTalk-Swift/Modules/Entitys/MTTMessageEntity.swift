@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum DDMessageContentType:Int {
+@objc enum DDMessageContentType:Int {
     case Text      = 0
     case Image     = 1
     case Voice     = 2
@@ -17,15 +17,56 @@ enum DDMessageContentType:Int {
     case GroupAudio     = 101
 }
 
-enum DDMessageState:Int{
+@objc enum DDMessageState:Int{
     case Sending = 0
     case SendFailure = 1
     case SendSuccess = 2
 }
 
+@objc public enum MsgType_Objc:Int32 {
+    case msgTypeSingleText = 1
+    case msgTypeSingleAudio = 2
+    case msgTypeGroupText = 17
+    case msgTypeGroupAudio = 18
+    public func toString() -> String {
+        switch self {
+        case .msgTypeSingleText: return "MSG_TYPE_SINGLE_TEXT"
+        case .msgTypeSingleAudio: return "MSG_TYPE_SINGLE_AUDIO"
+        case .msgTypeGroupText: return "MSG_TYPE_GROUP_TEXT"
+        case .msgTypeGroupAudio: return "MSG_TYPE_GROUP_AUDIO"
+        }
+    }
+    public static func fromString(_ str:String) throws -> MsgType_Objc {
+        switch str {
+        case "MSG_TYPE_SINGLE_TEXT":    return .msgTypeSingleText
+        case "MSG_TYPE_SINGLE_AUDIO":    return .msgTypeSingleAudio
+        case "MSG_TYPE_GROUP_TEXT":    return .msgTypeGroupText
+        case "MSG_TYPE_GROUP_AUDIO":    return .msgTypeGroupAudio
+        default: return .msgTypeSingleText
+        }
+    }
+    public var debugDescription:String { return getDescription() }
+    public var description:String { return getDescription() }
+    private func getDescription() -> String {
+        switch self {
+        case .msgTypeSingleText: return ".msgTypeSingleText"
+        case .msgTypeSingleAudio: return ".msgTypeSingleAudio"
+        case .msgTypeGroupText: return ".msgTypeGroupText"
+        case .msgTypeGroupAudio: return ".msgTypeGroupAudio"
+        }
+    }
+    public var hashValue:Int {
+        return self.rawValue.hashValue
+    }
+    public static func ==(lhs:MsgType_Objc, rhs:MsgType_Objc) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+}
+
+
 class MTTMessageEntity: NSObject {
     var msgID:Int = 0
-    var msgType:Im.BaseDefine.MsgType = .msgTypeSingleText
+    var msgType:MsgType_Objc = .msgTypeSingleText
     var msgTime:TimeInterval = 0
     var sessionId:String = ""
     var seqNo:Int = 0
@@ -39,7 +80,7 @@ class MTTMessageEntity: NSObject {
     var state:DDMessageState = .Sending
     
     
-    public convenience init(msgID:Int,msgType:Im.BaseDefine.MsgType,msgTime:TimeInterval,sessionID:String,senderID:String,msgContent:String,toUserID:String){
+    public convenience init(msgID:Int,msgType:MsgType_Objc,msgTime:TimeInterval,sessionID:String,senderID:String,msgContent:String,toUserID:String){
         self.init()
         
         self.msgID = msgID
