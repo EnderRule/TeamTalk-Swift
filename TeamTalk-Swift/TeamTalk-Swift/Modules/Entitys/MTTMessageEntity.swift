@@ -166,45 +166,47 @@ extension MTTMessageEntity {
         var msgInfo:[String:Any] = [:]
         if self.isVoiceMessage {
             self.msgContentType = .Voice
-            let tempData:NSData = msgData.msgData as NSData
-            let voiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData
-            let fileName:String = Encapsulator.defaultFileName()
-            if voiceData.write(toFile: fileName, atomically: true){
-                self.msgContent = fileName
-            }else{
-                self.msgContent = "語音存儲出錯"
-            }
             
-            var ch1:Int32 = 0
-            var ch2:Int32 = 0
-            var ch3:Int32 = 0
-            var ch4:Int32 = 0
-            voiceData.getBytes(&ch1, range: NSRange.init(location: 0, length: 1))
-            voiceData.getBytes(&ch2, range: NSRange.init(location: 1, length: 1))
-            voiceData.getBytes(&ch3, range: NSRange.init(location: 2, length: 1))
-            voiceData.getBytes(&ch4, range: NSRange.init(location: 3, length: 1))
-            ch1 = ch1 & 0x0ff
-            ch2 = ch2 & 0x0ff
-            ch3 = ch3 & 0x0ff
-            ch4 = ch4 & 0x0ff
-            if ((ch1 | ch2 | ch3 | ch4) < 0){
-                debugPrint(self.classForCoder,"init with msgData 、parse voice EOFException")
-            }
-            let voiceLength:Int32 = ((ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4 << 0))
-            msgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
-            msgInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
+//            let tempData:NSData = msgData.msgData as NSData
+//            let voiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData
+//            let fileName:String = Encapsulator.defaultFileName()
+//            if voiceData.write(toFile: fileName, atomically: true){
+//                self.msgContent = fileName
+//            }else{
+//                self.msgContent = "語音存儲出錯"
+//            }
+//            
+//            var ch1:Int32 = 0
+//            var ch2:Int32 = 0
+//            var ch3:Int32 = 0
+//            var ch4:Int32 = 0
+//            voiceData.getBytes(&ch1, range: NSRange.init(location: 0, length: 1))
+//            voiceData.getBytes(&ch2, range: NSRange.init(location: 1, length: 1))
+//            voiceData.getBytes(&ch3, range: NSRange.init(location: 2, length: 1))
+//            voiceData.getBytes(&ch4, range: NSRange.init(location: 3, length: 1))
+//            ch1 = ch1 & 0x0ff
+//            ch2 = ch2 & 0x0ff
+//            ch3 = ch3 & 0x0ff
+//            ch4 = ch4 & 0x0ff
+//            if ((ch1 | ch2 | ch3 | ch4) < 0){
+//                debugPrint(self.classForCoder,"init with msgData 、parse voice EOFException")
+//            }
+//            let voiceLength:Int32 = ((ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4 << 0))
+//            msgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
+//            msgInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
             
         }else{
             if let tempStr = String.init(data: msgData.msgData, encoding: .utf8){
-                let indata = tempStr.cString(using: .utf8)
-                var pout:UnsafeMutablePointer<Int8>?
-                var outLen:UInt32?
-                let inLen:UInt32 = UInt32(strlen(tempStr))
-                DecryptMsg(indata, inLen, &pout, &outLen!)
-                if pout != nil {
-                    let decodeMsg = String.init(cString: pout!)
-                    self.msgContent = decodeMsg
-                }
+//                let indata = tempStr.cString(using: .utf8)
+//                var pout:UnsafeMutablePointer<Int8>?
+//                var outLen:UInt32?
+//                let inLen:UInt32 = UInt32(strlen(tempStr))
+                
+//                DecryptMsg(indata, inLen, &pout, &outLen!)
+//                if pout != nil {
+//                    let decodeMsg = String.init(cString: pout!)
+//                    self.msgContent = decodeMsg
+//                }
             }else{
                 debugPrint(self.classForCoder,"init with msgData、convert error")
             }

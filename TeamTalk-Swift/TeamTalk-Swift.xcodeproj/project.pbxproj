@@ -638,6 +638,8 @@
 		66F10F881F4449F30035C888 /* AQRecorder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AQRecorder.mm; sourceTree = "<group>"; };
 		66F10F8B1F44535C0035C888 /* libsecurity.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsecurity.a; sourceTree = "<group>"; };
 		66F10F8C1F44535C0035C888 /* security.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = security.h; sourceTree = "<group>"; };
+		66F10F8E1F447F860035C888 /* SecurityString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityString.h; sourceTree = "<group>"; };
+		66F10F8F1F447F860035C888 /* SecurityString.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SecurityString.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -877,6 +879,8 @@
 			isa = PBXGroup;
 			children = (
 				66F10EDB1F4449570035C888 /* Voice */,
+				66F10F8E1F447F860035C888 /* SecurityString.h */,
+				66F10F8F1F447F860035C888 /* SecurityString.mm */,
 			);
 			path = Exist;
 			sourceTree = "<group>";
