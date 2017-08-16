@@ -20,17 +20,12 @@ class ReceiveMessageAPI: DDUnrequestSuperAPI {
     
     func unrequestAnalysis() -> UnrequestAPIAnalysis! {
         let analysis:UnrequestAPIAnalysis = {(data) in
-            if  let builder:Im.Message.ImmsgData.Builder = try? Im.Message.ImmsgData.Builder.fromJSONToBuilder(data: data!){
-                if let res:Im.Message.ImmsgData = try? builder.build() {
-                    
-                    //Fixme: here, should return MTTMessageEntity
-                    return res
-                }else {
-                    debugPrint("ReceiveMessageAPI builded failure")
-                    return  nil
-                }
+            if let res:Im.Message.ImmsgData = try? Im.Message.ImmsgData.parseFrom(data: data ?? Data()) {
+                let entity = MTTMessageEntity.init(msgData: res)
+                entity.state = .SendSuccess
+                return entity
             }else {
-                debugPrint("ReceiveMessageAPI fromJSONToBuilder failure")
+                debugPrint("ReceiveMessageAPI builded failure")
                 return  nil
             }
         }

@@ -34,32 +34,27 @@ class CreateGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
-            if let builder = try? Im.Group.ImgroupCreateRsp.Builder.fromJSONToBuilder(data: data!){
-                if let res = try? builder.build() {
-                    let resultcode = res.resultCode
+            if let res = try? Im.Group.ImgroupCreateRsp.parseFrom(data: data ?? Data()) {
+                let resultcode = res.resultCode
+                
+                if resultcode != 0 {
+                    return nil
+                }else {
+                    let entity:MTTGroupEntity = MTTGroupEntity.init()
+                    entity.objID = MTTGroupEntity.localIDFrom(pbID: res.groupId)
+                    entity.name = res.groupName
                     
-                    if resultcode != 0 {
-                        return nil
-                    }else {
-                        let entity:MTTGroupEntity = MTTGroupEntity.init()
-                        entity.objID = MTTGroupEntity.localIDFrom(pbID: res.groupId)
-                        entity.name = res.groupName
-                        
-                        for intUID in  res.userIdList {
-                            let uidStr = MTTUserEntity.localIDFrom(pbID: intUID)
-                            entity.groupUserIds.append(uidStr)
-                            entity.addFixOrderGroupUserIDs(uID: uidStr)
-                        }
-                        
-                        return entity
+                    for intUID in  res.userIdList {
+                        let uidStr = MTTUserEntity.localIDFrom(pbID: intUID)
+                        entity.groupUserIds.append(uidStr)
+                        entity.addFixOrderGroupUserIDs(uID: uidStr)
                     }
                     
-                }else {
-                    debugPrint("AllUserAPI builded failure")
-                    return nil
+                    return entity
                 }
+                
             }else {
-                debugPrint("AllUserAPI fromJSONToBuilder failure")
+                debugPrint("AllUserAPI builded failure")
                 return nil
             }
         }

@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
        
         DDClientStateMaintenanceManager .shareInstance()
-//        RuntimeStatus.shareInstance()
+
+        RuntimeStatus.instance()
         
         return true
     }

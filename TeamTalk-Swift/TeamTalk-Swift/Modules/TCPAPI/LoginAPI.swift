@@ -32,31 +32,29 @@ class LoginAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
             
-            if let loginresBuilder = try? Im.Login.ImloginRes.Builder.fromJSONToBuilder(data: data!){
-                if let loginres = try? loginresBuilder.build() {
-                    let loginResult:Int32 = loginres.resultCode.rawValue
+            if let loginres = try? Im.Login.ImloginRes.parseFrom(data: data ?? Data()) {
+                let loginResult:Int32 = loginres.resultCode.rawValue
+                
+                var result:[String:Any] = [:]
+                if loginResult != 0 {
+                    debugPrint(self.classForCoder," login resultCode != 0")
                     
-                    var result:[String:Any] = [:]
-                    if loginResult != 0 {
-                        return result
-                    }else {
-                        let serverTime:UInt32 = loginres.serverTime
-                        let resultString:String = loginres.resultString
-                        let user = MTTUserEntity.init(userinfo: loginres.userInfo)
-                        
-                        result.updateValue(serverTime, forKey: "serverTime")
-                        result.updateValue(resultString, forKey: "result")
-                        result.updateValue(user, forKey: "user")
-                        return result
-                    }
+                    return result
                 }else {
-                    debugPrint("LoginApi builded failure")
-                    return nil
+                    let serverTime:UInt32 = loginres.serverTime
+                    let resultString:String = loginres.resultString
+                    let user = MTTUserEntity.init(userinfo: loginres.userInfo)
+                    
+                    result.updateValue(serverTime, forKey: "serverTime")
+                    result.updateValue(resultString, forKey: "result")
+                    result.updateValue(user, forKey: "user")
+                    return result
                 }
             }else {
-                debugPrint("LoginApi fromJSONToBuilder failure")
+                debugPrint("LoginApi builded failure")
                 return nil
             }
+            
         }
         return analysis
     }
@@ -80,6 +78,8 @@ class LoginAPI: DDSuperAPI,DDAPIScheduleProtocol {
             dataOut.writeTcpProtocolHeader(Int16(SID_LOGIN), cId: Int16(IM_LOGIN_REQ), seqNo: seqno)
             
             if let data = try? builder.build().data() {
+                
+                debugPrint("LoginAPI package data: \((data as NSData).length) \(data)")
                 dataOut.directWriteBytes(data)
             }else {
                 debugPrint("LoginAPI package builded data failure")

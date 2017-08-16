@@ -26,7 +26,8 @@ class ViewController: UIViewController {
             print("ViewController test departinfo builded failure")
         }
         
-        
+    
+        self.view.addCommonTap(target: self , sel: #selector(self.tapAction))
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -36,6 +37,22 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func tapAction(){
+        LoginModule.instance().login(withUsername: "qing", password: "qing", success: { (user ) in
+            if user != nil {
+                RuntimeStatus.instance().user = user!
+                RuntimeStatus.instance().updateData()
+                DDClientState.shareInstance().userState = .online
+                
+                debugPrint("testLogin success : ",user!.name ,user!.objID )
+
+            }else{
+                debugPrint("testLogin success but not user")
+            }
+        }) { (logMsg) in
+            debugPrint("testLogin error : ",logMsg ?? "")
+        }
+    }
 
 }
 

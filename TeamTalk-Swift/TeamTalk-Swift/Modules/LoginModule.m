@@ -22,7 +22,7 @@
 #import "DDGroupModule.h"
 #import "MTTUtil.h"
 
-
+#import "MTTDDNotification.h"
 #import "TeamTalk_Swift-Swift.h"
 
 
@@ -78,7 +78,10 @@
             _port    =  [[dic objectForKey:@"port"] integerValue];
             [MTTUtil setMsfsUrl:[dic objectForKey:@"msfsPrior"]];
             [_tcpServer loginTcpServerIP:_priorIP port:_port Success:^{
+                
                 [_msgServer checkUserID:name Pwd:password token:@"" success:^(id object) {
+                    DDLog(@"login#登录验证 成功 %@,%@",name,password);
+                    
                     [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"password"];
                     [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"username"];
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"autologin"];
@@ -90,7 +93,7 @@
                     clientState.userState=DDUserOnline;
                     _relogining=YES;
                     MTTUserEntity* user = object[@"user"];
-                    TheRuntime.user=user;
+                    [RuntimeStatus instance].user=user;
                     
                     [[MTTDatabaseUtil instance] openCurrentUserDB];
                     
@@ -119,6 +122,7 @@
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationUserLoginSuccess object:user];
                     
+                    
                 } failure:^(NSError *object) {
                     
                     DDLog(@"login#登录验证失败");
@@ -127,11 +131,13 @@
                 }];
                 
             } failure:^{
-                 DDLog(@"连接消息服务器失败");
-                  failure(@"连接消息服务器失败");
+                DDLog(@"连接消息服务器失败 1");
+                failure(@"连接消息服务器失败");
             }];
         }
     } failure:^(NSString *error) {
+        DDLog(@"连接消息服务器失败 2");
+
          failure(@"连接消息服务器失败");
     }];
     
@@ -139,11 +145,10 @@
 
 - (void)reloginSuccess:(void(^)())success failure:(void(^)(NSString* error))failure
 {
-    DDLog(@"relogin func");
     if ([DDClientState shareInstance].userState == DDUserOffLine && _lastLoginPassword && _lastLoginUserName) {
         
         [self loginWithUsername:_lastLoginUserName password:_lastLoginPassword success:^(MTTUserEntity *user) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloginSuccess" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationUserReloginSuccess object:user];
             success(YES);
         } failure:^(NSString *error) {
             failure(@"重新登陆失败");

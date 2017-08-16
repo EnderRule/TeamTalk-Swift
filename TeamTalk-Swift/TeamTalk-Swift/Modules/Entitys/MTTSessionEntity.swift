@@ -179,4 +179,12 @@ extension MTTSessionEntity {
         self.init(sessionID: group.objID, sessionName: group.name, type: .sessionTypeGroup)
     }
     
+    class func sessionIDFrom(pbID:UInt32,sessionType:SessionType_Objc) -> String{
+        if sessionType == .sessionTypeSingle{
+            return MTTUserEntity.localIDFrom(pbID: pbID)
+        }else{
+            return MTTGroupEntity.localIDFrom(pbID: pbID)
+        }
+    } 
+    
 }

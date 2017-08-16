@@ -8,6 +8,7 @@
 
 #import "DDUserModule.h"
 #import "MTTDatabaseUtil.h"
+#import "MTTDDNotification.h"
 
 @interface DDUserModule(PrivateAPI)
 
@@ -111,7 +112,8 @@
 {
     
     //加载本地最近联系人
-    }
+   
+}
 
 #pragma mark - 
 #pragma mark PrivateAPI
@@ -124,6 +126,7 @@
 
 - (void)n_receiveUserLoginNotification:(NSNotification*)notification
 {
+    
     if (!_recentUsers)
     {
         _recentUsers = [[NSMutableDictionary alloc] init];

@@ -19,6 +19,7 @@
 
 
 #import "MTTUtil.h"
+#import "security.h"
 
 //AF network
 #import "AFHTTPSessionManager.h"
@@ -37,3 +38,10 @@
 #import "DDClientState.h"
 #import "DDClientStateMaintenanceManager.h"
 #import "RuntimeStatus.h"
+
+//Module
+#import "LoginModule.h"
+
+
+//audio、videos
+#import "Encapsulator.h"

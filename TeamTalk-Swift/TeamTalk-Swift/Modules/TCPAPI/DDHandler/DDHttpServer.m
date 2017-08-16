@@ -32,7 +32,6 @@
 -(void)getMsgIp:(void(^)(NSDictionary *dic))block failure:(void(^)(NSString* error))failure
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
  
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:SERVER_ADDR parameters:nil  progress:nil  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

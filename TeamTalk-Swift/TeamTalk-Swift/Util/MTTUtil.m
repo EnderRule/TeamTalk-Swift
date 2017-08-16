@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "MTTUtil.h"
+#import "RuntimeStatus.h"
 
-//#import "MTTUserEntity.h"
-//#import "MTTGroupEntity.h"
-#import "DDTcpClientManager.h"
-//#import "DDClientState.h"
+ #import "DDTcpClientManager.h"
+#import "DDClientState.h"
 //#import "SessionModule.h"
 //#import "DDMessageModule.h"
 
@@ -50,14 +49,12 @@
 #pragma mark - loginOut
 
 +(void)loginOut{
-    
-    
-//    TheRuntime.user =nil;
-//    TheRuntime.userID =nil;
+    TheRuntime.user =nil;
+    TheRuntime.userID =nil;
 //    [[DDMessageModule shareInstance] removeAllUnreadMessages];
 //    [[SessionModule instance] clearSession];
     [[DDTcpClientManager instance] disconnect];
-//    [DDClientState shareInstance].userState = DDUserOffLineInitiative;
+    [DDClientState shareInstance].userState = DDUserOffLineInitiative;
 }
 
 
@@ -70,17 +67,6 @@
         return [array[1] unsignedIntValue];
     }
     return 0;
-}
-
-+(NSString *)changeOriginalToLocalID:(UInt32)orignalID SessionType:(int)sessionType
-{
-//    if(sessionType == SessionTypeSessionTypeSingle)
-//    {
-//        return [MTTUserEntity pbUserIdToLocalID:orignalID];
-//    }
-//    return [MTTGroupEntity pbGroupIdToLocalID:orignalID];
-    
-    return @"test woooooords";
 }
 
 #pragma mark - new function

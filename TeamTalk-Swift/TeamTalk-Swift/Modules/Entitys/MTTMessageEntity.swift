@@ -65,9 +65,9 @@ import UIKit
 
 
 class MTTMessageEntity: NSObject {
-    var msgID:Int = 0
+    var msgID:UInt32 = 0
     var msgType:MsgType_Objc = .msgTypeSingleText
-    var msgTime:TimeInterval = 0
+    var msgTime:UInt32 = 0
     var sessionId:String = ""
     var seqNo:Int = 0
     var senderId:String = ""
@@ -80,7 +80,7 @@ class MTTMessageEntity: NSObject {
     var state:DDMessageState = .Sending
     
     
-    public convenience init(msgID:Int,msgType:MsgType_Objc,msgTime:TimeInterval,sessionID:String,senderID:String,msgContent:String,toUserID:String){
+    public convenience init(msgID:UInt32,msgType:MsgType_Objc,msgTime:UInt32,sessionID:String,senderID:String,msgContent:String,toUserID:String){
         self.init()
         
         self.msgID = msgID
@@ -120,10 +120,28 @@ class MTTMessageEntity: NSObject {
         return self.msgContentType == .Image
     }
     var isSendBySelf:Bool {
-        //Fixme: check theruntime user here
-//        self.senderId == TheRunTime.user.objID
-        return false
+       return  self.senderId == RuntimeStatus.instance().user.objID
     }
+    var isEmotionMsg:Bool{
+        return false
+//        return   [[[EmotionsModule shareInstance].emotionUnicodeDic allKeys] containsObject:self.msgContent];
+    }
+}
+
+extension MTTMessageEntity {
+    
+    static  let  DDVOICE_PLAYED:String              =       "voicePlayed"
+    static  let  VOICE_LENGTH:String                =       "voiceLength"
+    static  let  DD_IMAGE_LOCAL_KEY :String         =       "local"
+    static  let  DD_IMAGE_URL_KEY :String           =       "url"
+
+    static  let  DD_COMMODITY_ORGPRICE:String        =       "orgprice"
+    static  let  DD_COMMODITY_PICURL:String          =       "picUrl"
+    static  let  DD_COMMODITY_PRICE:String           =       "price"
+    static  let  DD_COMMODITY_TIMES:String           =       "times"
+    static  let  DD_COMMODITY_TITLE :String          =       "title"
+    static  let  DD_COMMODITY_URL:String             =       "URL"
+    static  let  DD_COMMODITY_ID:String              =       "CommodityID"
     
 }
 
@@ -131,7 +149,7 @@ extension MTTMessageEntity {
     public convenience init(msgInfo:Im.BaseDefine.MsgInfo,sessionType:Im.BaseDefine.SessionType){
         self.init()
         
-        self.msgTime = TimeInterval( msgInfo.createTime)
+        self.msgTime =  msgInfo.createTime
         //Fixme: upate values here
 
     }
@@ -139,9 +157,74 @@ extension MTTMessageEntity {
     public convenience init(msgData:Im.Message.ImmsgData){
         self.init()
         
-        self.msgTime = TimeInterval( msgData.createTime)
-        //Fixme: upate values here
+        self.msgTime = msgData.createTime
+        
+        self.msgType = MsgType_Objc.init(rawValue: msgData.msgType.rawValue) ?? .msgTypeSingleText
+        
+        self.sessionType = self.isGroupMessage ? .sessionTypeGroup: .sessionTypeSingle
 
+        var msgInfo:[String:Any] = [:]
+        if self.isVoiceMessage {
+            self.msgContentType = .Voice
+            let tempData:NSData = msgData.msgData as NSData
+            let voiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData
+            let fileName:String = Encapsulator.defaultFileName()
+            if voiceData.write(toFile: fileName, atomically: true){
+                self.msgContent = fileName
+            }else{
+                self.msgContent = "語音存儲出錯"
+            }
+            
+            var ch1:Int32 = 0
+            var ch2:Int32 = 0
+            var ch3:Int32 = 0
+            var ch4:Int32 = 0
+            voiceData.getBytes(&ch1, range: NSRange.init(location: 0, length: 1))
+            voiceData.getBytes(&ch2, range: NSRange.init(location: 1, length: 1))
+            voiceData.getBytes(&ch3, range: NSRange.init(location: 2, length: 1))
+            voiceData.getBytes(&ch4, range: NSRange.init(location: 3, length: 1))
+            ch1 = ch1 & 0x0ff
+            ch2 = ch2 & 0x0ff
+            ch3 = ch3 & 0x0ff
+            ch4 = ch4 & 0x0ff
+            if ((ch1 | ch2 | ch3 | ch4) < 0){
+                debugPrint(self.classForCoder,"init with msgData 、parse voice EOFException")
+            }
+            let voiceLength:Int32 = ((ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4 << 0))
+            msgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
+            msgInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
+            
+        }else{
+            if let tempStr = String.init(data: msgData.msgData, encoding: .utf8){
+                let indata = tempStr.cString(using: .utf8)
+                var pout:UnsafeMutablePointer<Int8>?
+                var outLen:UInt32?
+                let inLen:UInt32 = UInt32(strlen(tempStr))
+                DecryptMsg(indata, inLen, &pout, &outLen!)
+                if pout != nil {
+                    let decodeMsg = String.init(cString: pout!)
+                    self.msgContent = decodeMsg
+                }
+            }else{
+                debugPrint(self.classForCoder,"init with msgData、convert error")
+            }
+        }
+        
+        if self.sessionType == .sessionTypeSingle{
+            self.sessionId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
+        }else {
+            self.sessionId = MTTGroupEntity.localIDFrom(pbID: msgData.toSessionId)
+        }
+        
+        if self.isEmotionMsg{
+            self.msgContentType = .Emotion
+        }
+        self.msgID = msgData.msgId
+        self.toUserID = self.sessionId
+        self.senderId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
+        
+        self.info = msgInfo
+        
     }
 }
 

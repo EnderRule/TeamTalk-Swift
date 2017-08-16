@@ -16,6 +16,7 @@
 #import "DDAPISchedule.h"
 #import "DDClientState.h"
 
+#import "MTTDDNotification.h"
 
 @interface DDTcpClientManager(PrivateAPI)
 
@@ -69,8 +70,6 @@
 
 -(void)disconnect
 {
-    DDLog(@"MTalk Client:disconnect");
-    
     cDataLen = 0;
     
 	_receiveLock = nil;
@@ -94,7 +93,6 @@
 	_lastSendBuffer = nil;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkDisconnect object:nil  userInfo:nil ];
-    
 
 }
 
@@ -268,7 +266,7 @@
 
 - (void)p_handleEventHasBytesAvailableStream:(NSStream *)aStream
 {
-   // DDLog(@"handle eventHasBytesAvailable");
+    DDLog(@"handle eventHasBytesAvailable");
     if (aStream) {
         uint8_t buf[1024];
         NSInteger len = 0;

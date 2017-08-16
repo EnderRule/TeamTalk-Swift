@@ -32,27 +32,23 @@ class AddMemberToGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
-            if let builder = try? Im.Group.ImgroupChangeMemberRsp.Builder.fromJSONToBuilder(data: data!){
-                if let res = try? builder.build() {
-                    let resultcode:UInt32 = res.resultCode
-                    var array:[String] = []
-                    if resultcode != 0 {
-                        return array
-                    }else {
-                        for obj in res.curUserIdList {
-                            let userID:String = MTTUserEntity.localIDFrom(pbID: obj)
-                            array.append(userID)
-                        }
-                        return array
-                    }
+            if let res = try? Im.Group.ImgroupChangeMemberRsp.parseFrom(data: data ?? Data()) {
+                let resultcode:UInt32 = res.resultCode
+                var array:[String] = []
+                if resultcode != 0 {
+                    return array
                 }else {
-                    debugPrint("AddMemberToGroupAPI builded failure")
-                    return nil
+                    for obj in res.curUserIdList {
+                        let userID:String = MTTUserEntity.localIDFrom(pbID: obj)
+                        array.append(userID)
+                    }
+                    return array
                 }
             }else {
-                debugPrint("AddMemberToGroupAPI fromJSONToBuilder failure")
+                debugPrint("AddMemberToGroupAPI builded failure")
                 return nil
             }
+            
         }
         return analysis
     }

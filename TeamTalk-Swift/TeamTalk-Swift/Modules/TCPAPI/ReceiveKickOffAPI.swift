@@ -19,15 +19,11 @@ class ReceiveKickOffAPI: DDUnrequestSuperAPI {
     
     func unrequestAnalysis() -> UnrequestAPIAnalysis! {
         let analysis:UnrequestAPIAnalysis = {(data) in
-            if  let builder:Im.Login.ImkickUser.Builder = try? Im.Login.ImkickUser.Builder.fromJSONToBuilder(data: data!){
-                if let res:Im.Login.ImkickUser = try? builder.build() {
-                    return res.kickReason
-                }else {
-                    debugPrint("ReceiveKickOffAPI builded failure")
-                    return  nil
-                }
+
+            if let res:Im.Login.ImkickUser = try? Im.Login.ImkickUser.parseFrom(data: data ?? Data()) {
+                return res.kickReason
             }else {
-                debugPrint("ReceiveKickOffAPI fromJSONToBuilder failure")
+                debugPrint("ReceiveKickOffAPI builded failure")
                 return  nil
             }
         }

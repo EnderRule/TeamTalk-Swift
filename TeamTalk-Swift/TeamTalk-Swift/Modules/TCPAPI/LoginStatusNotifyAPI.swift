@@ -20,18 +20,13 @@ class LoginStatusNotifyAPI: DDUnrequestSuperAPI ,DDAPIUnrequestScheduleProtocol 
     
     func unrequestAnalysis() -> UnrequestAPIAnalysis! {
         let analysis:UnrequestAPIAnalysis = {(data) in
-            if  let builder:Im.Buddy.ImpcloginStatusNotify.Builder = try? Im.Buddy.ImpcloginStatusNotify.Builder.fromJSONToBuilder(data: data!){
-                if let res:Im.Buddy.ImpcloginStatusNotify = try? builder.build() {
-                    var dic:[String:Any] = [:]
-                    dic.updateValue(res.userId, forKey: "uid")
-                    dic.updateValue(res.loginStat.rawValue, forKey: "loginStat")
-                    return dic
-                }else {
-                    debugPrint("LoginStatusNotifyAPI builded failure")
-                    return  nil
-                }
+            if let res:Im.Buddy.ImpcloginStatusNotify = try? Im.Buddy.ImpcloginStatusNotify.parseFrom(data: data ?? Data()) {
+                var dic:[String:Any] = [:]
+                dic.updateValue(res.userId, forKey: "uid")
+                dic.updateValue(res.loginStat.rawValue, forKey: "loginStat")
+                return dic
             }else {
-                debugPrint("LoginStatusNotifyAPI fromJSONToBuilder failure")
+                debugPrint("LoginStatusNotifyAPI builded failure")
                 return  nil
             }
         }

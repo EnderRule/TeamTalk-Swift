@@ -31,25 +31,20 @@ class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
-            if let builder = try? Im.Buddy.ImallUserRsp.Builder.fromJSONToBuilder(data: data!){
-                if let res = try? builder.build() {
-                    var userAndVersion:[String:Any] = [:]
-                    userAndVersion.updateValue(res.latestUpdateTime, forKey: "alllastupdatetime")
-                    
-                    var userList:[MTTUserEntity] = []
-                    for userinfo in res.userList {
-                        let userEntity = MTTUserEntity.init(userinfo: userinfo)
-                        userList.append(userEntity)
-                    }
-                    userAndVersion.updateValue(userList, forKey: "userlist")
-                    
-                    return userAndVersion
-                }else {
-                    debugPrint("AllUserAPI builded failure")
-                    return nil
+            if let res = try? Im.Buddy.ImallUserRsp.parseFrom(data: data ?? Data()) {
+                var userAndVersion:[String:Any] = [:]
+                userAndVersion.updateValue(res.latestUpdateTime, forKey: "alllastupdatetime")
+                
+                var userList:[MTTUserEntity] = []
+                for userinfo in res.userList {
+                    let userEntity = MTTUserEntity.init(userinfo: userinfo)
+                    userList.append(userEntity)
                 }
+                userAndVersion.updateValue(userList, forKey: "userlist")
+                
+                return userAndVersion
             }else {
-                debugPrint("AllUserAPI fromJSONToBuilder failure")
+                debugPrint("AllUserAPI builded failure")
                 return nil
             }
         }

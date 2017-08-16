@@ -42,7 +42,7 @@ typedef void(^DDGetLastestCommodityMessageCompletion)(MTTMessageEntity* message)
  *
  *  @param sessionID  会话ID
  *  @param pagecount  每页消息数
- *  @param pageCount       页数
+ *  @param index   页数
  *  @param completion 完成获取
  */
 - (void)loadMessageForSessionID:(NSString*)sessionID pageCount:(int)pagecount index:(NSInteger)index completion:(LoadMessageInSessionCompletion)completion;

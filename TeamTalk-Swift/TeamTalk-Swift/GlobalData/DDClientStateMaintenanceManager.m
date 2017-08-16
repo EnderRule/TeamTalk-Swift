@@ -10,10 +10,11 @@
 #import "DDTcpClientManager.h"
 #import "DDClientState.h"
 #import "DDReachability.h"
-#import "MTTConstant.h"
+
+#import "MTTDDNotification.h"
 
 //#import "HeartbeatAPI.h"
-//#import "LoginModule.h"
+#import "LoginModule.h"
 //#import "RecentUsersViewController.h"
 
 #import "TeamTalk_Swift-Swift.h"
@@ -88,11 +89,14 @@ static NSInteger const reloginTimeinterval = 5;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     DDClientState* clientState = [DDClientState shareInstance];
+    
+    DDLog(@"%@ change ",keyPath);
+
+    
     //网络状态变化
     //Fixme: RecentUsersViewController should be update here
     if ([keyPath isEqualToString:DD_NETWORK_STATE_KEYPATH])
     {
-        DDLog(@"%@ change",DD_NETWORK_STATE_KEYPATH);
 
         if ([DDClientState shareInstance].networkState != DDNetWorkDisconnect)
         {
@@ -116,7 +120,6 @@ static NSInteger const reloginTimeinterval = 5;
     //用户状态变化
     else if ([keyPath isEqualToString:DD_USER_STATE_KEYPATH])
     {
-        DDLog(@"%@ change ",DD_USER_STATE_KEYPATH);
         
         switch ([DDClientState shareInstance].userState)
         {
@@ -169,7 +172,6 @@ static NSInteger const reloginTimeinterval = 5;
 //开启发送心跳的Timer
 -(void)p_startHeartBeat{
     
-    DDLog(@"begin heart beat");
     if (!_sendHeartTimer && ![_sendHeartTimer isValid])
     {
         _sendHeartTimer = [NSTimer scheduledTimerWithTimeInterval: heartBeatTimeinterval
@@ -217,7 +219,6 @@ static NSInteger const reloginTimeinterval = 5;
 {
     if (!_reloginTimer)
     {
-
         _reloginTimer = [NSTimer scheduledTimerWithTimeInterval:reloginTimeinterval target:self selector:@selector(p_onReloginTimer:) userInfo:nil repeats:YES];
         [_reloginTimer fire];
     }
@@ -258,39 +259,43 @@ static NSInteger const reloginTimeinterval = 5;
 //运行在断线重连的Timer上
 - (void)p_onReloginTimer:(NSTimer*)timer
 {
+    DDLog(@"p_ onRelogin Timer  ");
     
     static NSUInteger time = 0;
     static NSUInteger powN = 0;
     time ++;
     if (time >= _reloginInterval)
     {
-//        [[LoginModule instance] reloginSuccess:^{
-//            [_reloginTimer invalidate];
-//            _reloginTimer = nil;
-//            time=0;
-//            _reloginInterval = 0;
-//            powN = 0;
+        [[LoginModule instance] reloginSuccess:^{
+            DDLog(@"relogin success");
+
+            [_reloginTimer invalidate];
+            _reloginTimer = nil;
+            time=0;
+            _reloginInterval = 0;
+            powN = 0;
 //            [RecentUsersViewController shareInstance].title=APP_NAME;
-//            [MTTNotification postNotification:DDNotificationUserReloginSuccess userInfo:nil object:nil];
-//            DDLog(@"relogin success");
-//            } failure:^(NSString *error) {
-//            DDLog(@"relogin failure:%@",error);
-//                if ([error isEqualToString:@"未登录"]) {
-//                    [_reloginTimer invalidate];
-//                    _reloginTimer = nil;
-//                    time = 0;
-//                    _reloginInterval = 0;
-//                    powN = 0;
+            [[NSNotificationCenter defaultCenter]postNotificationName:DDNotificationUserLoginSuccess object:nil ];
+            DDClientState.shareInstance.userState = DDUserOnline;
+            
+        } failure:^(NSString *error) {
+            DDLog(@"relogin failure:%@",error);
+                if ([error isEqualToString:@"未登录"]) {
+                    [_reloginTimer invalidate];
+                    _reloginTimer = nil;
+                    time = 0;
+                    _reloginInterval = 0;
+                    powN = 0;
 //                    [RecentUsersViewController shareInstance].title=APP_NAME;
-//                }else{
+                }else{
 //                    [RecentUsersViewController shareInstance].title=@"未连接";
-//                    
-//                    powN ++;
-//                    time = 0;
-//                    _reloginInterval = pow(2, powN);
-//                }
-//            
-//        }];
+                    
+                    powN ++;
+                    time = 0;
+                    _reloginInterval = pow(2, powN);
+                }
+            
+        }];
        
     }
 }

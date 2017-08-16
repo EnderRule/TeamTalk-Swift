@@ -19,18 +19,13 @@ class SignNotifyAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
     
     func unrequestAnalysis() -> UnrequestAPIAnalysis! {
         let analysis:UnrequestAPIAnalysis = {(data) in
-            if  let builder:Im.Buddy.ImsignInfoChangedNotify.Builder = try? Im.Buddy.ImsignInfoChangedNotify.Builder.fromJSONToBuilder(data: data!){
-                if let res:Im.Buddy.ImsignInfoChangedNotify = try? builder.build() {
-                    var dic:[String:Any] = [:]
-                    dic.updateValue(res.changedUserId, forKey: "uid")
-                    dic.updateValue(res.signInfo, forKey: "sign")
-                    return dic
-                }else {
-                    debugPrint("SignNotifyAPI builded failure")
-                    return  nil
-                }
+            if let res:Im.Buddy.ImsignInfoChangedNotify = try? Im.Buddy.ImsignInfoChangedNotify.parseFrom(data: data ?? Data()) {
+                var dic:[String:Any] = [:]
+                dic.updateValue(res.changedUserId, forKey: "uid")
+                dic.updateValue(res.signInfo, forKey: "sign")
+                return dic
             }else {
-                debugPrint("SignNotifyAPI fromJSONToBuilder failure")
+                debugPrint("SignNotifyAPI builded failure")
                 return  nil
             }
         }
