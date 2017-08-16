@@ -21,6 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         RuntimeStatus.instance()
         
+        let testString = "fsfsfsefef"
+        let encryptStr = testString.encrypt()
+        let decryptStr = encryptStr.decrypt()
+        
+        print(NSString.classForCoder(),"\n\(testString)\n\(encryptStr)\n\(decryptStr)")
+        
         return true
     }
 

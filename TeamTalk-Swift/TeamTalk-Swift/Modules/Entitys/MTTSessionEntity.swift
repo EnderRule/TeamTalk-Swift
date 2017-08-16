@@ -139,9 +139,8 @@ class MTTSessionEntity: NSObject {
     }
     public func update(updateTime:TimeInterval){
         self.timeInterval = updateTime
-        
-        //Fixme:在此刷新数据
-//        [[MTTDatabaseUtil instance] updateRecentSession:self completion:^(NSError *error) { }];
+        MTTDatabaseUtil.instance().updateRecentSession(self) { (error ) in
+        }
     }
     
     override var hash: Int {

@@ -19,7 +19,6 @@
 
 
 #import "MTTUtil.h"
-#import "security.h"
 
 //AF network
 #import "AFHTTPSessionManager.h"
@@ -38,6 +37,9 @@
 #import "DDClientState.h"
 #import "DDClientStateMaintenanceManager.h"
 #import "RuntimeStatus.h"
+#import "MTTDatabaseUtil.h"
+#import "security.h"
+
 
 //Module
 #import "LoginModule.h"

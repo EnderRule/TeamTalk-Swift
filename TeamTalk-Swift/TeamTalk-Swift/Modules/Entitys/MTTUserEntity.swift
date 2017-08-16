@@ -52,14 +52,24 @@ class MTTUserEntity: MTTBaseEntity {
     func sendEmail(){
         let stringURL = "mailto:\(self.email)"
         if let url = URL.init(string: stringURL){
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+                // Fallback on earlier versions
+            }
         }
     }
     
     func callPhoneNum () {
         let stringURL = "tel:\(self.telphone)"
         if let url = URL.init(string: stringURL){
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+                // Fallback on earlier versions
+            }
         }
     }
     

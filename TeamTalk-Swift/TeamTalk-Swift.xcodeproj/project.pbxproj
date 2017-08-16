@@ -237,8 +237,21 @@
 		66F10F841F4449570035C888 /* Encapsulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10F511F4449570035C888 /* Encapsulator.m */; };
 		66F10F851F4449570035C888 /* PlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10F531F4449570035C888 /* PlayerManager.m */; };
 		66F10F861F4449570035C888 /* RawAudioDataPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10F551F4449570035C888 /* RawAudioDataPlayer.m */; };
-		66F10F891F4449F30035C888 /* AQRecorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66F10F881F4449F30035C888 /* AQRecorder.mm */; };
-		66F10F8D1F44535C0035C888 /* libsecurity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F8B1F44535C0035C888 /* libsecurity.a */; };
+		66F10F931F448B710035C888 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F921F448B710035C888 /* CFNetwork.framework */; };
+		66F10F951F448B7E0035C888 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F941F448B7E0035C888 /* SystemConfiguration.framework */; };
+		66F10F971F448B8A0035C888 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F961F448B8A0035C888 /* QuartzCore.framework */; };
+		66F10F991F448B930035C888 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F981F448B930035C888 /* ImageIO.framework */; };
+		66F10F9B1F448B9C0035C888 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F9A1F448B9C0035C888 /* CoreText.framework */; };
+		66F10F9D1F448BA60035C888 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F9C1F448BA60035C888 /* AssetsLibrary.framework */; };
+		66F10F9F1F448BAE0035C888 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F9E1F448BAE0035C888 /* CoreGraphics.framework */; };
+		66F10FA11F448BBF0035C888 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10FA01F448BBF0035C888 /* AVFoundation.framework */; };
+		66F10FA31F448BC80035C888 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10FA21F448BC80035C888 /* Accelerate.framework */; };
+		66F10FA71F448FDF0035C888 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10FA51F448FDF0035C888 /* libc++.1.tbd */; };
+		66F10FA81F448FDF0035C888 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10FA61F448FDF0035C888 /* libc++.tbd */; };
+		66F10FB51F449F710035C888 /* aes_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FAE1F449F710035C888 /* aes_core.cpp */; };
+		66F10FB61F449F710035C888 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB01F449F710035C888 /* base64.cpp */; };
+		66F10FB71F449F710035C888 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB21F449F710035C888 /* md5.cpp */; };
+		66F10FB81F449F710035C888 /* security.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB41F449F710035C888 /* security.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -634,12 +647,26 @@
 		66F10F531F4449570035C888 /* PlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerManager.m; sourceTree = "<group>"; };
 		66F10F541F4449570035C888 /* RawAudioDataPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawAudioDataPlayer.h; sourceTree = "<group>"; };
 		66F10F551F4449570035C888 /* RawAudioDataPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RawAudioDataPlayer.m; sourceTree = "<group>"; };
-		66F10F871F4449F30035C888 /* AQRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQRecorder.h; sourceTree = "<group>"; };
-		66F10F881F4449F30035C888 /* AQRecorder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AQRecorder.mm; sourceTree = "<group>"; };
-		66F10F8B1F44535C0035C888 /* libsecurity.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsecurity.a; sourceTree = "<group>"; };
-		66F10F8C1F44535C0035C888 /* security.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = security.h; sourceTree = "<group>"; };
-		66F10F8E1F447F860035C888 /* SecurityString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityString.h; sourceTree = "<group>"; };
-		66F10F8F1F447F860035C888 /* SecurityString.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SecurityString.mm; sourceTree = "<group>"; };
+		66F10F921F448B710035C888 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		66F10F941F448B7E0035C888 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		66F10F961F448B8A0035C888 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		66F10F981F448B930035C888 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		66F10F9A1F448B9C0035C888 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		66F10F9C1F448BA60035C888 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		66F10F9E1F448BAE0035C888 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		66F10FA01F448BBF0035C888 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		66F10FA21F448BC80035C888 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		66F10FA51F448FDF0035C888 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
+		66F10FA61F448FDF0035C888 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		66F10FAD1F449F710035C888 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		66F10FAE1F449F710035C888 /* aes_core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aes_core.cpp; sourceTree = "<group>"; };
+		66F10FAF1F449F710035C888 /* aes_locl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes_locl.h; sourceTree = "<group>"; };
+		66F10FB01F449F710035C888 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
+		66F10FB11F449F710035C888 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
+		66F10FB21F449F710035C888 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
+		66F10FB31F449F710035C888 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		66F10FB41F449F710035C888 /* security.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = security.cpp; sourceTree = "<group>"; };
+		66F10FB91F449FA60035C888 /* security.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; path = security.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -647,10 +674,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F10FA71F448FDF0035C888 /* libc++.1.tbd in Frameworks */,
+				66F10FA81F448FDF0035C888 /* libc++.tbd in Frameworks */,
+				66F10FA31F448BC80035C888 /* Accelerate.framework in Frameworks */,
+				66F10FA11F448BBF0035C888 /* AVFoundation.framework in Frameworks */,
+				66F10F9F1F448BAE0035C888 /* CoreGraphics.framework in Frameworks */,
+				66F10F9D1F448BA60035C888 /* AssetsLibrary.framework in Frameworks */,
+				66F10F9B1F448B9C0035C888 /* CoreText.framework in Frameworks */,
+				66F10F991F448B930035C888 /* ImageIO.framework in Frameworks */,
+				66F10F971F448B8A0035C888 /* QuartzCore.framework in Frameworks */,
+				66F10F951F448B7E0035C888 /* SystemConfiguration.framework in Frameworks */,
+				66F10F931F448B710035C888 /* CFNetwork.framework in Frameworks */,
 				66F10CC51F443A510035C888 /* libstdc++.6.tbd in Frameworks */,
 				66F10CC01F4435900035C888 /* CoreFoundation.framework in Frameworks */,
 				66F10CBE1F44354C0035C888 /* AudioToolbox.framework in Frameworks */,
-				66F10F8D1F44535C0035C888 /* libsecurity.a in Frameworks */,
 				66F10CBC1F4435430035C888 /* UIKit.framework in Frameworks */,
 				66F10CBA1F44353C0035C888 /* Foundation.framework in Frameworks */,
 				66F10A6A1F43F2D70035C888 /* libsqlite3.0.tbd in Frameworks */,
@@ -732,7 +769,7 @@
 		66E6D3571F428990008E9590 /* ThridPartys */ = {
 			isa = PBXGroup;
 			children = (
-				66F10F8A1F44535C0035C888 /* Security */,
+				66F10FAC1F449F700035C888 /* Security */,
 				66F10A541F43F14B0035C888 /* FMDB */,
 				66F107A51F42D4810035C888 /* SDWebImage */,
 				66F1072A1F42D1F50035C888 /* AFNetworking */,
@@ -879,8 +916,6 @@
 			isa = PBXGroup;
 			children = (
 				66F10EDB1F4449570035C888 /* Voice */,
-				66F10F8E1F447F860035C888 /* SecurityString.h */,
-				66F10F8F1F447F860035C888 /* SecurityString.mm */,
 			);
 			path = Exist;
 			sourceTree = "<group>";
@@ -1129,6 +1164,17 @@
 		66F10A671F43F2D70035C888 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				66F10FA51F448FDF0035C888 /* libc++.1.tbd */,
+				66F10FA61F448FDF0035C888 /* libc++.tbd */,
+				66F10FA21F448BC80035C888 /* Accelerate.framework */,
+				66F10FA01F448BBF0035C888 /* AVFoundation.framework */,
+				66F10F9E1F448BAE0035C888 /* CoreGraphics.framework */,
+				66F10F9C1F448BA60035C888 /* AssetsLibrary.framework */,
+				66F10F9A1F448B9C0035C888 /* CoreText.framework */,
+				66F10F981F448B930035C888 /* ImageIO.framework */,
+				66F10F961F448B8A0035C888 /* QuartzCore.framework */,
+				66F10F941F448B7E0035C888 /* SystemConfiguration.framework */,
+				66F10F921F448B710035C888 /* CFNetwork.framework */,
 				66F10CC41F443A510035C888 /* libstdc++.6.tbd */,
 				66F10CBF1F4435900035C888 /* CoreFoundation.framework */,
 				66F10CBD1F44354C0035C888 /* AudioToolbox.framework */,
@@ -1295,8 +1341,6 @@
 		66F10F491F4449570035C888 /* manager */ = {
 			isa = PBXGroup;
 			children = (
-				66F10F871F4449F30035C888 /* AQRecorder.h */,
-				66F10F881F4449F30035C888 /* AQRecorder.mm */,
 				66F10F4A1F4449570035C888 /* Codec */,
 				66F10F4E1F4449570035C888 /* Decapsulator.h */,
 				66F10F4F1F4449570035C888 /* Decapsulator.m */,
@@ -1320,11 +1364,18 @@
 			path = Codec;
 			sourceTree = "<group>";
 		};
-		66F10F8A1F44535C0035C888 /* Security */ = {
+		66F10FAC1F449F700035C888 /* Security */ = {
 			isa = PBXGroup;
 			children = (
-				66F10F8B1F44535C0035C888 /* libsecurity.a */,
-				66F10F8C1F44535C0035C888 /* security.h */,
+				66F10FB91F449FA60035C888 /* security.h */,
+				66F10FAD1F449F710035C888 /* aes.h */,
+				66F10FAE1F449F710035C888 /* aes_core.cpp */,
+				66F10FAF1F449F710035C888 /* aes_locl.h */,
+				66F10FB01F449F710035C888 /* base64.cpp */,
+				66F10FB11F449F710035C888 /* base64.h */,
+				66F10FB21F449F710035C888 /* md5.cpp */,
+				66F10FB31F449F710035C888 /* md5.h */,
+				66F10FB41F449F710035C888 /* security.cpp */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -1455,6 +1506,7 @@
 				66F10F721F4449570035C888 /* modes_wb.c in Sources */,
 				66F107C61F42D4810035C888 /* SDWebImageDecoder.m in Sources */,
 				66F108101F43E7180035C888 /* DDHttpServer.m in Sources */,
+				66F10FB61F449F710035C888 /* base64.cpp in Sources */,
 				66E6D3871F4289D0008E9590 /* RingBuffer.swift in Sources */,
 				66F10F801F4449570035C888 /* vq.c in Sources */,
 				66E6D3881F4289D0008E9590 /* UnknownFieldSet.swift in Sources */,
@@ -1474,6 +1526,7 @@
 				66E6D3B91F428C38008E9590 /* DynamicColor+RGBA.swift in Sources */,
 				66F10F5A1F4449570035C888 /* cb_search.c in Sources */,
 				66E6D3861F4289D0008E9590 /* Google.Protobuf.Wrappers.proto.swift in Sources */,
+				66F10FB71F449F710035C888 /* md5.cpp in Sources */,
 				66F108121F43E7180035C888 /* DDTcpServer.m in Sources */,
 				66E6D3761F4289D0008E9590 /* ExtendableMessage.swift in Sources */,
 				66F107151F42A36E0035C888 /* LoginAPI.swift in Sources */,
@@ -1498,7 +1551,6 @@
 				66E6D3411F428922008E9590 /* LKNineImgvContainerView.swift in Sources */,
 				66F107D21F42DB520035C888 /* AddMemberToGroupAPI.swift in Sources */,
 				66F107CA1F42D4810035C888 /* SDWebImagePrefetcher.m in Sources */,
-				66F10F891F4449F30035C888 /* AQRecorder.mm in Sources */,
 				66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */,
 				66F107911F42D3A90035C888 /* NSDictionary+JSON.m in Sources */,
 				66F10A621F43F14B0035C888 /* FMDatabase.m in Sources */,
@@ -1588,6 +1640,7 @@
 				66E6D3541F428922008E9590 /* ZQTipSwitch.swift in Sources */,
 				66F107191F42C2330035C888 /* SignNotifyAPI.swift in Sources */,
 				66F107C31F42D4810035C888 /* NSData+ImageContentType.m in Sources */,
+				66F10FB51F449F710035C888 /* aes_core.cpp in Sources */,
 				66F107A01F42D3A90035C888 /* UITabBar+SubView.m in Sources */,
 				66E6D3B51F428C38008E9590 /* DynamicColor+HSB.swift in Sources */,
 				66E6D3801F4289D0008E9590 /* Google.Protobuf.FieldMask.proto.swift in Sources */,
@@ -1622,6 +1675,7 @@
 				66F10F631F4449570035C888 /* filters.c in Sources */,
 				66F10F771F4449570035C888 /* sb_celp.c in Sources */,
 				66F10F681F4449570035C888 /* high_lsp_tables.c in Sources */,
+				66F10FB81F449F710035C888 /* security.cpp in Sources */,
 				66F107A41F42D3A90035C888 /* UIImage+Rotate_Flip.m in Sources */,
 				66E6D3961F428A33008E9590 /* Im.File.Imfile.proto.swift in Sources */,
 				66E6D3141F428700008E9590 /* ViewController.swift in Sources */,
@@ -1765,17 +1819,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_WARNINGS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = F9M2T7SUYF;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TeamTalk-Swift/GlobalData/MTTConstant.h";
 				INFOPLIST_FILE = "TeamTalk-Swift/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TeamTalk-Swift/ThridPartys/Security",
 				);
+				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_BUNDLE_IDENTIFIER = "fulladvantage.linking.talk.TeamTalk-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TeamTalk-Swift/TeamTalk-Swift-Bridging-Header.h";
@@ -1788,17 +1848,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_WARNINGS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				DEVELOPMENT_TEAM = F9M2T7SUYF;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TeamTalk-Swift/GlobalData/MTTConstant.h";
 				INFOPLIST_FILE = "TeamTalk-Swift/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TeamTalk-Swift/ThridPartys/Security",
 				);
+				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_BUNDLE_IDENTIFIER = "fulladvantage.linking.talk.TeamTalk-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TeamTalk-Swift/TeamTalk-Swift-Bridging-Header.h";

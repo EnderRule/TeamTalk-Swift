@@ -147,7 +147,7 @@ void jitter_buffer_put(JitterBuffer *jitter, const JitterBufferPacket *packet);
  * @param jitter Jitter buffer state
  * @param packet Returned packet
  * @param desired_span Number of samples (or units) we wish to get from the buffer (no guarantee)
- * @param current_timestamp Timestamp for the returned packet 
+ * @param start_offset Timestamp for the returned packet
 */
 int jitter_buffer_get(JitterBuffer *jitter, JitterBufferPacket *packet, spx_int32_t desired_span, spx_int32_t *start_offset);
 

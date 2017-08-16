@@ -56,7 +56,7 @@ extern "C" {
      *
      *  @return 返回 0-成功; 其他-失败
      */
-    DLL_MODIFIER int EncryptMsg(const char* pInData, unsigned int nInLen, char** pOutData, unsigned int* nOutLen);
+    DLL_MODIFIER int EncryptMsg(const char* pInData, int nInLen, char** pOutData, unsigned int** nOutLen);
     
     /**
      *  对消息解密
@@ -68,7 +68,7 @@ extern "C" {
      *
      *  @return 返回 0-成功; 其他-失败
      */
-    DLL_MODIFIER int DecryptMsg(const char* pInData, unsigned int nInLen, char** pOutData, unsigned int* nOutLen);
+    DLL_MODIFIER int DecryptMsg(const char* pInData, int nInLen, char** pOutData, unsigned int** nOutLen);
     
     /**
      *  对密码进行加密
@@ -81,7 +81,7 @@ extern "C" {
      *
      *  @return 返回 0-成功; 其他-失败
      */
-    DLL_MODIFIER int EncryptPass(const char* pInData, unsigned int nInLen, char** pOutData, unsigned int* nOutLen);
+    DLL_MODIFIER int EncryptPass(const char* pInData, int nInLen, char** pOutData,unsigned int** nOutLen);
     /**
      *  释放资源
      *
