@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReceiveKickOffAPI: DDUnrequestSuperAPI {
+class ReceiveKickOffAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
     func responseCommandID() -> Int32 {
         return Int32(IM_KICK_USER)
     }
@@ -23,7 +23,7 @@ class ReceiveKickOffAPI: DDUnrequestSuperAPI {
             if let res:Im.Login.ImkickUser = try? Im.Login.ImkickUser.parseFrom(data: data ?? Data()) {
                 return res.kickReason
             }else {
-                debugPrint("ReceiveKickOffAPI builded failure")
+                debugPrint("ReceiveKickOffAPI analysisReturnData failure")
                 return  0
             }
         }

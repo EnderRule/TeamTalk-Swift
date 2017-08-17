@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MsgReadNotifyAPI: DDUnrequestSuperAPI {
+class MsgReadNotifyAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
     func responseServiceID() -> Int32 {
         return Int32(SID_MSG)
     }
@@ -27,7 +27,7 @@ class MsgReadNotifyAPI: DDUnrequestSuperAPI {
                     dic.updateValue(res.sessionId, forKey: "from_id")
                     return dic
                 }else {
-                    debugPrint("SignNotifyAPI builded failure")
+                    debugPrint("SignNotifyAPI analysisReturnData failure")
                     return  [:]
                 }
             }else {

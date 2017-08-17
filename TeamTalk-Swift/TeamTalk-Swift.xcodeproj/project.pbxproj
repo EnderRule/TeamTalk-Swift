@@ -20,6 +20,42 @@
 		66686A781F4540E5008B26BD /* GetRecentSessionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A771F4540E5008B26BD /* GetRecentSessionAPI.swift */; };
 		66686A7A1F454BC2008B26BD /* LogoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A791F454BC2008B26BD /* LogoutAPI.swift */; };
 		66686A7C1F454D32008B26BD /* MsgReadACKAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A7B1F454D32008B26BD /* MsgReadACKAPI.swift */; };
+		66686A7E1F4562B0008B26BD /* RemoveSessionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A7D1F4562B0008B26BD /* RemoveSessionAPI.swift */; };
+		66686A801F456548008B26BD /* SendPushTokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A7F1F456548008B26BD /* SendPushTokenAPI.swift */; };
+		66686A821F456717008B26BD /* ShieldGroupMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A811F456717008B26BD /* ShieldGroupMessageAPI.swift */; };
+		66686A841F45697A008B26BD /* EditSignatureAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A831F45697A008B26BD /* EditSignatureAPI.swift */; };
+		66686A861F456F85008B26BD /* GetNightModeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A851F456F85008B26BD /* GetNightModeAPI.swift */; };
+		66686A881F457123008B26BD /* ChangeNightModeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A871F457123008B26BD /* ChangeNightModeAPI.swift */; };
+		66686A8D1F457457008B26BD /* UserStatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A8C1F457457008B26BD /* UserStatAPI.swift */; };
+		66686A901F457788008B26BD /* KickPCClientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A8F1F457788008B26BD /* KickPCClientAPI.swift */; };
+		66686A921F457903008B26BD /* GetGroupInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A911F457903008B26BD /* GetGroupInfoAPI.swift */; };
+		66686A971F457E80008B26BD /* DDSendPhotoMessageAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A961F457E80008B26BD /* DDSendPhotoMessageAPI.m */; };
+		66686A991F458037008B26BD /* GetMessageQueueAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A981F458037008B26BD /* GetMessageQueueAPI.swift */; };
+		66686A9B1F458525008B26BD /* GetUnreadMessagesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */; };
+		66686A9D1F4591B0008B26BD /* SendMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */; };
+		66686AA51F459ADC008B26BD /* DDMessageModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA01F459ADC008B26BD /* DDMessageModule.m */; };
+		66686AA61F459ADC008B26BD /* DDMessageSendManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA21F459ADC008B26BD /* DDMessageSendManager.mm */; };
+		66686AA71F459ADC008B26BD /* UnAckMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA41F459ADC008B26BD /* UnAckMessageManager.m */; };
+		66686AAC1F45A769008B26BD /* ChattingModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA91F45A769008B26BD /* ChattingModule.m */; };
+		66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AAB1F45A769008B26BD /* ChattingEditModule.m */; };
+		66686AB21F45A873008B26BD /* DDChatTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AB11F45A873008B26BD /* DDChatTextCell.m */; };
+		66686AB51F45A979008B26BD /* DDChatBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AB41F45A979008B26BD /* DDChatBaseCell.m */; };
+		66686ABC1F45A9C0008B26BD /* MenuImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AB91F45A9C0008B26BD /* MenuImageView.m */; };
+		66686ABD1F45A9C0008B26BD /* RecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686ABB1F45A9C0008B26BD /* RecordingView.m */; };
+		66686AC11F45AA72008B26BD /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AC01F45AA72008B26BD /* TTTAttributedLabel.m */; };
+		66686ADD1F45AACC008B26BD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66686AC31F45AACC008B26BD /* Info.plist */; };
+		66686ADE1F45AACC008B26BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AC51F45AACC008B26BD /* MASCompositeConstraint.m */; };
+		66686ADF1F45AACC008B26BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AC81F45AACC008B26BD /* MASConstraint.m */; };
+		66686AE01F45AACC008B26BD /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686ACA1F45AACC008B26BD /* MASConstraintMaker.m */; };
+		66686AE11F45AACC008B26BD /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686ACC1F45AACC008B26BD /* MASLayoutConstraint.m */; };
+		66686AE21F45AACC008B26BD /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AD01F45AACC008B26BD /* MASViewAttribute.m */; };
+		66686AE31F45AACC008B26BD /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AD21F45AACC008B26BD /* MASViewConstraint.m */; };
+		66686AE41F45AACC008B26BD /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AD41F45AACC008B26BD /* NSArray+MASAdditions.m */; };
+		66686AE51F45AACC008B26BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AD71F45AACC008B26BD /* NSLayoutConstraint+MASDebugAdditions.m */; };
+		66686AE61F45AACC008B26BD /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AD91F45AACC008B26BD /* View+MASAdditions.m */; };
+		66686AE71F45AACC008B26BD /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686ADC1F45AACC008B26BD /* ViewController+MASAdditions.m */; };
+		66686AEA1F45ABC3008B26BD /* SessionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AE91F45ABC3008B26BD /* SessionModule.m */; };
+		66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
 		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
 		66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3111F428700008E9590 /* AppDelegate.swift */; };
 		66E6D3141F428700008E9590 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3131F428700008E9590 /* ViewController.swift */; };
@@ -284,6 +320,71 @@
 		66686A771F4540E5008B26BD /* GetRecentSessionAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetRecentSessionAPI.swift; sourceTree = "<group>"; };
 		66686A791F454BC2008B26BD /* LogoutAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAPI.swift; sourceTree = "<group>"; };
 		66686A7B1F454D32008B26BD /* MsgReadACKAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MsgReadACKAPI.swift; sourceTree = "<group>"; };
+		66686A7D1F4562B0008B26BD /* RemoveSessionAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveSessionAPI.swift; sourceTree = "<group>"; };
+		66686A7F1F456548008B26BD /* SendPushTokenAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPushTokenAPI.swift; sourceTree = "<group>"; };
+		66686A811F456717008B26BD /* ShieldGroupMessageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShieldGroupMessageAPI.swift; sourceTree = "<group>"; };
+		66686A831F45697A008B26BD /* EditSignatureAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSignatureAPI.swift; sourceTree = "<group>"; };
+		66686A851F456F85008B26BD /* GetNightModeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetNightModeAPI.swift; sourceTree = "<group>"; };
+		66686A871F457123008B26BD /* ChangeNightModeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeNightModeAPI.swift; sourceTree = "<group>"; };
+		66686A8C1F457457008B26BD /* UserStatAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStatAPI.swift; sourceTree = "<group>"; };
+		66686A8F1F457788008B26BD /* KickPCClientAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KickPCClientAPI.swift; sourceTree = "<group>"; };
+		66686A911F457903008B26BD /* GetGroupInfoAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetGroupInfoAPI.swift; sourceTree = "<group>"; };
+		66686A951F457E80008B26BD /* DDSendPhotoMessageAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSendPhotoMessageAPI.h; sourceTree = "<group>"; };
+		66686A961F457E80008B26BD /* DDSendPhotoMessageAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDSendPhotoMessageAPI.m; sourceTree = "<group>"; };
+		66686A981F458037008B26BD /* GetMessageQueueAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMessageQueueAPI.swift; sourceTree = "<group>"; };
+		66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUnreadMessagesAPI.swift; sourceTree = "<group>"; };
+		66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMessageAPI.swift; sourceTree = "<group>"; };
+		66686A9F1F459ADC008B26BD /* DDMessageModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMessageModule.h; sourceTree = "<group>"; };
+		66686AA01F459ADC008B26BD /* DDMessageModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMessageModule.m; sourceTree = "<group>"; };
+		66686AA11F459ADC008B26BD /* DDMessageSendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMessageSendManager.h; sourceTree = "<group>"; };
+		66686AA21F459ADC008B26BD /* DDMessageSendManager.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = DDMessageSendManager.mm; sourceTree = "<group>"; };
+		66686AA31F459ADC008B26BD /* UnAckMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnAckMessageManager.h; sourceTree = "<group>"; };
+		66686AA41F459ADC008B26BD /* UnAckMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnAckMessageManager.m; sourceTree = "<group>"; };
+		66686AA81F45A769008B26BD /* ChattingModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingModule.h; sourceTree = "<group>"; };
+		66686AA91F45A769008B26BD /* ChattingModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingModule.m; sourceTree = "<group>"; };
+		66686AAA1F45A769008B26BD /* ChattingEditModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingEditModule.h; sourceTree = "<group>"; };
+		66686AAB1F45A769008B26BD /* ChattingEditModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingEditModule.m; sourceTree = "<group>"; };
+		66686AB01F45A873008B26BD /* DDChatTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatTextCell.h; sourceTree = "<group>"; };
+		66686AB11F45A873008B26BD /* DDChatTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChatTextCell.m; sourceTree = "<group>"; };
+		66686AB31F45A979008B26BD /* DDChatBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatBaseCell.h; sourceTree = "<group>"; };
+		66686AB41F45A979008B26BD /* DDChatBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChatBaseCell.m; sourceTree = "<group>"; };
+		66686AB61F45A995008B26BD /* DDChatCellProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDChatCellProtocol.h; sourceTree = "<group>"; };
+		66686AB81F45A9C0008B26BD /* MenuImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuImageView.h; sourceTree = "<group>"; };
+		66686AB91F45A9C0008B26BD /* MenuImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuImageView.m; sourceTree = "<group>"; };
+		66686ABA1F45A9C0008B26BD /* RecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingView.h; sourceTree = "<group>"; };
+		66686ABB1F45A9C0008B26BD /* RecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingView.m; sourceTree = "<group>"; };
+		66686ABF1F45AA72008B26BD /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		66686AC01F45AA72008B26BD /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		66686AC31F45AACC008B26BD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66686AC41F45AACC008B26BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
+		66686AC51F45AACC008B26BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
+		66686AC61F45AACC008B26BD /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
+		66686AC71F45AACC008B26BD /* MASConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraint.h; sourceTree = "<group>"; };
+		66686AC81F45AACC008B26BD /* MASConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraint.m; sourceTree = "<group>"; };
+		66686AC91F45AACC008B26BD /* MASConstraintMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraintMaker.h; sourceTree = "<group>"; };
+		66686ACA1F45AACC008B26BD /* MASConstraintMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraintMaker.m; sourceTree = "<group>"; };
+		66686ACB1F45AACC008B26BD /* MASLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASLayoutConstraint.h; sourceTree = "<group>"; };
+		66686ACC1F45AACC008B26BD /* MASLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASLayoutConstraint.m; sourceTree = "<group>"; };
+		66686ACD1F45AACC008B26BD /* Masonry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Masonry.h; sourceTree = "<group>"; };
+		66686ACE1F45AACC008B26BD /* MASUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASUtilities.h; sourceTree = "<group>"; };
+		66686ACF1F45AACC008B26BD /* MASViewAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewAttribute.h; sourceTree = "<group>"; };
+		66686AD01F45AACC008B26BD /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
+		66686AD11F45AACC008B26BD /* MASViewConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewConstraint.h; sourceTree = "<group>"; };
+		66686AD21F45AACC008B26BD /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
+		66686AD31F45AACC008B26BD /* NSArray+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASAdditions.h"; sourceTree = "<group>"; };
+		66686AD41F45AACC008B26BD /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MASAdditions.m"; sourceTree = "<group>"; };
+		66686AD51F45AACC008B26BD /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		66686AD61F45AACC008B26BD /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
+		66686AD71F45AACC008B26BD /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
+		66686AD81F45AACC008B26BD /* View+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASAdditions.h"; sourceTree = "<group>"; };
+		66686AD91F45AACC008B26BD /* View+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+MASAdditions.m"; sourceTree = "<group>"; };
+		66686ADA1F45AACC008B26BD /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		66686ADB1F45AACC008B26BD /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
+		66686ADC1F45AACC008B26BD /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+MASAdditions.m"; sourceTree = "<group>"; };
+		66686AE81F45ABC3008B26BD /* SessionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionModule.h; sourceTree = "<group>"; };
+		66686AE91F45ABC3008B26BD /* SessionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionModule.m; sourceTree = "<group>"; };
+		66686AEB1F45AE71008B26BD /* NSDate+DDAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DDAddition.h"; sourceTree = "<group>"; };
+		66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DDAddition.m"; sourceTree = "<group>"; };
 		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
 		66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamTalk-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E6D3111F428700008E9590 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -363,7 +464,7 @@
 		66E6D3B01F428C38008E9590 /* DynamicGradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicGradient.swift; sourceTree = "<group>"; };
 		66E6D3B11F428C38008E9590 /* HSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSL.swift; sourceTree = "<group>"; };
 		66E6D3B21F428C38008E9590 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		66E6D3C51F429147008E9590 /* DDSuperAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDSuperAPI.swift; sourceTree = "<group>"; };
+		66E6D3C51F429147008E9590 /* DDSuperAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DDSuperAPI.swift; path = ../DDSuperAPI.swift; sourceTree = "<group>"; };
 		66E6D3C91F42929B008E9590 /* DDAPISchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAPISchedule.h; sourceTree = "<group>"; };
 		66E6D3CA1F42929B008E9590 /* DDAPISchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAPISchedule.m; sourceTree = "<group>"; };
 		66E6D3CB1F42929B008E9590 /* DDAPIScheduleProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAPIScheduleProtocol.h; sourceTree = "<group>"; };
@@ -727,6 +828,150 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66686A891F4572CD008B26BD /* group */ = {
+			isa = PBXGroup;
+			children = (
+				66686A811F456717008B26BD /* ShieldGroupMessageAPI.swift */,
+				66F107D11F42DB520035C888 /* AddMemberToGroupAPI.swift */,
+				66F107D71F42EAC30035C888 /* CreateGroupAPI.swift */,
+				66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */,
+				66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */,
+				66686A911F457903008B26BD /* GetGroupInfoAPI.swift */,
+			);
+			name = group;
+			sourceTree = "<group>";
+		};
+		66686A8A1F4572FD008B26BD /* user */ = {
+			isa = PBXGroup;
+			children = (
+				66F107D51F42E5560035C888 /* AllUserAPI.swift */,
+				66686A711F45374C008B26BD /* DDUserDetailInfoAPI.swift */,
+				66686A831F45697A008B26BD /* EditSignatureAPI.swift */,
+				66686A8C1F457457008B26BD /* UserStatAPI.swift */,
+			);
+			name = user;
+			sourceTree = "<group>";
+		};
+		66686A8B1F45730E008B26BD /* message */ = {
+			isa = PBXGroup;
+			children = (
+				66686A7D1F4562B0008B26BD /* RemoveSessionAPI.swift */,
+				66686A771F4540E5008B26BD /* GetRecentSessionAPI.swift */,
+				66686A7B1F454D32008B26BD /* MsgReadACKAPI.swift */,
+				66686A751F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift */,
+				66686A731F45399E008B26BD /* GetLatestMsgIdAPI.swift */,
+				66F107D31F42E0350035C888 /* ShakeAPI.swift */,
+				66F1071D1F42C3F50035C888 /* ReceiveMessageACKAPI.swift */,
+				66686A981F458037008B26BD /* GetMessageQueueAPI.swift */,
+				66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */,
+				66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */,
+				66686A951F457E80008B26BD /* DDSendPhotoMessageAPI.h */,
+				66686A961F457E80008B26BD /* DDSendPhotoMessageAPI.m */,
+			);
+			name = message;
+			sourceTree = "<group>";
+		};
+		66686A8E1F45772E008B26BD /* loginOrout */ = {
+			isa = PBXGroup;
+			children = (
+				66F107111F42A0F30035C888 /* HeartbeatAPI.swift */,
+				66686A871F457123008B26BD /* ChangeNightModeAPI.swift */,
+				66686A851F456F85008B26BD /* GetNightModeAPI.swift */,
+				66686A7F1F456548008B26BD /* SendPushTokenAPI.swift */,
+				66F107141F42A36E0035C888 /* LoginAPI.swift */,
+				66686A791F454BC2008B26BD /* LogoutAPI.swift */,
+				66686A8F1F457788008B26BD /* KickPCClientAPI.swift */,
+			);
+			name = loginOrout;
+			sourceTree = "<group>";
+		};
+		66686A9E1F459AD2008B26BD /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				66686A9F1F459ADC008B26BD /* DDMessageModule.h */,
+				66686AA01F459ADC008B26BD /* DDMessageModule.m */,
+				66686AA11F459ADC008B26BD /* DDMessageSendManager.h */,
+				66686AA21F459ADC008B26BD /* DDMessageSendManager.mm */,
+				66686AA31F459ADC008B26BD /* UnAckMessageManager.h */,
+				66686AA41F459ADC008B26BD /* UnAckMessageManager.m */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		66686AAE1F45A84E008B26BD /* Viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				66686AAF1F45A85F008B26BD /* Cells */,
+			);
+			path = Viewcontrollers;
+			sourceTree = "<group>";
+		};
+		66686AAF1F45A85F008B26BD /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				66686AB61F45A995008B26BD /* DDChatCellProtocol.h */,
+				66686AB31F45A979008B26BD /* DDChatBaseCell.h */,
+				66686AB41F45A979008B26BD /* DDChatBaseCell.m */,
+				66686AB01F45A873008B26BD /* DDChatTextCell.h */,
+				66686AB11F45A873008B26BD /* DDChatTextCell.m */,
+				66686AB71F45A9C0008B26BD /* Control */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		66686AB71F45A9C0008B26BD /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				66686AB81F45A9C0008B26BD /* MenuImageView.h */,
+				66686AB91F45A9C0008B26BD /* MenuImageView.m */,
+				66686ABA1F45A9C0008B26BD /* RecordingView.h */,
+				66686ABB1F45A9C0008B26BD /* RecordingView.m */,
+			);
+			path = Control;
+			sourceTree = "<group>";
+		};
+		66686ABE1F45AA72008B26BD /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				66686ABF1F45AA72008B26BD /* TTTAttributedLabel.h */,
+				66686AC01F45AA72008B26BD /* TTTAttributedLabel.m */,
+			);
+			path = TTTAttributedLabel;
+			sourceTree = "<group>";
+		};
+		66686AC21F45AACC008B26BD /* Masonry */ = {
+			isa = PBXGroup;
+			children = (
+				66686AC31F45AACC008B26BD /* Info.plist */,
+				66686AC41F45AACC008B26BD /* MASCompositeConstraint.h */,
+				66686AC51F45AACC008B26BD /* MASCompositeConstraint.m */,
+				66686AC61F45AACC008B26BD /* MASConstraint+Private.h */,
+				66686AC71F45AACC008B26BD /* MASConstraint.h */,
+				66686AC81F45AACC008B26BD /* MASConstraint.m */,
+				66686AC91F45AACC008B26BD /* MASConstraintMaker.h */,
+				66686ACA1F45AACC008B26BD /* MASConstraintMaker.m */,
+				66686ACB1F45AACC008B26BD /* MASLayoutConstraint.h */,
+				66686ACC1F45AACC008B26BD /* MASLayoutConstraint.m */,
+				66686ACD1F45AACC008B26BD /* Masonry.h */,
+				66686ACE1F45AACC008B26BD /* MASUtilities.h */,
+				66686ACF1F45AACC008B26BD /* MASViewAttribute.h */,
+				66686AD01F45AACC008B26BD /* MASViewAttribute.m */,
+				66686AD11F45AACC008B26BD /* MASViewConstraint.h */,
+				66686AD21F45AACC008B26BD /* MASViewConstraint.m */,
+				66686AD31F45AACC008B26BD /* NSArray+MASAdditions.h */,
+				66686AD41F45AACC008B26BD /* NSArray+MASAdditions.m */,
+				66686AD51F45AACC008B26BD /* NSArray+MASShorthandAdditions.h */,
+				66686AD61F45AACC008B26BD /* NSLayoutConstraint+MASDebugAdditions.h */,
+				66686AD71F45AACC008B26BD /* NSLayoutConstraint+MASDebugAdditions.m */,
+				66686AD81F45AACC008B26BD /* View+MASAdditions.h */,
+				66686AD91F45AACC008B26BD /* View+MASAdditions.m */,
+				66686ADA1F45AACC008B26BD /* View+MASShorthandAdditions.h */,
+				66686ADB1F45AACC008B26BD /* ViewController+MASAdditions.h */,
+				66686ADC1F45AACC008B26BD /* ViewController+MASAdditions.m */,
+			);
+			path = Masonry;
+			sourceTree = "<group>";
+		};
 		66E6D3051F428700008E9590 = {
 			isa = PBXGroup;
 			children = (
@@ -750,6 +995,7 @@
 				66F107211F42C97A0035C888 /* Util */,
 				66F107131F42A3270035C888 /* Exist */,
 				66F107F81F43D6250035C888 /* GlobalData */,
+				66686AAE1F45A84E008B26BD /* Viewcontrollers */,
 				66E6D3C11F4290FB008E9590 /* Modules */,
 				66E6D3571F428990008E9590 /* ThridPartys */,
 				66E6D38A1F428A33008E9590 /* IMBaseDefine */,
@@ -798,6 +1044,8 @@
 		66E6D3571F428990008E9590 /* ThridPartys */ = {
 			isa = PBXGroup;
 			children = (
+				66686AC21F45AACC008B26BD /* Masonry */,
+				66686ABE1F45AA72008B26BD /* TTTAttributedLabel */,
 				66F10FAC1F449F700035C888 /* Security */,
 				66F10A541F43F14B0035C888 /* FMDB */,
 				66F107A51F42D4810035C888 /* SDWebImage */,
@@ -881,6 +1129,7 @@
 		66E6D3C11F4290FB008E9590 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				66686A9E1F459AD2008B26BD /* Message */,
 				66F10A4E1F43EF990035C888 /* LoginModule.h */,
 				66F10A4F1F43EF990035C888 /* LoginModule.m */,
 				66F10A701F43F8840035C888 /* DDUserModule.h */,
@@ -893,6 +1142,12 @@
 				66686A611F4522B5008B26BD /* MTTBubbleModule.m */,
 				66686A661F452310008B26BD /* EmotionsModule.h */,
 				66686A671F452310008B26BD /* EmotionsModule.m */,
+				66686AA81F45A769008B26BD /* ChattingModule.h */,
+				66686AA91F45A769008B26BD /* ChattingModule.m */,
+				66686AAA1F45A769008B26BD /* ChattingEditModule.h */,
+				66686AAB1F45A769008B26BD /* ChattingEditModule.m */,
+				66686AE81F45ABC3008B26BD /* SessionModule.h */,
+				66686AE91F45ABC3008B26BD /* SessionModule.m */,
 				66F107D91F42EEF70035C888 /* Entitys */,
 				66E6D3C21F4290FB008E9590 /* TCPAPI */,
 			);
@@ -905,7 +1160,6 @@
 				66F1071F1F42C4250035C888 /* RequestAPI */,
 				66F1071C1F42C3B10035C888 /* UnRequestAPI */,
 				66E6D3C81F429258008E9590 /* DDHandler */,
-				66E6D3C51F429147008E9590 /* DDSuperAPI.swift */,
 			);
 			path = TCPAPI;
 			sourceTree = "<group>";
@@ -913,6 +1167,7 @@
 		66E6D3C81F429258008E9590 /* DDHandler */ = {
 			isa = PBXGroup;
 			children = (
+				66E6D3C51F429147008E9590 /* DDSuperAPI.swift */,
 				66E6D3E01F4292E4008E9590 /* DDTcpClientManager.h */,
 				66E6D3E11F4292E4008E9590 /* DDTcpClientManager.m */,
 				66F1080A1F43E7180035C888 /* DDHttpServer.h */,
@@ -969,22 +1224,11 @@
 		66F1071F1F42C4250035C888 /* RequestAPI */ = {
 			isa = PBXGroup;
 			children = (
-				66F107111F42A0F30035C888 /* HeartbeatAPI.swift */,
-				66F107141F42A36E0035C888 /* LoginAPI.swift */,
-				66F1071D1F42C3F50035C888 /* ReceiveMessageACKAPI.swift */,
-				66F107D11F42DB520035C888 /* AddMemberToGroupAPI.swift */,
-				66F107D31F42E0350035C888 /* ShakeAPI.swift */,
-				66F107D51F42E5560035C888 /* AllUserAPI.swift */,
-				66F107D71F42EAC30035C888 /* CreateGroupAPI.swift */,
-				66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */,
 				66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */,
-				66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */,
-				66686A711F45374C008B26BD /* DDUserDetailInfoAPI.swift */,
-				66686A731F45399E008B26BD /* GetLatestMsgIdAPI.swift */,
-				66686A751F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift */,
-				66686A771F4540E5008B26BD /* GetRecentSessionAPI.swift */,
-				66686A791F454BC2008B26BD /* LogoutAPI.swift */,
-				66686A7B1F454D32008B26BD /* MsgReadACKAPI.swift */,
+				66686A8E1F45772E008B26BD /* loginOrout */,
+				66686A8B1F45730E008B26BD /* message */,
+				66686A8A1F4572FD008B26BD /* user */,
+				66686A891F4572CD008B26BD /* group */,
 			);
 			name = RequestAPI;
 			sourceTree = "<group>";
@@ -1061,6 +1305,8 @@
 				66F107601F42D3A80035C888 /* NSURL+SafeURL.m */,
 				66F107611F42D3A80035C888 /* NSData+Conversion.h */,
 				66F107621F42D3A90035C888 /* NSData+Conversion.m */,
+				66686AEB1F45AE71008B26BD /* NSDate+DDAddition.h */,
+				66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */,
 				66F107651F42D3A90035C888 /* NSDictionary+JSON.h */,
 				66F107661F42D3A90035C888 /* NSDictionary+JSON.m */,
 				66F107671F42D3A90035C888 /* NSDictionary+Safe.h */,
@@ -1490,6 +1736,7 @@
 				66F10F7A1F4449570035C888 /* speex_config_types.h.in in Resources */,
 				66E6D31C1F428700008E9590 /* LaunchScreen.storyboard in Resources */,
 				66E6D3191F428700008E9590 /* Assets.xcassets in Resources */,
+				66686ADD1F45AACC008B26BD /* Info.plist in Resources */,
 				66E6D3171F428700008E9590 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1521,10 +1768,13 @@
 				66F107A31F42D3A90035C888 /* UILabel+VerticalAlign.m in Sources */,
 				66E6D3821F4289D0008E9590 /* Google.Protobuf.Struct.proto.swift in Sources */,
 				66F107581F42D1F50035C888 /* UIImageView+AFNetworking.m in Sources */,
+				66686ADE1F45AACC008B26BD /* MASCompositeConstraint.m in Sources */,
+				66686ABD1F45A9C0008B26BD /* RecordingView.m in Sources */,
 				66E6D3D11F42929B008E9590 /* DDAPISchedule.m in Sources */,
 				66F10F821F4449570035C888 /* SpeexCodec.m in Sources */,
 				66F10A6E1F43F5BC0035C888 /* MTTDatabaseUtil.m in Sources */,
 				66E6D3BE1F428C38008E9590 /* HSL.swift in Sources */,
+				66686A881F457123008B26BD /* ChangeNightModeAPI.swift in Sources */,
 				66F107ED1F42F0750035C888 /* MTTBaseEntity.swift in Sources */,
 				66F10F761F4449570035C888 /* resample.c in Sources */,
 				66E6D3741F4289D0008E9590 /* CodedOutputStream.swift in Sources */,
@@ -1534,9 +1784,12 @@
 				66686A7C1F454D32008B26BD /* MsgReadACKAPI.swift in Sources */,
 				66F10F571F4449570035C888 /* framing.c in Sources */,
 				66F10F601F4449570035C888 /* exc_8_128_table.c in Sources */,
+				66686A991F458037008B26BD /* GetMessageQueueAPI.swift in Sources */,
+				66686A971F457E80008B26BD /* DDSendPhotoMessageAPI.m in Sources */,
 				66E6D34E1F428922008E9590 /* UIScrollView+Extention.swift in Sources */,
 				66E6D3A31F428BE8008E9590 /* DBScrollBannerView.swift in Sources */,
 				66E6D3B71F428C38008E9590 /* DynamicColor+Lab.swift in Sources */,
+				66686AB21F45A873008B26BD /* DDChatTextCell.m in Sources */,
 				66F107D41F42E0350035C888 /* ShakeAPI.swift in Sources */,
 				66E6D3521F428922008E9590 /* ZQEasyAlert.swift in Sources */,
 				66F107521F42D1F50035C888 /* AFURLSessionManager.m in Sources */,
@@ -1554,8 +1807,11 @@
 				66F107C61F42D4810035C888 /* SDWebImageDecoder.m in Sources */,
 				66F108101F43E7180035C888 /* DDHttpServer.m in Sources */,
 				66F10FB61F449F710035C888 /* base64.cpp in Sources */,
+				66686A921F457903008B26BD /* GetGroupInfoAPI.swift in Sources */,
 				66E6D3871F4289D0008E9590 /* RingBuffer.swift in Sources */,
+				66686A7E1F4562B0008B26BD /* RemoveSessionAPI.swift in Sources */,
 				66F10F801F4449570035C888 /* vq.c in Sources */,
+				66686AAC1F45A769008B26BD /* ChattingModule.m in Sources */,
 				66E6D3881F4289D0008E9590 /* UnknownFieldSet.swift in Sources */,
 				66F1074D1F42D1F50035C888 /* AFHTTPSessionManager.m in Sources */,
 				66F10F5B1F4449570035C888 /* exc_10_16_table.c in Sources */,
@@ -1567,8 +1823,10 @@
 				66E6D3941F428A33008E9590 /* Im.BaseDefine.ImbaseDefine.proto.swift in Sources */,
 				66F10F811F4449570035C888 /* window.c in Sources */,
 				66E6D37F1F4289D0008E9590 /* Google.Protobuf.Empty.proto.swift in Sources */,
+				66686A841F45697A008B26BD /* EditSignatureAPI.swift in Sources */,
 				66F107D01F42D4810035C888 /* UIView+WebCacheOperation.m in Sources */,
 				66F10F6F1F4449570035C888 /* ltp.c in Sources */,
+				66686AA71F459ADC008B26BD /* UnAckMessageManager.m in Sources */,
 				66F10F751F4449570035C888 /* quant_lsp.c in Sources */,
 				66E6D3B91F428C38008E9590 /* DynamicColor+RGBA.swift in Sources */,
 				66F10F5A1F4449570035C888 /* cb_search.c in Sources */,
@@ -1587,6 +1845,7 @@
 				66F10F841F4449570035C888 /* Encapsulator.m in Sources */,
 				66F107561F42D1F50035C888 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				66F107C71F42D4810035C888 /* SDWebImageDownloader.m in Sources */,
+				66686A861F456F85008B26BD /* GetNightModeAPI.swift in Sources */,
 				66F107551F42D1F50035C888 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				66F10F651F4449570035C888 /* gain_table_lbr.c in Sources */,
 				66F10F711F4449570035C888 /* modes.c in Sources */,
@@ -1601,6 +1860,7 @@
 				66F107CA1F42D4810035C888 /* SDWebImagePrefetcher.m in Sources */,
 				66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */,
 				66F107911F42D3A90035C888 /* NSDictionary+JSON.m in Sources */,
+				66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */,
 				66F10A621F43F14B0035C888 /* FMDatabase.m in Sources */,
 				66E6D3D21F42929B008E9590 /* DDSendBuffer.m in Sources */,
 				66E6D3451F428922008E9590 /* NSObject+String.swift in Sources */,
@@ -1611,16 +1871,19 @@
 				66E6D34B1F428922008E9590 /* UIColor+Extentions.swift in Sources */,
 				66E6D3A01F428A60008E9590 /* TestObject.m in Sources */,
 				66F10F5E1F4449570035C888 /* exc_5_256_table.c in Sources */,
+				66686AE11F45AACC008B26BD /* MASLayoutConstraint.m in Sources */,
 				66F1070F1F429D7B0035C888 /* DDUnrequestSuperAPI.m in Sources */,
 				66F107CF1F42D4810035C888 /* UIImageView+WebCache.m in Sources */,
 				66A64C341F42979F0089F491 /* DDNotification.swift in Sources */,
 				66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */,
 				66F107C41F42D4810035C888 /* SDImageCache.m in Sources */,
+				66686AE51F45AACC008B26BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				66E6D3851F4289D0008E9590 /* Google.Protobuf.Type.proto.swift in Sources */,
 				66F10F5F1F4449570035C888 /* exc_5_64_table.c in Sources */,
 				66F1078D1F42D3A90035C888 /* UIScrollView+PullToLoadMore.m in Sources */,
 				66E6D3BB1F428C38008E9590 /* DynamicColor.swift in Sources */,
 				66F107CB1F42D4810035C888 /* UIButton+WebCache.m in Sources */,
+				66686AE01F45AACC008B26BD /* MASConstraintMaker.m in Sources */,
 				66E6D3891F4289D0008E9590 /* WireFormat.swift in Sources */,
 				66F107941F42D3A90035C888 /* NSIndexSet+AQIsSetContiguous.m in Sources */,
 				66F107291F42CD660035C888 /* MsgReadNotifyAPI.swift in Sources */,
@@ -1633,12 +1896,14 @@
 				66E6D3951F428A33008E9590 /* Im.Buddy.Imbuddy.proto.swift in Sources */,
 				66F10F781F4449570035C888 /* scal.c in Sources */,
 				66E6D3DF1F4292CC008E9590 /* NSStream+NSStreamAddition.m in Sources */,
+				66686AA61F459ADC008B26BD /* DDMessageSendManager.mm in Sources */,
 				66E6D3831F4289D0008E9590 /* Google.Protobuf.SwiftDescriptor.proto.swift in Sources */,
 				66E6D3791F4289D0008E9590 /* GeneratedMessage.swift in Sources */,
 				66F10A641F43F14B0035C888 /* FMDatabasePool.m in Sources */,
 				66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */,
 				66E6D37B1F4289D0008E9590 /* Google.Protobuf.Api.proto.swift in Sources */,
 				66E6D3BD1F428C38008E9590 /* DynamicGradient.swift in Sources */,
+				66686A821F456717008B26BD /* ShieldGroupMessageAPI.swift in Sources */,
 				66E6D34D1F428922008E9590 /* UIImageView+Extention.swift in Sources */,
 				66E6D3B31F428C38008E9590 /* Array.swift in Sources */,
 				66E6D37C1F4289D0008E9590 /* Google.Protobuf.Compiler.Plugin.proto.swift in Sources */,
@@ -1646,6 +1911,7 @@
 				66F1079C1F42D3A90035C888 /* UIImage+UIImageAddition.m in Sources */,
 				66F107531F42D1F50035C888 /* AFAutoPurgingImageCache.m in Sources */,
 				66F10F621F4449570035C888 /* filterbank.c in Sources */,
+				66686AC11F45AA72008B26BD /* TTTAttributedLabel.m in Sources */,
 				66F10F7D1F4449570035C888 /* speex_header.c in Sources */,
 				66F10F6E1F4449570035C888 /* lsp_tables_nb.c in Sources */,
 				66F10A631F43F14B0035C888 /* FMDatabaseAdditions.m in Sources */,
@@ -1654,15 +1920,19 @@
 				66E6D3511F428922008E9590 /* UIViewController+Extention.swift in Sources */,
 				66F108001F43D9510035C888 /* DDClientStateMaintenanceManager.m in Sources */,
 				66F1079A1F42D3A90035C888 /* UIColor+JSMessagesView.m in Sources */,
+				66686AEA1F45ABC3008B26BD /* SessionModule.m in Sources */,
 				66F107C81F42D4810035C888 /* SDWebImageDownloaderOperation.m in Sources */,
 				66E6D3981F428A33008E9590 /* Im.Login.Imlogin.proto.swift in Sources */,
 				66F1071E1F42C3F50035C888 /* ReceiveMessageACKAPI.swift in Sources */,
 				66F107FF1F43D9510035C888 /* DDClientState.m in Sources */,
 				66F1079F1F42D3A90035C888 /* UIView+PointBadge.m in Sources */,
+				66686A9D1F4591B0008B26BD /* SendMessageAPI.swift in Sources */,
+				66686A9B1F458525008B26BD /* GetUnreadMessagesAPI.swift in Sources */,
 				66F10F6A1F4449570035C888 /* kiss_fft.c in Sources */,
 				66686A741F45399E008B26BD /* GetLatestMsgIdAPI.swift in Sources */,
 				66E6D39B1F428A33008E9590 /* Im.Server.Imserver.proto.swift in Sources */,
 				66F10F641F4449570035C888 /* gain_table.c in Sources */,
+				66686A8D1F457457008B26BD /* UserStatAPI.swift in Sources */,
 				66E6D37D1F4289D0008E9590 /* Google.Protobuf.Descriptor.proto.swift in Sources */,
 				66F107261F42CC040035C888 /* ReceiveMessageAPI.swift in Sources */,
 				66F107CC1F42D4810035C888 /* UIImage+GIF.m in Sources */,
@@ -1675,6 +1945,9 @@
 				66F107D81F42EAC30035C888 /* CreateGroupAPI.swift in Sources */,
 				66E6D34C1F428922008E9590 /* UIImage+Extention.swift in Sources */,
 				66F107C51F42D4810035C888 /* SDWebImageCompat.m in Sources */,
+				66686AB51F45A979008B26BD /* DDChatBaseCell.m in Sources */,
+				66686AA51F459ADC008B26BD /* DDMessageModule.m in Sources */,
+				66686ABC1F45A9C0008B26BD /* MenuImageView.m in Sources */,
 				66F10F7B1F4449570035C888 /* speex.c in Sources */,
 				66F1074E1F42D1F50035C888 /* AFNetworkReachabilityManager.m in Sources */,
 				66F107931F42D3A90035C888 /* NSIndexSet+AQIndexesOutsideSet.m in Sources */,
@@ -1686,6 +1959,7 @@
 				66F1078E1F42D3A90035C888 /* NSURL+SafeURL.m in Sources */,
 				66E6D33E1F428922008E9590 /* DBScrollBannerView+LKExtention.swift in Sources */,
 				66F1078F1F42D3A90035C888 /* NSData+Conversion.m in Sources */,
+				66686A801F456548008B26BD /* SendPushTokenAPI.swift in Sources */,
 				66686A7A1F454BC2008B26BD /* LogoutAPI.swift in Sources */,
 				66F107971F42D3A90035C888 /* NSString+JSMessagesView.m in Sources */,
 				66F10F581F4449570035C888 /* bits.c in Sources */,
@@ -1701,7 +1975,9 @@
 				66E6D3801F4289D0008E9590 /* Google.Protobuf.FieldMask.proto.swift in Sources */,
 				66F10F731F4449570035C888 /* nb_celp.c in Sources */,
 				66E6D3BF1F428C38008E9590 /* Utils.swift in Sources */,
+				66686AE71F45AACC008B26BD /* ViewController+MASAdditions.m in Sources */,
 				66F1079D1F42D3A90035C888 /* UIView+AnimationOptionsForCurve.m in Sources */,
+				66686AE41F45AACC008B26BD /* NSArray+MASAdditions.m in Sources */,
 				66E6D3721F4289D0008E9590 /* AbstractMessage.swift in Sources */,
 				66F10F7F1F4449570035C888 /* vbr.c in Sources */,
 				66F107991F42D3A90035C888 /* UIColor+AQGridView.m in Sources */,
@@ -1713,9 +1989,12 @@
 				66F10F851F4449570035C888 /* PlayerManager.m in Sources */,
 				66F10F691F4449570035C888 /* jitter.c in Sources */,
 				66E6D3751F4289D0008E9590 /* ConcreateExtensionField.swift in Sources */,
+				66686AE21F45AACC008B26BD /* MASViewAttribute.m in Sources */,
 				66E6D37E1F4289D0008E9590 /* Google.Protobuf.Duration.proto.swift in Sources */,
 				66F10F701F4449570035C888 /* mdf.c in Sources */,
 				66F108111F43E7180035C888 /* DDMsgServer.m in Sources */,
+				66686AE31F45AACC008B26BD /* MASViewConstraint.m in Sources */,
+				66686AE61F45AACC008B26BD /* View+MASAdditions.m in Sources */,
 				66E6D3991F428A33008E9590 /* Im.Message.Immessage.proto.swift in Sources */,
 				66E6D3501F428922008E9590 /* UIView+Extention.swift in Sources */,
 				66F10F831F4449570035C888 /* Decapsulator.m in Sources */,
@@ -1724,6 +2003,8 @@
 				66686A701F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift in Sources */,
 				66F107171F42A9D90035C888 /* LoginStatusNotifyAPI.swift in Sources */,
 				66686A6C1F452C12008B26BD /* DDDepartmentAPI.swift in Sources */,
+				66686A901F457788008B26BD /* KickPCClientAPI.swift in Sources */,
+				66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */,
 				66E6D3971F428A33008E9590 /* Im.Group.Imgroup.proto.swift in Sources */,
 				66F10F7E1F4449570035C888 /* stereo.c in Sources */,
 				66E6D3731F4289D0008E9590 /* CodedInputStream.swift in Sources */,
@@ -1747,6 +2028,7 @@
 				66F10F5D1F4449570035C888 /* exc_20_32_table.c in Sources */,
 				66F107541F42D1F50035C888 /* AFImageDownloader.m in Sources */,
 				66E6D3431F428922008E9590 /* LKZQWebVC.swift in Sources */,
+				66686ADF1F45AACC008B26BD /* MASConstraint.m in Sources */,
 				66E6D3781F4289D0008E9590 /* Field.swift in Sources */,
 				66F107951F42D3A90035C888 /* NSString+Additions.m in Sources */,
 				66F10F5C1F4449570035C888 /* exc_10_32_table.c in Sources */,
@@ -1886,6 +2168,7 @@
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TeamTalk-Swift/GlobalData/MTTConstant.h";
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = "TeamTalk-Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1915,6 +2198,7 @@
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TeamTalk-Swift/GlobalData/MTTConstant.h";
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = "TeamTalk-Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

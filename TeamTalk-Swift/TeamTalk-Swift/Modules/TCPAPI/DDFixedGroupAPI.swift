@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DDFixedGroupAPI: DDSuperAPI {
+class DDFixedGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -42,7 +42,7 @@ class DDFixedGroupAPI: DDSuperAPI {
                 return array
                 
             }else {
-                debugPrint("DDFixedGroupAPI builded failure")
+                debugPrint("DDFixedGroupAPI analysisReturnData failure")
                 return []
             }
         }

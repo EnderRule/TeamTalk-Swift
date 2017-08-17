@@ -52,28 +52,27 @@ class MTTSessionEntity: NSObject {
         get{
             if s_name.length <= 0 {
                 if self.sessionType == .sessionTypeSingle {
-                    //Fixme:在此刷新数据
-//                    [[DDUserModule shareInstance] getUserForUserID:_sessionID Block:^(MTTUserEntity *user) {
-//                        if ([user.nick length] > 0)
-//                        {
-//                        name = user.nick;
-//                        }
-//                        else
-//                        {
-//                        name = user.name;
-//                        }
-//                        
-//                        }];
+                    
+                    DDUserModule.shareInstance().getUserForUserID(self.sessionID, block: { (user ) in
+                        if user != nil {
+                            if user!.nick.length > 0 {
+                                self.s_name = user!.nick
+                            }else{
+                                self.s_name = user!.name
+                            }
+                        }
+                    })
                 }else {
-                    //Fixme:在此刷新数据
-//                    MTTGroupEntity* group = [[DDGroupModule instance] getGroupByGId:_sessionID];
-//                    if (!group) {
-//                        [[DDGroupModule instance] getGroupInfogroupID:_sessionID completion:^(MTTGroupEntity *group) {
-//                            name=group.name;
-//                            }];
-//                    }else{
-//                        name=group.name;
-//                    }
+                    if let group = DDGroupModule.instance().getGroupByGId(self.sessionID){
+                        self.s_name = group.name
+                        
+                    }else{
+                        DDGroupModule.instance().getGroupInfogroupID(self.sessionID, completion: { (group ) in
+                            if group != nil {
+                                self.s_name = group!.name
+                            }
+                        })
+                    }
                 }
             }
             return s_name
@@ -87,10 +86,11 @@ class MTTSessionEntity: NSObject {
     var timeInterval:TimeInterval {
         get{
             if s_timeInterval == 0 && self.sessionType == .sessionTypeSingle{
-                //Fixme:在此刷新数据
-//                [[DDUserModule shareInstance] getUserForUserID:_sessionID Block:^(MTTUserEntity *user) {
-//                    timeInterval = user.lastUpdateTime;
-//                    }];
+                DDUserModule.shareInstance().getUserForUserID(self.sessionID, block: { (user ) in
+                    if user != nil {
+                        self.s_timeInterval = TimeInterval( user!.lastUpdateTime)
+                    }
+                })
             }
             return s_timeInterval
         }
@@ -108,10 +108,9 @@ class MTTSessionEntity: NSObject {
     var sessionUsers:[String] {
         get{
             if self.sessionType == .sessionTypeGroup{
-                //Fixme:  重写这里
-//                MTTGroupEntity* group = [[DDGroupModule instance] getGroupByGId:_sessionID];
-//                return group.groupUserIds;
-
+                if let group = DDGroupModule.instance().getGroupByGId(self.sessionID){
+                    return group.groupUserIds
+                }
                 return []
             }else{
                 return []
@@ -177,6 +176,21 @@ extension MTTSessionEntity {
         self.init(sessionID: group.objID, sessionName: group.name, type: .sessionTypeGroup)
     }
     
+    public convenience init(unreadInfo:Im.BaseDefine.UnreadInfo){
+        self.init()
+        
+        let sessionType = unreadInfo.sessionType
+        self.sessionID = MTTSessionEntity.sessionIDFrom(pbID: unreadInfo.sessionId, BaseSessionType: sessionType)
+        if sessionType == .sessionTypeGroup{
+            self.sessionType = .sessionTypeGroup
+        }else{
+            self.sessionType = .sessionTypeSingle
+        }
+        self.unReadMsgCount = Int(unreadInfo.unreadCnt)
+        self.lastMsgID = Int(unreadInfo.latestMsgId)
+        self.lastMsg = String.init(data: unreadInfo.latestMsgData!, encoding: .utf8) ?? "" // unreadInfo.latestMsgData
+    }
+    
     class func sessionIDFrom(pbID:UInt32,sessionType:SessionType_Objc) -> String{
         if sessionType == .sessionTypeSingle{
             return MTTUserEntity.localIDFrom(pbID: pbID)
@@ -184,5 +198,11 @@ extension MTTSessionEntity {
             return MTTGroupEntity.localIDFrom(pbID: pbID)
         }
     } 
-    
+    class func sessionIDFrom(pbID:UInt32,BaseSessionType:Im.BaseDefine.SessionType) -> String{
+        if BaseSessionType == .sessionTypeSingle{
+            return MTTUserEntity.localIDFrom(pbID: pbID)
+        }else{
+            return MTTGroupEntity.localIDFrom(pbID: pbID)
+        }
+    }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReceiveMessageAPI: DDUnrequestSuperAPI {
+class ReceiveMessageAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
     
     func responseServiceID() -> Int32 {
         return Int32(SID_MSG)
@@ -25,7 +25,7 @@ class ReceiveMessageAPI: DDUnrequestSuperAPI {
                 entity.state = .SendSuccess
                 return entity
             }else {
-                debugPrint("ReceiveMessageAPI builded failure")
+                debugPrint("ReceiveMessageAPI analysisReturnData failure")
                 return  nil
             }
         }

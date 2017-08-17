@@ -51,7 +51,7 @@ class LoginAPI: DDSuperAPI,DDAPIScheduleProtocol {
                     return result
                 }
             }else {
-                debugPrint("LoginApi builded failure")
+                debugPrint("LoginAPI analysisReturnData failure")
                 return [:]
             }
             

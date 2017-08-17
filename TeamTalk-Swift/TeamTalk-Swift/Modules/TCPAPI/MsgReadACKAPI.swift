@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MsgReadACKAPI: DDSuperAPI {
+class MsgReadACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
         return 0
     }
@@ -62,7 +62,7 @@ class MsgReadACKAPI: DDSuperAPI {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("LogoutAPI package builded data failure")
+                debugPrint("MsgReadACKAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

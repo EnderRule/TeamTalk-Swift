@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LogoutAPI: DDSuperAPI {
+class LogoutAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
         return 5
     }
@@ -34,7 +34,7 @@ class LogoutAPI: DDSuperAPI {
             if let res = try? Im.Login.ImlogoutRsp.parseFrom(data: data ?? Data()) {
                  return res.resultCode
             }else {
-                debugPrint("LogoutAPI builded failure")
+                debugPrint("LogoutAPI analysisReturnData failure")
                 return 0
             }
         }

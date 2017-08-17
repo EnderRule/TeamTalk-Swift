@@ -145,7 +145,7 @@
                         //decode speex
 //                        NSLog(@"to decode a packet");
                         packetNo ++;
-                        int nDecodedByte = sizeof(short) * [codec decode:oggPacket.packet length:oggPacket.bytes output:decodedBuffer];
+                        int nDecodedByte = sizeof(short) * [codec decode:oggPacket.packet length: (int)oggPacket.bytes output:decodedBuffer];
                         decodedByteLength += nDecodedByte;
                         [self packetDecoded:(Byte *)decodedBuffer size:nDecodedByte];
                     }
@@ -176,7 +176,7 @@
     }
     self.player.isDataInputOver = YES;
     
-    NSLog(@"decode ogg to pcm: %d -> %d", [oggData length], decodedByteLength);
+    DDLog(@"decode ogg to pcm: %lu -> %lu", (unsigned long)[oggData length], (unsigned long)decodedByteLength);
 }
 
 - (BOOL)readOggHeaderToStreamState:(ogg_stream_state *)os fromOggPage:(ogg_page *)op {

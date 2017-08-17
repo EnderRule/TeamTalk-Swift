@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GetLatestMsgIdAPI: DDSuperAPI {
+class GetLatestMsgIdAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -34,7 +34,7 @@ class GetLatestMsgIdAPI: DDSuperAPI {
             if let res = try? Im.Message.ImgetLatestMsgIdRsp.parseFrom(data: data ?? Data()) {
                 return res.latestMsgId
             }else {
-                debugPrint("GetLatestMsgIdAPI builded failure")
+                debugPrint("GetLatestMsgIdAPI analysisReturnData failure")
                 return 0
             }
         }

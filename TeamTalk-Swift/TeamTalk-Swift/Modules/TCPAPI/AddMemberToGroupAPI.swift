@@ -45,7 +45,7 @@ class AddMemberToGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                     return array
                 }
             }else {
-                debugPrint("AddMemberToGroupAPI builded failure")
+                debugPrint("AddMemberToGroupAPI analysisReturnData failure")
                 return []
             }
             

@@ -54,7 +54,7 @@ class CreateGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 }
                 
             }else {
-                debugPrint("CreateGroupAPI builded failure")
+                debugPrint("CreateGroupAPI analysisReturnData failure")
                 return nil
             }
         }

@@ -169,8 +169,7 @@ struct JitterBuffer_ {
 /** Based on available data, this computes the optimal delay for the jitter buffer. 
    The optimised function is in timestamp units and is:
    cost = delay + late_factor*[number of frames that would be late if we used that delay]
-   @param tb Array of buffers
-   @param late_factor Equivalent cost of a late frame (in timestamp units) 
+   @param jitter Equivalent cost of a late frame (in timestamp units)
  */
 static spx_int16_t compute_opt_delay(JitterBuffer *jitter)
 {

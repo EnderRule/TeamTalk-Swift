@@ -178,7 +178,6 @@ extension MTTMessageEntity {
                 self.msgContent = "語音存儲出錯"
             }
         }else{
-            //Fixme:here
             if let tempStr = String.init(data: msgData.msgData, encoding: .utf8){
                 let indata = tempStr.cString(using: .utf8)
                 var pout:UnsafeMutablePointer<Int8>?

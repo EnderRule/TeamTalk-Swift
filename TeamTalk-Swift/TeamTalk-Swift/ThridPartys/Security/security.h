@@ -77,7 +77,6 @@ extern "C" {
      *  @param nInLen   待解密消息内容长度
      *  @param pOutData 解密后的文本
      *  @param nOutLen  解密后的文本长度
-     *  @param pKey     32位密钥
      *
      *  @return 返回 0-成功; 其他-失败
      */

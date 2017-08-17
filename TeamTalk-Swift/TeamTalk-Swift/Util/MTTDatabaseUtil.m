@@ -190,7 +190,7 @@
     NSUInteger messageState = [resultSet intForColumn:@"status"];
     NSUInteger count = [resultSet intForColumn:@"count(*)"];
     
-    MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:messageID
+    MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)messageID
                                                                       msgType:messageType
                                                                       msgTime:msgTime
                                                                     sessionID:sessionID
@@ -224,7 +224,7 @@
     NSUInteger messageID = [resultSet intForColumn:@"messageID"];
     NSUInteger messageState = [resultSet intForColumn:@"status"];
     
-    MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:messageID
+    MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)messageID
                                                                       msgType:messageType
                                                                       msgTime:msgTime
                                                                     sessionID:sessionID

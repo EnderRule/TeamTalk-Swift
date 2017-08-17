@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeleteMemberFromGroupAPI: DDSuperAPI {
+class DeleteMemberFromGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -49,7 +49,7 @@ class DeleteMemberFromGroupAPI: DDSuperAPI {
                     return entity
                 }
             }else {
-                debugPrint("DeleteMemberFromGroupAPI builded failure")
+                debugPrint("DeleteMemberFromGroupAPI analysisReturnData failure")
                 return nil
             }
         }

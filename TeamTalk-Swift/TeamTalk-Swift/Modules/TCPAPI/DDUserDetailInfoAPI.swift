@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DDUserDetailInfoAPI: DDSuperAPI {
+class DDUserDetailInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -41,7 +41,7 @@ class DDUserDetailInfoAPI: DDSuperAPI {
                 return userList
                 
             }else {
-                debugPrint("DDUserDetailInfoAPI builded failure")
+                debugPrint("DDUserDetailInfoAPI analysisReturnData failure")
                 return []
             }
         }

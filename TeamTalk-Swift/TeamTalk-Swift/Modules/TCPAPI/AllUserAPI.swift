@@ -44,7 +44,7 @@ class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 
                 return userAndVersion
             }else {
-                debugPrint("AllUserAPI builded failure")
+                debugPrint("AllUserAPI analysisReturnData failure")
                 return [:]
             }
         }

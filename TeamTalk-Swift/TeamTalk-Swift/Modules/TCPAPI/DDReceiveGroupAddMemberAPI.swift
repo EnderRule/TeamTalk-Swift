@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DDReceiveGroupAddMemberAPI: DDUnrequestSuperAPI {
+class DDReceiveGroupAddMemberAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
     func responseServiceID() -> Int32 {
         return Int32(SID_GROUP)
     }

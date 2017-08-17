@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GetRecentSessionAPI: DDSuperAPI {
+class GetRecentSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -56,7 +56,7 @@ class GetRecentSessionAPI: DDSuperAPI {
                 }
                 return array
             }else {
-                debugPrint("GetRecentSessionAPI builded failure")
+                debugPrint("GetRecentSessionAPI analysisReturnData failure")
                 return []
             }
         }

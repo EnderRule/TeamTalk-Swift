@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DDDepartmentAPI: DDSuperAPI {
+class DDDepartmentAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }

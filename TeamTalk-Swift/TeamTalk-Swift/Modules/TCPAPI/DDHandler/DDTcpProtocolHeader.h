@@ -91,8 +91,8 @@ enum
     IM_GROUP_CREATE_RES                         = 0x0406,
     IM_GROUP_CHANGE_MEMBER_REQ                  = 0x0407,
     IM_GROUP_CHANGE_MEMBER_RES                  = 0x0408,
-    IM_GROU_SHIELD_REQ                          = 0x0409,
-    IM_GROU_SHIELD_RES                          = 0x040a,
+    IM_GROUP_SHIELD_REQ                          = 0x0409,
+    IM_GROUP_SHIELD_RES                          = 0x040a,
     
 };
 
