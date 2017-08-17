@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TeamTalk_Swift-Swift.h"
-
+@class MTTGroupEntity;
 
 typedef void(^GetGroupInfoCompletion)(MTTGroupEntity* group);
 @interface DDGroupModule : NSObject

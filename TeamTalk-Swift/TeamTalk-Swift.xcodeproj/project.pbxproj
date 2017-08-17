@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66686A621F4522B5008B26BD /* MTTBubbleModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A611F4522B5008B26BD /* MTTBubbleModule.m */; };
+		66686A651F4522FD008B26BD /* MTTPhotosCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A641F4522FD008B26BD /* MTTPhotosCache.m */; };
+		66686A681F452310008B26BD /* EmotionsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A671F452310008B26BD /* EmotionsModule.m */; };
+		66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */; };
+		66686A6C1F452C12008B26BD /* DDDepartmentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */; };
+		66686A6E1F453176008B26BD /* DDFixedGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */; };
+		66686A701F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6F1F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift */; };
+		66686A721F45374C008B26BD /* DDUserDetailInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A711F45374C008B26BD /* DDUserDetailInfoAPI.swift */; };
+		66686A741F45399E008B26BD /* GetLatestMsgIdAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A731F45399E008B26BD /* GetLatestMsgIdAPI.swift */; };
+		66686A761F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A751F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift */; };
+		66686A781F4540E5008B26BD /* GetRecentSessionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A771F4540E5008B26BD /* GetRecentSessionAPI.swift */; };
+		66686A7A1F454BC2008B26BD /* LogoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A791F454BC2008B26BD /* LogoutAPI.swift */; };
+		66686A7C1F454D32008B26BD /* MsgReadACKAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A7B1F454D32008B26BD /* MsgReadACKAPI.swift */; };
 		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
 		66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3111F428700008E9590 /* AppDelegate.swift */; };
 		66E6D3141F428700008E9590 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3131F428700008E9590 /* ViewController.swift */; };
@@ -255,6 +268,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		66686A601F4522B5008B26BD /* MTTBubbleModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTBubbleModule.h; sourceTree = "<group>"; };
+		66686A611F4522B5008B26BD /* MTTBubbleModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTBubbleModule.m; sourceTree = "<group>"; };
+		66686A631F4522FD008B26BD /* MTTPhotosCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTPhotosCache.h; sourceTree = "<group>"; };
+		66686A641F4522FD008B26BD /* MTTPhotosCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTPhotosCache.m; sourceTree = "<group>"; };
+		66686A661F452310008B26BD /* EmotionsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmotionsModule.h; sourceTree = "<group>"; };
+		66686A671F452310008B26BD /* EmotionsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmotionsModule.m; sourceTree = "<group>"; };
+		66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteMemberFromGroupAPI.swift; sourceTree = "<group>"; };
+		66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDDepartmentAPI.swift; sourceTree = "<group>"; };
+		66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDFixedGroupAPI.swift; sourceTree = "<group>"; };
+		66686A6F1F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDReceiveGroupAddMemberAPI.swift; sourceTree = "<group>"; };
+		66686A711F45374C008B26BD /* DDUserDetailInfoAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDUserDetailInfoAPI.swift; sourceTree = "<group>"; };
+		66686A731F45399E008B26BD /* GetLatestMsgIdAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLatestMsgIdAPI.swift; sourceTree = "<group>"; };
+		66686A751F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMsgByMsgIDsAPI.swift; sourceTree = "<group>"; };
+		66686A771F4540E5008B26BD /* GetRecentSessionAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetRecentSessionAPI.swift; sourceTree = "<group>"; };
+		66686A791F454BC2008B26BD /* LogoutAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAPI.swift; sourceTree = "<group>"; };
+		66686A7B1F454D32008B26BD /* MsgReadACKAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MsgReadACKAPI.swift; sourceTree = "<group>"; };
 		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
 		66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamTalk-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E6D3111F428700008E9590 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -860,6 +889,10 @@
 				66F10A771F43F9CE0035C888 /* DDGroupModule.m */,
 				66F10A731F43F8DA0035C888 /* SpellLibrary.h */,
 				66F10A741F43F8DA0035C888 /* SpellLibrary.m */,
+				66686A601F4522B5008B26BD /* MTTBubbleModule.h */,
+				66686A611F4522B5008B26BD /* MTTBubbleModule.m */,
+				66686A661F452310008B26BD /* EmotionsModule.h */,
+				66686A671F452310008B26BD /* EmotionsModule.m */,
 				66F107D91F42EEF70035C888 /* Entitys */,
 				66E6D3C21F4290FB008E9590 /* TCPAPI */,
 			);
@@ -928,6 +961,7 @@
 				66F1071A1F42C3090035C888 /* ReceiveKickOffAPI.swift */,
 				66F107251F42CC040035C888 /* ReceiveMessageAPI.swift */,
 				66F107281F42CD660035C888 /* MsgReadNotifyAPI.swift */,
+				66686A6F1F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift */,
 			);
 			name = UnRequestAPI;
 			sourceTree = "<group>";
@@ -942,6 +976,15 @@
 				66F107D31F42E0350035C888 /* ShakeAPI.swift */,
 				66F107D51F42E5560035C888 /* AllUserAPI.swift */,
 				66F107D71F42EAC30035C888 /* CreateGroupAPI.swift */,
+				66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */,
+				66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */,
+				66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */,
+				66686A711F45374C008B26BD /* DDUserDetailInfoAPI.swift */,
+				66686A731F45399E008B26BD /* GetLatestMsgIdAPI.swift */,
+				66686A751F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift */,
+				66686A771F4540E5008B26BD /* GetRecentSessionAPI.swift */,
+				66686A791F454BC2008B26BD /* LogoutAPI.swift */,
+				66686A7B1F454D32008B26BD /* MsgReadACKAPI.swift */,
 			);
 			name = RequestAPI;
 			sourceTree = "<group>";
@@ -1123,6 +1166,8 @@
 				66F108081F43E2380035C888 /* RuntimeStatus.m */,
 				66F10CC11F4436140035C888 /* MTTDDNotification.h */,
 				66F10CC21F4436140035C888 /* MTTDDNotification.m */,
+				66686A631F4522FD008B26BD /* MTTPhotosCache.h */,
+				66686A641F4522FD008B26BD /* MTTPhotosCache.m */,
 			);
 			path = GlobalData;
 			sourceTree = "<group>";
@@ -1486,6 +1531,7 @@
 				66F10A751F43F8DA0035C888 /* SpellLibrary.m in Sources */,
 				66F107F51F4333720035C888 /* MTTSessionEntity.swift in Sources */,
 				66E6D3551F428922008E9590 /* ZQViewController.swift in Sources */,
+				66686A7C1F454D32008B26BD /* MsgReadACKAPI.swift in Sources */,
 				66F10F571F4449570035C888 /* framing.c in Sources */,
 				66F10F601F4449570035C888 /* exc_8_128_table.c in Sources */,
 				66E6D34E1F428922008E9590 /* UIScrollView+Extention.swift in Sources */,
@@ -1504,6 +1550,7 @@
 				66F10F861F4449570035C888 /* RawAudioDataPlayer.m in Sources */,
 				66F107121F42A0F30035C888 /* HeartbeatAPI.swift in Sources */,
 				66F10F721F4449570035C888 /* modes_wb.c in Sources */,
+				66686A721F45374C008B26BD /* DDUserDetailInfoAPI.swift in Sources */,
 				66F107C61F42D4810035C888 /* SDWebImageDecoder.m in Sources */,
 				66F108101F43E7180035C888 /* DDHttpServer.m in Sources */,
 				66F10FB61F449F710035C888 /* base64.cpp in Sources */,
@@ -1527,6 +1574,7 @@
 				66F10F5A1F4449570035C888 /* cb_search.c in Sources */,
 				66E6D3861F4289D0008E9590 /* Google.Protobuf.Wrappers.proto.swift in Sources */,
 				66F10FB71F449F710035C888 /* md5.cpp in Sources */,
+				66686A681F452310008B26BD /* EmotionsModule.m in Sources */,
 				66F108121F43E7180035C888 /* DDTcpServer.m in Sources */,
 				66E6D3761F4289D0008E9590 /* ExtendableMessage.swift in Sources */,
 				66F107151F42A36E0035C888 /* LoginAPI.swift in Sources */,
@@ -1558,6 +1606,7 @@
 				66E6D3451F428922008E9590 /* NSObject+String.swift in Sources */,
 				66F107501F42D1F50035C888 /* AFURLRequestSerialization.m in Sources */,
 				66F1071B1F42C3090035C888 /* ReceiveKickOffAPI.swift in Sources */,
+				66686A6E1F453176008B26BD /* DDFixedGroupAPI.swift in Sources */,
 				66E6D3811F4289D0008E9590 /* Google.Protobuf.SourceContext.proto.swift in Sources */,
 				66E6D34B1F428922008E9590 /* UIColor+Extentions.swift in Sources */,
 				66E6D3A01F428A60008E9590 /* TestObject.m in Sources */,
@@ -1565,6 +1614,7 @@
 				66F1070F1F429D7B0035C888 /* DDUnrequestSuperAPI.m in Sources */,
 				66F107CF1F42D4810035C888 /* UIImageView+WebCache.m in Sources */,
 				66A64C341F42979F0089F491 /* DDNotification.swift in Sources */,
+				66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */,
 				66F107C41F42D4810035C888 /* SDImageCache.m in Sources */,
 				66E6D3851F4289D0008E9590 /* Google.Protobuf.Type.proto.swift in Sources */,
 				66F10F5F1F4449570035C888 /* exc_5_64_table.c in Sources */,
@@ -1576,6 +1626,7 @@
 				66F107291F42CD660035C888 /* MsgReadNotifyAPI.swift in Sources */,
 				66E6D3BC1F428C38008E9590 /* DynamicColorSpace.swift in Sources */,
 				66E6D3B41F428C38008E9590 /* DynamicColor+Deriving.swift in Sources */,
+				66686A651F4522FD008B26BD /* MTTPhotosCache.m in Sources */,
 				66F107F31F4308D60035C888 /* MTTGroupEntity.swift in Sources */,
 				66F10A6F1F43F7FC0035C888 /* LoginModule.m in Sources */,
 				66F10F561F4449570035C888 /* bitwise.c in Sources */,
@@ -1598,6 +1649,7 @@
 				66F10F7D1F4449570035C888 /* speex_header.c in Sources */,
 				66F10F6E1F4449570035C888 /* lsp_tables_nb.c in Sources */,
 				66F10A631F43F14B0035C888 /* FMDatabaseAdditions.m in Sources */,
+				66686A781F4540E5008B26BD /* GetRecentSessionAPI.swift in Sources */,
 				66F10F591F4449570035C888 /* buffer.c in Sources */,
 				66E6D3511F428922008E9590 /* UIViewController+Extention.swift in Sources */,
 				66F108001F43D9510035C888 /* DDClientStateMaintenanceManager.m in Sources */,
@@ -1608,6 +1660,7 @@
 				66F107FF1F43D9510035C888 /* DDClientState.m in Sources */,
 				66F1079F1F42D3A90035C888 /* UIView+PointBadge.m in Sources */,
 				66F10F6A1F4449570035C888 /* kiss_fft.c in Sources */,
+				66686A741F45399E008B26BD /* GetLatestMsgIdAPI.swift in Sources */,
 				66E6D39B1F428A33008E9590 /* Im.Server.Imserver.proto.swift in Sources */,
 				66F10F641F4449570035C888 /* gain_table.c in Sources */,
 				66E6D37D1F4289D0008E9590 /* Google.Protobuf.Descriptor.proto.swift in Sources */,
@@ -1629,9 +1682,11 @@
 				66E6D3DC1F4292CC008E9590 /* DataOutputStream+Addition.m in Sources */,
 				66F10F791F4449570035C888 /* smallft.c in Sources */,
 				66E6D3DD1F4292CC008E9590 /* DDDataInputStream.m in Sources */,
+				66686A761F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift in Sources */,
 				66F1078E1F42D3A90035C888 /* NSURL+SafeURL.m in Sources */,
 				66E6D33E1F428922008E9590 /* DBScrollBannerView+LKExtention.swift in Sources */,
 				66F1078F1F42D3A90035C888 /* NSData+Conversion.m in Sources */,
+				66686A7A1F454BC2008B26BD /* LogoutAPI.swift in Sources */,
 				66F107971F42D3A90035C888 /* NSString+JSMessagesView.m in Sources */,
 				66F10F581F4449570035C888 /* bits.c in Sources */,
 				66F108151F43E77D0035C888 /* MTTAFNetworkingClient.m in Sources */,
@@ -1651,6 +1706,7 @@
 				66F10F7F1F4449570035C888 /* vbr.c in Sources */,
 				66F107991F42D3A90035C888 /* UIColor+AQGridView.m in Sources */,
 				66F1074F1F42D1F50035C888 /* AFSecurityPolicy.m in Sources */,
+				66686A621F4522B5008B26BD /* MTTBubbleModule.m in Sources */,
 				66E6D39A1F428A33008E9590 /* Im.Other.Imother.proto.swift in Sources */,
 				66E6D3DE1F4292CC008E9590 /* DDDataOutputStream.m in Sources */,
 				66F108091F43E2380035C888 /* RuntimeStatus.m in Sources */,
@@ -1665,7 +1721,9 @@
 				66F10F831F4449570035C888 /* Decapsulator.m in Sources */,
 				66F107921F42D3A90035C888 /* NSDictionary+Safe.m in Sources */,
 				66E6D34F1F428922008E9590 /* UITextView+Extention.swift in Sources */,
+				66686A701F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift in Sources */,
 				66F107171F42A9D90035C888 /* LoginStatusNotifyAPI.swift in Sources */,
+				66686A6C1F452C12008B26BD /* DDDepartmentAPI.swift in Sources */,
 				66E6D3971F428A33008E9590 /* Im.Group.Imgroup.proto.swift in Sources */,
 				66F10F7E1F4449570035C888 /* stereo.c in Sources */,
 				66E6D3731F4289D0008E9590 /* CodedInputStream.swift in Sources */,

@@ -43,6 +43,10 @@
 
 //Module
 #import "LoginModule.h"
+#import "DDUserModule.h"
+#import "DDGroupModule.h"
+#import "MTTBubbleModule.h"
+#import "EmotionsModule.h"
 
 
 //audio、videos

@@ -29,11 +29,16 @@ class MTTBaseEntity: NSObject {
 
 extension MTTBaseEntity {
     class func pbIDFrom(localID:String)->UInt32{
-        return UInt32((localID as NSString).integerValue)
+        let components = localID.components(separatedBy: "_")
+        if components.count >= 2{
+             return UInt32((components[1] as NSString).intValue)
+        }
+        return 0
     }
     class func localIDFrom(pbID:UInt32)->String {
         return "\(pbID)"
     }
+    
     
     
 }

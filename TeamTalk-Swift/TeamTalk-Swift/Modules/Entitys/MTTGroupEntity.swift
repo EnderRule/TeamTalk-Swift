@@ -58,15 +58,13 @@ class MTTGroupEntity: MTTBaseEntity {
         }
         set{
             s_groupUserIds.removeAll()
-            fixGroupUserIds.removeAll()
-            
             s_groupUserIds = newValue.sorted(by: { (obj1, obj2) -> Bool in
                 let obj1_tmp = obj1.replacingOccurrences(of: USER_PRE, with: "") as NSString
                 let obj2_tmp = obj2.replacingOccurrences(of: USER_PRE, with: "") as NSString
-                
                 return  obj1_tmp.integerValue > obj2_tmp.integerValue ? false : true
             })
-            
+            //fix
+            fixGroupUserIds.removeAll()
             for obj in s_groupUserIds.enumerated(){
                 self.addFixOrderGroupUserIDs(uID: obj.element )
             }

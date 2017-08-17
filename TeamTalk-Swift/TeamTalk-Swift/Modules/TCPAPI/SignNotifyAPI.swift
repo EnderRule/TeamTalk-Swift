@@ -26,7 +26,7 @@ class SignNotifyAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
                 return dic
             }else {
                 debugPrint("SignNotifyAPI builded failure")
-                return  nil
+                return  [:]
             }
         }
         return analysis

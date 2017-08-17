@@ -13,6 +13,9 @@
 #import "MTTDatabaseUtil.h"
 
 #import "NSDictionary+Safe.h"
+
+#import "TeamTalk_Swift-Swift.h"
+
 @implementation DDGroupModule
 - (instancetype)init
 {

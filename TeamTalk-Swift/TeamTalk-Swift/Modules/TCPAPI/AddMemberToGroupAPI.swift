@@ -46,7 +46,7 @@ class AddMemberToGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 }
             }else {
                 debugPrint("AddMemberToGroupAPI builded failure")
-                return nil
+                return []
             }
             
         }

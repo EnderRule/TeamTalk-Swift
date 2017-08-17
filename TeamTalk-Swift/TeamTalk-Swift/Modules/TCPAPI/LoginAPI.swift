@@ -52,7 +52,7 @@ class LoginAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 }
             }else {
                 debugPrint("LoginApi builded failure")
-                return nil
+                return [:]
             }
             
         }

@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         RuntimeStatus.instance()
         
-        let testString = "fsfsfsefef"
+        let testString = "fsfsfsefef fs测试哈哈哈哈哈单独累吧😓④发数据考虑f睡覺覅是你"
         let encryptStr = testString.encrypt()
         let decryptStr = encryptStr.decrypt()
         

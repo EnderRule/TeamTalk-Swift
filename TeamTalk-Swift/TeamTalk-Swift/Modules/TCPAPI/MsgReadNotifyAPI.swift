@@ -28,11 +28,11 @@ class MsgReadNotifyAPI: DDUnrequestSuperAPI {
                     return dic
                 }else {
                     debugPrint("SignNotifyAPI builded failure")
-                    return  nil
+                    return  [:]
                 }
             }else {
                 debugPrint("SignNotifyAPI fromJSONToBuilder failure")
-                return  nil
+                return  [:]
             }
         }
         return analysis

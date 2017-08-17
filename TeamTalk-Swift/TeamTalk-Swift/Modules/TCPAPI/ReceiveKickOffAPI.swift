@@ -24,7 +24,7 @@ class ReceiveKickOffAPI: DDUnrequestSuperAPI {
                 return res.kickReason
             }else {
                 debugPrint("ReceiveKickOffAPI builded failure")
-                return  nil
+                return  0
             }
         }
         return analysis

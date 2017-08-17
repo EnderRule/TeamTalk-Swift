@@ -125,7 +125,6 @@ class MTTSessionEntity: NSObject {
         }
     }
     
-    
     public convenience init(sessionID:String,sessionName:String?,type:SessionType_Objc){
         self.init()
         

@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TeamTalk_Swift-Swift.h"
 
 typedef void(^DDLoadRecentUsersCompletion)();
-
+@class MTTUserEntity;
 
 @interface DDUserModule : NSObject
 

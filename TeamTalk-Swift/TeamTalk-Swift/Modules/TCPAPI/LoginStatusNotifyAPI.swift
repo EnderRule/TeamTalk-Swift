@@ -27,7 +27,7 @@ class LoginStatusNotifyAPI: DDUnrequestSuperAPI ,DDAPIUnrequestScheduleProtocol 
                 return dic
             }else {
                 debugPrint("LoginStatusNotifyAPI builded failure")
-                return  nil
+                return  [:]
             }
         }
         return analysis

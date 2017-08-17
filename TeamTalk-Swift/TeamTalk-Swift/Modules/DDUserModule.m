@@ -10,6 +10,8 @@
 #import "MTTDatabaseUtil.h"
 #import "MTTDDNotification.h"
 
+#import "TeamTalk_Swift-Swift.h"
+
 @interface DDUserModule(PrivateAPI)
 
 - (void)n_receiveUserLogoutNotification:(NSNotification*)notification;
