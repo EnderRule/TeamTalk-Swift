@@ -39,11 +39,25 @@ class MsgReadACKAPI: DDSuperAPI {
     // object 格式 [sessoinID,msgID,sessionType] as [String]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            let builder = Im.Login.ImlogoutReq.Builder()
+            let sessionID:UInt32 = MTTBaseEntity.pbIDFrom(localID: "\((object as! [Any])[0])" )
+            let msgID:UInt32 =  UInt32(("\((object as! [Any])[1])" as NSString).intValue)
+            let typeID:UInt32 =  UInt32(("\((object as! [Any])[2])" as NSString).intValue)
+            
+            var sesssionType = Im.BaseDefine.SessionType.sessionTypeSingle
+            if typeID == 2 {
+                sesssionType = Im.BaseDefine.SessionType.sessionTypeGroup
+            }
+            
+            let builder = Im.Message.ImmsgDataReadAck.Builder()
+            builder.setUserId(0)
+            builder.setSessionId(sessionID)
+            builder.setMsgId(msgID)
+            builder.setSessionType(sesssionType)
+            
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)
-            dataOut.writeTcpProtocolHeader(Int16(SID_LOGIN),
-                                           cId: Int16(IM_LOGOUT_REQ),
+            dataOut.writeTcpProtocolHeader(Int16(SID_MSG),
+                                           cId: Int16(IM_MSG_DATA_READ_ACK),
                                            seqNo: seqno)
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)

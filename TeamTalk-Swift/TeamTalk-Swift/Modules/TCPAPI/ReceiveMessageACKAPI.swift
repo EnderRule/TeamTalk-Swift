@@ -35,7 +35,7 @@ class ReceiveMessageACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
         }
         return analysis
     }
-    
+
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
             let msgid:UInt32 = (object as? Array<Any>)?[1] as? UInt32 ?? 0
