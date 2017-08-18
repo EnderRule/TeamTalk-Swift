@@ -25,7 +25,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let encryptStr = testString.encrypt()
         let decryptStr = encryptStr.decrypt()
         
-        print(NSString.classForCoder(),"\n\(testString)\n\(encryptStr)\n\(decryptStr)")
+        print(self.classForCoder,"security test ","\n\(testString)\n\(encryptStr)\n\(decryptStr)")
+        
+        let loginVC = MTTLoginViewController.init()
+        loginVC.hidesBottomBarWhenPushed = true
+        let navivc:UINavigationController = UINavigationController.init(rootViewController: loginVC)
+        navivc.setNavigationBarHidden(false , animated: true )
+        
+        window = UIWindow.init(frame: UIScreen.main.bounds)
+        window?.rootViewController = navivc
+        window?.makeKeyAndVisible()
         
         return true
     }

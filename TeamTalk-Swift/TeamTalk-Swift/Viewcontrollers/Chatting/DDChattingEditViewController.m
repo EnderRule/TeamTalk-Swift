@@ -9,19 +9,18 @@
 #import "DDChattingEditViewController.h"
 #import "ChattingEditModule.h"
 #import "DDUserModule.h"
-#import "DDCreateGroupAPI.h"
 #import "RuntimeStatus.h"
 #import "DDGroupModule.h"
-#import "EditGroupViewController.h"
-#import "PublicProfileViewControll.h"
-#import "DDPersonEditCollectionCell.h"
-#import "ShieldGroupMessageAPI.h"
 
-#import "DDDeleteMemberFromGroupAPI.h"
+
+#import "DDPersonEditCollectionCell.h"
+
+
+
 #import "MBProgressHUD.h"
 #import "MTTDatabaseUtil.h"
 #import "MTTGroupInfoCell.h"
-#import "MTTNotification.h"
+
 #import "Masonry.h"
 
 #import "MTTDDNotification.h"
@@ -139,7 +138,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.session.sessionType == SessionTypeSessionTypeGroup){
+    if (self.session.sessionType == SessionType_ObjcSessionTypeGroup){
         return 3;
     }else{
         return 1;
@@ -295,7 +294,7 @@
     MTTUserEntity *user = self.items[indexPath.row];
     if ([user.position isEqualToString:@"99999"]) {
         //添加联系人
-        //Fixme:here
+        //Fixme:添加联系人
 //        EditGroupViewController *newEdit = [EditGroupViewController new];
 //        newEdit.session=self.session;
 //        newEdit.group=self.group;
@@ -314,7 +313,7 @@
     }
     else if (user)
     {
-        //Fixme:here
+        //Fixme:打开个人信息页面
 
 //        PublicProfileViewControll *public = [PublicProfileViewControll new];
 //        public.user=user;
@@ -430,9 +429,8 @@
     [deleteMemberAPI requestWithObject:@[self.session.sessionID, user.objID] Completion:^(MTTGroupEntity *response, NSError *error) {
         [self.hud hide:YES afterDelay:1];
         if (error) {
-            //Fixme:here
-
-//            [MTTUtil showAlertWithTitle:@" " message:error.domain?error.domain:@"未知错误"];
+            UIAlertView *aler = [[UIAlertView alloc]initWithTitle:nil  message:error.localizedDescription delegate:nil  cancelButtonTitle:nil  otherButtonTitles:@"确定", nil];
+            [aler show];
             return ;
         }
         if (response)
@@ -463,8 +461,8 @@
             return ;
         }
         self.group.isShield=!self.group.isShield;
-        //Fixme:here
-//        [MTTNotification postNotification:MTTNotificationSessionShieldAndFixed userInfo:nil object:nil];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:MTTNotificationSessionShieldAndFixed object:nil   ];
         [[MTTDatabaseUtil instance] updateRecentGroup:self.group completion:^(NSError *error) {
             
         }];

@@ -85,6 +85,8 @@
         
         NSData* data = [NSData dataWithContentsOfFile:string];
         
+        if (data){
+        
         
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         
@@ -136,6 +138,7 @@
         self.textBgImage = textBgImagePath;
 //        self.picBgImage = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:picBgImagePath];
         self.picBgImage = picBgImagePath;
+        }
     }
     return self;
 }

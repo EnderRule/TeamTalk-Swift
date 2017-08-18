@@ -120,37 +120,52 @@
         
     }
     
-    
 }
+
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    
+    [self layoutContentView:nil ];
+}
+
 #pragma mark -
 #pragma mark DDChatCellProtocol Protocol
 - (CGSize)sizeForContent:(MTTMessageEntity*)content
 {
-    float height = 150;
-    float width = 60;
-    NSString* urlString = content.msgContent;
-    urlString = [urlString stringByReplacingOccurrencesOfString:DD_MESSAGE_IMAGE_PREFIX withString:@""];
-    urlString = [urlString stringByReplacingOccurrencesOfString:DD_MESSAGE_IMAGE_SUFFIX withString:@""];
-    NSURL* url = [NSURL URLWithString:urlString];
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    if( [manager cachedImageExistsForURL:url]){
-        NSString *key = [manager cacheKeyForURL:url];
-        UIImage *curImg = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
-        height = curImg.size.height>40?curImg.size.height:40;
-        width = curImg.size.width>40?curImg.size.width:40;
-        return [MTTUtil sizeTrans:CGSizeMake(width, height)];
-    }
+    float height = 120;
+    float width = 150;
+    //Fixme:  设置图片高度
+//    NSString* urlString = content.msgContent;
+//    urlString = [urlString stringByReplacingOccurrencesOfString:DD_MESSAGE_IMAGE_PREFIX withString:@""];
+//    urlString = [urlString stringByReplacingOccurrencesOfString:DD_MESSAGE_IMAGE_SUFFIX withString:@""];
+//    
+//    if ([[NSFileManager defaultManager]fileExistsAtPath:urlString]){
+//        UIImage *image = [UIImage imageWithContentsOfFile:urlString];
+//        if (image.size.width > 0 && image.size.height > 0){
+//            return [MTTUtil sizeTrans:image.size];
+//        }
+//    }
+//    
+//    NSURL* url = [NSURL URLWithString:urlString];
+//    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+//    if( [manager cachedImageExistsForURL:url]){
+//        NSString *key = [manager cacheKeyForURL:url];
+//        UIImage *curImg = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
+//        height = curImg.size.height>40?curImg.size.height:40;
+//        width = curImg.size.width>40?curImg.size.width:40;
+//        return [MTTUtil sizeTrans:CGSizeMake(width, height)];
+//    }
     return CGSizeMake(width, height);
 }
 
 - (float)contentUpGapWithBubble
 {
-    return 1;
+    return 2;
 }
 
 - (float)contentDownGapWithBubble
 {
-    return 1;
+    return 2;
 }
 
 - (float)contentLeftGapWithBubble
@@ -158,7 +173,7 @@
     switch (self.location)
     {
         case DDBubbleRight:
-            return 1;
+            return 2;
         case DDBubbleLeft:
             return 6.5;
     }
@@ -173,7 +188,7 @@
             return 6.5;
             break;
         case DDBubbleLeft:
-            return 1;
+            return 2;
             break;
     }
     return 0;

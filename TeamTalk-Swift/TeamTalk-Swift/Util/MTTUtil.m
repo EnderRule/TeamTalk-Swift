@@ -63,7 +63,7 @@
 +(UInt32)changeIDToOriginal:(NSString *)sessionID
 {
     NSArray *array = [sessionID componentsSeparatedByString:@"_"];
-    if (array[1]) {
+    if (array.count >= 2 && array[1]) {
         return [array[1] unsignedIntValue];
     }
     return 0;

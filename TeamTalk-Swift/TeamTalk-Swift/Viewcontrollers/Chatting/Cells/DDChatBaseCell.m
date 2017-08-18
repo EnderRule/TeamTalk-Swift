@@ -20,7 +20,7 @@
 
 CGFloat const dd_avatarEdge = 10;                 //头像到边缘的距离
 CGFloat const dd_avatarBubbleGap = 5;             //头像和气泡之间的距离
-CGFloat const dd_bubbleUpDown = 20;                //气泡到上下边缘的距离
+CGFloat const dd_bubbleUpDown = 5;                //气泡到上下边缘的距离
 @interface DDChatBaseCell ()
 @property(copy)NSString *currentUserID;
 
@@ -89,7 +89,7 @@ CGFloat const dd_bubbleUpDown = 20;                //气泡到上下边缘的距
     if (self.currentUserID) {
         [[DDUserModule shareInstance] getUserForUserID:self.currentUserID Block:^(MTTUserEntity *user) {
             
-            //Fixme:here
+            //Fixme:开个人信息页面
 //            PublicProfileViewControll *public = [PublicProfileViewControll new];
 //            public.user=user;
 //            [[ChattingMainViewController shareInstance] pushViewController:public animated:YES];

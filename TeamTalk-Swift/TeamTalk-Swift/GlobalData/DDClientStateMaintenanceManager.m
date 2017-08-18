@@ -94,7 +94,7 @@ static NSInteger const reloginTimeinterval = 5;
 
     
     //网络状态变化
-    //Fixme: RecentUsersViewController should be update here
+
     if ([keyPath isEqualToString:DD_NETWORK_STATE_KEYPATH])
     {
 
@@ -114,7 +114,7 @@ static NSInteger const reloginTimeinterval = 5;
         {
             clientState.userState=DDUserOffLine;
             
-//            [RecentUsersViewController shareInstance].title=@"连接失败";
+            [RecentUsersViewController shareInstance].title=@"连接失败";
         }
     }
     //用户状态变化
@@ -124,28 +124,28 @@ static NSInteger const reloginTimeinterval = 5;
         switch ([DDClientState shareInstance].userState)
         {
             case DDUserKickout:
-//                [RecentUsersViewController shareInstance].title=@"未连接";
+                [RecentUsersViewController shareInstance].title=@"未连接";
                 [self p_stopCheckServerHeartBeat];
                 [self p_stopHeartBeat];
                 break;
             case DDUserOffLine:
-//                [RecentUsersViewController shareInstance].title=@"未连接";
+                [RecentUsersViewController shareInstance].title=@"未连接";
                 [self p_stopCheckServerHeartBeat];
                 [self p_stopHeartBeat];
                 [self p_startRelogin];
                 break;
             case DDUserOffLineInitiative:
-//                [RecentUsersViewController shareInstance].title=@"未连接";
+                [RecentUsersViewController shareInstance].title=@"未连接";
                 [self p_stopCheckServerHeartBeat];
                 [self p_stopHeartBeat];
                 break;
             case DDUserOnline:
-//                [RecentUsersViewController shareInstance].title=APP_NAME;
+                [RecentUsersViewController shareInstance].title=APP_NAME;
                 [self p_startCheckServerHeartBeat];
                 [self p_startHeartBeat];
                 break;
             case DDUserLogining:
-//                [RecentUsersViewController shareInstance].title=@"收取中";
+                [RecentUsersViewController shareInstance].title=@"收取中";
                 break;
         }
     }
@@ -259,7 +259,7 @@ static NSInteger const reloginTimeinterval = 5;
 //运行在断线重连的Timer上
 - (void)p_onReloginTimer:(NSTimer*)timer
 {
-    DDLog(@"p_ onRelogin Timer  ");
+//    DDLog(@"p_ onRelogin Timer  ");
     
     static NSUInteger time = 0;
     static NSUInteger powN = 0;

@@ -31,22 +31,23 @@
 
 
 #import "UnAckMessageManager.h"
-#import "GetMessageQueueAPI.h"
-#import "GetLatestMsgId.h"
+
+
 #import "MTTPhotosCache.h"
 #import "UIScrollView+PullToLoadMore.h"
 #import "UIImageView+WebCache.h"
-#import "MTTWebViewController.h"
-#import "SVWebViewController.h"
+
+
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "MTTPhotosCache.h"
-#import "ContactsViewController.h"
+
 #import "DDUserModule.h"
 #import "LCActionSheet.h"
 #import "MTTUtil.h"
 #import "UIImageView+WebCache.h"
-#import "MTTUsersStatAPI.h"
+
 #import "Masonry.h"
+
 #import "MTTDDNotification.h"
 #import "TeamTalk_Swift-Swift.h"
 
@@ -207,7 +208,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
         NSString* lastText =  [text substringWithRange:range];
         if([lastText isEqualToString:@"@"]){
             self.isGotoAt = YES;
-            //Fixme:here
+            //Fixme: 选择联系人
 //            ContactsViewController *contact = [ContactsViewController new];
 //            contact.isFromAt=YES;
 //            contact.selectUser =^(MTTUserEntity *user){
@@ -304,7 +305,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
 //    MTTMessageEntity* message = [MTTMessageEntity makeMessage:filePath Module:self.module MsgType:msgContentType];
 //    [self.tableView reloadData];
 //    [self scrollToBottomAnimated:YES];
-//    BOOL isGroup = [self.SessionEntity isGroup];
+//    BOOL isGroup = [self.module.SessionEntity isGroup];
 //    if (isGroup) {
 //        message.msgType=MsgTypeMsgTypeGroupAudio;
 //    }else
@@ -323,7 +324,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
 //        
 //    });
 //    
-//    [[DDMessageSendManager instance] sendVoiceMessage:muData filePath:filePath forSessionID:self.SessionEntity.sessionID isGroup:isGroup Message:message Session:self.SessionEntity completion:^(MTTMessageEntity *theMessage, NSError *error) {
+//    [[DDMessageSendManager instance] sendVoiceMessage:muData filePath:filePath forSessionID:self.module.SessionEntity.sessionID isGroup:isGroup Message:message Session:self.module.SessionEntity completion:^(MTTMessageEntity *theMessage, NSError *error) {
 //        if (!error)
 //        {
 //            DDLog(@"发送语音消息成功");
@@ -383,7 +384,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
                                              selector:@selector(handleWillShowKeyboard:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleWillHideKeyboard:)
                                                  name:UIKeyboardWillHideNotification
@@ -438,14 +439,16 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
                                                             target:self
                                                             action:@selector(Edit:)];
     self.navigationItem.rightBarButtonItem=item;
+
+    //    [self.module addObserver:self
+//                  forKeyPath:@"showingMessages"
+//                     options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
+//                     context:NULL];
     [self.module addObserver:self
-                  forKeyPath:@"showingMessages"
-                     options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
-                     context:NULL];
-    [self.module addObserver:self
-                  forKeyPath:@"MTTSessionEntity.sessionID"
+                  forKeyPath:@"SessionEntity.sessionID"
                      options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
                      context:NULL];
+    
     [self.navigationItem.titleView setUserInteractionEnabled:YES];
     self.view.backgroundColor=TTBG;
     
@@ -497,6 +500,8 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
     [self.chatInputView.textView setEditable:YES];
     
     [self.navigationController.navigationBar setHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    
     if (self.ddUtility != nil)
     {
         NSString *sessionId = self.module.SessionEntity.sessionID;
@@ -573,7 +578,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
 -(IBAction)Edit:(id)sender
 {
     DDChattingEditViewController *chattingedit = [DDChattingEditViewController new];
-    chattingedit.session=self.SessionEntity;
+    chattingedit.session = self.module.SessionEntity;
     self.title=@"";
     [self pushViewController:chattingedit animated:YES];
 }
@@ -632,8 +637,9 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
 #pragma mark - EmojiFace Funcation
 -(void)insertEmojiFace:(NSString *)string
 {
-    DDMessageContentType msgContentType = DDMEssageEmotion;
-    MTTMessageEntity *message = [MTTMessageEntity makeMessage:string Module:self.module MsgType:msgContentType];
+    DDMessageContentType msgContentType = DDMessageContentTypeEmotion;
+    MTTMessageEntity *message = [[MTTMessageEntity alloc]initWithContent:string module:self.module msgContentType:msgContentType];
+    // [MTTMessageEntity makeMessage:string Module:self.module MsgType:msgContentType];
     [self.tableView reloadData];
     //[self.chatInputView.textView setText:nil];
     [[MTTDatabaseUtil instance] insertMessages:@[message] success:^{
@@ -758,10 +764,10 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
 {
     [self.module.showingMessages removeAllObjects];
     [self.tableView reloadData];
-    self.SessionEntity = nil;
+    self.module.SessionEntity = nil;
     self.hadLoadHistory=YES;
     [self.module.showingMessages removeAllObjects];
-    self.SessionEntity = session;
+    self.module.SessionEntity = session;
     [self setThisViewTitle:session.name];
     [self.module loadAllHistoryCompletion:message Completion:^(NSUInteger addcount, NSError *error) {
         [self.tableView reloadData];
@@ -769,15 +775,15 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
 }
 - (void)showChattingContentForSession:(MTTSessionEntity*)session
 {
-    self.SessionEntity = nil;
+    self.module.SessionEntity = nil;
     self.hadLoadHistory=NO;
     [self p_unableChatFunction];
     [self p_enableChatFunction];
     [self.module.showingMessages removeAllObjects];
     [self.tableView reloadData];
-    self.SessionEntity = session;
+    self.module.SessionEntity = session;
     [self setThisViewTitle:session.name];
-    //    self.SessionEntity.unReadMsgCount = 0;
+    //    self.module.SessionEntity.unReadMsgCount = 0;
     [self.module loadMoreHistoryCompletion:^(NSUInteger addcount, NSError *error) {
         [self.tableView reloadData];
         if (self.hadLoadHistory == NO) {
@@ -786,10 +792,10 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
         if (session.unReadMsgCount !=0 ) {
             
             MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
-            if(self.SessionEntity.sessionID){
-                [readACK requestWithObject:@[self.SessionEntity.sessionID,@(self.SessionEntity.lastMsgID),@(self.SessionEntity.sessionType)] Completion:nil];
-                self.SessionEntity.unReadMsgCount=0;
-                [[MTTDatabaseUtil instance] updateRecentSession:self.SessionEntity completion:^(NSError *error) {
+            if(self.module.SessionEntity.sessionID){
+                [readACK requestWithObject:@[self.module.SessionEntity.sessionID,@(self.module.SessionEntity.lastMsgID),@(self.module.SessionEntity.sessionType)] Completion:nil];
+                self.module.SessionEntity.unReadMsgCount=0;
+                [[MTTDatabaseUtil instance] updateRecentSession:self.module.SessionEntity completion:^(NSError *error) {
                     
                 }];
             }
@@ -817,7 +823,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
         cell = [[DDChatTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell.contentLabel.delegate = self;
     }
-    cell.session =self.SessionEntity;
+    cell.session =self.module.SessionEntity;
     NSString* myUserID = [RuntimeStatus instance].user.objID;
     if ([message.senderId isEqualToString:myUserID])
     {
@@ -828,8 +834,8 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
         [cell setLocation:DDBubbleLeft];
     }
     
-    if (![[UnAckMessageManager instance] isInUnAckQueue:message] && message.state == DDMessageSending && [message isSendBySelf]) {
-        message.state=DDMessageSendFailure;
+    if (![[UnAckMessageManager instance] isInUnAckQueue:message] && message.state == DDMessageStateSending && [message isSendBySelf]) {
+        message.state=DDMessageStateSendFailure;
     }
     [[MTTDatabaseUtil instance] updateMessageForMessage:message completion:^(BOOL result) {
         
@@ -854,7 +860,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
     {
         cell = [[DDChatVoiceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.session =self.SessionEntity;
+    cell.session =self.module.SessionEntity;
     NSString* myUserID = [RuntimeStatus instance].user.objID;
     if ([message.senderId isEqualToString:myUserID])
     {
@@ -935,7 +941,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
     {
         cell = [[DDEmotionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.session =self.SessionEntity;
+    cell.session =self.module.SessionEntity;
     NSString* myUserID =[RuntimeStatus instance].user.objID;
     if ([message.senderId isEqualToString:myUserID])
     {
@@ -969,7 +975,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
     {
         cell = [[DDChatImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.session =self.SessionEntity;
+    cell.session =self.module.SessionEntity;
     NSString* myUserID =[RuntimeStatus instance].user.objID;
     if ([message.senderId isEqualToString:myUserID])
     {
@@ -1002,7 +1008,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
             {
                 MTTMessageEntity* message = (MTTMessageEntity*)obj;
                 NSURL* url;
-                if(message.msgContentType == DDMessageTypeImage){
+                if(message.msgContentType == DDMessageContentTypeImage){
                     NSString* urlString = message.msgContent;
                     urlString = [urlString stringByReplacingOccurrencesOfString:DD_MESSAGE_IMAGE_PREFIX withString:@""];
                     urlString = [urlString stringByReplacingOccurrencesOfString:DD_MESSAGE_IMAGE_SUFFIX withString:@""];
@@ -1182,9 +1188,9 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     
-    if ([keyPath isEqualToString:@"MTTSessionEntity.sessionID"]) {
+    if ([keyPath isEqualToString:@"SessionEntity.sessionID"]) {
         if ([change objectForKey:@"new"] !=nil) {
-            [self setThisViewTitle:self.SessionEntity.name];
+            [self setThisViewTitle:self.module.SessionEntity.name];
         }
     }
 //    if ([keyPath isEqualToString:@"showingMessages"]) {
@@ -1240,7 +1246,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
     MTTMessageEntity* message = [notification object];
     UIApplicationState state =[UIApplication sharedApplication].applicationState;
     if (state == UIApplicationStateBackground) {
-        if([message.sessionId isEqualToString:self.SessionEntity.sessionID])
+        if([message.sessionId isEqualToString:self.module.SessionEntity.sessionID])
         {
             [self.module addShowMessage:message];
             [self.module updateSessionUpdateTime:message.msgTime];
@@ -1252,7 +1258,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
     }
     //显示消息
     
-    if([message.sessionId isEqualToString:self.SessionEntity.sessionID])
+    if([message.sessionId isEqualToString:self.module.SessionEntity.sessionID])
     {
         [self.module addShowMessage:message];
         [self.module updateSessionUpdateTime:message.msgTime];
@@ -1332,11 +1338,11 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
     if (self.ddUtility == nil)
     {
         self.ddUtility = [ChatUtilityViewController new];
-        NSString *sessionId = self.SessionEntity.sessionID;
+        NSString *sessionId = self.module.SessionEntity.sessionID;
         if(self.module.isGroup){
             self.ddUtility.userId = 0;
         }else{
-            self.ddUtility.userId = [MTTUserEntity localIDTopb:sessionId];
+            self.ddUtility.userId = [MTTUserEntity pbIDFromLocalID:sessionId];// [MTTUserEntity localIDTopb:sessionId];
         }
         [self addChildViewController:self.ddUtility];
         self.ddUtility.view.frame=CGRectMake(0, self.view.size.height,FULL_WIDTH , 280);
@@ -1500,6 +1506,7 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
     }
 }
 #pragma mark - KeyBoardNotification
+
 - (void)handleWillShowKeyboard:(NSNotification *)notification
 {
     
@@ -1545,14 +1552,15 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
 
 -(IBAction)titleTap:(id)sender
 {
-    if ([self.SessionEntity isGroup]) {
+    if ([self.module.SessionEntity isGroupSession]) {
         return;
     }
     [self.module getCurrentUser:^(MTTUserEntity *user) {
-        PublicProfileViewControll *profile = [PublicProfileViewControll new];
-        profile.title=user.nick;
-        profile.user=user;
-        [self pushViewController:profile animated:YES];
+        //Fixme: 打开用户信息页面
+//        PublicProfileViewControll *profile = [PublicProfileViewControll new];
+//        profile.title=user.nick;
+//        profile.user=user;
+//        [self pushViewController:profile animated:YES];
     }];
 }
 
@@ -1568,9 +1576,9 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
 - (void)attributedLabel:(__unused TTTAttributedLabel *)label
    didSelectLinkWithURL:(NSURL *)url
 {
-    //Fixme:here
-    SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:url];
-    [self.navigationController pushViewController:webViewController animated:YES];
+    //Fixme: 浏览器打开标签链接
+//    SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:url];
+//    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithPhoneNumber:(NSString *)phoneNumber
@@ -1578,10 +1586,11 @@ typedef NS_ENUM(NSUInteger, PanelStatus)
     NSArray *res = [phoneNumber componentsSeparatedByString:LINK_SPLIT];
     if([res count] == 2){
         if([res[0] isEqualToString:NICK_SPLIT]){
-            MTTUserEntity *user = [[DDUserModule shareInstance] getUserByNick:res[1]];
-            PublicProfileViewControll *public = [PublicProfileViewControll new];
-            public.user=user;
-            [self pushViewController:public animated:YES];
+            //Fixme: 打开用户信息页面
+//            MTTUserEntity *user = [[DDUserModule shareInstance] getUserByNick:res[1]];
+//            PublicProfileViewControll *public = [PublicProfileViewControll new];
+//            public.user=user;
+//            [self pushViewController:public animated:YES];
         }
         if([res[0] isEqualToString:PHONE_SPLIT]){
             NSString *phone = [res[1] stringByReplacingOccurrencesOfString:@" " withString:@""];

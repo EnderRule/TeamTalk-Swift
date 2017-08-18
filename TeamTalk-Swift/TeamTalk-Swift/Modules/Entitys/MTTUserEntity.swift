@@ -26,6 +26,23 @@ class MTTUserEntity: MTTBaseEntity {
     var pyname:String = ""
     var userStatus:Int = 0
     
+    private var nickName:String {
+        set {
+            self.nick = newValue
+        }
+        get {
+            return self.nick
+        }
+    }
+    var userId:String{
+        set{
+            self.objID = newValue
+        }
+        get{
+            return self.objID
+        }
+    }
+    
     public convenience  init(userID:String,name:String,nick:String,avatar:String,userRole:Int,userUpdated:Int ) {
         
         self.init()

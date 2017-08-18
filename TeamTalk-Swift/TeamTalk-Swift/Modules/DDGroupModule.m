@@ -97,25 +97,24 @@
     if (group) {
         completion(group);
     }else{
-        //Fixme:here
-//        GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] init];
-//        [request requestWithObject:@[@([MTTUtil changeIDToOriginal:groupID]),@(group.objectVersion)] Completion:^(id response, NSError *error) {
-//            if (!error)
-//            {
-//                if ([response count]) {
-//                    MTTGroupEntity* group = (MTTGroupEntity*)response[0];
-//                    if (group)
-//                    {
-//                        [self addGroup:group];
-//                        [[MTTDatabaseUtil instance] updateRecentGroup:group completion:^(NSError *error) {
-//                            DDLog(@"insert group to database error.");
-//                        }];
-//                    }
-//                    completion(group);
-//                }
-//                
-//            }
-//        }];
+        GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] init];
+        [request requestWithObject:@[@([MTTUtil changeIDToOriginal:groupID]),@(group.objectVersion)] Completion:^(id response, NSError *error) {
+            if (!error)
+            {
+                if ([response count]) {
+                    MTTGroupEntity* group = (MTTGroupEntity*)response[0];
+                    if (group)
+                    {
+                        [self addGroup:group];
+                        [[MTTDatabaseUtil instance] updateRecentGroup:group completion:^(NSError *error) {
+                            DDLog(@"insert group to database error.");
+                        }];
+                    }
+                    completion(group);
+                }
+                
+            }
+        }];
     }
     
 }

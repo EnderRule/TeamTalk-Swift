@@ -36,7 +36,7 @@
  *
  *  @param titles 所有按钮的标题
  *
- *  @param redButtonIndex 红色按钮的index
+ *  @param buttonIndex 红色按钮的index
  *
  *  @param delegate 代理
  *
@@ -54,7 +54,7 @@
  *
  *  @param titles 所有按钮的标题
  *
- *  @param redButtonIndex 红色按钮的index
+ *  @param buttonIndex 红色按钮的index
  *
  *  @param delegate 代理
  *

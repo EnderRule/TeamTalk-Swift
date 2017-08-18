@@ -7,13 +7,14 @@
 //
 
 #import "NSString+DDPath.h"
-//#import "DDUserModule.h"
-//#import "RuntimeStatus.h"
+#import "DDUserModule.h"
+#import "RuntimeStatus.h"
+#import "TeamTalk_Swift-Swift.h"
+
 @implementation NSString (DDPath)
 + (NSString*)userExclusiveDirection
 {
-    //Fixme: 设置用户独立的文件夹
-    NSString* myName =  @"";// TheRuntime.user.objID;
+    NSString* myName = TheRuntime.user.objID;
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];

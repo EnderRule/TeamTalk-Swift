@@ -87,10 +87,9 @@
 
 -(void)updateData
 {
-    //Fixme: should  update module data here
-//    [DDMessageModule shareInstance];
+    [DDMessageModule shareInstance];
     [DDClientStateMaintenanceManager shareInstance];
-//    [DDGroupModule instance];
+    [DDGroupModule instance];
 }
 
 

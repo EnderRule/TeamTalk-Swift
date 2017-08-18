@@ -106,7 +106,7 @@
             pboard.string = self.QRCodeResult;
         }
         if(buttonIndex == 2){
-            //Fixme:here
+            //Fixme:打开网页
 //            NSURL *url = [NSURL URLWithString:self.QRCodeResult];
 //            SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:url];
 //            

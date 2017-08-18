@@ -28,11 +28,11 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -41,5 +41,15 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSMotionUsageDescription</key>
+	<string>motion usage</string>
+	<key>NSCameraUsageDescription</key>
+	<string>camera usage </string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo lib usage</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>microphone usage </string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>media lib usage</string>
 </dict>
 </plist>

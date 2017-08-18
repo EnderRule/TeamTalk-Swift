@@ -194,7 +194,7 @@ extern "C" {
         string strEnc((char*)pEncData, nEncryptLen);
         free(pEncData);
         string strDec = base64_encode(strEnc);
-        *nOutLen = (uint32_t *)strDec.length();
+//        *nOutLen = (uint32_t *)strDec.length();
 
         char* pTmp = (char*) malloc(strDec.length() + 1);
         memcpy(pTmp, strDec.c_str(), strDec.length());

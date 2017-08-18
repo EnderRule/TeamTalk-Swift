@@ -115,8 +115,8 @@
                             });
                         }
                     }];
-                    //Fixme:update values here
-//                    [[SessionModule instance] loadLocalSession:^(bool isok) {}];
+
+                    [[SessionModule instance] loadLocalSession:^(bool isok) {}];
                     
                     success(user);
                     

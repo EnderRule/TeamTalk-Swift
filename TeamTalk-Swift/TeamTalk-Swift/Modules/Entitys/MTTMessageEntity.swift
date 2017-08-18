@@ -93,12 +93,25 @@ class MTTMessageEntity: NSObject {
         
     }
     
-    public convenience init(content:String,module:Any,msgContentType:DDMessageContentType){
+    public convenience init(content:String,module:ChattingModule,msgContentType:DDMessageContentType){
         self.init()
         
+        if module.sessionEntity.sessionType == .sessionTypeGroup{
+            self.msgType = .msgTypeGroupText
+        }else{
+            self.msgType = .msgTypeSingleText
+        }
+        self.msgContent = content
         self.msgContentType = msgContentType
-        //Fixme: add a ChattingModule here
-        
+        self.msgID = UInt32(DDMessageModule.getMessageID())
+        self.sessionId = module.sessionEntity.sessionID
+        self.toUserID = module.sessionEntity.sessionID
+        self.senderId = RuntimeStatus.instance().user.userId
+        self.state = .Sending
+        self.msgTime = UInt32(Date().timeIntervalSince1970)
+
+        module.addShowMessage(self)
+        module.updateSessionUpdateTime(UInt(self.msgTime))
     }
     
     var isGroupMessage:Bool {

@@ -36,8 +36,9 @@ class UserStatAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 
                 var userstatList:[Any] = []
                 for statinfo in res.userStatList {
-                    userstatList.append(statinfo.userId)
-                    userstatList.append(statinfo.status.rawValue)
+                    userstatList.append([statinfo.userId,statinfo.status.rawValue])
+//                    userstatList.append(statinfo.userId)
+//                    userstatList.append(statinfo.status.rawValue)
                 }
                 return userstatList
             }else {

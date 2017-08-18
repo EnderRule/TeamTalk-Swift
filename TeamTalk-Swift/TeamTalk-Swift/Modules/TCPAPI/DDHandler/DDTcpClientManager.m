@@ -183,7 +183,8 @@
     @try {
         
         if (![_sendBuffers count]) {
-            DDLog(@"WRITE - No data to send");
+//            DDLog(@"WRITE - No data to send");
+          
             _noDataSent = YES;
             
             return;
@@ -200,7 +201,7 @@
             
             [_sendBuffers removeObjectAtIndex:0];
             
-            DDLog(@"WRITE - No data to send");
+//            DDLog(@"WRITE - No data to send");
             
             _noDataSent = YES;
             
@@ -215,7 +216,7 @@
             
             [_sendBuffers removeObjectAtIndex:0];
             
-            DDLog(@"WRITE - No data to send");
+//            DDLog(@"WRITE - No data to send");
             
             _noDataSent = YES;
             
@@ -224,7 +225,7 @@
         
         //			DDLog(@"write %ld bytes", len);
         len = [_outStream write:((const uint8_t *)[sendBuffer mutableBytes] + [sendBuffer sendPos]) maxLength:len];
-        DDLog(@"WRITE - Written directly to outStream len:%lid", (long)len);
+//        DDLog(@"WRITE - Written directly to outStream len:%lid", (long)len);
         [sendBuffer consumeData:len];
         
         if (![sendBuffer length]) {
@@ -266,7 +267,7 @@
 
 - (void)p_handleEventHasBytesAvailableStream:(NSStream *)aStream
 {
-    DDLog(@"handle eventHasBytesAvailable");
+//    DDLog(@"handle eventHasBytesAvailable");
     if (aStream) {
         uint8_t buf[1024];
         NSInteger len = 0;
@@ -292,7 +293,7 @@
                 
                 uint32_t pduLen = [inputData readInt];
                 if (pduLen > (uint32_t)[_receiveBuffer length]) {
-                    DDLog(@"not enough data received");
+//                    DDLog(@"not enough data received");
                     break;
                 }
                 
@@ -303,7 +304,7 @@
                 tcpHeader.commandId = [inputData readShort];
                 tcpHeader.reserved = [inputData readShort];
                 tcpHeader.error = [inputData readShort];
-                DDLog(@"receive a packet serviceId=%d, commandId=%d", tcpHeader.serviceId, tcpHeader.commandId);
+
                 range = NSMakeRange(16, pduLen - 16);
                 NSData *payloadData = [_receiveBuffer subdataWithRange:range];
                 uint32_t remainLen = (int)[_receiveBuffer length] - pduLen;

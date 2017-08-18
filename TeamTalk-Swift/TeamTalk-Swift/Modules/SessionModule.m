@@ -10,7 +10,7 @@
 
 #import "NSDictionary+Safe.h"
 #import "MTTDatabaseUtil.h"
-//#import "ChattingMainViewController.h"
+#import "ChattingMainViewController.h"
 #import "SpellLibrary.h"
 #import "DDGroupModule.h"
 #import "MTTDDNotification.h"
@@ -111,7 +111,7 @@
                 obj.lastMsg = session.lastMsg;
                 
                 //Fixme:here
-//                if ([[ChattingMainViewController shareInstance].module.MTTSessionEntity.sessionID isEqualToString:obj.sessionID]) {
+//                if ([[ChattingMainViewController shareInstance].module.SessionEntity.sessionID isEqualToString:obj.sessionID]) {
 //                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChattingSessionUpdate" object:@{@"session":obj,@"count":@(lostMsgCount)}];
 //                }
                 session=obj;
@@ -151,13 +151,8 @@
         
         [self getHadUnreadMessageSession:^(NSUInteger count) {}];
         
-//        NSDate *date =[NSDate date];
-        
+        //Fixme: update DB 
         [[MTTDatabaseUtil instance] updateRecentSessions:response completion:^(NSError *error) {}];
-
-//        NSDate *date1 =[NSDate date];
-        
-//        NSLog(@"时间差：%f",[date1 timeIntervalSinceDate:date]);
         
         block(0);
 
@@ -216,26 +211,25 @@
         session.lastMsgID = message.msgID;
         session.timeInterval = message.msgTime;
         
-        //Fixme:here
-//        if (![message.sessionId isEqualToString:[ChattingMainViewController shareInstance].module.MTTSessionEntity.sessionID]) {
-//            if (![message.senderId isEqualToString:TheRuntime.user.objID]) {
-//                    session.unReadMsgCount=session.unReadMsgCount+1;
-//            }
-//        }
+        if (![message.sessionId isEqualToString:[ChattingMainViewController shareInstance].module.SessionEntity.sessionID]) {
+            if (![message.senderId isEqualToString:TheRuntime.user.objID]) {
+                    session.unReadMsgCount=session.unReadMsgCount+1;
+            }
+        }
         
     }else{
-        session = [[MTTSessionEntity alloc]initWithSessionID:message.sessionId sessionName:nil  type:sessionType];// [[MTTSessionEntity alloc] initWithSessionID:message.sessionId type:sessionType];
+        session = [[MTTSessionEntity alloc]initWithSessionID:message.sessionId sessionName:nil  type:sessionType];
         session.lastMsg=message.msgContent;
         session.lastMsgID = message.msgID;
         session.timeInterval = message.msgTime;
         
-        //Fixme:here
-//        if (![message.sessionId isEqualToString:[ChattingMainViewController shareInstance].module.MTTSessionEntity.sessionID]) {
-//            if (![message.senderId isEqualToString:TheRuntime.user.objID]) {
-//                session.unReadMsgCount=session.unReadMsgCount+1;
-//            }
-//            
-//        }
+        if (![message.
+              sessionId isEqualToString:[ChattingMainViewController shareInstance].module.SessionEntity.sessionID]) {
+            if (![message.senderId isEqualToString:TheRuntime.user.objID]) {
+                session.unReadMsgCount=session.unReadMsgCount+1;
+            }
+            
+        }
         [self addSessionsToSessionModel:@[session]];
     }
     [self updateToDatabase:session];

@@ -189,7 +189,7 @@
 }
 -(void)choosePicture:(id)sender
 {
-    //Fixme:here
+    //Fixme: 选择图片
 //    self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 //    self.imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 //    [self pushViewController:[AlbumViewController new] animated:YES];

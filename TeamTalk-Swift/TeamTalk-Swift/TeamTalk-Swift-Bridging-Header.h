@@ -47,6 +47,7 @@
 #import "DDGroupModule.h"
 #import "MTTBubbleModule.h"
 #import "EmotionsModule.h"
+#import "DDMessageModule.h"
 
 
 //audio、videos
@@ -54,4 +55,6 @@
 
 
 //ViewControllers
+#import "MTTLoginViewController.h"
+#import "RecentUsersViewController.h"
 #import "ChattingMainViewController.h"
