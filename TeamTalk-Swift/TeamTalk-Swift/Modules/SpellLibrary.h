@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TeamTalk_Swift-Swift.h"
 
 
 /**

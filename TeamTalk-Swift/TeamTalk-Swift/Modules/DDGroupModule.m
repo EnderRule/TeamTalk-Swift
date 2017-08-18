@@ -11,7 +11,7 @@
 //#import "GetGroupInfoAPi.h"
 //#import "DDReceiveGroupAddMemberAPI.h"
 #import "MTTDatabaseUtil.h"
-
+#import "MTTDDNotification.h"
 #import "NSDictionary+Safe.h"
 
 #import "TeamTalk_Swift-Swift.h"
@@ -28,24 +28,24 @@
                 if(group.objID)
                 {
                     [self addGroup:group];
-                    //Fixme: update values here
-//                    GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] init];
-//                    [request requestWithObject:@[@([MTTUtil changeIDToOriginal:group.objID]),@(group.objectVersion)] Completion:^(id response, NSError *error) {
-//                        if (!error)
-//                        {
-//                            if ([response count]) {
-//                                MTTGroupEntity* group = (MTTGroupEntity*)response[0];
-//                                if (group)
-//                                {
-//                                    [self addGroup:group];
-//                                    [[MTTDatabaseUtil instance] updateRecentGroup:group completion:^(NSError *error) {
-//                                        DDLog(@"insert group to database error.");
-//                                    }];
-//                                }
-//                            }
-//                            
-//                        }
-//                    }];
+
+                    GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] init];
+                    [request requestWithObject:@[@([MTTUtil changeIDToOriginal:group.objID]),@(group.objectVersion)] Completion:^(id response, NSError *error) {
+                        if (!error)
+                        {
+                            if ([response count]) {
+                                MTTGroupEntity* group = (MTTGroupEntity*)response[0];
+                                if (group)
+                                {
+                                    [self addGroup:group];
+                                    [[MTTDatabaseUtil instance] updateRecentGroup:group completion:^(NSError *error) {
+                                        DDLog(@"insert group to database error.");
+                                    }];
+                                }
+                            }
+                            
+                        }
+                    }];
 
                 }
             }];
@@ -127,30 +127,30 @@
 
 - (void)registerAPI
 {
-    //Fixme:here
-//    DDReceiveGroupAddMemberAPI* addmemberAPI = [[DDReceiveGroupAddMemberAPI alloc] init];
-//    [addmemberAPI registerAPIInAPIScheduleReceiveData:^(id object, NSError *error) {
-//        if (!error)
-//        {
-//            MTTGroupEntity* groupEntity = (MTTGroupEntity*)object;
-//            if (!groupEntity){
-//                return;
-//            }
-//            if ([self getGroupByGId:groupEntity.objID]){
-//                //自己本身就在组中
-//                
-//            } else{
-//                //自己被添加进组中
-//                groupEntity.lastUpdateTime = [[NSDate date] timeIntervalSince1970];
-//                [[DDGroupModule instance] addGroup:groupEntity];
-//                [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationRecentContactsUpdate object:nil];
-//            }
-//        }
-//        else
-//        {
-//            DDLog(@"error:%@",[error domain]);
-//        }
-//    }];
+    DDReceiveGroupAddMemberAPI* addmemberAPI = [[DDReceiveGroupAddMemberAPI alloc] init];
+    [addmemberAPI registerAPIInAPIScheduleReceiveData:^(id object, NSError *error) {
+        if (!error)
+        {
+            MTTGroupEntity* groupEntity = (MTTGroupEntity*)object;
+            if (!groupEntity){
+                return;
+            }
+            if ([self getGroupByGId:groupEntity.objID]){
+                //自己本身就在组中
+                
+            } else{
+                //自己被添加进组中
+                groupEntity.lastUpdateTime = [[NSDate date] timeIntervalSince1970];
+                [[DDGroupModule instance] addGroup:groupEntity];
+                [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationRecentContactsUpdate object:nil];
+            }
+            
+        }
+        else
+        {
+            DDLog(@"error:%@",[error domain]);
+        }
+    }];
     
     //弃用的方法
 //    DDReceiveGroupDeleteMemberAPI* deleteMemberAPI = [[DDReceiveGroupDeleteMemberAPI alloc] init];

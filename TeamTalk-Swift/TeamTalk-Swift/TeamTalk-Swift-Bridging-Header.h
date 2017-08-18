@@ -51,3 +51,7 @@
 
 //audio、videos
 #import "Encapsulator.h"
+
+
+//ViewControllers
+#import "ChattingMainViewController.h"

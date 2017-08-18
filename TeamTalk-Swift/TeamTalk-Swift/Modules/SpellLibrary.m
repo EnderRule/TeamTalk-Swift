@@ -8,6 +8,7 @@
 
 #import "SpellLibrary.h"
 #import "NSString+Additions.h"
+#import "TeamTalk_Swift-Swift.h"
 
 @implementation SpellLibrary
 {

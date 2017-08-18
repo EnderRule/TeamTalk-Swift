@@ -38,10 +38,6 @@
 		66686AA71F459ADC008B26BD /* UnAckMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA41F459ADC008B26BD /* UnAckMessageManager.m */; };
 		66686AAC1F45A769008B26BD /* ChattingModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA91F45A769008B26BD /* ChattingModule.m */; };
 		66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AAB1F45A769008B26BD /* ChattingEditModule.m */; };
-		66686AB21F45A873008B26BD /* DDChatTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AB11F45A873008B26BD /* DDChatTextCell.m */; };
-		66686AB51F45A979008B26BD /* DDChatBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AB41F45A979008B26BD /* DDChatBaseCell.m */; };
-		66686ABC1F45A9C0008B26BD /* MenuImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AB91F45A9C0008B26BD /* MenuImageView.m */; };
-		66686ABD1F45A9C0008B26BD /* RecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686ABB1F45A9C0008B26BD /* RecordingView.m */; };
 		66686AC11F45AA72008B26BD /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AC01F45AA72008B26BD /* TTTAttributedLabel.m */; };
 		66686ADD1F45AACC008B26BD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66686AC31F45AACC008B26BD /* Info.plist */; };
 		66686ADE1F45AACC008B26BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AC51F45AACC008B26BD /* MASCompositeConstraint.m */; };
@@ -56,6 +52,65 @@
 		66686AE71F45AACC008B26BD /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686ADC1F45AACC008B26BD /* ViewController+MASAdditions.m */; };
 		66686AEA1F45ABC3008B26BD /* SessionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AE91F45ABC3008B26BD /* SessionModule.m */; };
 		66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
+		66686AF11F4678CC008B26BD /* DDSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF01F4678CC008B26BD /* DDSearch.m */; };
+		66686AF41F46796E008B26BD /* ContactsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF31F46796E008B26BD /* ContactsModule.m */; };
+		66686B1F1F46900B008B26BD /* MenuImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B0B1F46900B008B26BD /* MenuImageView.m */; };
+		66686B201F46900B008B26BD /* RecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B0D1F46900B008B26BD /* RecordingView.m */; };
+		66686B211F46900B008B26BD /* DDChatBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B0F1F46900B008B26BD /* DDChatBaseCell.m */; };
+		66686B221F46900B008B26BD /* DDChatImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B121F46900B008B26BD /* DDChatImageCell.m */; };
+		66686B231F46900B008B26BD /* DDChatTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B141F46900B008B26BD /* DDChatTextCell.m */; };
+		66686B241F46900B008B26BD /* DDChatVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B161F46900B008B26BD /* DDChatVoiceCell.m */; };
+		66686B251F46900B008B26BD /* DDEmotionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B181F46900B008B26BD /* DDEmotionCell.m */; };
+		66686B261F46900B008B26BD /* DDPersonEditCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B1A1F46900B008B26BD /* DDPersonEditCollectionCell.m */; };
+		66686B271F46900B008B26BD /* DDPromptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B1C1F46900B008B26BD /* DDPromptCell.m */; };
+		66686B281F46900B008B26BD /* MTTGroupInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B1E1F46900B008B26BD /* MTTGroupInfoCell.m */; };
+		66686B2B1F469035008B26BD /* EditContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B2A1F469035008B26BD /* EditContactsCell.m */; };
+		66686B2E1F46904D008B26BD /* EditGroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B2D1F46904D008B26BD /* EditGroupViewCell.m */; };
+		66686B311F4690E5008B26BD /* ChattingMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B301F4690E5008B26BD /* ChattingMainViewController.m */; };
+		66686B341F46910F008B26BD /* MTTBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B331F46910F008B26BD /* MTTBaseViewController.m */; };
+		66686B371F469119008B26BD /* MTTBaseScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B361F469119008B26BD /* MTTBaseScrollViewController.m */; };
+		66686B3A1F469122008B26BD /* MTTPullScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B391F469122008B26BD /* MTTPullScrollViewController.m */; };
+		66686B421F4691CA008B26BD /* JSDismissiveTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B3D1F4691CA008B26BD /* JSDismissiveTextView.m */; };
+		66686B431F4691CA008B26BD /* JSMessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B3F1F4691CA008B26BD /* JSMessageInputView.m */; };
+		66686B441F4691CA008B26BD /* JSMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B411F4691CA008B26BD /* JSMessageTextView.m */; };
+		66686B4E1F469289008B26BD /* MTTAvatarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B471F469289008B26BD /* MTTAvatarManager.m */; };
+		66686B4F1F469289008B26BD /* MTTAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B491F469289008B26BD /* MTTAvatarImageView.m */; };
+		66686B501F469289008B26BD /* MTTLogoAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B4B1F469289008B26BD /* MTTLogoAnimateView.m */; };
+		66686B511F469289008B26BD /* TouchDownGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B4D1F469289008B26BD /* TouchDownGestureRecognizer.m */; };
+		66686B581F469402008B26BD /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B551F469402008B26BD /* HPGrowingTextView.m */; };
+		66686B591F469402008B26BD /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B571F469402008B26BD /* HPTextViewInternal.m */; };
+		66686B601F469626008B26BD /* ChatUtilityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B5B1F469626008B26BD /* ChatUtilityViewController.m */; };
+		66686B611F469626008B26BD /* DDChatImagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B5D1F469626008B26BD /* DDChatImagePreviewViewController.m */; };
+		66686B621F469626008B26BD /* EmotionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B5F1F469626008B26BD /* EmotionsViewController.m */; };
+		66686B691F46967C008B26BD /* bgImage_HL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686B651F46967C008B26BD /* bgImage_HL@2x.png */; };
+		66686B6A1F46967C008B26BD /* cellLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686B661F46967C008B26BD /* cellLine@2x.png */; };
+		66686B6B1F46967C008B26BD /* LCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B681F46967C008B26BD /* LCActionSheet.m */; };
+		66686B831F4696EC008B26BD /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B701F4696EC008B26BD /* MWCaptionView.m */; };
+		66686B841F4696EC008B26BD /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B731F4696EC008B26BD /* MWGridCell.m */; };
+		66686B851F4696EC008B26BD /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B751F4696EC008B26BD /* MWGridViewController.m */; };
+		66686B861F4696EC008B26BD /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B771F4696EC008B26BD /* MWPhoto.m */; };
+		66686B871F4696EC008B26BD /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B791F4696EC008B26BD /* MWPhotoBrowser.m */; };
+		66686B881F4696EC008B26BD /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B7D1F4696EC008B26BD /* MWTapDetectingImageView.m */; };
+		66686B891F4696EC008B26BD /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B7F1F4696EC008B26BD /* MWTapDetectingView.m */; };
+		66686B8A1F4696EC008B26BD /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B811F4696EC008B26BD /* MWZoomingScrollView.m */; };
+		66686B8B1F4696EC008B26BD /* MWPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66686B821F4696EC008B26BD /* MWPhotoBrowser.bundle */; };
+		66686B8F1F4697C7008B26BD /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B8E1F4697C7008B26BD /* MBProgressHUD.m */; };
+		66686B921F469B2E008B26BD /* DDChattingEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B911F469B2E008B26BD /* DDChattingEditViewController.m */; };
+		66686BB11F469CB2008B26BD /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B961F469CB2008B26BD /* NSIndexPath+PSTCollectionViewAdditions.m */; };
+		66686BB21F469CB2008B26BD /* PSTCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B981F469CB2008B26BD /* PSTCollectionView.m */; };
+		66686BB31F469CB2008B26BD /* PSTCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B9A1F469CB2008B26BD /* PSTCollectionViewCell.m */; };
+		66686BB41F469CB2008B26BD /* PSTCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B9D1F469CB2008B26BD /* PSTCollectionViewController.m */; };
+		66686BB51F469CB2008B26BD /* PSTCollectionViewData.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B9F1F469CB2008B26BD /* PSTCollectionViewData.m */; };
+		66686BB61F469CB2008B26BD /* PSTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BA11F469CB2008B26BD /* PSTCollectionViewFlowLayout.m */; };
+		66686BB71F469CB2008B26BD /* PSTCollectionViewItemKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BA31F469CB2008B26BD /* PSTCollectionViewItemKey.m */; };
+		66686BB81F469CB2008B26BD /* PSTCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BA61F469CB2008B26BD /* PSTCollectionViewLayout.m */; };
+		66686BB91F469CB2008B26BD /* PSTCollectionViewUpdateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BA81F469CB2008B26BD /* PSTCollectionViewUpdateItem.m */; };
+		66686BBA1F469CB2008B26BD /* PSTGridLayoutInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BAA1F469CB2008B26BD /* PSTGridLayoutInfo.m */; };
+		66686BBB1F469CB2008B26BD /* PSTGridLayoutItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BAC1F469CB2008B26BD /* PSTGridLayoutItem.m */; };
+		66686BBC1F469CB2008B26BD /* PSTGridLayoutRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BAE1F469CB2008B26BD /* PSTGridLayoutRow.m */; };
+		66686BBD1F469CB2008B26BD /* PSTGridLayoutSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BB01F469CB2008B26BD /* PSTGridLayoutSection.m */; };
+		66686BC21F469CDA008B26BD /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BC11F469CDA008B26BD /* DACircularProgressView.m */; };
+		66686BC51F469E19008B26BD /* DDContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BC41F469E19008B26BD /* DDContactsCell.m */; };
 		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
 		66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3111F428700008E9590 /* AppDelegate.swift */; };
 		66E6D3141F428700008E9590 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3131F428700008E9590 /* ViewController.swift */; };
@@ -344,15 +399,6 @@
 		66686AA91F45A769008B26BD /* ChattingModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingModule.m; sourceTree = "<group>"; };
 		66686AAA1F45A769008B26BD /* ChattingEditModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingEditModule.h; sourceTree = "<group>"; };
 		66686AAB1F45A769008B26BD /* ChattingEditModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingEditModule.m; sourceTree = "<group>"; };
-		66686AB01F45A873008B26BD /* DDChatTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatTextCell.h; sourceTree = "<group>"; };
-		66686AB11F45A873008B26BD /* DDChatTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChatTextCell.m; sourceTree = "<group>"; };
-		66686AB31F45A979008B26BD /* DDChatBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatBaseCell.h; sourceTree = "<group>"; };
-		66686AB41F45A979008B26BD /* DDChatBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChatBaseCell.m; sourceTree = "<group>"; };
-		66686AB61F45A995008B26BD /* DDChatCellProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDChatCellProtocol.h; sourceTree = "<group>"; };
-		66686AB81F45A9C0008B26BD /* MenuImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuImageView.h; sourceTree = "<group>"; };
-		66686AB91F45A9C0008B26BD /* MenuImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuImageView.m; sourceTree = "<group>"; };
-		66686ABA1F45A9C0008B26BD /* RecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingView.h; sourceTree = "<group>"; };
-		66686ABB1F45A9C0008B26BD /* RecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingView.m; sourceTree = "<group>"; };
 		66686ABF1F45AA72008B26BD /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		66686AC01F45AA72008B26BD /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		66686AC31F45AACC008B26BD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -385,6 +431,127 @@
 		66686AE91F45ABC3008B26BD /* SessionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionModule.m; sourceTree = "<group>"; };
 		66686AEB1F45AE71008B26BD /* NSDate+DDAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DDAddition.h"; sourceTree = "<group>"; };
 		66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DDAddition.m"; sourceTree = "<group>"; };
+		66686AEF1F4678CC008B26BD /* DDSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSearch.h; sourceTree = "<group>"; };
+		66686AF01F4678CC008B26BD /* DDSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDSearch.m; sourceTree = "<group>"; };
+		66686AF21F46796E008B26BD /* ContactsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsModule.h; sourceTree = "<group>"; };
+		66686AF31F46796E008B26BD /* ContactsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsModule.m; sourceTree = "<group>"; };
+		66686B0A1F46900B008B26BD /* MenuImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuImageView.h; sourceTree = "<group>"; };
+		66686B0B1F46900B008B26BD /* MenuImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuImageView.m; sourceTree = "<group>"; };
+		66686B0C1F46900B008B26BD /* RecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingView.h; sourceTree = "<group>"; };
+		66686B0D1F46900B008B26BD /* RecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingView.m; sourceTree = "<group>"; };
+		66686B0E1F46900B008B26BD /* DDChatBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatBaseCell.h; sourceTree = "<group>"; };
+		66686B0F1F46900B008B26BD /* DDChatBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChatBaseCell.m; sourceTree = "<group>"; };
+		66686B101F46900B008B26BD /* DDChatCellProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatCellProtocol.h; sourceTree = "<group>"; };
+		66686B111F46900B008B26BD /* DDChatImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatImageCell.h; sourceTree = "<group>"; };
+		66686B121F46900B008B26BD /* DDChatImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChatImageCell.m; sourceTree = "<group>"; };
+		66686B131F46900B008B26BD /* DDChatTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatTextCell.h; sourceTree = "<group>"; };
+		66686B141F46900B008B26BD /* DDChatTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChatTextCell.m; sourceTree = "<group>"; };
+		66686B151F46900B008B26BD /* DDChatVoiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatVoiceCell.h; sourceTree = "<group>"; };
+		66686B161F46900B008B26BD /* DDChatVoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChatVoiceCell.m; sourceTree = "<group>"; };
+		66686B171F46900B008B26BD /* DDEmotionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDEmotionCell.h; sourceTree = "<group>"; };
+		66686B181F46900B008B26BD /* DDEmotionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDEmotionCell.m; sourceTree = "<group>"; };
+		66686B191F46900B008B26BD /* DDPersonEditCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPersonEditCollectionCell.h; sourceTree = "<group>"; };
+		66686B1A1F46900B008B26BD /* DDPersonEditCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPersonEditCollectionCell.m; sourceTree = "<group>"; };
+		66686B1B1F46900B008B26BD /* DDPromptCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPromptCell.h; sourceTree = "<group>"; };
+		66686B1C1F46900B008B26BD /* DDPromptCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPromptCell.m; sourceTree = "<group>"; };
+		66686B1D1F46900B008B26BD /* MTTGroupInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTGroupInfoCell.h; sourceTree = "<group>"; };
+		66686B1E1F46900B008B26BD /* MTTGroupInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTGroupInfoCell.m; sourceTree = "<group>"; };
+		66686B291F469035008B26BD /* EditContactsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditContactsCell.h; sourceTree = "<group>"; };
+		66686B2A1F469035008B26BD /* EditContactsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditContactsCell.m; sourceTree = "<group>"; };
+		66686B2C1F46904D008B26BD /* EditGroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditGroupViewCell.h; sourceTree = "<group>"; };
+		66686B2D1F46904D008B26BD /* EditGroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditGroupViewCell.m; sourceTree = "<group>"; };
+		66686B2F1F4690E5008B26BD /* ChattingMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingMainViewController.h; sourceTree = "<group>"; };
+		66686B301F4690E5008B26BD /* ChattingMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingMainViewController.m; sourceTree = "<group>"; };
+		66686B321F46910F008B26BD /* MTTBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTBaseViewController.h; sourceTree = "<group>"; };
+		66686B331F46910F008B26BD /* MTTBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTBaseViewController.m; sourceTree = "<group>"; };
+		66686B351F469119008B26BD /* MTTBaseScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTBaseScrollViewController.h; sourceTree = "<group>"; };
+		66686B361F469119008B26BD /* MTTBaseScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTBaseScrollViewController.m; sourceTree = "<group>"; };
+		66686B381F469122008B26BD /* MTTPullScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTPullScrollViewController.h; sourceTree = "<group>"; };
+		66686B391F469122008B26BD /* MTTPullScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTPullScrollViewController.m; sourceTree = "<group>"; };
+		66686B3C1F4691CA008B26BD /* JSDismissiveTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDismissiveTextView.h; sourceTree = "<group>"; };
+		66686B3D1F4691CA008B26BD /* JSDismissiveTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDismissiveTextView.m; sourceTree = "<group>"; };
+		66686B3E1F4691CA008B26BD /* JSMessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMessageInputView.h; sourceTree = "<group>"; };
+		66686B3F1F4691CA008B26BD /* JSMessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSMessageInputView.m; sourceTree = "<group>"; };
+		66686B401F4691CA008B26BD /* JSMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMessageTextView.h; sourceTree = "<group>"; };
+		66686B411F4691CA008B26BD /* JSMessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSMessageTextView.m; sourceTree = "<group>"; };
+		66686B461F469289008B26BD /* MTTAvatarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTAvatarManager.h; sourceTree = "<group>"; };
+		66686B471F469289008B26BD /* MTTAvatarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTAvatarManager.m; sourceTree = "<group>"; };
+		66686B481F469289008B26BD /* MTTAvatarImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTAvatarImageView.h; sourceTree = "<group>"; };
+		66686B491F469289008B26BD /* MTTAvatarImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTAvatarImageView.m; sourceTree = "<group>"; };
+		66686B4A1F469289008B26BD /* MTTLogoAnimateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTLogoAnimateView.h; sourceTree = "<group>"; };
+		66686B4B1F469289008B26BD /* MTTLogoAnimateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTLogoAnimateView.m; sourceTree = "<group>"; };
+		66686B4C1F469289008B26BD /* TouchDownGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDownGestureRecognizer.h; sourceTree = "<group>"; };
+		66686B4D1F469289008B26BD /* TouchDownGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDownGestureRecognizer.m; sourceTree = "<group>"; };
+		66686B541F469402008B26BD /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		66686B551F469402008B26BD /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		66686B561F469402008B26BD /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		66686B571F469402008B26BD /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
+		66686B5A1F469626008B26BD /* ChatUtilityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUtilityViewController.h; sourceTree = "<group>"; };
+		66686B5B1F469626008B26BD /* ChatUtilityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatUtilityViewController.m; sourceTree = "<group>"; };
+		66686B5C1F469626008B26BD /* DDChatImagePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChatImagePreviewViewController.h; sourceTree = "<group>"; };
+		66686B5D1F469626008B26BD /* DDChatImagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChatImagePreviewViewController.m; sourceTree = "<group>"; };
+		66686B5E1F469626008B26BD /* EmotionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmotionsViewController.h; sourceTree = "<group>"; };
+		66686B5F1F469626008B26BD /* EmotionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmotionsViewController.m; sourceTree = "<group>"; };
+		66686B651F46967C008B26BD /* bgImage_HL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgImage_HL@2x.png"; sourceTree = "<group>"; };
+		66686B661F46967C008B26BD /* cellLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cellLine@2x.png"; sourceTree = "<group>"; };
+		66686B671F46967C008B26BD /* LCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCActionSheet.h; sourceTree = "<group>"; };
+		66686B681F46967C008B26BD /* LCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCActionSheet.m; sourceTree = "<group>"; };
+		66686B6F1F4696EC008B26BD /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
+		66686B701F4696EC008B26BD /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
+		66686B711F4696EC008B26BD /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
+		66686B721F4696EC008B26BD /* MWGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridCell.h; sourceTree = "<group>"; };
+		66686B731F4696EC008B26BD /* MWGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridCell.m; sourceTree = "<group>"; };
+		66686B741F4696EC008B26BD /* MWGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridViewController.h; sourceTree = "<group>"; };
+		66686B751F4696EC008B26BD /* MWGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridViewController.m; sourceTree = "<group>"; };
+		66686B761F4696EC008B26BD /* MWPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhoto.h; sourceTree = "<group>"; };
+		66686B771F4696EC008B26BD /* MWPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhoto.m; sourceTree = "<group>"; };
+		66686B781F4696EC008B26BD /* MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowser.h; sourceTree = "<group>"; };
+		66686B791F4696EC008B26BD /* MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhotoBrowser.m; sourceTree = "<group>"; };
+		66686B7A1F4696EC008B26BD /* MWPhotoBrowserPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowserPrivate.h; sourceTree = "<group>"; };
+		66686B7B1F4696EC008B26BD /* MWPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoProtocol.h; sourceTree = "<group>"; };
+		66686B7C1F4696EC008B26BD /* MWTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingImageView.h; sourceTree = "<group>"; };
+		66686B7D1F4696EC008B26BD /* MWTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingImageView.m; sourceTree = "<group>"; };
+		66686B7E1F4696EC008B26BD /* MWTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingView.h; sourceTree = "<group>"; };
+		66686B7F1F4696EC008B26BD /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingView.m; sourceTree = "<group>"; };
+		66686B801F4696EC008B26BD /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZoomingScrollView.h; sourceTree = "<group>"; };
+		66686B811F4696EC008B26BD /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZoomingScrollView.m; sourceTree = "<group>"; };
+		66686B821F4696EC008B26BD /* MWPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWPhotoBrowser.bundle; sourceTree = "<group>"; };
+		66686B8D1F4697C7008B26BD /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		66686B8E1F4697C7008B26BD /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		66686B901F469B2E008B26BD /* DDChattingEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDChattingEditViewController.h; sourceTree = "<group>"; };
+		66686B911F469B2E008B26BD /* DDChattingEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDChattingEditViewController.m; sourceTree = "<group>"; };
+		66686B951F469CB2008B26BD /* NSIndexPath+PSTCollectionViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexPath+PSTCollectionViewAdditions.h"; sourceTree = "<group>"; };
+		66686B961F469CB2008B26BD /* NSIndexPath+PSTCollectionViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexPath+PSTCollectionViewAdditions.m"; sourceTree = "<group>"; };
+		66686B971F469CB2008B26BD /* PSTCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionView.h; sourceTree = "<group>"; };
+		66686B981F469CB2008B26BD /* PSTCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionView.m; sourceTree = "<group>"; };
+		66686B991F469CB2008B26BD /* PSTCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewCell.h; sourceTree = "<group>"; };
+		66686B9A1F469CB2008B26BD /* PSTCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewCell.m; sourceTree = "<group>"; };
+		66686B9B1F469CB2008B26BD /* PSTCollectionViewCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewCommon.h; sourceTree = "<group>"; };
+		66686B9C1F469CB2008B26BD /* PSTCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewController.h; sourceTree = "<group>"; };
+		66686B9D1F469CB2008B26BD /* PSTCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewController.m; sourceTree = "<group>"; };
+		66686B9E1F469CB2008B26BD /* PSTCollectionViewData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewData.h; sourceTree = "<group>"; };
+		66686B9F1F469CB2008B26BD /* PSTCollectionViewData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewData.m; sourceTree = "<group>"; };
+		66686BA01F469CB2008B26BD /* PSTCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		66686BA11F469CB2008B26BD /* PSTCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		66686BA21F469CB2008B26BD /* PSTCollectionViewItemKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewItemKey.h; sourceTree = "<group>"; };
+		66686BA31F469CB2008B26BD /* PSTCollectionViewItemKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewItemKey.m; sourceTree = "<group>"; };
+		66686BA41F469CB2008B26BD /* PSTCollectionViewLayout+Internals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PSTCollectionViewLayout+Internals.h"; sourceTree = "<group>"; };
+		66686BA51F469CB2008B26BD /* PSTCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewLayout.h; sourceTree = "<group>"; };
+		66686BA61F469CB2008B26BD /* PSTCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewLayout.m; sourceTree = "<group>"; };
+		66686BA71F469CB2008B26BD /* PSTCollectionViewUpdateItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTCollectionViewUpdateItem.h; sourceTree = "<group>"; };
+		66686BA81F469CB2008B26BD /* PSTCollectionViewUpdateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTCollectionViewUpdateItem.m; sourceTree = "<group>"; };
+		66686BA91F469CB2008B26BD /* PSTGridLayoutInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutInfo.h; sourceTree = "<group>"; };
+		66686BAA1F469CB2008B26BD /* PSTGridLayoutInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutInfo.m; sourceTree = "<group>"; };
+		66686BAB1F469CB2008B26BD /* PSTGridLayoutItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutItem.h; sourceTree = "<group>"; };
+		66686BAC1F469CB2008B26BD /* PSTGridLayoutItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutItem.m; sourceTree = "<group>"; };
+		66686BAD1F469CB2008B26BD /* PSTGridLayoutRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutRow.h; sourceTree = "<group>"; };
+		66686BAE1F469CB2008B26BD /* PSTGridLayoutRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutRow.m; sourceTree = "<group>"; };
+		66686BAF1F469CB2008B26BD /* PSTGridLayoutSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutSection.h; sourceTree = "<group>"; };
+		66686BB01F469CB2008B26BD /* PSTGridLayoutSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutSection.m; sourceTree = "<group>"; };
+		66686BC01F469CDA008B26BD /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
+		66686BC11F469CDA008B26BD /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		66686BC31F469E19008B26BD /* DDContactsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContactsCell.h; sourceTree = "<group>"; };
+		66686BC41F469E19008B26BD /* DDContactsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContactsCell.m; sourceTree = "<group>"; };
 		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
 		66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamTalk-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E6D3111F428700008E9590 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -901,33 +1068,15 @@
 		66686AAE1F45A84E008B26BD /* Viewcontrollers */ = {
 			isa = PBXGroup;
 			children = (
-				66686AAF1F45A85F008B26BD /* Cells */,
+				66686B321F46910F008B26BD /* MTTBaseViewController.h */,
+				66686B331F46910F008B26BD /* MTTBaseViewController.m */,
+				66686B351F469119008B26BD /* MTTBaseScrollViewController.h */,
+				66686B361F469119008B26BD /* MTTBaseScrollViewController.m */,
+				66686B381F469122008B26BD /* MTTPullScrollViewController.h */,
+				66686B391F469122008B26BD /* MTTPullScrollViewController.m */,
+				66686B071F46900B008B26BD /* Chatting */,
 			);
 			path = Viewcontrollers;
-			sourceTree = "<group>";
-		};
-		66686AAF1F45A85F008B26BD /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				66686AB61F45A995008B26BD /* DDChatCellProtocol.h */,
-				66686AB31F45A979008B26BD /* DDChatBaseCell.h */,
-				66686AB41F45A979008B26BD /* DDChatBaseCell.m */,
-				66686AB01F45A873008B26BD /* DDChatTextCell.h */,
-				66686AB11F45A873008B26BD /* DDChatTextCell.m */,
-				66686AB71F45A9C0008B26BD /* Control */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		66686AB71F45A9C0008B26BD /* Control */ = {
-			isa = PBXGroup;
-			children = (
-				66686AB81F45A9C0008B26BD /* MenuImageView.h */,
-				66686AB91F45A9C0008B26BD /* MenuImageView.m */,
-				66686ABA1F45A9C0008B26BD /* RecordingView.h */,
-				66686ABB1F45A9C0008B26BD /* RecordingView.m */,
-			);
-			path = Control;
 			sourceTree = "<group>";
 		};
 		66686ABE1F45AA72008B26BD /* TTTAttributedLabel */ = {
@@ -970,6 +1119,255 @@
 				66686ADC1F45AACC008B26BD /* ViewController+MASAdditions.m */,
 			);
 			path = Masonry;
+			sourceTree = "<group>";
+		};
+		66686AEE1F4678AD008B26BD /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				66F10A731F43F8DA0035C888 /* SpellLibrary.h */,
+				66F10A741F43F8DA0035C888 /* SpellLibrary.m */,
+				66686AEF1F4678CC008B26BD /* DDSearch.h */,
+				66686AF01F4678CC008B26BD /* DDSearch.m */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		66686B071F46900B008B26BD /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+				66686B2F1F4690E5008B26BD /* ChattingMainViewController.h */,
+				66686B301F4690E5008B26BD /* ChattingMainViewController.m */,
+				66686B5A1F469626008B26BD /* ChatUtilityViewController.h */,
+				66686B5B1F469626008B26BD /* ChatUtilityViewController.m */,
+				66686B5C1F469626008B26BD /* DDChatImagePreviewViewController.h */,
+				66686B5D1F469626008B26BD /* DDChatImagePreviewViewController.m */,
+				66686B5E1F469626008B26BD /* EmotionsViewController.h */,
+				66686B5F1F469626008B26BD /* EmotionsViewController.m */,
+				66686B901F469B2E008B26BD /* DDChattingEditViewController.h */,
+				66686B911F469B2E008B26BD /* DDChattingEditViewController.m */,
+				66686B081F46900B008B26BD /* Cells */,
+			);
+			path = Chatting;
+			sourceTree = "<group>";
+		};
+		66686B081F46900B008B26BD /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				66686B091F46900B008B26BD /* Control */,
+				66686B0E1F46900B008B26BD /* DDChatBaseCell.h */,
+				66686B0F1F46900B008B26BD /* DDChatBaseCell.m */,
+				66686B101F46900B008B26BD /* DDChatCellProtocol.h */,
+				66686B111F46900B008B26BD /* DDChatImageCell.h */,
+				66686B121F46900B008B26BD /* DDChatImageCell.m */,
+				66686B131F46900B008B26BD /* DDChatTextCell.h */,
+				66686B141F46900B008B26BD /* DDChatTextCell.m */,
+				66686B151F46900B008B26BD /* DDChatVoiceCell.h */,
+				66686B161F46900B008B26BD /* DDChatVoiceCell.m */,
+				66686B171F46900B008B26BD /* DDEmotionCell.h */,
+				66686B181F46900B008B26BD /* DDEmotionCell.m */,
+				66686B191F46900B008B26BD /* DDPersonEditCollectionCell.h */,
+				66686B1A1F46900B008B26BD /* DDPersonEditCollectionCell.m */,
+				66686B1B1F46900B008B26BD /* DDPromptCell.h */,
+				66686B1C1F46900B008B26BD /* DDPromptCell.m */,
+				66686B1D1F46900B008B26BD /* MTTGroupInfoCell.h */,
+				66686B1E1F46900B008B26BD /* MTTGroupInfoCell.m */,
+				66686B291F469035008B26BD /* EditContactsCell.h */,
+				66686B2A1F469035008B26BD /* EditContactsCell.m */,
+				66686BC31F469E19008B26BD /* DDContactsCell.h */,
+				66686BC41F469E19008B26BD /* DDContactsCell.m */,
+				66686B2C1F46904D008B26BD /* EditGroupViewCell.h */,
+				66686B2D1F46904D008B26BD /* EditGroupViewCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		66686B091F46900B008B26BD /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				66686B0A1F46900B008B26BD /* MenuImageView.h */,
+				66686B0B1F46900B008B26BD /* MenuImageView.m */,
+				66686B0C1F46900B008B26BD /* RecordingView.h */,
+				66686B0D1F46900B008B26BD /* RecordingView.m */,
+			);
+			path = Control;
+			sourceTree = "<group>";
+		};
+		66686B3B1F4691BF008B26BD /* JSMessage */ = {
+			isa = PBXGroup;
+			children = (
+				66686B3C1F4691CA008B26BD /* JSDismissiveTextView.h */,
+				66686B3D1F4691CA008B26BD /* JSDismissiveTextView.m */,
+				66686B3E1F4691CA008B26BD /* JSMessageInputView.h */,
+				66686B3F1F4691CA008B26BD /* JSMessageInputView.m */,
+				66686B401F4691CA008B26BD /* JSMessageTextView.h */,
+				66686B411F4691CA008B26BD /* JSMessageTextView.m */,
+			);
+			path = JSMessage;
+			sourceTree = "<group>";
+		};
+		66686B451F469280008B26BD /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				66686B461F469289008B26BD /* MTTAvatarManager.h */,
+				66686B471F469289008B26BD /* MTTAvatarManager.m */,
+				66686B481F469289008B26BD /* MTTAvatarImageView.h */,
+				66686B491F469289008B26BD /* MTTAvatarImageView.m */,
+				66686B4A1F469289008B26BD /* MTTLogoAnimateView.h */,
+				66686B4B1F469289008B26BD /* MTTLogoAnimateView.m */,
+				66686B4C1F469289008B26BD /* TouchDownGestureRecognizer.h */,
+				66686B4D1F469289008B26BD /* TouchDownGestureRecognizer.m */,
+			);
+			path = Control;
+			sourceTree = "<group>";
+		};
+		66686B521F469402008B26BD /* HPGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				66686B531F469402008B26BD /* class */,
+			);
+			path = HPGrowingTextView;
+			sourceTree = "<group>";
+		};
+		66686B531F469402008B26BD /* class */ = {
+			isa = PBXGroup;
+			children = (
+				66686B541F469402008B26BD /* HPGrowingTextView.h */,
+				66686B551F469402008B26BD /* HPGrowingTextView.m */,
+				66686B561F469402008B26BD /* HPTextViewInternal.h */,
+				66686B571F469402008B26BD /* HPTextViewInternal.m */,
+			);
+			path = class;
+			sourceTree = "<group>";
+		};
+		66686B631F46967C008B26BD /* LCActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				66686B641F46967C008B26BD /* Image */,
+				66686B671F46967C008B26BD /* LCActionSheet.h */,
+				66686B681F46967C008B26BD /* LCActionSheet.m */,
+			);
+			path = LCActionSheet;
+			sourceTree = "<group>";
+		};
+		66686B641F46967C008B26BD /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				66686B651F46967C008B26BD /* bgImage_HL@2x.png */,
+				66686B661F46967C008B26BD /* cellLine@2x.png */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		66686B6C1F4696EC008B26BD /* MWPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				66686B6D1F4696EC008B26BD /* MWPhotoBrowser */,
+			);
+			path = MWPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		66686B6D1F4696EC008B26BD /* MWPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				66686B6E1F4696EC008B26BD /* Classes */,
+				66686B821F4696EC008B26BD /* MWPhotoBrowser.bundle */,
+			);
+			path = MWPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		66686B6E1F4696EC008B26BD /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				66686B6F1F4696EC008B26BD /* MWCaptionView.h */,
+				66686B701F4696EC008B26BD /* MWCaptionView.m */,
+				66686B711F4696EC008B26BD /* MWCommon.h */,
+				66686B721F4696EC008B26BD /* MWGridCell.h */,
+				66686B731F4696EC008B26BD /* MWGridCell.m */,
+				66686B741F4696EC008B26BD /* MWGridViewController.h */,
+				66686B751F4696EC008B26BD /* MWGridViewController.m */,
+				66686B761F4696EC008B26BD /* MWPhoto.h */,
+				66686B771F4696EC008B26BD /* MWPhoto.m */,
+				66686B781F4696EC008B26BD /* MWPhotoBrowser.h */,
+				66686B791F4696EC008B26BD /* MWPhotoBrowser.m */,
+				66686B7A1F4696EC008B26BD /* MWPhotoBrowserPrivate.h */,
+				66686B7B1F4696EC008B26BD /* MWPhotoProtocol.h */,
+				66686B7C1F4696EC008B26BD /* MWTapDetectingImageView.h */,
+				66686B7D1F4696EC008B26BD /* MWTapDetectingImageView.m */,
+				66686B7E1F4696EC008B26BD /* MWTapDetectingView.h */,
+				66686B7F1F4696EC008B26BD /* MWTapDetectingView.m */,
+				66686B801F4696EC008B26BD /* MWZoomingScrollView.h */,
+				66686B811F4696EC008B26BD /* MWZoomingScrollView.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		66686B8C1F4697C7008B26BD /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				66686B8D1F4697C7008B26BD /* MBProgressHUD.h */,
+				66686B8E1F4697C7008B26BD /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		66686B931F469CB2008B26BD /* PSTCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				66686B941F469CB2008B26BD /* PSTCollectionView */,
+			);
+			path = PSTCollectionView;
+			sourceTree = "<group>";
+		};
+		66686B941F469CB2008B26BD /* PSTCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				66686B951F469CB2008B26BD /* NSIndexPath+PSTCollectionViewAdditions.h */,
+				66686B961F469CB2008B26BD /* NSIndexPath+PSTCollectionViewAdditions.m */,
+				66686B971F469CB2008B26BD /* PSTCollectionView.h */,
+				66686B981F469CB2008B26BD /* PSTCollectionView.m */,
+				66686B991F469CB2008B26BD /* PSTCollectionViewCell.h */,
+				66686B9A1F469CB2008B26BD /* PSTCollectionViewCell.m */,
+				66686B9B1F469CB2008B26BD /* PSTCollectionViewCommon.h */,
+				66686B9C1F469CB2008B26BD /* PSTCollectionViewController.h */,
+				66686B9D1F469CB2008B26BD /* PSTCollectionViewController.m */,
+				66686B9E1F469CB2008B26BD /* PSTCollectionViewData.h */,
+				66686B9F1F469CB2008B26BD /* PSTCollectionViewData.m */,
+				66686BA01F469CB2008B26BD /* PSTCollectionViewFlowLayout.h */,
+				66686BA11F469CB2008B26BD /* PSTCollectionViewFlowLayout.m */,
+				66686BA21F469CB2008B26BD /* PSTCollectionViewItemKey.h */,
+				66686BA31F469CB2008B26BD /* PSTCollectionViewItemKey.m */,
+				66686BA41F469CB2008B26BD /* PSTCollectionViewLayout+Internals.h */,
+				66686BA51F469CB2008B26BD /* PSTCollectionViewLayout.h */,
+				66686BA61F469CB2008B26BD /* PSTCollectionViewLayout.m */,
+				66686BA71F469CB2008B26BD /* PSTCollectionViewUpdateItem.h */,
+				66686BA81F469CB2008B26BD /* PSTCollectionViewUpdateItem.m */,
+				66686BA91F469CB2008B26BD /* PSTGridLayoutInfo.h */,
+				66686BAA1F469CB2008B26BD /* PSTGridLayoutInfo.m */,
+				66686BAB1F469CB2008B26BD /* PSTGridLayoutItem.h */,
+				66686BAC1F469CB2008B26BD /* PSTGridLayoutItem.m */,
+				66686BAD1F469CB2008B26BD /* PSTGridLayoutRow.h */,
+				66686BAE1F469CB2008B26BD /* PSTGridLayoutRow.m */,
+				66686BAF1F469CB2008B26BD /* PSTGridLayoutSection.h */,
+				66686BB01F469CB2008B26BD /* PSTGridLayoutSection.m */,
+			);
+			path = PSTCollectionView;
+			sourceTree = "<group>";
+		};
+		66686BBE1F469CDA008B26BD /* DACircularProgress */ = {
+			isa = PBXGroup;
+			children = (
+				66686BBF1F469CDA008B26BD /* DACircularProgress */,
+			);
+			path = DACircularProgress;
+			sourceTree = "<group>";
+		};
+		66686BBF1F469CDA008B26BD /* DACircularProgress */ = {
+			isa = PBXGroup;
+			children = (
+				66686BC01F469CDA008B26BD /* DACircularProgressView.h */,
+				66686BC11F469CDA008B26BD /* DACircularProgressView.m */,
+			);
+			path = DACircularProgress;
 			sourceTree = "<group>";
 		};
 		66E6D3051F428700008E9590 = {
@@ -1044,6 +1442,11 @@
 		66E6D3571F428990008E9590 /* ThridPartys */ = {
 			isa = PBXGroup;
 			children = (
+				66686BBE1F469CDA008B26BD /* DACircularProgress */,
+				66686B931F469CB2008B26BD /* PSTCollectionView */,
+				66686B8C1F4697C7008B26BD /* MBProgressHUD */,
+				66686B6C1F4696EC008B26BD /* MWPhotoBrowser */,
+				66686B521F469402008B26BD /* HPGrowingTextView */,
 				66686AC21F45AACC008B26BD /* Masonry */,
 				66686ABE1F45AA72008B26BD /* TTTAttributedLabel */,
 				66F10FAC1F449F700035C888 /* Security */,
@@ -1129,6 +1532,7 @@
 		66E6D3C11F4290FB008E9590 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				66686AEE1F4678AD008B26BD /* Search */,
 				66686A9E1F459AD2008B26BD /* Message */,
 				66F10A4E1F43EF990035C888 /* LoginModule.h */,
 				66F10A4F1F43EF990035C888 /* LoginModule.m */,
@@ -1136,8 +1540,6 @@
 				66F10A711F43F8840035C888 /* DDUserModule.m */,
 				66F10A761F43F9CE0035C888 /* DDGroupModule.h */,
 				66F10A771F43F9CE0035C888 /* DDGroupModule.m */,
-				66F10A731F43F8DA0035C888 /* SpellLibrary.h */,
-				66F10A741F43F8DA0035C888 /* SpellLibrary.m */,
 				66686A601F4522B5008B26BD /* MTTBubbleModule.h */,
 				66686A611F4522B5008B26BD /* MTTBubbleModule.m */,
 				66686A661F452310008B26BD /* EmotionsModule.h */,
@@ -1148,6 +1550,8 @@
 				66686AAB1F45A769008B26BD /* ChattingEditModule.m */,
 				66686AE81F45ABC3008B26BD /* SessionModule.h */,
 				66686AE91F45ABC3008B26BD /* SessionModule.m */,
+				66686AF21F46796E008B26BD /* ContactsModule.h */,
+				66686AF31F46796E008B26BD /* ContactsModule.m */,
 				66F107D91F42EEF70035C888 /* Entitys */,
 				66E6D3C21F4290FB008E9590 /* TCPAPI */,
 			);
@@ -1203,6 +1607,9 @@
 		66F107131F42A3270035C888 /* Exist */ = {
 			isa = PBXGroup;
 			children = (
+				66686B631F46967C008B26BD /* LCActionSheet */,
+				66686B451F469280008B26BD /* Control */,
+				66686B3B1F4691BF008B26BD /* JSMessage */,
 				66F10EDB1F4449570035C888 /* Voice */,
 			);
 			path = Exist;
@@ -1736,8 +2143,11 @@
 				66F10F7A1F4449570035C888 /* speex_config_types.h.in in Resources */,
 				66E6D31C1F428700008E9590 /* LaunchScreen.storyboard in Resources */,
 				66E6D3191F428700008E9590 /* Assets.xcassets in Resources */,
+				66686B6A1F46967C008B26BD /* cellLine@2x.png in Resources */,
+				66686B691F46967C008B26BD /* bgImage_HL@2x.png in Resources */,
 				66686ADD1F45AACC008B26BD /* Info.plist in Resources */,
 				66E6D3171F428700008E9590 /* Main.storyboard in Resources */,
+				66686B8B1F4696EC008B26BD /* MWPhotoBrowser.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1769,28 +2179,33 @@
 				66E6D3821F4289D0008E9590 /* Google.Protobuf.Struct.proto.swift in Sources */,
 				66F107581F42D1F50035C888 /* UIImageView+AFNetworking.m in Sources */,
 				66686ADE1F45AACC008B26BD /* MASCompositeConstraint.m in Sources */,
-				66686ABD1F45A9C0008B26BD /* RecordingView.m in Sources */,
 				66E6D3D11F42929B008E9590 /* DDAPISchedule.m in Sources */,
+				66686B591F469402008B26BD /* HPTextViewInternal.m in Sources */,
 				66F10F821F4449570035C888 /* SpeexCodec.m in Sources */,
 				66F10A6E1F43F5BC0035C888 /* MTTDatabaseUtil.m in Sources */,
 				66E6D3BE1F428C38008E9590 /* HSL.swift in Sources */,
 				66686A881F457123008B26BD /* ChangeNightModeAPI.swift in Sources */,
+				66686B621F469626008B26BD /* EmotionsViewController.m in Sources */,
 				66F107ED1F42F0750035C888 /* MTTBaseEntity.swift in Sources */,
 				66F10F761F4449570035C888 /* resample.c in Sources */,
 				66E6D3741F4289D0008E9590 /* CodedOutputStream.swift in Sources */,
 				66F10A751F43F8DA0035C888 /* SpellLibrary.m in Sources */,
 				66F107F51F4333720035C888 /* MTTSessionEntity.swift in Sources */,
 				66E6D3551F428922008E9590 /* ZQViewController.swift in Sources */,
+				66686B501F469289008B26BD /* MTTLogoAnimateView.m in Sources */,
+				66686BC21F469CDA008B26BD /* DACircularProgressView.m in Sources */,
 				66686A7C1F454D32008B26BD /* MsgReadACKAPI.swift in Sources */,
 				66F10F571F4449570035C888 /* framing.c in Sources */,
+				66686B841F4696EC008B26BD /* MWGridCell.m in Sources */,
 				66F10F601F4449570035C888 /* exc_8_128_table.c in Sources */,
 				66686A991F458037008B26BD /* GetMessageQueueAPI.swift in Sources */,
 				66686A971F457E80008B26BD /* DDSendPhotoMessageAPI.m in Sources */,
 				66E6D34E1F428922008E9590 /* UIScrollView+Extention.swift in Sources */,
 				66E6D3A31F428BE8008E9590 /* DBScrollBannerView.swift in Sources */,
+				66686B201F46900B008B26BD /* RecordingView.m in Sources */,
 				66E6D3B71F428C38008E9590 /* DynamicColor+Lab.swift in Sources */,
-				66686AB21F45A873008B26BD /* DDChatTextCell.m in Sources */,
 				66F107D41F42E0350035C888 /* ShakeAPI.swift in Sources */,
+				66686B861F4696EC008B26BD /* MWPhoto.m in Sources */,
 				66E6D3521F428922008E9590 /* ZQEasyAlert.swift in Sources */,
 				66F107521F42D1F50035C888 /* AFURLSessionManager.m in Sources */,
 				66F107D61F42E5560035C888 /* AllUserAPI.swift in Sources */,
@@ -1805,15 +2220,22 @@
 				66F10F721F4449570035C888 /* modes_wb.c in Sources */,
 				66686A721F45374C008B26BD /* DDUserDetailInfoAPI.swift in Sources */,
 				66F107C61F42D4810035C888 /* SDWebImageDecoder.m in Sources */,
+				66686B421F4691CA008B26BD /* JSDismissiveTextView.m in Sources */,
+				66686B891F4696EC008B26BD /* MWTapDetectingView.m in Sources */,
 				66F108101F43E7180035C888 /* DDHttpServer.m in Sources */,
 				66F10FB61F449F710035C888 /* base64.cpp in Sources */,
+				66686BBD1F469CB2008B26BD /* PSTGridLayoutSection.m in Sources */,
 				66686A921F457903008B26BD /* GetGroupInfoAPI.swift in Sources */,
 				66E6D3871F4289D0008E9590 /* RingBuffer.swift in Sources */,
 				66686A7E1F4562B0008B26BD /* RemoveSessionAPI.swift in Sources */,
+				66686B2E1F46904D008B26BD /* EditGroupViewCell.m in Sources */,
 				66F10F801F4449570035C888 /* vq.c in Sources */,
 				66686AAC1F45A769008B26BD /* ChattingModule.m in Sources */,
 				66E6D3881F4289D0008E9590 /* UnknownFieldSet.swift in Sources */,
+				66686BC51F469E19008B26BD /* DDContactsCell.m in Sources */,
+				66686BB21F469CB2008B26BD /* PSTCollectionView.m in Sources */,
 				66F1074D1F42D1F50035C888 /* AFHTTPSessionManager.m in Sources */,
+				66686B611F469626008B26BD /* DDChatImagePreviewViewController.m in Sources */,
 				66F10F5B1F4449570035C888 /* exc_10_16_table.c in Sources */,
 				66F1075B1F42D1F50035C888 /* UIWebView+AFNetworking.m in Sources */,
 				66E6D3BA1F428C38008E9590 /* DynamicColor+XYZ.swift in Sources */,
@@ -1821,15 +2243,23 @@
 				66F10F6D1F4449570035C888 /* lsp.c in Sources */,
 				66F10A721F43F8840035C888 /* DDUserModule.m in Sources */,
 				66E6D3941F428A33008E9590 /* Im.BaseDefine.ImbaseDefine.proto.swift in Sources */,
+				66686BB61F469CB2008B26BD /* PSTCollectionViewFlowLayout.m in Sources */,
+				66686BB51F469CB2008B26BD /* PSTCollectionViewData.m in Sources */,
+				66686B261F46900B008B26BD /* DDPersonEditCollectionCell.m in Sources */,
 				66F10F811F4449570035C888 /* window.c in Sources */,
 				66E6D37F1F4289D0008E9590 /* Google.Protobuf.Empty.proto.swift in Sources */,
 				66686A841F45697A008B26BD /* EditSignatureAPI.swift in Sources */,
 				66F107D01F42D4810035C888 /* UIView+WebCacheOperation.m in Sources */,
 				66F10F6F1F4449570035C888 /* ltp.c in Sources */,
 				66686AA71F459ADC008B26BD /* UnAckMessageManager.m in Sources */,
+				66686BB71F469CB2008B26BD /* PSTCollectionViewItemKey.m in Sources */,
 				66F10F751F4449570035C888 /* quant_lsp.c in Sources */,
+				66686B3A1F469122008B26BD /* MTTPullScrollViewController.m in Sources */,
+				66686B311F4690E5008B26BD /* ChattingMainViewController.m in Sources */,
 				66E6D3B91F428C38008E9590 /* DynamicColor+RGBA.swift in Sources */,
 				66F10F5A1F4449570035C888 /* cb_search.c in Sources */,
+				66686BBA1F469CB2008B26BD /* PSTGridLayoutInfo.m in Sources */,
+				66686B2B1F469035008B26BD /* EditContactsCell.m in Sources */,
 				66E6D3861F4289D0008E9590 /* Google.Protobuf.Wrappers.proto.swift in Sources */,
 				66F10FB71F449F710035C888 /* md5.cpp in Sources */,
 				66686A681F452310008B26BD /* EmotionsModule.m in Sources */,
@@ -1842,6 +2272,7 @@
 				66E6D3E21F4292E4008E9590 /* DDTcpClientManager.m in Sources */,
 				66F10F741F4449570035C888 /* preprocess.c in Sources */,
 				66E6D3771F4289D0008E9590 /* ExtensionRegistry.swift in Sources */,
+				66686BBB1F469CB2008B26BD /* PSTGridLayoutItem.m in Sources */,
 				66F10F841F4449570035C888 /* Encapsulator.m in Sources */,
 				66F107561F42D1F50035C888 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				66F107C71F42D4810035C888 /* SDWebImageDownloader.m in Sources */,
@@ -1852,12 +2283,15 @@
 				66F107EF1F42F1DA0035C888 /* MTTMessageEntity.swift in Sources */,
 				66E6D33F1F428922008E9590 /* defines.swift in Sources */,
 				66E6D34A1F428922008E9590 /* TableViewCell+Extention.swift in Sources */,
+				66686B8F1F4697C7008B26BD /* MBProgressHUD.m in Sources */,
 				66E6D3841F4289D0008E9590 /* Google.Protobuf.Timestamp.proto.swift in Sources */,
 				66F10F671F4449570035C888 /* hexc_table.c in Sources */,
 				66F1070C1F429CB80035C888 /* DDSuperAPI.m in Sources */,
 				66E6D3411F428922008E9590 /* LKNineImgvContainerView.swift in Sources */,
 				66F107D21F42DB520035C888 /* AddMemberToGroupAPI.swift in Sources */,
+				66686B601F469626008B26BD /* ChatUtilityViewController.m in Sources */,
 				66F107CA1F42D4810035C888 /* SDWebImagePrefetcher.m in Sources */,
+				66686B281F46900B008B26BD /* MTTGroupInfoCell.m in Sources */,
 				66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */,
 				66F107911F42D3A90035C888 /* NSDictionary+JSON.m in Sources */,
 				66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */,
@@ -1870,6 +2304,7 @@
 				66E6D3811F4289D0008E9590 /* Google.Protobuf.SourceContext.proto.swift in Sources */,
 				66E6D34B1F428922008E9590 /* UIColor+Extentions.swift in Sources */,
 				66E6D3A01F428A60008E9590 /* TestObject.m in Sources */,
+				66686B441F4691CA008B26BD /* JSMessageTextView.m in Sources */,
 				66F10F5E1F4449570035C888 /* exc_5_256_table.c in Sources */,
 				66686AE11F45AACC008B26BD /* MASLayoutConstraint.m in Sources */,
 				66F1070F1F429D7B0035C888 /* DDUnrequestSuperAPI.m in Sources */,
@@ -1877,7 +2312,10 @@
 				66A64C341F42979F0089F491 /* DDNotification.swift in Sources */,
 				66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */,
 				66F107C41F42D4810035C888 /* SDImageCache.m in Sources */,
+				66686BB41F469CB2008B26BD /* PSTCollectionViewController.m in Sources */,
 				66686AE51F45AACC008B26BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				66686BB31F469CB2008B26BD /* PSTCollectionViewCell.m in Sources */,
+				66686B4E1F469289008B26BD /* MTTAvatarManager.m in Sources */,
 				66E6D3851F4289D0008E9590 /* Google.Protobuf.Type.proto.swift in Sources */,
 				66F10F5F1F4449570035C888 /* exc_5_64_table.c in Sources */,
 				66F1078D1F42D3A90035C888 /* UIScrollView+PullToLoadMore.m in Sources */,
@@ -1886,6 +2324,9 @@
 				66686AE01F45AACC008B26BD /* MASConstraintMaker.m in Sources */,
 				66E6D3891F4289D0008E9590 /* WireFormat.swift in Sources */,
 				66F107941F42D3A90035C888 /* NSIndexSet+AQIsSetContiguous.m in Sources */,
+				66686B241F46900B008B26BD /* DDChatVoiceCell.m in Sources */,
+				66686B6B1F46967C008B26BD /* LCActionSheet.m in Sources */,
+				66686B271F46900B008B26BD /* DDPromptCell.m in Sources */,
 				66F107291F42CD660035C888 /* MsgReadNotifyAPI.swift in Sources */,
 				66E6D3BC1F428C38008E9590 /* DynamicColorSpace.swift in Sources */,
 				66E6D3B41F428C38008E9590 /* DynamicColor+Deriving.swift in Sources */,
@@ -1895,23 +2336,29 @@
 				66F10F561F4449570035C888 /* bitwise.c in Sources */,
 				66E6D3951F428A33008E9590 /* Im.Buddy.Imbuddy.proto.swift in Sources */,
 				66F10F781F4449570035C888 /* scal.c in Sources */,
+				66686AF11F4678CC008B26BD /* DDSearch.m in Sources */,
+				66686B871F4696EC008B26BD /* MWPhotoBrowser.m in Sources */,
+				66686B371F469119008B26BD /* MTTBaseScrollViewController.m in Sources */,
 				66E6D3DF1F4292CC008E9590 /* NSStream+NSStreamAddition.m in Sources */,
 				66686AA61F459ADC008B26BD /* DDMessageSendManager.mm in Sources */,
 				66E6D3831F4289D0008E9590 /* Google.Protobuf.SwiftDescriptor.proto.swift in Sources */,
 				66E6D3791F4289D0008E9590 /* GeneratedMessage.swift in Sources */,
 				66F10A641F43F14B0035C888 /* FMDatabasePool.m in Sources */,
+				66686B221F46900B008B26BD /* DDChatImageCell.m in Sources */,
 				66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */,
 				66E6D37B1F4289D0008E9590 /* Google.Protobuf.Api.proto.swift in Sources */,
 				66E6D3BD1F428C38008E9590 /* DynamicGradient.swift in Sources */,
 				66686A821F456717008B26BD /* ShieldGroupMessageAPI.swift in Sources */,
 				66E6D34D1F428922008E9590 /* UIImageView+Extention.swift in Sources */,
 				66E6D3B31F428C38008E9590 /* Array.swift in Sources */,
+				66686B211F46900B008B26BD /* DDChatBaseCell.m in Sources */,
 				66E6D37C1F4289D0008E9590 /* Google.Protobuf.Compiler.Plugin.proto.swift in Sources */,
 				66E6D3B61F428C38008E9590 /* DynamicColor+HSL.swift in Sources */,
 				66F1079C1F42D3A90035C888 /* UIImage+UIImageAddition.m in Sources */,
 				66F107531F42D1F50035C888 /* AFAutoPurgingImageCache.m in Sources */,
 				66F10F621F4449570035C888 /* filterbank.c in Sources */,
 				66686AC11F45AA72008B26BD /* TTTAttributedLabel.m in Sources */,
+				66686B431F4691CA008B26BD /* JSMessageInputView.m in Sources */,
 				66F10F7D1F4449570035C888 /* speex_header.c in Sources */,
 				66F10F6E1F4449570035C888 /* lsp_tables_nb.c in Sources */,
 				66F10A631F43F14B0035C888 /* FMDatabaseAdditions.m in Sources */,
@@ -1934,6 +2381,7 @@
 				66F10F641F4449570035C888 /* gain_table.c in Sources */,
 				66686A8D1F457457008B26BD /* UserStatAPI.swift in Sources */,
 				66E6D37D1F4289D0008E9590 /* Google.Protobuf.Descriptor.proto.swift in Sources */,
+				66686B881F4696EC008B26BD /* MWTapDetectingImageView.m in Sources */,
 				66F107261F42CC040035C888 /* ReceiveMessageAPI.swift in Sources */,
 				66F107CC1F42D4810035C888 /* UIImage+GIF.m in Sources */,
 				66F10F6B1F4449570035C888 /* kiss_fftr.c in Sources */,
@@ -1945,12 +2393,15 @@
 				66F107D81F42EAC30035C888 /* CreateGroupAPI.swift in Sources */,
 				66E6D34C1F428922008E9590 /* UIImage+Extention.swift in Sources */,
 				66F107C51F42D4810035C888 /* SDWebImageCompat.m in Sources */,
-				66686AB51F45A979008B26BD /* DDChatBaseCell.m in Sources */,
+				66686B581F469402008B26BD /* HPGrowingTextView.m in Sources */,
+				66686BB11F469CB2008B26BD /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				66686AA51F459ADC008B26BD /* DDMessageModule.m in Sources */,
-				66686ABC1F45A9C0008B26BD /* MenuImageView.m in Sources */,
 				66F10F7B1F4449570035C888 /* speex.c in Sources */,
 				66F1074E1F42D1F50035C888 /* AFNetworkReachabilityManager.m in Sources */,
+				66686B921F469B2E008B26BD /* DDChattingEditViewController.m in Sources */,
 				66F107931F42D3A90035C888 /* NSIndexSet+AQIndexesOutsideSet.m in Sources */,
+				66686B511F469289008B26BD /* TouchDownGestureRecognizer.m in Sources */,
+				66686BBC1F469CB2008B26BD /* PSTGridLayoutRow.m in Sources */,
 				66F107981F42D3A90035C888 /* UIButton+JSMessagesView.m in Sources */,
 				66E6D3DC1F4292CC008E9590 /* DataOutputStream+Addition.m in Sources */,
 				66F10F791F4449570035C888 /* smallft.c in Sources */,
@@ -1958,8 +2409,10 @@
 				66686A761F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift in Sources */,
 				66F1078E1F42D3A90035C888 /* NSURL+SafeURL.m in Sources */,
 				66E6D33E1F428922008E9590 /* DBScrollBannerView+LKExtention.swift in Sources */,
+				66686B231F46900B008B26BD /* DDChatTextCell.m in Sources */,
 				66F1078F1F42D3A90035C888 /* NSData+Conversion.m in Sources */,
 				66686A801F456548008B26BD /* SendPushTokenAPI.swift in Sources */,
+				66686BB81F469CB2008B26BD /* PSTCollectionViewLayout.m in Sources */,
 				66686A7A1F454BC2008B26BD /* LogoutAPI.swift in Sources */,
 				66F107971F42D3A90035C888 /* NSString+JSMessagesView.m in Sources */,
 				66F10F581F4449570035C888 /* bits.c in Sources */,
@@ -1974,12 +2427,14 @@
 				66E6D3B51F428C38008E9590 /* DynamicColor+HSB.swift in Sources */,
 				66E6D3801F4289D0008E9590 /* Google.Protobuf.FieldMask.proto.swift in Sources */,
 				66F10F731F4449570035C888 /* nb_celp.c in Sources */,
+				66686B8A1F4696EC008B26BD /* MWZoomingScrollView.m in Sources */,
 				66E6D3BF1F428C38008E9590 /* Utils.swift in Sources */,
 				66686AE71F45AACC008B26BD /* ViewController+MASAdditions.m in Sources */,
 				66F1079D1F42D3A90035C888 /* UIView+AnimationOptionsForCurve.m in Sources */,
 				66686AE41F45AACC008B26BD /* NSArray+MASAdditions.m in Sources */,
 				66E6D3721F4289D0008E9590 /* AbstractMessage.swift in Sources */,
 				66F10F7F1F4449570035C888 /* vbr.c in Sources */,
+				66686B341F46910F008B26BD /* MTTBaseViewController.m in Sources */,
 				66F107991F42D3A90035C888 /* UIColor+AQGridView.m in Sources */,
 				66F1074F1F42D1F50035C888 /* AFSecurityPolicy.m in Sources */,
 				66686A621F4522B5008B26BD /* MTTBubbleModule.m in Sources */,
@@ -1988,6 +2443,7 @@
 				66F108091F43E2380035C888 /* RuntimeStatus.m in Sources */,
 				66F10F851F4449570035C888 /* PlayerManager.m in Sources */,
 				66F10F691F4449570035C888 /* jitter.c in Sources */,
+				66686AF41F46796E008B26BD /* ContactsModule.m in Sources */,
 				66E6D3751F4289D0008E9590 /* ConcreateExtensionField.swift in Sources */,
 				66686AE21F45AACC008B26BD /* MASViewAttribute.m in Sources */,
 				66E6D37E1F4289D0008E9590 /* Google.Protobuf.Duration.proto.swift in Sources */,
@@ -1997,8 +2453,11 @@
 				66686AE61F45AACC008B26BD /* View+MASAdditions.m in Sources */,
 				66E6D3991F428A33008E9590 /* Im.Message.Immessage.proto.swift in Sources */,
 				66E6D3501F428922008E9590 /* UIView+Extention.swift in Sources */,
+				66686B1F1F46900B008B26BD /* MenuImageView.m in Sources */,
+				66686B251F46900B008B26BD /* DDEmotionCell.m in Sources */,
 				66F10F831F4449570035C888 /* Decapsulator.m in Sources */,
 				66F107921F42D3A90035C888 /* NSDictionary+Safe.m in Sources */,
+				66686B4F1F469289008B26BD /* MTTAvatarImageView.m in Sources */,
 				66E6D34F1F428922008E9590 /* UITextView+Extention.swift in Sources */,
 				66686A701F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift in Sources */,
 				66F107171F42A9D90035C888 /* LoginStatusNotifyAPI.swift in Sources */,
@@ -2025,11 +2484,14 @@
 				66E6D39C1F428A33008E9590 /* Im.SwitchService.ImswitchService.proto.swift in Sources */,
 				66F107961F42D3A90035C888 /* NSString+DDPath.m in Sources */,
 				66E6D3A41F428BE8008E9590 /* SwiftyJSON.swift in Sources */,
+				66686BB91F469CB2008B26BD /* PSTCollectionViewUpdateItem.m in Sources */,
 				66F10F5D1F4449570035C888 /* exc_20_32_table.c in Sources */,
 				66F107541F42D1F50035C888 /* AFImageDownloader.m in Sources */,
 				66E6D3431F428922008E9590 /* LKZQWebVC.swift in Sources */,
 				66686ADF1F45AACC008B26BD /* MASConstraint.m in Sources */,
+				66686B831F4696EC008B26BD /* MWCaptionView.m in Sources */,
 				66E6D3781F4289D0008E9590 /* Field.swift in Sources */,
+				66686B851F4696EC008B26BD /* MWGridViewController.m in Sources */,
 				66F107951F42D3A90035C888 /* NSString+Additions.m in Sources */,
 				66F10F5C1F4449570035C888 /* exc_10_32_table.c in Sources */,
 				66F107CE1F42D4810035C888 /* UIImageView+HighlightedWebCache.m in Sources */,
