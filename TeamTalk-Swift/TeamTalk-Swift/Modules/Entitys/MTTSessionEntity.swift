@@ -102,7 +102,7 @@ class MTTSessionEntity: NSObject {
     var isShield:Bool = false
     var isFixedTop:Bool = false
     var lastMsg:String = ""
-    var lastMsgID:Int = 0
+    var lastMsgID:UInt32 = 0
     var avatar:String = ""
     
     var sessionUsers:[String] {
@@ -187,7 +187,7 @@ extension MTTSessionEntity {
             self.sessionType = .sessionTypeSingle
         }
         self.unReadMsgCount = Int(unreadInfo.unreadCnt)
-        self.lastMsgID = Int(unreadInfo.latestMsgId)
+        self.lastMsgID = UInt32(unreadInfo.latestMsgId)
         self.lastMsg = String.init(data: unreadInfo.latestMsgData!, encoding: .utf8) ?? "" // unreadInfo.latestMsgData
     }
     

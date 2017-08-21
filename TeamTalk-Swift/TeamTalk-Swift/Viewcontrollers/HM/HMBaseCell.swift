@@ -10,6 +10,8 @@ import UIKit
 
 protocol HMCellConfig {
     func configWith(object:Any)
+    
+//    func cellHeight()->CGFloat
 }
 
 class HMBaseCell: UITableViewCell {
@@ -39,5 +41,9 @@ class HMBaseCell: UITableViewCell {
     
     func setupCustom(){
         //子类实现
+    }
+    
+    func configWith(object: Any) {
+    
     }
 }

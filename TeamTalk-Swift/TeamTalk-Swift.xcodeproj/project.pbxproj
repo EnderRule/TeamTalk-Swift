@@ -272,6 +272,15 @@
 		66686D1B1F4A7642008B26BD /* HMBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1A1F4A7642008B26BD /* HMBaseCell.swift */; };
 		66686D1D1F4A766D008B26BD /* HMRecentSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */; };
 		66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */; };
+		6682FE721F4AC4490048FA23 /* HMDefines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE711F4AC4490048FA23 /* HMDefines.swift */; };
+		6682FE741F4AEB7E0048FA23 /* MTTPromtEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */; };
+		6682FE761F4AED8F0048FA23 /* HMChatPromptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */; };
+		6682FE781F4AF03D0048FA23 /* EntitysCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE771F4AF03D0048FA23 /* EntitysCellHeight.swift */; };
+		6682FE7A1F4AF2350048FA23 /* HMChatTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE791F4AF2350048FA23 /* HMChatTextCell.swift */; };
+		6682FE7C1F4AF2600048FA23 /* HMChatImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE7B1F4AF2600048FA23 /* HMChatImageCell.swift */; };
+		6682FE801F4AF28B0048FA23 /* HMChatVoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE7F1F4AF28B0048FA23 /* HMChatVoiceCell.swift */; };
+		6682FE821F4AF2B00048FA23 /* HMChatVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE811F4AF2B00048FA23 /* HMChatVideoCell.swift */; };
+		6682FE841F4AF2E80048FA23 /* HMChatEmotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE831F4AF2E80048FA23 /* HMChatEmotionCell.swift */; };
 		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
 		66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3111F428700008E9590 /* AppDelegate.swift */; };
 		66E6D3141F428700008E9590 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3131F428700008E9590 /* ViewController.swift */; };
@@ -887,6 +896,15 @@
 		66686D1A1F4A7642008B26BD /* HMBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMBaseCell.swift; path = HM/HMBaseCell.swift; sourceTree = "<group>"; };
 		66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMRecentSessionCell.swift; path = HM/HMRecentSessionCell.swift; sourceTree = "<group>"; };
 		66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMChattingViewController.swift; sourceTree = "<group>"; };
+		6682FE711F4AC4490048FA23 /* HMDefines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMDefines.swift; path = HM/HMDefines.swift; sourceTree = "<group>"; };
+		6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTPromtEntity.swift; sourceTree = "<group>"; };
+		6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatPromptCell.swift; path = HM/HMChatPromptCell.swift; sourceTree = "<group>"; };
+		6682FE771F4AF03D0048FA23 /* EntitysCellHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EntitysCellHeight.swift; path = HM/EntitysCellHeight.swift; sourceTree = "<group>"; };
+		6682FE791F4AF2350048FA23 /* HMChatTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatTextCell.swift; path = HM/HMChatTextCell.swift; sourceTree = "<group>"; };
+		6682FE7B1F4AF2600048FA23 /* HMChatImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatImageCell.swift; path = HM/HMChatImageCell.swift; sourceTree = "<group>"; };
+		6682FE7F1F4AF28B0048FA23 /* HMChatVoiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatVoiceCell.swift; path = HM/HMChatVoiceCell.swift; sourceTree = "<group>"; };
+		6682FE811F4AF2B00048FA23 /* HMChatVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatVideoCell.swift; path = HM/HMChatVideoCell.swift; sourceTree = "<group>"; };
+		6682FE831F4AF2E80048FA23 /* HMChatEmotionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMChatEmotionCell.swift; sourceTree = "<group>"; };
 		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
 		66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamTalk-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E6D3111F428700008E9590 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1941,6 +1959,7 @@
 		66686D191F46F7B8008B26BD /* HM */ = {
 			isa = PBXGroup;
 			children = (
+				6682FE711F4AC4490048FA23 /* HMDefines.swift */,
 				66686D201F4ABC9A008B26BD /* Cells */,
 				66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */,
 				66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */,
@@ -1951,8 +1970,15 @@
 		66686D201F4ABC9A008B26BD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6682FE771F4AF03D0048FA23 /* EntitysCellHeight.swift */,
 				66686D1A1F4A7642008B26BD /* HMBaseCell.swift */,
 				66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */,
+				6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */,
+				6682FE791F4AF2350048FA23 /* HMChatTextCell.swift */,
+				6682FE7B1F4AF2600048FA23 /* HMChatImageCell.swift */,
+				6682FE7F1F4AF28B0048FA23 /* HMChatVoiceCell.swift */,
+				6682FE811F4AF2B00048FA23 /* HMChatVideoCell.swift */,
+				6682FE831F4AF2E80048FA23 /* HMChatEmotionCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2390,6 +2416,7 @@
 				66F107F21F4308D60035C888 /* MTTGroupEntity.swift */,
 				66F107F41F4333720035C888 /* MTTSessionEntity.swift */,
 				66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */,
+				6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */,
 			);
 			path = Entitys;
 			sourceTree = "<group>";
@@ -2962,6 +2989,7 @@
 				66686B891F4696EC008B26BD /* MWTapDetectingView.m in Sources */,
 				66F108101F43E7180035C888 /* DDHttpServer.m in Sources */,
 				66F10FB61F449F710035C888 /* base64.cpp in Sources */,
+				6682FE7C1F4AF2600048FA23 /* HMChatImageCell.swift in Sources */,
 				66686BBD1F469CB2008B26BD /* PSTGridLayoutSection.m in Sources */,
 				66686A921F457903008B26BD /* GetGroupInfoAPI.swift in Sources */,
 				66E6D3871F4289D0008E9590 /* RingBuffer.swift in Sources */,
@@ -2989,6 +3017,7 @@
 				66E6D37F1F4289D0008E9590 /* Google.Protobuf.Empty.proto.swift in Sources */,
 				66686A841F45697A008B26BD /* EditSignatureAPI.swift in Sources */,
 				66F107D01F42D4810035C888 /* UIView+WebCacheOperation.m in Sources */,
+				6682FE7A1F4AF2350048FA23 /* HMChatTextCell.swift in Sources */,
 				66F10F6F1F4449570035C888 /* ltp.c in Sources */,
 				66686AA71F459ADC008B26BD /* UnAckMessageManager.m in Sources */,
 				66686BB71F469CB2008B26BD /* PSTCollectionViewItemKey.m in Sources */,
@@ -3058,6 +3087,7 @@
 				66686BB31F469CB2008B26BD /* PSTCollectionViewCell.m in Sources */,
 				66686B4E1F469289008B26BD /* MTTAvatarManager.m in Sources */,
 				66E6D3851F4289D0008E9590 /* Google.Protobuf.Type.proto.swift in Sources */,
+				6682FE801F4AF28B0048FA23 /* HMChatVoiceCell.swift in Sources */,
 				66F10F5F1F4449570035C888 /* exc_5_64_table.c in Sources */,
 				66F1078D1F42D3A90035C888 /* UIScrollView+PullToLoadMore.m in Sources */,
 				66E6D3BB1F428C38008E9590 /* DynamicColor.swift in Sources */,
@@ -3087,6 +3117,7 @@
 				66E6D3791F4289D0008E9590 /* GeneratedMessage.swift in Sources */,
 				66F10A641F43F14B0035C888 /* FMDatabasePool.m in Sources */,
 				66686B221F46900B008B26BD /* DDChatImageCell.m in Sources */,
+				6682FE741F4AEB7E0048FA23 /* MTTPromtEntity.swift in Sources */,
 				66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */,
 				66E6D37B1F4289D0008E9590 /* Google.Protobuf.Api.proto.swift in Sources */,
 				66E6D3BD1F428C38008E9590 /* DynamicGradient.swift in Sources */,
@@ -3137,6 +3168,7 @@
 				66F107D81F42EAC30035C888 /* CreateGroupAPI.swift in Sources */,
 				66E6D34C1F428922008E9590 /* UIImage+Extention.swift in Sources */,
 				66F107C51F42D4810035C888 /* SDWebImageCompat.m in Sources */,
+				6682FE721F4AC4490048FA23 /* HMDefines.swift in Sources */,
 				66686D121F46D81E008B26BD /* SCLAlertViewStyleKit.m in Sources */,
 				66686B581F469402008B26BD /* HPGrowingTextView.m in Sources */,
 				66686BB11F469CB2008B26BD /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
@@ -3145,6 +3177,7 @@
 				66F1074E1F42D1F50035C888 /* AFNetworkReachabilityManager.m in Sources */,
 				66686B921F469B2E008B26BD /* DDChattingEditViewController.m in Sources */,
 				66F107931F42D3A90035C888 /* NSIndexSet+AQIndexesOutsideSet.m in Sources */,
+				6682FE841F4AF2E80048FA23 /* HMChatEmotionCell.swift in Sources */,
 				66686B511F469289008B26BD /* TouchDownGestureRecognizer.m in Sources */,
 				66686BBC1F469CB2008B26BD /* PSTGridLayoutRow.m in Sources */,
 				66686D1D1F4A766D008B26BD /* HMRecentSessionCell.swift in Sources */,
@@ -3227,9 +3260,11 @@
 				66E6D3961F428A33008E9590 /* Im.File.Imfile.proto.swift in Sources */,
 				66E6D3141F428700008E9590 /* ViewController.swift in Sources */,
 				66F10A781F43F9CE0035C888 /* DDGroupModule.m in Sources */,
+				6682FE821F4AF2B00048FA23 /* HMChatVideoCell.swift in Sources */,
 				66E6D3D31F42929B008E9590 /* DDTcpProtocolHeader.m in Sources */,
 				66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */,
 				66F1075A1F42D1F50035C888 /* UIRefreshControl+AFNetworking.m in Sources */,
+				6682FE761F4AED8F0048FA23 /* HMChatPromptCell.swift in Sources */,
 				66E6D39C1F428A33008E9590 /* Im.SwitchService.ImswitchService.proto.swift in Sources */,
 				66F107961F42D3A90035C888 /* NSString+DDPath.m in Sources */,
 				66E6D3A41F428BE8008E9590 /* SwiftyJSON.swift in Sources */,
@@ -3246,6 +3281,7 @@
 				66F10F5C1F4449570035C888 /* exc_10_32_table.c in Sources */,
 				66F107CE1F42D4810035C888 /* UIImageView+HighlightedWebCache.m in Sources */,
 				66F10F661F4449570035C888 /* hexc_10_32_table.c in Sources */,
+				6682FE781F4AF03D0048FA23 /* EntitysCellHeight.swift in Sources */,
 				66F1079E1F42D3A90035C888 /* UIView+Addition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

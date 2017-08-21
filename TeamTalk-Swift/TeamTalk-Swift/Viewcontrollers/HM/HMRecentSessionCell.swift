@@ -82,7 +82,8 @@ class HMRecentSessionCell: HMBaseCell,HMCellConfig {
         
     }
     
-    func configWith(object: Any) {
+    
+    override func configWith(object: Any) {
         
         if let session = object as? MTTSessionEntity {
             self.session = session
@@ -118,22 +119,18 @@ class HMRecentSessionCell: HMBaseCell,HMCellConfig {
                         }
                         
                         var avatars:[String] = []
-                        
                         let UIDs:[String] = group!.groupUserIds.reversed()
                         for uid in UIDs{
                             if  UIDs.index(of: uid) ?? 0 > 8 {
                                 break
                             }
-                            
                             DDUserModule.shareInstance().getUserForUserID(uid , block: { (user ) in
                                 if user != nil {
                                     avatars.append(user!.avatarUrl)
                                 }
                             })
                         }
-                        
                         let groupAvatarUrls = (avatars as NSArray).componentsJoined(by: ";")
-                        
                         self.avatarView.setAvatar(groupAvatarUrls, group: true )
                     }
                 })

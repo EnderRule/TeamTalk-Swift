@@ -161,6 +161,9 @@ extension MTTMessageEntity {
     
 }
 
+
+
+
 extension MTTMessageEntity {
     public convenience init(msgInfo:Im.BaseDefine.MsgInfo,sessionType:Im.BaseDefine.SessionType){
         self.init()

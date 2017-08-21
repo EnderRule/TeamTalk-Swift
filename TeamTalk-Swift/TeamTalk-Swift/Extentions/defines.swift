@@ -93,8 +93,7 @@ func dispatch_queue(label:String,after:Double,task:@escaping (()->Void)){
 let defaultLoadingTip   = "請稍等..."
 let defaultLoadFailTip   = "載入失敗"
 
-let DD_MESSAGE_IMAGE_PREFIX:String             = "&$#@~^@[{:"
-let DD_MESSAGE_IMAGE_SUFFIX:String             = ":}]&$~@#@"
+
 
 
 let mainTipTitleFont:UIFont = UIFont.systemFont(ofSize: 15);

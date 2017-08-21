@@ -49,7 +49,7 @@ class GetRecentSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
                         sessionEntity.lastMsg = encryMsg.decrypt()
                     }
                     
-                    sessionEntity.lastMsgID = Int( sessionInfo.latestMsgId)
+                    sessionEntity.lastMsgID = UInt32( sessionInfo.latestMsgId)
                     sessionEntity.timeInterval = TimeInterval(sessionInfo.updatedTime)
                     
                     array.append(sessionEntity)

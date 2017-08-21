@@ -66,7 +66,7 @@ static int localAndServerGap = 0;
     else
     {
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yy/MM/dd"];
+        [dateFormatter setDateFormat:@"yyyy/MM/dd"];
         NSString* dateString = [dateFormatter stringFromDate:self];
         return dateString;
     }

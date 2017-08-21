@@ -151,7 +151,6 @@
         
         [self getHadUnreadMessageSession:^(NSUInteger count) {}];
         
-        //Fixme: update DB 
         [[MTTDatabaseUtil instance] updateRecentSessions:response completion:^(NSError *error) {}];
         
         block(0);
