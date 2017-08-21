@@ -83,6 +83,11 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         if indexPath.row < self.sessions.count{
             let session = self.sessions[indexPath.row]
             debugPrint("select session:",session.sessionID)
+
+            let chattingVC:HMChattingViewController = HMChattingViewController.init(session: session)
+            chattingVC.hidesBottomBarWhenPushed = true
+            self.push(newVC: chattingVC, animated: true )
+            
         }
     }
     

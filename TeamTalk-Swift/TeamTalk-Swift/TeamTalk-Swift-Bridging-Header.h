@@ -35,7 +35,7 @@
 //Categorys from TeamTalk-Objc
 #import "NSString+Additions.h"
 #import "NSDate+DDAddition.h"
-
+#import "MTTAvatarImageView.h"
 
 //GlobalData
 #import "DDClientState.h"

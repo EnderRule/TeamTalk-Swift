@@ -271,6 +271,7 @@
 		66686D181F46F7A9008B26BD /* HMRecentSessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */; };
 		66686D1B1F4A7642008B26BD /* HMBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1A1F4A7642008B26BD /* HMBaseCell.swift */; };
 		66686D1D1F4A766D008B26BD /* HMRecentSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */; };
+		66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */; };
 		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
 		66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3111F428700008E9590 /* AppDelegate.swift */; };
 		66E6D3141F428700008E9590 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3131F428700008E9590 /* ViewController.swift */; };
@@ -885,6 +886,7 @@
 		66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMRecentSessionsViewController.swift; path = HM/HMRecentSessionsViewController.swift; sourceTree = "<group>"; };
 		66686D1A1F4A7642008B26BD /* HMBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMBaseCell.swift; path = HM/HMBaseCell.swift; sourceTree = "<group>"; };
 		66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMRecentSessionCell.swift; path = HM/HMRecentSessionCell.swift; sourceTree = "<group>"; };
+		66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMChattingViewController.swift; sourceTree = "<group>"; };
 		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
 		66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamTalk-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E6D3111F428700008E9590 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1939,11 +1941,20 @@
 		66686D191F46F7B8008B26BD /* HM */ = {
 			isa = PBXGroup;
 			children = (
+				66686D201F4ABC9A008B26BD /* Cells */,
 				66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */,
+				66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */,
+			);
+			name = HM;
+			sourceTree = "<group>";
+		};
+		66686D201F4ABC9A008B26BD /* Cells */ = {
+			isa = PBXGroup;
+			children = (
 				66686D1A1F4A7642008B26BD /* HMBaseCell.swift */,
 				66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */,
 			);
-			name = HM;
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		66E6D3051F428700008E9590 = {
@@ -2990,6 +3001,7 @@
 				66686B2B1F469035008B26BD /* EditContactsCell.m in Sources */,
 				66E6D3861F4289D0008E9590 /* Google.Protobuf.Wrappers.proto.swift in Sources */,
 				66F10FB71F449F710035C888 /* md5.cpp in Sources */,
+				66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */,
 				66686A681F452310008B26BD /* EmotionsModule.m in Sources */,
 				66F108121F43E7180035C888 /* DDTcpServer.m in Sources */,
 				66E6D3761F4289D0008E9590 /* ExtendableMessage.swift in Sources */,

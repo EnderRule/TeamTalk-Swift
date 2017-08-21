@@ -55,6 +55,22 @@ extension UIViewController{
         self.rootNaviCtrl().present(targetVC, animated: true, completion: completion)
     }
     
+    open func push(newVC:UIViewController,animated:Bool){
+        let rootVC = UIApplication.shared.keyWindow?.rootViewController
+        
+        if let tabbar = rootVC as? UITabBarController{
+            if let naviga = tabbar.selectedViewController as? UINavigationController {
+                naviga.pushViewController(newVC, animated: animated)
+            }else{
+                tabbar.present(newVC, animated: animated, completion: nil )
+            }
+        }else if let naviga = rootVC as? UINavigationController {
+            naviga.pushViewController(newVC, animated: animated)
+        }else {
+            self.present(newVC, animated: animated, completion: nil)
+        }
+    }
+    
     
     open func pushLoginVC(){
 //
