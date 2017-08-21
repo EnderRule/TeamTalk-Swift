@@ -30,8 +30,12 @@
 #import "NSData+ImageContentType.h"
 
 
+#import "Masonry.h"
+
 //Categorys from TeamTalk-Objc
 #import "NSString+Additions.h"
+#import "NSDate+DDAddition.h"
+
 
 //GlobalData
 #import "DDClientState.h"
@@ -48,7 +52,10 @@
 #import "MTTBubbleModule.h"
 #import "EmotionsModule.h"
 #import "DDMessageModule.h"
-
+#import "ChattingModule.h"
+#import "ChattingEditModule.h"
+#import "SessionModule.h"
+#import "ContactsModule.h"
 
 //audio、videos
 #import "Encapsulator.h"

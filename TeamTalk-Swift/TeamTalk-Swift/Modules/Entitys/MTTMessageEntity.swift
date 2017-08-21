@@ -65,6 +65,9 @@ import UIKit
 
 
 class MTTMessageEntity: NSObject {
+    
+    
+    
     var msgID:UInt32 = 0
     var msgType:MsgType_Objc = .msgTypeSingleText
     var msgTime:UInt32 = 0

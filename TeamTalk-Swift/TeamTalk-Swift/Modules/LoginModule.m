@@ -80,7 +80,7 @@
             [_tcpServer loginTcpServerIP:_priorIP port:_port Success:^{
                 
                 [_msgServer checkUserID:name Pwd:password token:@"" success:^(id object) {
-                    DDLog(@"login#登录验证 成功 %@,%@",name,password);
+                    DDLog(@"login#登录验证成功 %@",name);
                     
                     [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"password"];
                     [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"username"];

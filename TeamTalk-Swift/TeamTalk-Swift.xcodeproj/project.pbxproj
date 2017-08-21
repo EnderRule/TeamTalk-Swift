@@ -252,7 +252,6 @@
 		66686CF31F46CE44008B26BD /* shielded@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686C621F46CE44008B26BD /* shielded@2x.png */; };
 		66686CF41F46CE44008B26BD /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686C631F46CE44008B26BD /* star.png */; };
 		66686CF51F46CE44008B26BD /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686C641F46CE44008B26BD /* star@2x.png */; };
-		66686CF61F46CE44008B26BD /* TeamTalk.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 66686C651F46CE44008B26BD /* TeamTalk.xcworkspace */; };
 		66686CF71F46CE44008B26BD /* tel.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686C661F46CE44008B26BD /* tel.png */; };
 		66686CF81F46CE44008B26BD /* tel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686C671F46CE44008B26BD /* tel@2x.png */; };
 		66686CF91F46CE44008B26BD /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686C681F46CE44008B26BD /* unselected.png */; };
@@ -269,6 +268,9 @@
 		66686D141F46D81E008B26BD /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686D0B1F46D81E008B26BD /* SCLTextView.m */; };
 		66686D151F46D81E008B26BD /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686D0D1F46D81E008B26BD /* SCLTimerDisplay.m */; };
 		66686D161F46D81E008B26BD /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686D0F1F46D81E008B26BD /* UIImage+ImageEffects.m */; };
+		66686D181F46F7A9008B26BD /* HMRecentSessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */; };
+		66686D1B1F4A7642008B26BD /* HMBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1A1F4A7642008B26BD /* HMBaseCell.swift */; };
+		66686D1D1F4A766D008B26BD /* HMRecentSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */; };
 		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
 		66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3111F428700008E9590 /* AppDelegate.swift */; };
 		66E6D3141F428700008E9590 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3131F428700008E9590 /* ViewController.swift */; };
@@ -856,7 +858,6 @@
 		66686C621F46CE44008B26BD /* shielded@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shielded@2x.png"; sourceTree = "<group>"; };
 		66686C631F46CE44008B26BD /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		66686C641F46CE44008B26BD /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
-		66686C651F46CE44008B26BD /* TeamTalk.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = TeamTalk.xcworkspace; sourceTree = "<group>"; };
 		66686C661F46CE44008B26BD /* tel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tel.png; sourceTree = "<group>"; };
 		66686C671F46CE44008B26BD /* tel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tel@2x.png"; sourceTree = "<group>"; };
 		66686C681F46CE44008B26BD /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected.png; sourceTree = "<group>"; };
@@ -881,6 +882,9 @@
 		66686D0D1F46D81E008B26BD /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
 		66686D0E1F46D81E008B26BD /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		66686D0F1F46D81E008B26BD /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMRecentSessionsViewController.swift; path = HM/HMRecentSessionsViewController.swift; sourceTree = "<group>"; };
+		66686D1A1F4A7642008B26BD /* HMBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMBaseCell.swift; path = HM/HMBaseCell.swift; sourceTree = "<group>"; };
+		66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMRecentSessionCell.swift; path = HM/HMRecentSessionCell.swift; sourceTree = "<group>"; };
 		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
 		66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamTalk-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E6D3111F428700008E9590 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1406,6 +1410,7 @@
 				66686BD61F46C708008B26BD /* Login */,
 				66686BC61F46C580008B26BD /* RecentContacts */,
 				66686B071F46900B008B26BD /* Chatting */,
+				66686D191F46F7B8008B26BD /* HM */,
 			);
 			path = Viewcontrollers;
 			sourceTree = "<group>";
@@ -1889,7 +1894,6 @@
 				66686C621F46CE44008B26BD /* shielded@2x.png */,
 				66686C631F46CE44008B26BD /* star.png */,
 				66686C641F46CE44008B26BD /* star@2x.png */,
-				66686C651F46CE44008B26BD /* TeamTalk.xcworkspace */,
 				66686C661F46CE44008B26BD /* tel.png */,
 				66686C671F46CE44008B26BD /* tel@2x.png */,
 				66686C681F46CE44008B26BD /* unselected.png */,
@@ -1930,6 +1934,16 @@
 				66686D0F1F46D81E008B26BD /* UIImage+ImageEffects.m */,
 			);
 			path = SCLAlertView;
+			sourceTree = "<group>";
+		};
+		66686D191F46F7B8008B26BD /* HM */ = {
+			isa = PBXGroup;
+			children = (
+				66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */,
+				66686D1A1F4A7642008B26BD /* HMBaseCell.swift */,
+				66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */,
+			);
+			name = HM;
 			sourceTree = "<group>";
 		};
 		66E6D3051F428700008E9590 = {
@@ -2725,7 +2739,6 @@
 				66686C701F46CE44008B26BD /* bubble.bundle in Resources */,
 				66686C891F46CE44008B26BD /* conversation_selected.png in Resources */,
 				66686CF71F46CE44008B26BD /* tel.png in Resources */,
-				66686CF61F46CE44008B26BD /* TeamTalk.xcworkspace in Resources */,
 				66686CEB1F46CE44008B26BD /* search_group@2x.png in Resources */,
 				66686C9A1F46CE44008B26BD /* dd_left_voice_one@2x.png in Resources */,
 				66686CBE1F46CE44008B26BD /* dd_volumn.png in Resources */,
@@ -2911,6 +2924,7 @@
 				66F10F571F4449570035C888 /* framing.c in Sources */,
 				66686B841F4696EC008B26BD /* MWGridCell.m in Sources */,
 				66F10F601F4449570035C888 /* exc_8_128_table.c in Sources */,
+				66686D181F46F7A9008B26BD /* HMRecentSessionsViewController.swift in Sources */,
 				66686A991F458037008B26BD /* GetMessageQueueAPI.swift in Sources */,
 				66686A971F457E80008B26BD /* DDSendPhotoMessageAPI.m in Sources */,
 				66E6D34E1F428922008E9590 /* UIScrollView+Extention.swift in Sources */,
@@ -3045,6 +3059,7 @@
 				66F107291F42CD660035C888 /* MsgReadNotifyAPI.swift in Sources */,
 				66E6D3BC1F428C38008E9590 /* DynamicColorSpace.swift in Sources */,
 				66E6D3B41F428C38008E9590 /* DynamicColor+Deriving.swift in Sources */,
+				66686D1B1F4A7642008B26BD /* HMBaseCell.swift in Sources */,
 				66686A651F4522FD008B26BD /* MTTPhotosCache.m in Sources */,
 				66F107F31F4308D60035C888 /* MTTGroupEntity.swift in Sources */,
 				66F10A6F1F43F7FC0035C888 /* LoginModule.m in Sources */,
@@ -3120,6 +3135,7 @@
 				66F107931F42D3A90035C888 /* NSIndexSet+AQIndexesOutsideSet.m in Sources */,
 				66686B511F469289008B26BD /* TouchDownGestureRecognizer.m in Sources */,
 				66686BBC1F469CB2008B26BD /* PSTGridLayoutRow.m in Sources */,
+				66686D1D1F4A766D008B26BD /* HMRecentSessionCell.swift in Sources */,
 				66686D161F46D81E008B26BD /* UIImage+ImageEffects.m in Sources */,
 				66F107981F42D3A90035C888 /* UIButton+JSMessagesView.m in Sources */,
 				66E6D3DC1F4292CC008E9590 /* DataOutputStream+Addition.m in Sources */,

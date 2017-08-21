@@ -51,5 +51,7 @@
 	<string>microphone usage </string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>media lib usage</string>
+	<key>CFBundleDisplayName</key>
+	<string>TeamTalk-Swift</string>
 </dict>
 </plist>

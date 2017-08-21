@@ -171,7 +171,11 @@
                     
                 }];
             }
-            [self pushViewController: [RecentUsersViewController shareInstance] animated:YES];
+            HMRecentSessionsViewController *newvc = [[HMRecentSessionsViewController alloc]init];
+            newvc.hidesBottomBarWhenPushed = YES;
+            [self pushViewController:newvc animated:YES];
+            
+//            [self pushViewController: [RecentUsersViewController shareInstance] animated:YES];
         }
     } failure:^(NSString *error) {
         

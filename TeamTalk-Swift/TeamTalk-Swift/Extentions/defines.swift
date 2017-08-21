@@ -26,6 +26,7 @@ let FB_APP_ID           = APPMainInfo["FacebookAppID"].stringValue
 let FBDisplayName       = APPMainInfo["FacebookDisplayName"].stringValue
 let APP_VERSION         = APPMainInfo["CFBundleShortVersionString"].stringValue
 let APP_BUILD_VERSION   = APPMainInfo["CFBundleVersion"].stringValue
+let APP_Name            = APPMainInfo["CFBundleDisplayName"].stringValue
 
 //MARK:各種SDK串接 KEY
 let NIMSDKKEY:String           = "cfc2457057aa45c166ac8661ffaba837"
@@ -33,7 +34,6 @@ let NIMSDKKEY:String           = "cfc2457057aa45c166ac8661ffaba837"
 //let ll3SDKKEY:String           = "305e3b07d73a0c454deab436609b6d6f"
 //let ll3SDKACT:String           = "8UGRCM-1"
 //let BaiduStatKEY:String        = "8c82a01e9d"
-
 
 //MARK:其他輔助常量、function
 func SCREEN_WIDTH()->CGFloat{return UIScreen.main.bounds.size.width }
@@ -92,6 +92,10 @@ func dispatch_queue(label:String,after:Double,task:@escaping (()->Void)){
 //MARK:字符串常量
 let defaultLoadingTip   = "請稍等..."
 let defaultLoadFailTip   = "載入失敗"
+
+let DD_MESSAGE_IMAGE_PREFIX:String             = "&$#@~^@[{:"
+let DD_MESSAGE_IMAGE_SUFFIX:String             = ":}]&$~@#@"
+
 
 let mainTipTitleFont:UIFont = UIFont.systemFont(ofSize: 15);
 

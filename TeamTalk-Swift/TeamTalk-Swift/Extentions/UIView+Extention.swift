@@ -150,6 +150,18 @@ extension UIView{
         }
     }
     
+//    func genarateImage()->UIImage? {
+//        let size = self.bounds.size
+//        
+//        UIGraphicsBeginImageContextWithOptions(size , false , UIScreen.main.scale)
+//        self.layer.render(in: UIGraphicsGetCurrentContext()!)
+//        let image = UIGraphicsGetImageFromCurrentImageContext()
+//        
+//        UIGraphicsEndImageContext()
+//        
+//        return image
+//    }
+    
 //    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        self.next?.touchesBegan(touches, with: event)
 //        self.superview?.touchesBegan(touches, with: event)
