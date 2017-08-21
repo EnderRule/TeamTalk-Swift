@@ -105,6 +105,7 @@ typedef NS_ENUM(NSInteger, APIErrorCode){
     {
         return;
     }
+    DDLog(@"request time out for api : %@  %@",api,[api class]);
     
 //    [_timeoutMap setObject:api forKey:[NSDate date]];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));

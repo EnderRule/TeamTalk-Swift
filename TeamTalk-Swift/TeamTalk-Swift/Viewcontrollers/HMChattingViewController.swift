@@ -15,7 +15,7 @@ class HMChattingViewController: UIViewController,UITableViewDataSource,UITableVi
 
     private var tableView:UITableView = UITableView.init()
     
-    
+    private var showingMessages:[Any] = []
     
     public convenience init(session:MTTSessionEntity){
         self.init()
@@ -34,7 +34,9 @@ class HMChattingViewController: UIViewController,UITableViewDataSource,UITableVi
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.tableFooterView = UIView.init()
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
+        tableView.backgroundColor = UIColor.green
+        
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: UITableViewCell.cellIdentifier)
         tableView.register(HMChatTextCell.classForCoder(), forCellReuseIdentifier: HMChatTextCell.cellIdentifier)
         tableView.register(HMChatImageCell.classForCoder(), forCellReuseIdentifier: HMChatImageCell.cellIdentifier)
@@ -45,13 +47,34 @@ class HMChattingViewController: UIViewController,UITableViewDataSource,UITableVi
         
         self.view.addSubview(tableView)
         
+        tableView.mas_makeConstraints { (maker ) in
+            maker?.edges.equalTo()(self.view)
+        }
         
+        chattingModule.getNewMsg { (count , error) in
+            print("get newmsg :\(count)",error?.localizedDescription ?? "nil error")
+            
+            if count > 0{
+                self.refreshData()
+            }
+        }
+        
+        
+        chattingModule.loadMoreHistoryCompletion { (count , error ) in
+            print("load more history  :\(count)",error?.localizedDescription ?? "nil error")
+
+            if count > 0{
+                self.refreshData()
+            }
+        }
     }
 
     func refreshData(){
-        self.chattingModule.loadMoreHistoryCompletion { (count , error ) in
-            self.tableView.reloadData()
-        }
+
+        self.showingMessages = chattingModule.showingMessages as! [Any]
+
+        self.tableView.reloadData()
+        
         
     }
     
@@ -78,32 +101,33 @@ class HMChattingViewController: UIViewController,UITableViewDataSource,UITableVi
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.chattingModule.showingMessages.count
+        let count  = self.showingMessages.count
+        print("numberOfRowsInSection showingmessages ",self.showingMessages)
+        return count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row < self.chattingModule.showingMessages.count {
-             let obj = self.chattingModule.showingMessages.object(at: indexPath.row)
+        if indexPath.row < self.showingMessages.count {
+             let obj = self.showingMessages[indexPath.row]
             if let message = obj as? MTTMessageEntity {
             
                 return message.cellHeight()
-            }else if let prompt = obj as? MTTPromtEntity {
-                return prompt.cellHeight()
+            }else if obj is DDPromptEntity {
+                return 30.0 // prompt.cellHeight()
             }
         }
         return 0.01
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.cellIdentifier, for: indexPath)
-        if indexPath.row < self.chattingModule.showingMessages.count {
-            let obj = self.chattingModule.showingMessages.object(at: indexPath.row)
+        if indexPath.row < self.showingMessages.count {
+            let obj = self.showingMessages[indexPath.row]
             if let message = obj as? MTTMessageEntity {
                 
                 if message.msgContentType == .Text {
                     
                 }
                 
-            }else if let prompt = obj as? MTTPromtEntity {
+            }else if let prompt = obj as? DDPromptEntity {
                 
                 let promptCell:HMChatPromptCell = tableView.dequeueReusableCell(withIdentifier: HMChatPromptCell.cellIdentifier, for: indexPath) as! HMChatPromptCell
                 promptCell.configWith(object: prompt)
@@ -111,7 +135,17 @@ class HMChattingViewController: UIViewController,UITableViewDataSource,UITableVi
                 return promptCell
             }
         }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.cellIdentifier, for: indexPath)
         return cell;
+        
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false )
+        
+        chattingModule.addPrompt("select row \(indexPath.row)")
+        
+        self.refreshData()
     }
     
 }

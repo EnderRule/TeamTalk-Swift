@@ -120,9 +120,12 @@
             NSInteger newDataLength;
             lastSendBufferLength = [_lastSendBuffer length];
             newDataLength = [data length];
-            if (lastSendBufferLength<1024) {
+            
+            if (lastSendBufferLength < 1024 ) {
                 DDLog(@"WRITE - Have a buffer with enough space, appending data to it");
-                [_lastSendBuffer appendData:data];
+                if ([data length] > 0 ){ //Fixme:here, add a new condition by HZQ
+                    [_lastSendBuffer appendData:data];
+                }
                 return;
             }
         }
