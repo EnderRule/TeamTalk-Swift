@@ -282,6 +282,7 @@
 		6682FE821F4AF2B00048FA23 /* HMChatVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE811F4AF2B00048FA23 /* HMChatVideoCell.swift */; };
 		6682FE841F4AF2E80048FA23 /* HMChatEmotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE831F4AF2E80048FA23 /* HMChatEmotionCell.swift */; };
 		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
+		66E436A61F4BCD95009D527D /* HMChatBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E436A51F4BCD95009D527D /* HMChatBaseCell.swift */; };
 		66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3111F428700008E9590 /* AppDelegate.swift */; };
 		66E6D3141F428700008E9590 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3131F428700008E9590 /* ViewController.swift */; };
 		66E6D3171F428700008E9590 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E6D3151F428700008E9590 /* Main.storyboard */; };
@@ -906,6 +907,7 @@
 		6682FE811F4AF2B00048FA23 /* HMChatVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatVideoCell.swift; path = HM/HMChatVideoCell.swift; sourceTree = "<group>"; };
 		6682FE831F4AF2E80048FA23 /* HMChatEmotionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMChatEmotionCell.swift; sourceTree = "<group>"; };
 		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
+		66E436A51F4BCD95009D527D /* HMChatBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatBaseCell.swift; path = HM/HMChatBaseCell.swift; sourceTree = "<group>"; };
 		66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamTalk-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E6D3111F428700008E9590 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66E6D3131F428700008E9590 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -1973,14 +1975,23 @@
 				6682FE771F4AF03D0048FA23 /* EntitysCellHeight.swift */,
 				66686D1A1F4A7642008B26BD /* HMBaseCell.swift */,
 				66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */,
+				66E436A71F4BCEEC009D527D /* ChatCells */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		66E436A71F4BCEEC009D527D /* ChatCells */ = {
+			isa = PBXGroup;
+			children = (
 				6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */,
+				66E436A51F4BCD95009D527D /* HMChatBaseCell.swift */,
 				6682FE791F4AF2350048FA23 /* HMChatTextCell.swift */,
 				6682FE7B1F4AF2600048FA23 /* HMChatImageCell.swift */,
 				6682FE7F1F4AF28B0048FA23 /* HMChatVoiceCell.swift */,
 				6682FE811F4AF2B00048FA23 /* HMChatVideoCell.swift */,
 				6682FE831F4AF2E80048FA23 /* HMChatEmotionCell.swift */,
 			);
-			name = Cells;
+			name = ChatCells;
 			sourceTree = "<group>";
 		};
 		66E6D3051F428700008E9590 = {
@@ -2989,6 +3000,7 @@
 				66686B891F4696EC008B26BD /* MWTapDetectingView.m in Sources */,
 				66F108101F43E7180035C888 /* DDHttpServer.m in Sources */,
 				66F10FB61F449F710035C888 /* base64.cpp in Sources */,
+				66E436A61F4BCD95009D527D /* HMChatBaseCell.swift in Sources */,
 				6682FE7C1F4AF2600048FA23 /* HMChatImageCell.swift in Sources */,
 				66686BBD1F469CB2008B26BD /* PSTGridLayoutSection.m in Sources */,
 				66686A921F457903008B26BD /* GetGroupInfoAPI.swift in Sources */,

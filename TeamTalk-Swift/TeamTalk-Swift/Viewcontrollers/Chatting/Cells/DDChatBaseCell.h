@@ -37,8 +37,10 @@ typedef NS_ENUM(NSUInteger, DDBubbleLocationType)
 @property (strong) UILabel *userName;
 @property (nonatomic,retain)UIActivityIndicatorView* activityView;
 @property (nonatomic,retain)UIImageView* sendFailuredImageView;
+
 @property (nonatomic,copy)DDSendAgain sendAgain;
 @property (nonatomic,copy)DDTapInBubble tapInBubble;
+
 @property (nonatomic,copy)MTTBubbleConfig* leftConfig;
 @property (nonatomic,copy)MTTBubbleConfig* rightConfig;
 @property (nonatomic,retain)TTTAttributedLabel* contentLabel;
@@ -47,4 +49,5 @@ typedef NS_ENUM(NSUInteger, DDBubbleLocationType)
 - (void)showSendFailure;
 - (void)showSendSuccess;
 - (void)showSending;
+
 @end

@@ -44,7 +44,7 @@ class GetUnreadMessagesAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 
                 return dic
             }else {
-                debugPrint("GetMessageQueueAPI analysisReturnData failure")
+                debugPrint("GetUnreadMessagesAPI analysisReturnData failure")
                 return [:]
             }
         }
@@ -66,7 +66,7 @@ class GetUnreadMessagesAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("GetMessageQueueAPI package builded data failure")
+                debugPrint("GetUnreadMessagesAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HMRecentSessionCell: HMBaseCell,HMCellConfig {
+class HMRecentSessionCell: HMBaseCell {
 
     var session:MTTSessionEntity?
     
