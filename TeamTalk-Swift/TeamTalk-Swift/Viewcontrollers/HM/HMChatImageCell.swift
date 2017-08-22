@@ -8,14 +8,41 @@
 
 import UIKit
 
-class HMChatImageCell: HMBaseCell {
+class HMChatImageCell: HMChatBaseCell {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    var mainImgv:UIImageView = UIImageView.init()
+    
+    override func setupCustom() {
+        super.setupCustom()
+        
+        mainImgv.contentMode = .scaleAspectFit
+        
+        self.contentView.addSubview(mainImgv)
     }
-    */
+    
+    
+    override func setContent(message: MTTMessageEntity) {
+        super.setContent(message: message)
+        
+        var imageURL:String = message.msgContent
+        imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_PREFIX, with: "")
+        imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_SUFFIX, with: "")
+        
+        self.mainImgv.setImage(str: imageURL)
+    }
+    
+    override func layoutContentView(message: MTTMessageEntity) {
+        let sizecontent = self.contentSizeFor(message: message)
+        
+        self.mainImgv.mas_makeConstraints { (maker ) in
+            maker?.left.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(self.bubbleLeftEdge())
+            maker?.top.mas_equalTo()(self.bubbleImgv.mas_top)?.offset()(self.bubbleTopEdge())
+            maker?.size.mas_equalTo()(sizecontent)
+        }
+    }
+    
+    override func contentSizeFor(message: MTTMessageEntity) -> CGSize {
+        return CGSize.init(width: 150, height: 150 * 1.618)
+    }
 
 }

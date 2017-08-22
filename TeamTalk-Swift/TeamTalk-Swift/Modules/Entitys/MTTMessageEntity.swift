@@ -159,8 +159,8 @@ extension MTTMessageEntity {
     static  let  DD_COMMODITY_URL:String             =       "URL"
     static  let  DD_COMMODITY_ID:String              =       "CommodityID"
     
+    
 }
-
 
 
 

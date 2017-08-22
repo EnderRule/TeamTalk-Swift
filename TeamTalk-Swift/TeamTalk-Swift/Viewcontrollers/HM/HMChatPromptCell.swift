@@ -13,9 +13,9 @@ class HMChatPromptCell: HMBaseCell {
     var promptLabel:UILabel = UILabel.init()
     
     override func setupCustom() {
-        self.contentView.backgroundColor = UIColor.red
+        self.contentView.backgroundColor = UIColor.clear
         
-        promptLabel.backgroundColor = UIColor.gray
+        promptLabel.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         promptLabel.layer.cornerRadius = 8
         promptLabel.clipsToBounds = true
         promptLabel.font = UIFont.systemFont(ofSize: 11)

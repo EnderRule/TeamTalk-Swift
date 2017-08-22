@@ -20,6 +20,9 @@ let URL_REGULA = "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\
 let PHONE_REGULA = "\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[358]+\\d{9}|\\d{8}|\\d{7}"
 let EMAIL_REGULA = "[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}"
 
+
+let maxChatTextWidth:CGFloat = (SCREEN_WIDTH() - 70.0 * 2.0)
+
 //字体大小
 let fontTitle  = UIFont.systemFont(ofSize: 16)
 let fontNormal = UIFont.systemFont(ofSize: 14)

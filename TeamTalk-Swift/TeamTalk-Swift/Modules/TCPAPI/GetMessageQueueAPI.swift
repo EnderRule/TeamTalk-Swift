@@ -10,7 +10,8 @@ import UIKit
 
 class GetMessageQueueAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
-        return 20
+        //Fixme:here should be longer,as 20
+        return 5
     }
     
     func requestServiceID() -> Int32 {

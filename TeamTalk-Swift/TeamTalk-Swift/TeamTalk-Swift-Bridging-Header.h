@@ -29,13 +29,15 @@
 #import "UIImage+GIF.h"
 #import "NSData+ImageContentType.h"
 
-
 #import "Masonry.h"
+
+#import "NIMInputView.h"
 
 //Categorys from TeamTalk-Objc
 #import "NSString+Additions.h"
 #import "NSDate+DDAddition.h"
 #import "MTTAvatarImageView.h"
+
 
 //GlobalData
 #import "DDClientState.h"
@@ -64,4 +66,4 @@
 //ViewControllers
 #import "MTTLoginViewController.h"
 #import "RecentUsersViewController.h"
-#import "ChattingMainViewController.h"
+

@@ -62,10 +62,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        ChattingMainViewController.shareInstance().module.sessionEntity = nil
-        
-        
+    
     }
     
     override func didReceiveMemoryWarning() {

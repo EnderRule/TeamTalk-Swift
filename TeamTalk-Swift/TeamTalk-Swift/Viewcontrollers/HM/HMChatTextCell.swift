@@ -8,23 +8,54 @@
 
 import UIKit
 
-class HMChatTextCell: HMBaseCell {
+
+
+class HMChatTextCell: HMChatBaseCell {
 
     var textView:UITextView = UITextView.init()
     
     override func setupCustom() {
+        super.setupCustom()
         
+        textView.isScrollEnabled = false
         textView.isEditable = false
         textView.isSelectable = false
-        textView.font = UIFon
+        textView.font = fontNormal
+        
+        self.contentView.addSubview(textView)
     }
     
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
+    override func setContent(message: MTTMessageEntity) {
+        super.setContent(message: message)
+        
+        self.textView.text = message.msgContent
+    }
+    
+    override func layoutContentView(message: MTTMessageEntity) {
+        let sizecontent = self.contentSizeFor(message: message)
+        
+         self.textView.mas_makeConstraints { (maker ) in
+            maker?.left.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(self.bubbleLeftEdge())
+            maker?.top.mas_equalTo()(self.bubbleImgv.mas_top)?.offset()(self.bubbleTopEdge())
+            maker?.size.mas_equalTo()(sizecontent)
+        }
+    }
+    
+    override func contentSizeFor(message: MTTMessageEntity) -> CGSize {
+        
+        let tempText:String = textView.text ?? ""
+        
+        textView.text = message.msgContent
+        
+        var size = textView.sizeThatFits(.init(width: maxChatTextWidth, height: 1000))
+        if size.width > maxChatTextWidth {
+            size.width = maxChatTextWidth
+        }
+        textView.text = tempText
+        return size
+    }
+    
+    
+    
 }

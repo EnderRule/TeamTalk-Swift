@@ -16,7 +16,7 @@ enum HMBubbleLocation:Int {
 
 let HMAvatarGap:CGFloat       = 8   // //头像到边缘的距离
 let HMBubbleUpDownGap:CGFloat = 15  // 气泡到上下边缘的距离
-let HMBubbleAvatarGap:CGFloat = 15  // 头像和气泡之间的距离
+let HMBubbleAvatarGap:CGFloat = 5  // 头像和气泡之间的距离
 
 
 
@@ -91,7 +91,7 @@ class HMChatBaseCell: HMBaseCell {
         let leftConfig:MTTBubbleConfig = MTTBubbleModule.shareInstance().getBubbleConfigLeft(true)
         let rightConfig:MTTBubbleConfig = MTTBubbleModule.shareInstance().getBubbleConfigLeft(false)
         
-        let size = self .sizeFor(message: message)
+        let size = self .contentSizeFor(message: message)
         let bubbleWidth:CGFloat = self.bubbleLeftEdge() + size.width + self.bubbleRightEdge()
         let bubbleHeight:CGFloat = self.bubbleTopEdge() + size.height + self.bubbleBottomEdge()
         
@@ -99,18 +99,18 @@ class HMChatBaseCell: HMBaseCell {
         if message.senderId == RuntimeStatus.instance().user.userId {
             self.bubbleLocation = .right
             
-            self.avatarImgv.mas_remakeConstraints({ (maker ) in
-                maker?.right.equalTo()(self.contentView)?.offset()(-HMAvatarGap)
-                maker?.size.equalTo()(CGSize.init(width: 40, height: 40))
+            self.avatarImgv.mas_updateConstraints({ (maker ) in
                 maker?.top.equalTo()(HMAvatarGap)
+                maker?.right.equalTo()(self.contentView.mas_right)?.offset()(-HMAvatarGap)
+                maker?.size.equalTo()(CGSize.init(width: 40, height: 40))
             })
         }else{
             self.bubbleLocation = .left
             
-            self.avatarImgv.mas_remakeConstraints({ (maker ) in
+            self.avatarImgv.mas_updateConstraints({ (maker ) in
+                maker?.top.equalTo()(HMAvatarGap)
                 maker?.left.equalTo()(HMAvatarGap)
                 maker?.size.equalTo()(CGSize.init(width: 40, height: 40))
-                maker?.top.equalTo()(HMAvatarGap)
             })
         }
         
@@ -199,28 +199,64 @@ class HMChatBaseCell: HMBaseCell {
         self.layoutContentView(message: message)
     }
     
+    func cellHeightFor(message:MTTMessageEntity)->CGFloat{
+        // 昵称高度 + 实际内容高度 + 气泡与cell的间隔 + 气泡与内容的间隔。 总高度必须 >= 头像高度 + 头像与cell的间隔
+        var nameHeight:CGFloat = nameLabel.height
+        if message.sessionType == .sessionTypeSingle || message.senderId == RuntimeStatus.instance().user.userId {
+            nameHeight = 0
+        }
+        
+        var contentSize:CGSize = self.contentSizeFor(message: message)
+        if message.msgContentType == .Text  {
+            let cell = HMChatTextCell.init(style: .default, reuseIdentifier: HMChatTextCell.cellIdentifier )
+            contentSize = cell.contentSizeFor(message: message)
+        }else if message.msgContentType == .Image {
+            let cell = HMChatImageCell.init(style: .default, reuseIdentifier: HMChatImageCell.cellIdentifier )
+            contentSize = cell.contentSizeFor(message: message)
+        }else if message.msgContentType == .Audio || message.msgContentType == .GroupAudio {
+            
+        }else if message.msgContentType == .Voice{
+            contentSize = .init(width: 150, height: 54.0)
+        }else if message.msgContentType == .Emotion {
+            contentSize = .init(width: 88, height: 88)
+        }
+        
+        let totalHeight = nameHeight + contentSize.height + self.bubbleTopEdge() + self.bubbleBottomEdge() + HMBubbleUpDownGap * 2.0
+        
+        return max(totalHeight, avatarImgv.height + HMAvatarGap * 2)
+    }
+    
+    
+    ///子类继承实现
     func layoutContentView(message:MTTMessageEntity){
         
     }
- 
-    func sizeFor(message:MTTMessageEntity)->CGSize{
-        return CGSize.init(width: 180, height: 90)
+    
+    func contentSizeFor(message:MTTMessageEntity)->CGSize{
+        return CGSize.init(width: 180, height: 44.0)
     }
     
     func bubbleTopEdge()->CGFloat {
-        return 10
+        return 6
     }
     
     func bubbleLeftEdge()->CGFloat {
-        return  15
+        if self.bubbleLocation == .right{
+            return 5
+        }else {
+            return 10
+        }
     }
     func bubbleBottomEdge()->CGFloat{
-        return 10
+        return 5
     }
     func bubbleRightEdge()->CGFloat{
-        return 15
+        if self.bubbleLocation == .right{
+            return 10
+        }else {
+            return 5
+        }
     }
-    
     
     
     func sendAgainAction(){
