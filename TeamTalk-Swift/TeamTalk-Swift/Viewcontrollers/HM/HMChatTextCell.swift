@@ -10,52 +10,70 @@ import UIKit
 
 
 
-class HMChatTextCell: HMChatBaseCell {
+class HMChatTextCell: HMChatBaseCell,M80AttributedLabelDelegate {
 
-    var textView:UITextView = UITextView.init()
+    var attTextLabel:M80AttributedLabel = M80AttributedLabel.init()
     
     override func setupCustom() {
         super.setupCustom()
         
-        textView.isScrollEnabled = false
-        textView.isEditable = false
-        textView.isSelectable = false
-        textView.font = fontNormal
+        attTextLabel.delegate = self
+        attTextLabel.numberOfLines = 0
+        attTextLabel.lineBreakMode = .byWordWrapping
+        attTextLabel.backgroundColor = UIColor.clear
+        attTextLabel.font = fontNormal
         
-        self.contentView.addSubview(textView)
+        
+        self.contentView.addSubview(attTextLabel)
+        
+//        textView.isScrollEnabled = false
+//        textView.isEditable = false
+//        textView.isSelectable = true
+//        textView.font = fontNormal
+//        textView.backgroundColor = UIColor.clear
+//        self.contentView.addSubview(textView)
     }
     
 
     override func setContent(message: MTTMessageEntity) {
         super.setContent(message: message)
         
-        self.textView.text = message.msgContent
+        attTextLabel.nim_setText(message.msgContent)
+        
+        
+//        self.textView.text = message.msgContent
     }
     
     override func layoutContentView(message: MTTMessageEntity) {
-        let sizecontent = self.contentSizeFor(message: message)
+//        let sizecontent = self.contentSizeFor(message: message)
         
-         self.textView.mas_makeConstraints { (maker ) in
+         self.attTextLabel.mas_remakeConstraints { (maker ) in
             maker?.left.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(self.bubbleLeftEdge())
             maker?.top.mas_equalTo()(self.bubbleImgv.mas_top)?.offset()(self.bubbleTopEdge())
-            maker?.size.mas_equalTo()(sizecontent)
+            
+            maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)?.offset()(-self.bubbleBottomEdge())
+            maker?.right.mas_equalTo()(self.bubbleImgv.mas_right)?.offset()(-self.bubbleRightEdge())
+
+//            maker?.size.mas_equalTo()(sizecontent)
         }
     }
     
     override func contentSizeFor(message: MTTMessageEntity) -> CGSize {
         
-        let tempText:String = textView.text ?? ""
+        let tempText:String = attTextLabel.text ?? ""
         
-        textView.text = message.msgContent
+        attTextLabel.nim_setText(message.msgContent)
         
-        var size = textView.sizeThatFits(.init(width: maxChatTextWidth, height: 1000))
-        if size.width > maxChatTextWidth {
-            size.width = maxChatTextWidth
+        var size = attTextLabel.sizeThatFits(.init(width: maxChatContentWidth, height: 1000))
+        if size.width > maxChatContentWidth {
+            size.width = maxChatContentWidth
         }
-        textView.text = tempText
+        attTextLabel.nim_setText(tempText)
         return size
     }
     
-    
+    func m80AttributedLabel(_ label: M80AttributedLabel, clickedOnLink linkData: Any) {
+        
+    }
     
 }

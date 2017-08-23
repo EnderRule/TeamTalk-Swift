@@ -159,7 +159,26 @@ extension MTTMessageEntity {
     static  let  DD_COMMODITY_URL:String             =       "URL"
     static  let  DD_COMMODITY_ID:String              =       "CommodityID"
     
-    
+    static let mgjEmotionDic = ["[牙牙撒花]":"221",
+                                "[牙牙尴尬]":"222",
+                                "[牙牙大笑]":"223",
+                                "[牙牙组团]":"224",
+                                "[牙牙凄凉]":"225",
+                                "[牙牙吐血]":"226",
+                                "[牙牙花痴]":"227",
+                                "[牙牙疑问]":"228",
+                                "[牙牙爱心]":"229",
+                                "[牙牙害羞]":"230",
+                                "[牙牙牙买碟]":"231",
+                                "[牙牙亲一下]":"232",
+                                "[牙牙大哭]":"233",
+                                "[牙牙愤怒]":"234",
+                                "[牙牙挖鼻屎]":"235",
+                                "[牙牙嘻嘻]":"236",
+                                "[牙牙漂漂]":"237",
+                                "[牙牙冰冻]":"238",
+                                "[牙牙傲娇]":"239",
+                                "[牙牙闪电]":"240"]
 }
 
 
@@ -264,6 +283,13 @@ extension MTTMessageEntity {
     }
 }
 
+extension MTTMessageEntity {
+    func updateToDB(compeletion:((Bool)->Void)?){
+        MTTDatabaseUtil.instance().updateMessage(forMessage: self) { (result ) in
+            compeletion?(result)
+        }
+    }
+}
 
 extension String {
     

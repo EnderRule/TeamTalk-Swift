@@ -8,8 +8,8 @@
 
 #import "UIImage+NIM.h"
 #import "NIMInputEmoticonDefine.h"
-
-
+#import "UIImage+GIF.h"
+#import "NSString+NIMKit.h"
 
 @implementation UIImage (NIMKit)
 
@@ -40,6 +40,14 @@
     }
     path = path ? path : [NSBundle pathForResource:doubleImage ofType:fileExt inDirectory:bundlePath]; //取二倍圖
     path = path ? path : [NSBundle pathForResource:imageName ofType:fileExt inDirectory:bundlePath]; //實在沒了就去取一倍圖
+    
+    DDLog(@"nim_fetchChartlet  emoji %@/%@ path:%@",chartletId,imageName,path);
+    
+    if ([fileExt isEqualToString:@"gif"]){
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        return [UIImage sd_animatedGIFWithData:data];
+    }
+    
     return [UIImage imageWithContentsOfFile:path];
 }
 
@@ -103,6 +111,42 @@
     
     NSString *name = [emotionbundleName stringByAppendingPathComponent:imageName];
     return [UIImage imageNamed:name];
+}
+
++ (UIImage *)nim_loadChartlet:(NSString *)catalog name:(NSString *)emojiName{
+    NSURL *url = [[NSBundle mainBundle] URLForResource:NIMKit_EmojiBundleName  withExtension:nil];
+    NSBundle *bundle = [NSBundle bundleWithURL:url];
+    NSArray  *paths   = [bundle pathsForResourcesOfType:nil inDirectory:NIMKit_ChartletChartletCatalogPath];
+    for (NSString *path in paths) {
+//        NSLog(@"%@",path);
+        
+        BOOL isDirectory = NO;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory] && isDirectory) {
+            if ([path.lastPathComponent isEqualToString:catalog]){
+                NSArray *resources = [NSBundle pathsForResourcesOfType:nil inDirectory:[path stringByAppendingPathComponent:NIMKit_ChartletChartletCatalogContentPath]];
+                
+                for (NSString *path in resources) {
+//                    NSLog(@"%@",path);
+                    NSString *name  = path.lastPathComponent.stringByDeletingPathExtension;
+                    
+                    if([name.nim_stringByDeletingPictureResolution isEqualToString:emojiName]){
+//                        NSLog(@"matching path:%@",path);
+                        
+                        if ([path.lastPathComponent.pathExtension isEqualToString:@"gif"]){
+                            
+                            NSData *data = [NSData dataWithContentsOfFile:path];
+                            return [UIImage sd_animatedGIFWithData:data];
+                        }else {
+                        
+                            return [UIImage imageWithContentsOfFile:path];
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+    return nil ;
 }
 
 - (UIImage *)nim_imageForAvatarUpload

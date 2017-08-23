@@ -13,7 +13,7 @@
 @protocol NIMInputActionDelegate <NSObject>
 
 @optional
-- (BOOL)onTapMediaItem:(NIMMediaItem *)item;
+- (void)onTapMediaItem:(NIMMediaItem *)item;
 
 - (void)onTextChanged:(id)sender;
 

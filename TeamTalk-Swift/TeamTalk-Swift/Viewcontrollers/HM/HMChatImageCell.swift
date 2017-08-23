@@ -20,17 +20,15 @@ class HMChatImageCell: HMChatBaseCell {
         self.contentView.addSubview(mainImgv)
     }
     
-    
     override func setContent(message: MTTMessageEntity) {
         super.setContent(message: message)
         
-        var imageURL:String = message.msgContent
-        imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_PREFIX, with: "")
-        imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_SUFFIX, with: "")
+        let imageURL:String = self.imageURLFrom(message: message)
         
         self.mainImgv.setImage(str: imageURL)
+        debugPrint("set content message imageURL:\(imageURL)")
     }
-    
+
     override func layoutContentView(message: MTTMessageEntity) {
         let sizecontent = self.contentSizeFor(message: message)
         
@@ -42,7 +40,54 @@ class HMChatImageCell: HMChatBaseCell {
     }
     
     override func contentSizeFor(message: MTTMessageEntity) -> CGSize {
-        return CGSize.init(width: 150, height: 150 * 1.618)
+        var defaultSize:CGSize = .init(width: 100, height: 61.8)  //默认 0.618 黄金比例
+        
+        let imageURL:String = self.imageURLFrom(message: message)
+ 
+        var theImage:UIImage?
+        if FileManager.default.fileExists(atPath: imageURL){
+            theImage = UIImage.init(contentsOfFile: imageURL)
+        }else{
+            guard let url = URL.init(string: imageURL)else{
+                return defaultSize
+            }
+            guard SDWebImageManager.shared().cachedImageExists(for: url) else{
+                return defaultSize
+            }
+            guard let key = SDWebImageManager.shared().cacheKey(for: url)else {
+                return defaultSize
+            }
+            guard let image = SDImageCache.shared().imageFromDiskCache(forKey: key)else {
+                return defaultSize
+            }
+            
+            theImage = image
+        }
+        guard (theImage != nil) else {
+            return defaultSize
+        }
+        
+        defaultSize.width = min( max(theImage!.size.width, 40),maxChatContentWidth)  // 至少40 的宽度
+
+        defaultSize.height = defaultSize.width * theImage!.size.height/theImage!.size.width  //确定宽度后、根据图片的宽高比例来计算高度
+
+        return defaultSize
     }
 
+    
+    private func imageURLFrom(message:MTTMessageEntity)->String{
+    
+        let contentDic = NSDictionary.initWithJsonString(message.msgContent) ?? [:]
+        var imageURL:String = contentDic[MTTMessageEntity.DD_IMAGE_LOCAL_KEY] as? String ?? ""
+        if imageURL.length <= 0 {
+            imageURL = contentDic[MTTMessageEntity.DD_IMAGE_URL_KEY] as? String ?? ""
+        }
+        
+        
+        if imageURL.length > 0{
+            imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_PREFIX, with: "")
+            imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_SUFFIX, with: "")
+        }
+        return imageURL
+    }
 }

@@ -31,13 +31,9 @@ class HMChatPromptCell: HMBaseCell {
         newsize.width += 10
         promptLabel.frame = .init(x: 0, y: 0, width: newsize.width, height: 20)
         promptLabel.center = self.contentView.center
-        print(promptLabel.frame,promptLabel.text ?? "nil text")
     }
-    
     override func configWith(object: Any) {
         if let  prompt = object as? DDPromptEntity {
-            print(self.classForCoder,"config with \(prompt.message)")
-            
             promptLabel.text = prompt.message
         }
     }

@@ -15,7 +15,7 @@ enum HMBubbleLocation:Int {
 }
 
 let HMAvatarGap:CGFloat       = 8   // //头像到边缘的距离
-let HMBubbleUpDownGap:CGFloat = 15  // 气泡到上下边缘的距离
+let HMBubbleUpDownGap:CGFloat = 8  // 气泡到上下边缘的距离
 let HMBubbleAvatarGap:CGFloat = 5  // 头像和气泡之间的距离
 
 
@@ -54,8 +54,15 @@ class HMChatBaseCell: HMBaseCell {
         self.delegate = nil
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(false , animated: false )
+    }
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(false , animated: false )
+    }
     
     override func setupCustom() {
+        
         avatarImgv.backgroundColor = UIColor.blue
         
         nameLabel.font = fontNormal
@@ -66,7 +73,9 @@ class HMChatBaseCell: HMBaseCell {
         
         self.activityView.hidesWhenStopped = true
         self.activityView.isHidden = true
+        self.activityView.backgroundColor = UIColor.clear
         
+        self.resendButton.setTitle("重新發送", for: .normal)
         self.resendButton.setImage(UIImage.init(named: "setting"), for: .normal)
         self.resendButton.addTarget(self , action: #selector(self.sendAgainAction), for: .touchUpInside)
         
@@ -99,17 +108,19 @@ class HMChatBaseCell: HMBaseCell {
         if message.senderId == RuntimeStatus.instance().user.userId {
             self.bubbleLocation = .right
             
-            self.avatarImgv.mas_updateConstraints({ (maker ) in
+            self.avatarImgv.mas_remakeConstraints({ (maker ) in
                 maker?.top.equalTo()(HMAvatarGap)
                 maker?.right.equalTo()(self.contentView.mas_right)?.offset()(-HMAvatarGap)
+                
                 maker?.size.equalTo()(CGSize.init(width: 40, height: 40))
             })
         }else{
             self.bubbleLocation = .left
             
-            self.avatarImgv.mas_updateConstraints({ (maker ) in
+            self.avatarImgv.mas_remakeConstraints({ (maker ) in
                 maker?.top.equalTo()(HMAvatarGap)
                 maker?.left.equalTo()(HMAvatarGap)
+                
                 maker?.size.equalTo()(CGSize.init(width: 40, height: 40))
             })
         }
@@ -137,7 +148,7 @@ class HMChatBaseCell: HMBaseCell {
             
             self.bubbleImgv.mas_remakeConstraints({ (maker) in
                 maker?.right.mas_equalTo()(self.avatarImgv.mas_left)?.offset()(-HMBubbleAvatarGap)
-                maker?.top.mas_equalTo()(self.nameLabel.mas_bottom)
+                maker?.top.mas_equalTo()(self.nameLabel.mas_bottom)?.offset()(HMBubbleUpDownGap)
                 maker?.size.mas_equalTo()(CGSize.init(width: bubbleWidth, height: bubbleHeight))
             })
             if var bubbleImage:UIImage = UIImage.init(named: rightConfig.textBgImage){
@@ -147,7 +158,7 @@ class HMChatBaseCell: HMBaseCell {
         }else{
             self.bubbleImgv.mas_remakeConstraints({ (maker) in
                 maker?.left.mas_equalTo()(self.avatarImgv.mas_right)?.offset()(HMBubbleAvatarGap)
-                maker?.top.mas_equalTo()(self.nameLabel.mas_bottom)
+                maker?.top.mas_equalTo()(self.nameLabel.mas_bottom)?.offset()(HMBubbleUpDownGap)
                 maker?.size.mas_equalTo()(CGSize.init(width: bubbleWidth, height: bubbleHeight))
             })
             if var bubbleImage:UIImage = UIImage.init(named: leftConfig.textBgImage){
@@ -218,7 +229,7 @@ class HMChatBaseCell: HMBaseCell {
         }else if message.msgContentType == .Voice{
             contentSize = .init(width: 150, height: 54.0)
         }else if message.msgContentType == .Emotion {
-            contentSize = .init(width: 88, height: 88)
+            contentSize = .init(width: 150, height: 150)
         }
         
         let totalHeight = nameHeight + contentSize.height + self.bubbleTopEdge() + self.bubbleBottomEdge() + HMBubbleUpDownGap * 2.0

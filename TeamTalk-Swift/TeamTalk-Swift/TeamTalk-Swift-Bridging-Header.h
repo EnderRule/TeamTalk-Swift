@@ -20,23 +20,15 @@
 
 #import "MTTUtil.h"
 
-//AF network
-#import "AFHTTPSessionManager.h"
 
-//SDImage
-#import "SDImageCache.h"
-#import "UIImageView+WebCache.h"
-#import "UIImage+GIF.h"
-#import "NSData+ImageContentType.h"
 
-#import "Masonry.h"
-
-#import "NIMInputView.h"
 
 //Categorys from TeamTalk-Objc
 #import "NSString+Additions.h"
 #import "NSDate+DDAddition.h"
 #import "MTTAvatarImageView.h"
+#import "MTTPhotosCache.h"
+#import "NSDictionary+JSON.h"
 
 
 //GlobalData
@@ -59,6 +51,9 @@
 #import "SessionModule.h"
 #import "ContactsModule.h"
 
+//API
+#import "DDSendPhotoMessageAPI.h"
+#import "DDMessageSendManager.h"
 //audio、videos
 #import "Encapsulator.h"
 
@@ -67,3 +62,20 @@
 #import "MTTLoginViewController.h"
 #import "RecentUsersViewController.h"
 
+//第三方
+//AF network
+#import "AFHTTPSessionManager.h"
+
+//SDImage
+#import "SDImageCache.h"
+#import "UIImageView+WebCache.h"
+#import "UIImage+GIF.h"
+#import "NSData+ImageContentType.h"
+
+#import "Masonry.h"
+#import "NIMInputView.h"
+#import "UIImage+NIM.h"
+#import "M80AttributedLabel.h"
+#import "M80AttributedLabel+NIMKit.h"
+
+#import "TZImagePickerController.h"

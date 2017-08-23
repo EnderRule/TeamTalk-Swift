@@ -16,7 +16,7 @@
                  title:(NSString *)title
 {
     NIMMediaItem *item  = [[NIMMediaItem alloc] init];
-    item.selctor        = NSSelectorFromString(selector);
+    item.selector        = NSSelectorFromString(selector);
     item.normalImage    = normalImage;
     item.selectedImage  = selectedImage;
     item.title          = title;
@@ -26,12 +26,12 @@
 + (NSArray <NIMMediaItem *> *)defaultItems{
     
     
-    return @[[NIMMediaItem item:@"onTapMediaItemPicture:"
+    return @[[NIMMediaItem item:NIMMediaItemPickPhotoSelector
                     normalImage:[UIImage imageNamed:@"bk_media_picture_normal"]
                   selectedImage:[UIImage imageNamed:@"bk_media_picture_nomal_pressed"]
                           title:@"相冊"],
              
-             [NIMMediaItem item:@"onTapMediaItemShoot:"
+             [NIMMediaItem item:NIMMediaItemShootPhotoSelector
                     normalImage:[UIImage imageNamed:@"bk_media_shoot_normal"]
                   selectedImage:[UIImage imageNamed:@"bk_media_shoot_pressed"]
                           title:@"拍攝"],

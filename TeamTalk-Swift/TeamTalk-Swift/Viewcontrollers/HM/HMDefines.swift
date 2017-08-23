@@ -21,7 +21,7 @@ let PHONE_REGULA = "\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[3
 let EMAIL_REGULA = "[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}"
 
 
-let maxChatTextWidth:CGFloat = (SCREEN_WIDTH() - 70.0 * 2.0)
+let maxChatContentWidth:CGFloat = (SCREEN_WIDTH() - 70.0 * 2.0)   //聊天cell的内容view的最大宽度
 
 //字体大小
 let fontTitle  = UIFont.systemFont(ofSize: 16)

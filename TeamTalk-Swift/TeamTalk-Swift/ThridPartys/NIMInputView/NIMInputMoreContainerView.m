@@ -182,13 +182,7 @@ NSInteger NIMButtonBegintLeftX = 11;
     NSInteger index = [sender tag];
     NIMMediaItem *item = _mediaItems[index];
     if (_actionDelegate && [_actionDelegate respondsToSelector:@selector(onTapMediaItem:)]) {
-       
         [_actionDelegate onTapMediaItem:item];
-        //Fixme: change by HZQ
-//        BOOL handled = [_actionDelegate onTapMediaItem:item];
-//        if (!handled) {
-//            NSAssert(0, @"invalid item selector!");
-//        }
     }
     
 }

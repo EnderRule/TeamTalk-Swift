@@ -108,14 +108,14 @@ class HMRecentSessionCell: HMBaseCell {
             if session.isGroupSession {
                 //configs for GroupEntity
 
-                DDGroupModule.instance().getGroupInfogroupID(session.sessionID, completion: { (group ) in
+                DDGroupModule.instance().getGroupInfogroupID(session.sessionID, completion: {[weak self ] (group ) in
                     if group != nil {
-                        self.nameLabel.text = group!.name
+                        self?.nameLabel.text = group!.name
 
                         if group!.isShield{
-                            self.unreadMsgLabel.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+                            self?.unreadMsgLabel.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
                         }else{
-                            self.unreadMsgLabel.backgroundColor = UIColor.red
+                            self?.unreadMsgLabel.backgroundColor = UIColor.red
                         }
                         
                         var avatars:[String] = []
@@ -131,7 +131,7 @@ class HMRecentSessionCell: HMBaseCell {
                             })
                         }
                         let groupAvatarUrls = (avatars as NSArray).componentsJoined(by: ";")
-                        self.avatarView.setAvatar(groupAvatarUrls, group: true )
+                        self?.avatarView.setAvatar(groupAvatarUrls, group: true )
                     }
                 })
             }else {

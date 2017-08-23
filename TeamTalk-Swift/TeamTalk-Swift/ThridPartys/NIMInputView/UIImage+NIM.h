@@ -25,4 +25,6 @@
 
 - (UIImage *)nim_imageForAvatarUpload;
 
++ (UIImage *)nim_loadChartlet:(NSString *)catalog name:(NSString *)emojiName;
+
 @end

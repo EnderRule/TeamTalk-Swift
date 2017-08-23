@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#define NIMMediaItemPickPhotoSelector  @"onTapMediaItemPick"
+
+#define NIMMediaItemShootPhotoSelector  @"onTapMediaItemShoot"
+
 @interface NIMMediaItem : NSObject
 
-@property (nonatomic,assign)    SEL selctor;
+@property (nonatomic,assign)    SEL selector;
 
 @property (nonatomic,strong)    UIImage *normalImage;
 

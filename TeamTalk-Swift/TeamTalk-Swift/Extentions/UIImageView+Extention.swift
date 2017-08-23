@@ -48,13 +48,13 @@ extension UIImageView{
                             return
                         }
                     }catch{
-                        debugPrint("read gif data error:\(error.localizedDescription) \n\n\(newfilePath)")
+//                        debugPrint("read gif data error:\(error.localizedDescription) \n\n\(newfilePath)")
                     }
                 }
                 
                 let image = UIImage.init(contentsOfFile: newfilePath)
                 
-                debugPrint("non gif \(newfilePath) imagescount \(image?.images?.count ?? 0)")
+//                debugPrint("non gif \(newfilePath) imagescount \(image?.images?.count ?? 0)")
                 
                 self.image = image
                 

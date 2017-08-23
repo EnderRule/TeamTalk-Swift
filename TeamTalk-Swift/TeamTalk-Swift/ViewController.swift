@@ -52,7 +52,9 @@ class ViewController: UIViewController {
         }) { (logMsg) in
             debugPrint("testLogin error : ",logMsg ?? "")
         }
+
     }
+    
 
 }
 
