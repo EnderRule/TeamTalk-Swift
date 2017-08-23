@@ -71,21 +71,21 @@
 - (void)loginWithUsername:(NSString*)name password:(NSString*)password success:(void(^)(MTTUserEntity* loginedUser))success failure:(void(^)(NSString* error))failure
 {
 
-    if (DEBUG) {
-        MTTUserEntity *user = [[ MTTUserEntity alloc]initWithUserID:@"user_4" name:@"qing" nick:@"qing" avatar:@"setting" userRole:1 userUpdated:1];
-        TheRuntime.user = user;
-        [DDClientState shareInstance].userState = DDUserOnline;
-        _relogining = YES;
-        
-        [[MTTDatabaseUtil instance]openCurrentUserDB];
-        [[SessionModule instance]loadLocalSession:^(bool isok) {
-            
-        }];
-        
-        success(user);
-        [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationUserLoginSuccess object:user];
-        return ;
-    }
+//    if (DEBUG) {
+//        MTTUserEntity *user = [[ MTTUserEntity alloc]initWithUserID:@"user_4" name:@"qing" nick:@"qing" avatar:@"setting" userRole:1 userUpdated:1];
+//        TheRuntime.user = user;
+//        [DDClientState shareInstance].userState = DDUserOnline;
+//        _relogining = YES;
+//        
+//        [[MTTDatabaseUtil instance]openCurrentUserDB];
+//        [[SessionModule instance]loadLocalSession:^(bool isok) {
+//            
+//        }];
+//        
+//        success(user);
+//        [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationUserLoginSuccess object:user];
+//        return ;
+//    }
     
     [_httpServer getMsgIp:^(NSDictionary *dic) {
         NSInteger code  = [[dic objectForKey:@"code"] integerValue];

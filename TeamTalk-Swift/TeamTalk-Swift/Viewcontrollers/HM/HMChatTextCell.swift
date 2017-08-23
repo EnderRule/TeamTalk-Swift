@@ -26,12 +26,7 @@ class HMChatTextCell: HMChatBaseCell,M80AttributedLabelDelegate {
         
         self.contentView.addSubview(attTextLabel)
         
-//        textView.isScrollEnabled = false
-//        textView.isEditable = false
-//        textView.isSelectable = true
-//        textView.font = fontNormal
-//        textView.backgroundColor = UIColor.clear
-//        self.contentView.addSubview(textView)
+        
     }
     
 
@@ -39,22 +34,15 @@ class HMChatTextCell: HMChatBaseCell,M80AttributedLabelDelegate {
         super.setContent(message: message)
         
         attTextLabel.nim_setText(message.msgContent)
-        
-        
-//        self.textView.text = message.msgContent
     }
     
     override func layoutContentView(message: MTTMessageEntity) {
-//        let sizecontent = self.contentSizeFor(message: message)
         
          self.attTextLabel.mas_remakeConstraints { (maker ) in
             maker?.left.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(self.bubbleLeftEdge())
             maker?.top.mas_equalTo()(self.bubbleImgv.mas_top)?.offset()(self.bubbleTopEdge())
-            
             maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)?.offset()(-self.bubbleBottomEdge())
             maker?.right.mas_equalTo()(self.bubbleImgv.mas_right)?.offset()(-self.bubbleRightEdge())
-
-//            maker?.size.mas_equalTo()(sizecontent)
         }
     }
     

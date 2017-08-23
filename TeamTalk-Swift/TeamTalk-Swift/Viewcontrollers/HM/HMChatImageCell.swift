@@ -16,8 +16,10 @@ class HMChatImageCell: HMChatBaseCell {
         super.setupCustom()
         
         mainImgv.contentMode = .scaleAspectFit
+        mainImgv.backgroundColor = UIColor.clear
         
         self.contentView.addSubview(mainImgv)
+        
     }
     
     override func setContent(message: MTTMessageEntity) {
@@ -30,13 +32,20 @@ class HMChatImageCell: HMChatBaseCell {
     }
 
     override func layoutContentView(message: MTTMessageEntity) {
-        let sizecontent = self.contentSizeFor(message: message)
         
-        self.mainImgv.mas_makeConstraints { (maker ) in
+        self.mainImgv.mas_remakeConstraints { (maker ) in
             maker?.left.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(self.bubbleLeftEdge())
             maker?.top.mas_equalTo()(self.bubbleImgv.mas_top)?.offset()(self.bubbleTopEdge())
-            maker?.size.mas_equalTo()(sizecontent)
+            maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)?.offset()(-self.bubbleBottomEdge())
+            maker?.right.mas_equalTo()(self.bubbleImgv.mas_right)?.offset()(-self.bubbleRightEdge())
         }
+        
+//        let sizecontent = self.contentSizeFor(message: message)
+//        self.mainImgv.mas_remakeConstraints { (maker ) in
+//            maker?.left.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(self.bubbleLeftEdge())
+//            maker?.top.mas_equalTo()(self.bubbleImgv.mas_top)?.offset()(self.bubbleTopEdge())
+//            maker?.size.mas_equalTo()(sizecontent)
+//        }
     }
     
     override func contentSizeFor(message: MTTMessageEntity) -> CGSize {
@@ -67,7 +76,7 @@ class HMChatImageCell: HMChatBaseCell {
             return defaultSize
         }
         
-        defaultSize.width = min( max(theImage!.size.width, 40),maxChatContentWidth)  // 至少40 的宽度
+        defaultSize.width = min( max(theImage!.size.width, 40),maxChatContentWidth * 0.618 )  // 至少40 的宽度
 
         defaultSize.height = defaultSize.width * theImage!.size.height/theImage!.size.width  //确定宽度后、根据图片的宽高比例来计算高度
 
