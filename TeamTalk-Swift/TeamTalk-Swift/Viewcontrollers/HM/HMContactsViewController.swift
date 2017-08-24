@@ -47,13 +47,17 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: UITableViewCell.cellIdentifier)
+        tableView.register(HMContactsCell.classForCoder(), forCellReuseIdentifier: HMContactsCell.cellIdentifier)
+        
         self.view.addSubview(self.tableView)
         
         tableView.mas_makeConstraints { (maker ) in
             maker?.edges.mas_equalTo()(self.view)
         }
         
-        
+        tableView.addHeader { 
+            self.refreshContacts()
+        }
         
     }
     
@@ -64,7 +68,7 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
             debugPrint("refreshContacts user? ",obj )
             
             if let user = obj as? MTTUserEntity{
-                debugPrint(user.name)
+                debugPrint(user.name,user.avatar)
                 self.users.append(user)
             }
         }
@@ -79,6 +83,7 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
             }
             
         }
+        self.tableView.headerEndRefreshing()
         self.tableView.reloadData()
     }
     
@@ -95,22 +100,17 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.cellIdentifier, for: indexPath)
+        let cell:HMContactsCell = tableView.dequeueReusableCell(withIdentifier: HMContactsCell.cellIdentifier, for: indexPath) as! HMContactsCell
         
         if indexPath.section == 0 {
             if indexPath.row < self.groups.count {
                 let group = self.groups[indexPath.row]
-                
-                cell.textLabel?.text = group.name
-            }else {
-                cell.textLabel?.text = ""
+                cell.configWith(object: group)
             }
         }else  {
             if indexPath.row < self.users.count {
                 let user = self.users[indexPath.row]
-                cell.textLabel?.text = user.name
-            }else {
-                cell.textLabel?.text = ""
+                cell.configWith(object: user)
             }
         }
         

@@ -49,16 +49,14 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             print("get newmsg :\(count)",error?.localizedDescription ?? "nil error")
             
             if count > 0{
-                self.refreshMessagesData()
+                self.refreshMessagesData(scrollToBottom: true)
             }
         }
-        
-        
         chattingModule.loadMoreHistoryCompletion { (count , error ) in
             print("load more history  :\(count)",error?.localizedDescription ?? "nil error")
 
             if count > 0{
-                self.refreshMessagesData()
+                self.refreshMessagesData(scrollToBottom: true )
             }
         }
     }
@@ -75,7 +73,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     
-        self.refreshMessagesData()
+        self.refreshMessagesData(scrollToBottom: true)
+
         self.navigationItem.title = self.chattingModule.sessionEntity.name
     }
     
@@ -96,11 +95,13 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     }
     
     func setupChatMessagesTableview(){
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.tableView.tableFooterView = UIView.init()
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.tableFooterView = UIView.init()
         tableView.separatorStyle = .singleLine
         tableView.backgroundColor = UIColor.green
+        tableView.keyboardDismissMode = .onDrag
         
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: UITableViewCell.cellIdentifier)
         tableView.register(HMChatTextCell.classForCoder(), forCellReuseIdentifier: HMChatTextCell.cellIdentifier)
@@ -119,20 +120,37 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             maker?.bottom.mas_equalTo()(self.chatInputView.mas_top)
         }
         
+        tableView.headerRefreshingText = "正在載入..."
+        tableView.headerPullToRefreshText = "下拉載入更多"
+        tableView.headerReleaseToRefreshText = "鬆開后載入"
+        tableView.addHeader { 
+            self.chattingModule.loadMoreHistoryCompletion({[weak self ] (count , error ) in
+                if count > 0 {
+                    self?.refreshMessagesData(scrollToBottom: false)
+                    self?.tableView.headerEndRefreshing()
+                    
+                }else {
+                    debugPrint("load more history messages for session \(self?.chattingModule.sessionEntity.sessionID ?? "") ,but no more")
+                    self?.tableView.headerEndRefreshing()
+                }
+            })
+        }
     }
     
     
-    func refreshMessagesData(){
+    func refreshMessagesData(scrollToBottom:Bool){
         
         self.showingMessages = chattingModule.showingMessages as! [Any]
         
         self.tableView.reloadData()
-        self.tableView.checkScrollToBottom()
+        if scrollToBottom{
+            self.tableView.checkScrollToBottom()
+        }
     }
  
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (object as? ChattingModule) == self.chattingModule  && keyPath == "showingMessages"{
-            self.refreshMessagesData()
+            self.refreshMessagesData(scrollToBottom: false)
         }
     }
     
@@ -208,11 +226,13 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             }
             dispatch(after: 0, task: { 
                 self?.tableView.reloadData()
+                self?.tableView.checkScrollToBottom()
             })
         }) {[weak self] (error ) in
             msgEntity.state = .SendFailure
             
             self?.tableView.reloadData()
+            self?.tableView.checkScrollToBottom()
         }
         
     }
