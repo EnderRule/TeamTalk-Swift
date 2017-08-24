@@ -190,6 +190,7 @@
     __block NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     __block NSInteger version = [[defaults objectForKey:@"alllastupdatetime"] integerValue];
+    
     [[MTTDatabaseUtil instance] getAllUsers:^(NSArray *contacts, NSError *error) {
         if ([contacts count] !=0) {
             [contacts enumerateObjectsUsingBlock:^(MTTUserEntity *obj, NSUInteger idx, BOOL *stop) {

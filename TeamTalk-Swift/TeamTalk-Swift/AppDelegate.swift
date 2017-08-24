@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginVC = MTTLoginViewController.init()
         loginVC.hidesBottomBarWhenPushed = true
         let navivc:UINavigationController = UINavigationController.init(rootViewController: loginVC)
-        navivc.setNavigationBarHidden(false , animated: true )
+        navivc.setNavigationBarHidden(true  , animated:true)
         
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.rootViewController = navivc

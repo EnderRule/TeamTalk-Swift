@@ -171,11 +171,10 @@
                     
                 }];
             }
-            HMRecentSessionsViewController *newvc = [[HMRecentSessionsViewController alloc]init];
-            newvc.hidesBottomBarWhenPushed = YES;
-            [self pushViewController:newvc animated:YES];
             
-//            [self pushViewController: [RecentUsersViewController shareInstance] animated:YES];
+            [self loginSuccessHandler];
+            
+            
         }
     } failure:^(NSString *error) {
         
@@ -211,4 +210,25 @@
     
     return YES;
 }
+
+-(void)loginSuccessHandler{
+    UITabBarController *maintabbar = [[UITabBarController alloc]init];
+    UINavigationController *recentsnavi = [[UINavigationController alloc]initWithRootViewController:[[HMRecentSessionsViewController alloc]init]];
+    UINavigationController *contactsNavi = [[UINavigationController alloc]initWithRootViewController:[[HMContactsViewController alloc]init]];
+    recentsnavi.title = @"消息";
+    contactsNavi.title = @"联系人";
+    
+    [maintabbar setViewControllers:@[recentsnavi,contactsNavi]];
+    
+    [self pushViewController:maintabbar animated:true];
+    
+    
+//    HMRecentSessionsViewController *newvc = [[HMRecentSessionsViewController alloc]init];
+//    newvc.hidesBottomBarWhenPushed = YES;
+//    [self pushViewController:newvc animated:YES];
+    
+    //            [self pushViewController: [RecentUsersViewController shareInstance] animated:YES];
+    
+}
+
 @end

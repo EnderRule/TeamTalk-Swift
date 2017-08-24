@@ -77,5 +77,5 @@
 #import "UIImage+NIM.h"
 #import "M80AttributedLabel.h"
 #import "M80AttributedLabel+NIMKit.h"
-
+#import "MJRefresh.h"
 #import "TZImagePickerController.h"

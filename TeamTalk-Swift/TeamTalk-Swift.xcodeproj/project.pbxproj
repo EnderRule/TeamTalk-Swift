@@ -269,6 +269,15 @@
 		66686D1B1F4A7642008B26BD /* HMBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1A1F4A7642008B26BD /* HMBaseCell.swift */; };
 		66686D1D1F4A766D008B26BD /* HMRecentSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */; };
 		66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */; };
+		6672CC211F4E626200DA46E6 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6672CC111F4E626200DA46E6 /* MJRefresh.bundle */; };
+		6672CC221F4E626200DA46E6 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC141F4E626200DA46E6 /* MJRefreshBaseView.m */; };
+		6672CC231F4E626200DA46E6 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC161F4E626200DA46E6 /* MJRefreshConst.m */; };
+		6672CC241F4E626200DA46E6 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC181F4E626200DA46E6 /* MJRefreshFooterView.m */; };
+		6672CC251F4E626200DA46E6 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC1A1F4E626200DA46E6 /* MJRefreshHeaderView.m */; };
+		6672CC261F4E626200DA46E6 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC1C1F4E626200DA46E6 /* UIScrollView+MJExtension.m */; };
+		6672CC271F4E626200DA46E6 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC1E1F4E626200DA46E6 /* UIScrollView+MJRefresh.m */; };
+		6672CC281F4E626200DA46E6 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC201F4E626200DA46E6 /* UIView+MJExtension.m */; };
+		6672CC2A1F4E65BF00DA46E6 /* HMContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC291F4E65BF00DA46E6 /* HMContactsViewController.swift */; };
 		6682FE721F4AC4490048FA23 /* HMDefines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE711F4AC4490048FA23 /* HMDefines.swift */; };
 		6682FE741F4AEB7E0048FA23 /* MTTPromtEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */; };
 		6682FE761F4AED8F0048FA23 /* HMChatPromptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */; };
@@ -946,6 +955,23 @@
 		66686D1A1F4A7642008B26BD /* HMBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMBaseCell.swift; path = HM/HMBaseCell.swift; sourceTree = "<group>"; };
 		66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMRecentSessionCell.swift; path = HM/HMRecentSessionCell.swift; sourceTree = "<group>"; };
 		66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMChattingViewController.swift; sourceTree = "<group>"; };
+		6672CC111F4E626200DA46E6 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		6672CC121F4E626200DA46E6 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		6672CC131F4E626200DA46E6 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
+		6672CC141F4E626200DA46E6 /* MJRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBaseView.m; sourceTree = "<group>"; };
+		6672CC151F4E626200DA46E6 /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
+		6672CC161F4E626200DA46E6 /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
+		6672CC171F4E626200DA46E6 /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
+		6672CC181F4E626200DA46E6 /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
+		6672CC191F4E626200DA46E6 /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
+		6672CC1A1F4E626200DA46E6 /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
+		6672CC1B1F4E626200DA46E6 /* UIScrollView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJExtension.h"; sourceTree = "<group>"; };
+		6672CC1C1F4E626200DA46E6 /* UIScrollView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJExtension.m"; sourceTree = "<group>"; };
+		6672CC1D1F4E626200DA46E6 /* UIScrollView+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJRefresh.h"; sourceTree = "<group>"; };
+		6672CC1E1F4E626200DA46E6 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
+		6672CC1F1F4E626200DA46E6 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
+		6672CC201F4E626200DA46E6 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		6672CC291F4E65BF00DA46E6 /* HMContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMContactsViewController.swift; path = HM/HMContactsViewController.swift; sourceTree = "<group>"; };
 		6682FE711F4AC4490048FA23 /* HMDefines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMDefines.swift; path = HM/HMDefines.swift; sourceTree = "<group>"; };
 		6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTPromtEntity.swift; sourceTree = "<group>"; };
 		6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatPromptCell.swift; path = HM/HMChatPromptCell.swift; sourceTree = "<group>"; };
@@ -2101,6 +2127,7 @@
 				66686D201F4ABC9A008B26BD /* Cells */,
 				66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */,
 				66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */,
+				6672CC291F4E65BF00DA46E6 /* HMContactsViewController.swift */,
 			);
 			name = HM;
 			sourceTree = "<group>";
@@ -2114,6 +2141,29 @@
 				66E436A71F4BCEEC009D527D /* ChatCells */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		6672CC101F4E626200DA46E6 /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				6672CC111F4E626200DA46E6 /* MJRefresh.bundle */,
+				6672CC121F4E626200DA46E6 /* MJRefresh.h */,
+				6672CC131F4E626200DA46E6 /* MJRefreshBaseView.h */,
+				6672CC141F4E626200DA46E6 /* MJRefreshBaseView.m */,
+				6672CC151F4E626200DA46E6 /* MJRefreshConst.h */,
+				6672CC161F4E626200DA46E6 /* MJRefreshConst.m */,
+				6672CC171F4E626200DA46E6 /* MJRefreshFooterView.h */,
+				6672CC181F4E626200DA46E6 /* MJRefreshFooterView.m */,
+				6672CC191F4E626200DA46E6 /* MJRefreshHeaderView.h */,
+				6672CC1A1F4E626200DA46E6 /* MJRefreshHeaderView.m */,
+				6672CC1B1F4E626200DA46E6 /* UIScrollView+MJExtension.h */,
+				6672CC1C1F4E626200DA46E6 /* UIScrollView+MJExtension.m */,
+				6672CC1D1F4E626200DA46E6 /* UIScrollView+MJRefresh.h */,
+				6672CC1E1F4E626200DA46E6 /* UIScrollView+MJRefresh.m */,
+				6672CC1F1F4E626200DA46E6 /* UIView+MJExtension.h */,
+				6672CC201F4E626200DA46E6 /* UIView+MJExtension.m */,
+			);
+			path = MJRefresh;
 			sourceTree = "<group>";
 		};
 		66BD02711F4D1CB100131E2D /* TZImagePickerController */ = {
@@ -2325,6 +2375,7 @@
 		66E6D3571F428990008E9590 /* ThridPartys */ = {
 			isa = PBXGroup;
 			children = (
+				6672CC101F4E626200DA46E6 /* MJRefresh */,
 				66BD029F1F4D8D5600131E2D /* M80AttributedLabel */,
 				66BD02711F4D1CB100131E2D /* TZImagePickerController */,
 				66E437481F4C41BC009D527D /* NIMInputView */,
@@ -3144,6 +3195,7 @@
 				66686CD61F46CE44008B26BD /* myprofile.png in Resources */,
 				66686CD51F46CE44008B26BD /* mac_logined@2x.png in Resources */,
 				66686C841F46CE44008B26BD /* contact@2x.png in Resources */,
+				6672CC211F4E626200DA46E6 /* MJRefresh.bundle in Resources */,
 				66686CCF1F46CE44008B26BD /* left.png in Resources */,
 				66686CBB1F46CE44008B26BD /* dd_take-photo@2x.png in Resources */,
 				66686CB71F46CE44008B26BD /* dd_send_failed.png in Resources */,
@@ -3241,6 +3293,7 @@
 				66686ADE1F45AACC008B26BD /* MASCompositeConstraint.m in Sources */,
 				66E6D3D11F42929B008E9590 /* DDAPISchedule.m in Sources */,
 				66686B591F469402008B26BD /* HPTextViewInternal.m in Sources */,
+				6672CC271F4E626200DA46E6 /* UIScrollView+MJRefresh.m in Sources */,
 				66F10F821F4449570035C888 /* SpeexCodec.m in Sources */,
 				66686BDA1F46C718008B26BD /* MTTLoginViewController.m in Sources */,
 				66BD02901F4D1CB100131E2D /* TZAssetCell.m in Sources */,
@@ -3307,6 +3360,7 @@
 				66686BC51F469E19008B26BD /* DDContactsCell.m in Sources */,
 				66686BB21F469CB2008B26BD /* PSTCollectionView.m in Sources */,
 				66F1074D1F42D1F50035C888 /* AFHTTPSessionManager.m in Sources */,
+				6672CC251F4E626200DA46E6 /* MJRefreshHeaderView.m in Sources */,
 				66686B611F469626008B26BD /* DDChatImagePreviewViewController.m in Sources */,
 				66F10F5B1F4449570035C888 /* exc_10_16_table.c in Sources */,
 				66F1075B1F42D1F50035C888 /* UIWebView+AFNetworking.m in Sources */,
@@ -3343,10 +3397,12 @@
 				66F108121F43E7180035C888 /* DDTcpServer.m in Sources */,
 				66E6D3761F4289D0008E9590 /* ExtendableMessage.swift in Sources */,
 				66F107151F42A36E0035C888 /* LoginAPI.swift in Sources */,
+				6672CC231F4E626200DA46E6 /* MJRefreshConst.m in Sources */,
 				66F107CD1F42D4810035C888 /* UIImage+MultiFormat.m in Sources */,
 				66F10F6C1F4449570035C888 /* lpc.c in Sources */,
 				66E6D3B81F428C38008E9590 /* DynamicColor+Mixing.swift in Sources */,
 				66E6D3E21F4292E4008E9590 /* DDTcpClientManager.m in Sources */,
+				6672CC261F4E626200DA46E6 /* UIScrollView+MJExtension.m in Sources */,
 				66F10F741F4449570035C888 /* preprocess.c in Sources */,
 				66E6D3771F4289D0008E9590 /* ExtensionRegistry.swift in Sources */,
 				66686BBB1F469CB2008B26BD /* PSTGridLayoutItem.m in Sources */,
@@ -3370,6 +3426,7 @@
 				66686B601F469626008B26BD /* ChatUtilityViewController.m in Sources */,
 				66F107CA1F42D4810035C888 /* SDWebImagePrefetcher.m in Sources */,
 				66686B281F46900B008B26BD /* MTTGroupInfoCell.m in Sources */,
+				6672CC241F4E626200DA46E6 /* MJRefreshFooterView.m in Sources */,
 				66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */,
 				66F107911F42D3A90035C888 /* NSDictionary+JSON.m in Sources */,
 				66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */,
@@ -3481,6 +3538,7 @@
 				66E6D3531F428922008E9590 /* ZQTextField.swift in Sources */,
 				66F10A661F43F14B0035C888 /* FMResultSet.m in Sources */,
 				66E6D37A1F4289D0008E9590 /* Google.Protobuf.Any.proto.swift in Sources */,
+				6672CC221F4E626200DA46E6 /* MJRefreshBaseView.m in Sources */,
 				66F107F11F42FE490035C888 /* MTTUserEntity.swift in Sources */,
 				66F107D81F42EAC30035C888 /* CreateGroupAPI.swift in Sources */,
 				66E6D34C1F428922008E9590 /* UIImage+Extention.swift in Sources */,
@@ -3529,6 +3587,7 @@
 				66F107A01F42D3A90035C888 /* UITabBar+SubView.m in Sources */,
 				66E6D3B51F428C38008E9590 /* DynamicColor+HSB.swift in Sources */,
 				66E4379F1F4C41BC009D527D /* NSString+NIMKit.m in Sources */,
+				6672CC281F4E626200DA46E6 /* UIView+MJExtension.m in Sources */,
 				66E6D3801F4289D0008E9590 /* Google.Protobuf.FieldMask.proto.swift in Sources */,
 				66F10F731F4449570035C888 /* nb_celp.c in Sources */,
 				66686B8A1F4696EC008B26BD /* MWZoomingScrollView.m in Sources */,
@@ -3542,6 +3601,7 @@
 				66F107991F42D3A90035C888 /* UIColor+AQGridView.m in Sources */,
 				66F1074F1F42D1F50035C888 /* AFSecurityPolicy.m in Sources */,
 				66E437931F4C41BC009D527D /* NIMInputAudioRecordIndicatorView.m in Sources */,
+				6672CC2A1F4E65BF00DA46E6 /* HMContactsViewController.swift in Sources */,
 				66686A621F4522B5008B26BD /* MTTBubbleModule.m in Sources */,
 				66E6D39A1F428A33008E9590 /* Im.Other.Imother.proto.swift in Sources */,
 				66E6D3DE1F4292CC008E9590 /* DDDataOutputStream.m in Sources */,

@@ -118,10 +118,9 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated{
 
-    if (self.tabBarController ==nil) {
+    if (self.tabBarController == nil) {
         [self.navigationController pushViewController:viewController animated:animated];
-    }
-    else{
+    }  else{
         [self.tabBarController.navigationController pushViewController:viewController animated:animated];
     }
 }

@@ -157,7 +157,9 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     func sortSessions(){
         self.sessions.removeAll()
         self.sessions = SessionModule.instance().getAllSessions() as? [MTTSessionEntity] ?? []
-
+        
+        debugPrint("sort sessions :",self.sessions,self.sessions.count)
+        
         if self.sessions.count > 0 {
             let sortDes1 = NSSortDescriptor.init(key: "timeInterval", ascending: false)
             let sortDes2 = NSSortDescriptor.init(key: "isFixedTop", ascending: false )
