@@ -101,7 +101,7 @@
     NSString* word = nil;
     if ([sender isKindOfClass:[MTTUserEntity class]])
     {
-        word = [(MTTUserEntity*)sender nick];
+        word = [(MTTUserEntity*)sender nickName];
     }
     else if ([sender isKindOfClass:[MTTGroupEntity class]])
     {

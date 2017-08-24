@@ -105,9 +105,9 @@
             NSInteger len;
             len = [_outStream write:[data mutableBytes] maxLength:[data length]];
             _noDataSent = NO;
-            DDLog(@"WRITE - Written directly to outStream len:%li", (long)len);
+//            DDLog(@"WRITE - Written directly to outStream len:%li", (long)len);
             if (len < [data length]) {
-                DDLog(@"WRITE - Creating a new buffer for remaining data len:%lu", [data length] - len);
+//                DDLog(@"WRITE - Creating a new buffer for remaining data len:%lu", [data length] - len);
                 _lastSendBuffer = [DDSendBuffer dataWithNSData:[data subdataWithRange:NSMakeRange([data length]-len, [data length])]];
                 [_sendBuffers addObject:_lastSendBuffer];
                 
@@ -122,14 +122,14 @@
             newDataLength = [data length];
             
             if (lastSendBufferLength < 1024 ) {
-                DDLog(@"WRITE - Have a buffer with enough space, appending data to it");
+//                DDLog(@"WRITE - Have a buffer with enough space, appending data to it");
                 if ([data length] > 0 ){ //Fixme:here, add a new condition by HZQ
                     [_lastSendBuffer appendData:data];
                 }
                 return;
             }
         }
-        DDLog(@"WRITE - Creating a new buffer");
+//        DDLog(@"WRITE - Creating a new buffer");
         _lastSendBuffer = [DDSendBuffer dataWithNSData:data];
         [_sendBuffers addObject:_lastSendBuffer];
         
@@ -147,7 +147,7 @@
 {
     switch(eventCode) {
         case NSStreamEventNone:
-			DDLog(@"Event type: EventNone");
+//			DDLog(@"Event type: EventNone");
 			break;
         case NSStreamEventOpenCompleted:
 			[self p_handleConntectOpenCompletedStream:aStream];
@@ -170,7 +170,7 @@
 #pragma mark - PrivateAPI
 - (void)p_handleConntectOpenCompletedStream:(NSStream *)aStream
 {
-    DDLog(@"handleConntectOpenCompleted");
+//    DDLog(@"handleConntectOpenCompleted");
     if (aStream == _outStream) {
         
         [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkConnectComplete object:nil  userInfo:nil ];
@@ -254,7 +254,7 @@
 
 - (void)p_handleEventErrorOccurredStream:(NSStream *)aStream
 {
-    DDLog(@"handle eventErrorOccurred");
+//    DDLog(@"handle eventErrorOccurred");
     [self disconnect];
     
     [DDClientState shareInstance].userState = DDUserOffLine;
@@ -262,7 +262,7 @@
 
 - (void)p_handleEventEndEncounteredStream:(NSStream *)aStream
 {
-    DDLog(@"handle eventEndEncountered");
+//    DDLog(@"handle eventEndEncountered");
     
     cDataLen = 0;
 
@@ -325,7 +325,7 @@
             [_receiveLock unlock];
         }
         else {
-            DDLog(@"No buffer!");
+//            DDLog(@"No buffer!");
         }
 
     }

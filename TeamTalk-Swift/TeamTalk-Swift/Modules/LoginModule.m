@@ -68,7 +68,7 @@
 
 
 #pragma mark Public API
-- (void)loginWithUsername:(NSString*)name password:(NSString*)password success:(void(^)(MTTUserEntity* loginedUser))success failure:(void(^)(NSString* error))failure
+- (void)loginWithUsername:(NSString*)userName password:(NSString*)password success:(void(^)(MTTUserEntity* loginedUser))success failure:(void(^)(NSString* error))failure
 {
 
 //    if (DEBUG) {
@@ -95,16 +95,87 @@
             [MTTUtil setMsfsUrl:[dic objectForKey:@"msfsPrior"]];
             [_tcpServer loginTcpServerIP:_priorIP port:_port Success:^{
                 
-                [_msgServer checkUserID:name Pwd:password token:@"" success:^(id object) {
-                    DDLog(@"login#登录验证成功 %@",name);
+                
+                NSNumber* clientType = @(17);
+                NSString *clientVersion = [NSString stringWithFormat:@"MAC/%@-%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+                NSArray* parameter = @[userName,password,clientVersion,clientType];
+                
+                LoginAPI* api = [[LoginAPI alloc] init];
+                [api requestWithObject:parameter Completion:^(id response, NSError *error) {
+                    
+                    if ((NSDictionary *)response){
+                        MTTUserEntity *user = (MTTUserEntity *) response[@"user"];
+                        if (user && user.isValided){
+                            DDLog(@"login#登录验证成功 %@",userName);
+
+                            [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"password"];
+                            [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"username"];
+                            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"autologin"];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                            
+                            _lastLoginPassword = password;
+                            _lastLoginUserName = userName;
+                            DDClientState* clientState = [DDClientState shareInstance];
+                            clientState.userState=DDUserOnline;
+                            _relogining=YES;
+
+                            [RuntimeStatus instance].user=user;
+                            
+                            [[MTTDatabaseUtil instance] openCurrentUserDB];
+                            
+                            
+                            
+                            
+                            //加载所有人信息，创建检索拼音
+                            [self p_loadAllUsersCompletion:^{
+                                
+                                if ([[SpellLibrary instance] isEmpty]) {
+                                    
+                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                        [[[DDUserModule shareInstance] getAllMaintanceUser] enumerateObjectsUsingBlock:^(MTTUserEntity *obj, NSUInteger idx, BOOL *stop) {
+                                            [[SpellLibrary instance] addSpellForObject:obj];
+                                            [[SpellLibrary instance] addDeparmentSpellForObject:obj];
+                                            
+                                        }];
+                                        NSArray *array =  [[DDGroupModule instance] getAllGroups];
+                                        [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                                            [[SpellLibrary instance] addSpellForObject:obj];
+                                        }];
+                                    });
+                                }
+                            }];
+                            
+                            [[SessionModule instance] loadLocalSession:^(bool isok) {}];
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationUserLoginSuccess object:user];
+
+                            success(user);
+                        }else{
+                            NSString *resultString = (NSString *)response[@"resultString"];
+                            if (!resultString || resultString.length <= 0 ){
+                                resultString = [NSString stringWithFormat:@"登入失败：code = %@", response[@"resultCode"]];
+                            }
+                            failure(resultString);
+                         }
+                    } else {
+                        DDLog(@"error:%@",[error domain]);
+                        failure(error.description);
+                    }
+                }];
+                
+                return
+                
+                
+                [_msgServer checkUserID:userName Pwd:password token:@"" success:^(id object) {
+                    DDLog(@"login#登录验证成功 %@",userName);
                     
                     [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"password"];
-                    [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"username"];
+                    [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"username"];
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"autologin"];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
-                    _lastLoginPassword=password;
-                    _lastLoginUserName=name;
+                    _lastLoginPassword = password;
+                    _lastLoginUserName = userName;
                     DDClientState* clientState = [DDClientState shareInstance];
                     clientState.userState=DDUserOnline;
                     _relogining=YES;
@@ -112,6 +183,11 @@
                     [RuntimeStatus instance].user=user;
                     
                     [[MTTDatabaseUtil instance] openCurrentUserDB];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationUserLoginSuccess object:user];
+                    
+                    success(user);
+
                     
                     //加载所有人信息，创建检索拼音
                     [self p_loadAllUsersCompletion:^{
@@ -134,9 +210,7 @@
 
                     [[SessionModule instance] loadLocalSession:^(bool isok) {}];
                     
-                    success(user);
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationUserLoginSuccess object:user];
                     
                     
                 } failure:^(NSError *object) {

@@ -6,7 +6,8 @@
 //  Copyright (c) 2014年 dujia. All rights reserved.
 //
 
-#import "MTTBaseViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface MTTLoginViewController : MTTBaseViewController
+
+@interface MTTLoginViewController : UIViewController
 @end

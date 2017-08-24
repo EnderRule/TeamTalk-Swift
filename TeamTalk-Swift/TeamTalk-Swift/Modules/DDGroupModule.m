@@ -151,34 +151,6 @@
         }
     }];
     
-    //弃用的方法
-//    DDReceiveGroupDeleteMemberAPI* deleteMemberAPI = [[DDReceiveGroupDeleteMemberAPI alloc] init];
-//    [deleteMemberAPI registerAPIInAPIScheduleReceiveData:^(id object, NSError *error) {
-//        if (!error)
-//        {
-//            MTTGroupEntity* MTTGroupEntity = (MTTGroupEntity*)object;
-//            if (!MTTGroupEntity)
-//            {
-//                return;
-//            }
-//            DDUserlistModule* userModule = getDDUserlistModule();
-//            if ([MTTGroupEntity.groupUserIds containsObject:userModule.myUserId])
-//            {
-//                //别人被踢了
-//                [[DDMainWindowController instance] updateCurrentChattingViewController];
-//            }
-//            else
-//            {
-//                //自己被踢了
-//                [self.recentlyGroupIds removeObject:MTTGroupEntity.groupId];
-//                DDSessionModule* sessionModule = getDDSessionModule();
-//                [sessionModule.recentlySessionIds removeObject:MTTGroupEntity.groupId];
-//                DDMessageModule* messageModule = getDDMessageModule();
-//                [messageModule popArrayMessage:MTTGroupEntity.groupId];
-//                [NotificationHelp postNotification:notificationReloadTheRecentContacts userInfo:nil object:nil];
-//            }
-//        }
-//    }];
 }
 
 

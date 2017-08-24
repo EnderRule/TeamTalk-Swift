@@ -32,8 +32,6 @@ typedef void(^DDChatLoadMoreHistoryCompletion)(NSUInteger addcount, NSError* err
 - (void)loadMoreHistoryCompletion:(DDChatLoadMoreHistoryCompletion)completion;
 - (void)loadAllHistoryCompletion:(MTTMessageEntity*)message Completion:(DDChatLoadMoreHistoryCompletion)completion;
 
-- (float)messageHeight:(MTTMessageEntity*)message;
-
 - (void)addPrompt:(NSString*)prompt;
 - (void)addShowMessage:(MTTMessageEntity*)message;
 - (void)addShowMessages:(NSArray*)messages;

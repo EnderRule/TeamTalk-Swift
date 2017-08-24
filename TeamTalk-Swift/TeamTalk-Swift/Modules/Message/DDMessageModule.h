@@ -12,9 +12,20 @@
 @class MTTMessageEntity;
 @class MTTSessionEntity;
 
+@protocol DDMessageModuleDelegate <NSObject>
+
+@optional
+
+-(void)onReceiveMessage:(MTTMessageEntity *)message;
+
+@end
+
 @interface DDMessageModule : NSObject
 @property(assign)NSInteger unreadMsgCount;
 + (instancetype)shareInstance;
+
+-(void)addDelegate:(id<DDMessageModuleDelegate>) delegate;
+-(void)removeDelegate:(id<DDMessageModuleDelegate>)delegate;
 
 + (NSUInteger )getMessageID;
 

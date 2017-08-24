@@ -7,7 +7,6 @@
 //
 
 #import "MTTLoginViewController.h"
-#import "RecentUsersViewController.h"
 
 #import "LoginModule.h"
 
@@ -15,7 +14,8 @@
 
 #import "RuntimeStatus.h"
 #import "SCLAlertView.h"
-
+#import "MBProgressHUD.h"
+#import "MTTDDNotification.h"
 #import "TeamTalk_Swift-Swift.h"
 
 @interface MTTLoginViewController ()<UITextFieldDelegate>
@@ -26,6 +26,8 @@
 @property (nonatomic,weak)IBOutlet UITextField* userPassTextField;
 @property (nonatomic,weak)IBOutlet UIButton* userLoginBtn;
 @property(assign)BOOL isRelogin;
+
+@property (nonatomic) MBProgressHUD *hud;
 
 @end
 
@@ -99,6 +101,12 @@
     self.userPassTextField.text = @"qing";
 #endif
     
+    
+    self.hud = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:self.hud];
+    self.hud.dimBackground = YES;
+    [self.hud setHidden:YES];
+    self.hud.labelText=@"";
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -159,11 +167,15 @@
         
         [HUD removeFromSuperview];
         
+        DDLog(@"login success:%@ %@ %@",user.userId,user.name ,user.avatar);
         
         [self.userLoginBtn setEnabled:YES];
         if (user) {
             TheRuntime.user=user ;
             [TheRuntime updateData];
+            
+            [self loginSuccessHandler];
+
             
             if (TheRuntime.pushToken) {
                 SendPushTokenAPI *pushToken = [[SendPushTokenAPI alloc] init];
@@ -171,8 +183,6 @@
                     
                 }];
             }
-            
-            [self loginSuccessHandler];
             
             
         }
@@ -193,9 +203,11 @@
         }else{
             [self.userLoginBtn setEnabled:YES];
             DDLog(@"login error %@",error);
-            UIAlertView *aler = [[UIAlertView alloc]initWithTitle:@"" message:error delegate:nil  cancelButtonTitle:nil  otherButtonTitles:@"确定", nil];
-            [aler show];
             
+            [self.hud setHidden:NO];
+            self.hud.labelText = error;
+            
+            [self.hud hide:YES afterDelay:3];
         }
     }];
     
@@ -220,8 +232,10 @@
     
     [maintabbar setViewControllers:@[recentsnavi,contactsNavi]];
     
-    [self pushViewController:maintabbar animated:true];
+    [self.navigationController pushViewController:maintabbar animated:true ];
     
+    [self.navigationController setNavigationBarHidden:YES];
+    [self removeFromParentViewController];
     
 //    HMRecentSessionsViewController *newvc = [[HMRecentSessionsViewController alloc]init];
 //    newvc.hidesBottomBarWhenPushed = YES;

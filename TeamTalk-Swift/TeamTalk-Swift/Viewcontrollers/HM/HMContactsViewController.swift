@@ -20,6 +20,7 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "通訊錄"
         
         
         self.setupTableview()
@@ -89,6 +90,9 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
     
     
     //MARK: - tableview delegate /datasource 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return HMAvatarGap * 2 + 40
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -127,6 +131,12 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
             if indexPath.row < self.users.count {
                 let user = self.users[indexPath.row]
                 print("selected user :",user.userId,user.name)
+
+                let session = MTTSessionEntity.init(user: user)
+                let chatvc = HMChattingViewController.init(session: session)
+                chatvc.hidesBottomBarWhenPushed = true
+                self.push(newVC: chatvc, animated: true )
+                
             }
             
         }

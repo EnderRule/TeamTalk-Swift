@@ -78,7 +78,7 @@ class HMChatImageCell: HMChatBaseCell {
         
         defaultSize.width = min( max(theImage!.size.width, 40),maxChatContentWidth * 0.618 )  // 至少40 的宽度
 
-        defaultSize.height = defaultSize.width * theImage!.size.height/theImage!.size.width  //确定宽度后、根据图片的宽高比例来计算高度
+        defaultSize.height = defaultSize.width * theImage!.size.height/theImage!.size.width  //计算好宽度后、根据图片的宽高比例来计算高度
 
         return defaultSize
     }

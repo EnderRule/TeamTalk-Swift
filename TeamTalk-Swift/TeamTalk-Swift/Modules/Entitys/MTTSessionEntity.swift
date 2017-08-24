@@ -55,8 +55,8 @@ class MTTSessionEntity: NSObject {
                     
                     DDUserModule.shareInstance().getUserForUserID(self.sessionID, block: { (user ) in
                         if user != nil {
-                            if user!.nick.length > 0 {
-                                self.s_name = user!.nick
+                            if user!.nickName.length > 0 {
+                                self.s_name = user!.nickName
                             }else{
                                 self.s_name = user!.name
                             }

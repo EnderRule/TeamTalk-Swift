@@ -57,7 +57,7 @@
         for (i=0; i< count; i++)
         {
             NSObject* user = [_allUsersAndGroups objectAtIndex:i];
-            string = [(MTTUserEntity*)user nick];
+            string = [(MTTUserEntity*)user nickName];
             NSString* objectID = [self p_getIDForObject:user];
 
             if ([string rangeOfString:content].length > 0)

@@ -126,7 +126,7 @@ class HMRecentSessionCell: HMBaseCell {
                             }
                             DDUserModule.shareInstance().getUserForUserID(uid , block: { (user ) in
                                 if user != nil {
-                                    avatars.append(user!.avatarUrl)
+                                    avatars.append(user!.avatar)
                                 }
                             })
                         }
@@ -143,7 +143,7 @@ class HMRecentSessionCell: HMBaseCell {
                         }
                         self.avatarView.image = nil
                         
-                        self.avatarView.setAvatar(user!.avatarUrl, group: false)
+                        self.avatarView.setAvatar(user!.avatar, group: false)
                     }
                 })
                 

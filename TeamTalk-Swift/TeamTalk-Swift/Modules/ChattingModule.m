@@ -9,7 +9,6 @@
 #import "ChattingModule.h"
 #import "MTTDatabaseUtil.h"
 
-#import "DDChatTextCell.h"
 
 #import "NSDate+DDAddition.h"
 #import "DDUserModule.h"
@@ -36,7 +35,6 @@ static NSUInteger const showPromptGap = 300;
 @implementation ChattingModule
 {
     //只是用来获取cell的高度的
-    DDChatTextCell* _textCell;
     
     NSUInteger _earliestDate;
     NSUInteger _lastestDate;
@@ -201,47 +199,6 @@ static NSUInteger const showPromptGap = 300;
         }
     }];
     return minMsgID;
-}
-
-
-
-- (float)messageHeight:(MTTMessageEntity*)message
-{
-    
-    if (message.msgContentType == DDMessageContentTypeText ) {
-        if (!_textCell)
-        {
-            _textCell =   [[DDChatTextCell alloc] init];
-        }
-        return [_textCell cellHeightForMessage:message];
-        
-    }else if (message.msgContentType == DDMessageContentTypeVoice )
-    {
-        return 60;
-    }else if(message.msgContentType == DDMessageContentTypeImage)
-    {
-        float height = 150;
-        NSString* urlString = message.msgContent;
-        urlString = [urlString stringByReplacingOccurrencesOfString:DD_MESSAGE_IMAGE_PREFIX withString:@""];
-        urlString = [urlString stringByReplacingOccurrencesOfString:DD_MESSAGE_IMAGE_SUFFIX withString:@""];
-        NSURL* url = [NSURL URLWithString:urlString];
-        SDWebImageManager *manager = [SDWebImageManager sharedManager];
-        if( [manager cachedImageExistsForURL:url]){
-            NSString *key = [manager cacheKeyForURL:url];
-            UIImage *curImg = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
-            height = [MTTUtil sizeTrans:curImg.size].height;
-        }
-        float last_height = height+20;;
-        return last_height>60?last_height:60;
-    }
-    else if(message.msgContentType == DDMessageContentTypeEmotion){
-        return 133+20;
-    }
-    else
-    {
-        return 135;
-    }
-    
 }
 
 - (void)addPrompt:(NSString*)promptContent

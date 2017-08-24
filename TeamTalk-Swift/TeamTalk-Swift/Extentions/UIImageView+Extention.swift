@@ -16,11 +16,11 @@ extension UIImageView{
     
     //str:local resource name ,or imageFilePath at sandbox,or imageURL.
     open func setImage(str:String){
-        self.setImage(str: str , placeHolder: nil, cornerRadius: nil)
+        self.setImage(str: str , placeHolder: nil, cornerRadius: 0)
     }
     
     open func setImage(str:String,placeHolder:UIImage?){
-        self.setImage(str: str , placeHolder: placeHolder, cornerRadius: nil)
+        self.setImage(str: str , placeHolder: placeHolder, cornerRadius: 0)
     }
     
     open func setImage(str:String,placeHolder:UIImage?,cornerRadius:CGFloat?){
@@ -63,8 +63,8 @@ extension UIImageView{
         }
         
         if str.lowercased().hasPrefix("http") {
-            
-//            self.sd_setImage(with: URL.init(string: str), placeholderImage: placeHolder,corner: cornerRadius ?? 0.0)
+
+            self.sd_setImage(with: URL.init(string: str), placeholderImage: placeHolder,corner: cornerRadius ?? 0.0)
         }else if str.lowercased().hasPrefix("file://") || str.lowercased().hasPrefix("/"){
             let image = UIImage.init(contentsOfFile: str)
             

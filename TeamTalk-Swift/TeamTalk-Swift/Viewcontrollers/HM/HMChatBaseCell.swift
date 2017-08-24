@@ -63,7 +63,7 @@ class HMChatBaseCell: HMBaseCell {
     
     override func setupCustom() {
         
-        avatarImgv.backgroundColor = UIColor.blue
+        avatarImgv.backgroundColor = UIColor.clear
         
         nameLabel.font = fontNormal
         nameLabel.textColor = colorTitle
@@ -128,8 +128,8 @@ class HMChatBaseCell: HMBaseCell {
         //设置头像和昵称 
         DDUserModule.shareInstance().getUserForUserID(message.senderId) { (user ) in
             if user != nil {
-                self.avatarImgv.setImage(str: user!.avatarUrl)
-                self.nameLabel.text = user!.nick
+                self.avatarImgv.setImage(str: user!.avatar)
+                self.nameLabel.text = user!.nickName
             }
         }
         //是否隐藏昵称

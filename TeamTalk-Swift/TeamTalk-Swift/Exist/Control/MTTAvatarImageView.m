@@ -71,6 +71,7 @@
         //只有一个头像
         NSURL* avatarURL = [NSURL safeURLWithString:avatar];
         UIImage* placeholdImage = [UIImage imageNamed:@"user_placeholder"];
+//        [self sd_setImageWithURL:[NSURL URLWithString:avatar]];
         [self sd_setImageWithURL:avatarURL placeholderImage:placeholdImage];
     }
 }

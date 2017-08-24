@@ -32,29 +32,31 @@ class LoginAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
             
-            if let loginres = try? Im.Login.ImloginRes.parseFrom(data: data ?? Data()) {
-                let loginResult:Int32 = loginres.resultCode.rawValue
-                
-                var result:[String:Any] = [:]
-                if loginResult != 0 {
-                    debugPrint(self.classForCoder," login resultCode != 0")
-                    
-                    return result
-                }else {
-                    let serverTime:UInt32 = loginres.serverTime
-                    let resultString:String = loginres.resultString
-                    let user = MTTUserEntity.init(userinfo: loginres.userInfo)
-                    
-                    result.updateValue(serverTime, forKey: "serverTime")
-                    result.updateValue(resultString, forKey: "result")
-                    result.updateValue(user, forKey: "user")
-                    return result
+            if let res = try? Im.Login.ImloginRes.parseFrom(data: data ?? Data()) {
+                debugPrint("LoginAPI analysisReturnData loginResult    ",res.resultString,res.resultCode)
+                if res.userInfo != nil {
+                    debugPrint("LoginAPI success with id realname nickname \n ", res.userInfo.userId,res.userInfo.userRealName,res.userInfo.userNickName)
                 }
+                
+                let serverTime:UInt32 = res.serverTime ?? 00
+                let resultString:String = res.resultString ?? ""
+               
+                var result:[String:Any] = [:]
+                result.updateValue(serverTime, forKey: "serverTime")
+                result.updateValue(resultString, forKey: "resultString")
+                result.updateValue(res.resultCode.rawValue, forKey: "resultCode")
+               
+                if res.userInfo != nil  &&  res.userInfo.userId > 0 {
+                    let user = MTTUserEntity.init(userinfo: res.userInfo)
+                    if user.isValided {
+                        result.updateValue(user, forKey: "user")
+                    }
+                }
+                return result
             }else {
                 debugPrint("LoginAPI analysisReturnData failure")
-                return [:]
+                return ["resultString":"數據解析失敗","resultCode":"-1","serverTime":0]
             }
-            
         }
         return analysis
     }
@@ -78,8 +80,6 @@ class LoginAPI: DDSuperAPI,DDAPIScheduleProtocol {
             dataOut.writeTcpProtocolHeader(Int16(SID_LOGIN), cId: Int16(IM_LOGIN_REQ), seqNo: seqno)
             
             if let data = try? builder.build().data() {
-                
-                debugPrint("LoginAPI package data: \((data as NSData).length) \(data)")
                 dataOut.directWriteBytes(data)
             }else {
                 debugPrint("LoginAPI package builded data failure")

@@ -25,10 +25,7 @@ class HMChatTextCell: HMChatBaseCell,M80AttributedLabelDelegate {
         
         
         self.contentView.addSubview(attTextLabel)
-        
-        
     }
-    
 
     override func setContent(message: MTTMessageEntity) {
         super.setContent(message: message)

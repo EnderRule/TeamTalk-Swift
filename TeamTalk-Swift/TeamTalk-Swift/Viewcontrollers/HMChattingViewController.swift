@@ -12,7 +12,7 @@ let ChatInputView_MinHeight:CGFloat = 44.0
 
 
 class HMChattingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,
-NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControllerDelegate {
+NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControllerDelegate,DDMessageModuleDelegate {
 
     
     private var chattingModule:ChattingModule!
@@ -35,6 +35,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     deinit {
         NotificationCenter.default.removeObserver(self )
         chattingModule.removeObserver(self , forKeyPath: "showingMessages")
+        
+        DDMessageModule.shareInstance().remove(self)
     }
     
     override func viewDidLoad() {
@@ -59,14 +61,16 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 self.refreshMessagesData(scrollToBottom: true )
             }
         }
+        
+        
+        
     }
-
-
-    
+ 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        DDMessageModule.shareInstance().add(self)
+
         self.navigationController?.setNavigationBarHidden(false , animated: true )
     }
     
@@ -148,7 +152,10 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         }
     }
  
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
         if (object as? ChattingModule) == self.chattingModule  && keyPath == "showingMessages"{
             self.refreshMessagesData(scrollToBottom: false)
         }
@@ -216,6 +223,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     
     
     func sendMessage(msgEntity:MTTMessageEntity){
+        self.tableView.checkScrollToBottom()
         
         DDMessageSendManager.instance().sendMessage(msgEntity, isGroup: self.chattingModule.sessionEntity.isGroupSession, session: self.chattingModule.sessionEntity, completion: {[weak self] (messageentity, error ) in
             
@@ -226,13 +234,11 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             }
             dispatch(after: 0, task: { 
                 self?.tableView.reloadData()
-                self?.tableView.checkScrollToBottom()
             })
         }) {[weak self] (error ) in
             msgEntity.state = .SendFailure
             
             self?.tableView.reloadData()
-            self?.tableView.checkScrollToBottom()
         }
         
     }
@@ -304,11 +310,44 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             })
         }
         
+    }
+    
+    //MARK: 消息管理代理 DDMessageModuleDelegate
+    func onReceiveMessage(_ message: MTTMessageEntity!) {
+        guard (self.navigationController?.topViewController == self ) else {
+            return
+        }
         
+        print("DDMessageModuleDelegate onReceiveMessage \n",(message.dicValues() as NSDictionary))
+        
+        if UIApplication.shared.applicationState == .background {
+            if message.sessionId == self.chattingModule.sessionEntity.sessionID {
+                self.chattingModule.addShowMessage(message)
+                self.chattingModule.updateSessionUpdateTime(UInt(message.msgTime))
+                
+                self.refreshMessagesData(scrollToBottom: true )
+            }
+            return
+        }
+        
+        if message.sessionId == self.chattingModule.sessionEntity.sessionID {
+            self.chattingModule.addShowMessage(message)
+            self.chattingModule.updateSessionUpdateTime(UInt(message.msgTime))
+            
+            self.refreshMessagesData(scrollToBottom: true )
+            
+            DDMessageModule.shareInstance().sendMsgRead(message)
+        }
     }
     
     
     //MARK: NIMInputView related delegates
+    
+    func onInputViewActive(_ active: Bool) {
+        if active{
+            self.tableView.checkScrollToBottom()
+        }
+    }
     func disableCharlet() -> Bool {
         return false
     }

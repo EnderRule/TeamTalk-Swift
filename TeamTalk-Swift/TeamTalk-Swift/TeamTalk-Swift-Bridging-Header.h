@@ -60,7 +60,6 @@
 
 //ViewControllers
 #import "MTTLoginViewController.h"
-#import "RecentUsersViewController.h"
 
 //第三方
 //AF network

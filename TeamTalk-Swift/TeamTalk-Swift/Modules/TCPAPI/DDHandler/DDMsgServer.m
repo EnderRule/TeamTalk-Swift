@@ -11,22 +11,8 @@
 
 #import "TeamTalk_Swift-Swift.h"
 
-
-typedef void(^CheckSuccess)(id object);
-typedef void(^CheckFailure)(NSError* error);
-
-@interface DDMsgServer(PrivateAPI)
-
-- (void)n_receiveLoginMsgServerNotification:(NSNotification*)notification;
-- (void)n_receiveLoginLoginServerNotification:(NSNotification*)notification;
-
-@end
-
 @implementation DDMsgServer
 {
-    CheckSuccess _success;
-    CheckFailure _failure;
-    
     BOOL _connecting;
     NSUInteger _connectTimes;
 }
@@ -59,7 +45,8 @@ typedef void(^CheckFailure)(NSError* error);
                 if (response)
                 {
                     NSInteger code =[response[@"code"] integerValue];
-                    if (code !=0) {
+                    
+                    if (code != 0) {
                         NSString *errString= @"";
                         switch (code) {
                             case 0:
@@ -90,18 +77,22 @@ typedef void(^CheckFailure)(NSError* error);
                             default:
                                 break;
                         }
+                       
                         NSError *error1 = [NSError errorWithDomain:errString code:code userInfo:nil];
                         failure(error1);
+                    }else{
+                        MTTUserEntity *user = (MTTUserEntity *) response[@"user"];
+                        
+                        if (user.isValided){
+                            success(response);
                         }else{
-                            NSString *resultString =response[@"resultString"];
-                            if (resultString == nil) {
-                                success(response);
-                            }
+                            NSString *resultString = response[@"resultString"];
+                            NSError *error = [NSError errorWithDomain:resultString code:0 userInfo:nil ];
+                            failure(error);
                         }
+                       
+                    }
                 }
-                   
-                
-                
             }
             else
             {

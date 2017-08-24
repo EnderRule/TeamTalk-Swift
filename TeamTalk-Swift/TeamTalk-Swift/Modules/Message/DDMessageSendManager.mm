@@ -64,6 +64,8 @@ static uint32_t seqNo = 0;
 - (void)sendMessage:(MTTMessageEntity *)message isGroup:(BOOL)isGroup Session:(MTTSessionEntity*)session completion:(DDSendMessageCompletion)completion Error:(void (^)(NSError *))block
 {
     
+    NSLog(@"DDsendMessage Manager sending: %@   ",message.dicValues);
+    
     dispatch_async(self.sendMessageSendQueue, ^{
         SendMessageAPI* sendMessageAPI = [[SendMessageAPI alloc] init];
         uint32_t nowSeqNo = ++seqNo;

@@ -26,7 +26,7 @@ class MTTUserEntity: MTTBaseEntity {
     var pyname:String = ""
     var userStatus:Int = 0
     
-    private var nickName:String {
+    var nickName:String {
         set {
             self.nick = newValue
         }
@@ -40,6 +40,13 @@ class MTTUserEntity: MTTBaseEntity {
         }
         get{
             return self.objID
+        }
+    }
+    
+    var isValided:Bool {
+        get{
+            Timer.init().invalidate()
+            return self.userId.length > 0
         }
     }
     
@@ -92,18 +99,7 @@ class MTTUserEntity: MTTBaseEntity {
     
     var avatarUrl:String{
         get {
-            return self.avatar.appending("_100x100.jpg")
-        }
-    }
-    
-    var avatarUrl300:String {
-        get{
-            return self.avatar.appending("_310x310.jpg")
-        }
-    }
-    var avatarUrlPreImage:String{
-        get{
-            return self.avatar.appending("_640x999.jpg")
+            return self.avatar
         }
     }
     
@@ -145,7 +141,7 @@ extension MTTUserEntity{
         
         self.objID = MTTUserEntity.localIDFrom(pbID: userinfo.userId)
         self.name  = userinfo.userRealName
-        self.nick  = userinfo.userNickName
+        self.nickName  = userinfo.userNickName
         self.avatar = userinfo.avatarUrl
         self.department = "\(userinfo.departmentId)"
         self.departId = "\(userinfo.departmentId)"

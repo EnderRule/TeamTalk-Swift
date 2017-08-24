@@ -26,6 +26,8 @@
 @interface DDMessageModule(){
 
     NSMutableDictionary* _unreadMessages;
+    
+    NSMutableArray *_delegates;
 }
 
 @end
@@ -49,15 +51,38 @@
     {
         //注册收到消息API
         self.unreadMsgCount =0;
+        
         _unreadMessages = [[NSMutableDictionary alloc] init];
+        _delegates = [[NSMutableArray alloc]init];
         
         [self p_registerReceiveMessageAPI];
     }
     return self;
 }
 
+-(void)addDelegate:(id<DDMessageModuleDelegate>)delegate{
+    
+    if (![_delegates containsObject:delegate]){
+        [_delegates addObject:delegate];
+    }
+}
+
+-(void)removeDelegate:(id<DDMessageModuleDelegate>)delegate
+{
+    while ([_delegates containsObject:delegate]) {
+        [_delegates removeObject:delegate];
+    }
+}
+-(void)removeAllDelegate{
+    [_delegates removeAllObjects];
+}
+
+
+
 - (void)dealloc
 {
+    [_delegates removeAllObjects];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -82,7 +107,6 @@
     [readACK requestWithObject:@[message.sessionId,@(message.msgID),@(message.sessionType)] Completion:nil];
 }
 
-
 -(void)removeAllUnreadMessages{
 
     [_unreadMessages removeAllObjects];
@@ -105,28 +129,34 @@
 {
     ReceiveMessageAPI* receiveMessageAPI = [[ReceiveMessageAPI alloc] init];
     [receiveMessageAPI registerAPIInAPIScheduleReceiveData:^(MTTMessageEntity* object, NSError *error) {
-        object.state=DDMessageStateSendSuccess;
-        ReceiveMessageACKAPI *rmack = [[ReceiveMessageACKAPI alloc] init];
-        [rmack requestWithObject:@[object.senderId,@(object.msgID),object.sessionId,@(object.sessionType)] Completion:^(id response, NSError *error) {
+        if (object){
+            object.state = DDMessageStateSendSuccess;
+            ReceiveMessageACKAPI *rmack = [[ReceiveMessageACKAPI alloc] init];
+            [rmack requestWithObject:@[object.senderId,@(object.msgID),object.sessionId,@(object.sessionType)] Completion:^(id response, NSError *error) {
+            }];
             
-        }];
-//        NSArray* messages = [self p_spliteMessage:object];
-//        [messages enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//            [self p_saveReceivedMessage:obj];
-//        }];
-        if ([object isGroupMessage]) {
-            MTTGroupEntity *group = [[DDGroupModule instance] getGroupByGId:object.sessionId];
-            if (group.isShield == 1) {
-                MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
-                [readACK requestWithObject:@[object.sessionId,@(object.msgID),@(object.sessionType)] Completion:nil];
+            
+            if ([object isGroupMessage]) {
+                MTTGroupEntity *group = [[DDGroupModule instance] getGroupByGId:object.sessionId];
+                if (group.isShield == 1) {
+                    MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
+                    [readACK requestWithObject:@[object.sessionId,@(object.msgID),@(object.sessionType)] Completion:nil];
+                }
             }
+            [[MTTDatabaseUtil instance] insertMessages:@[object] success:^{
+                
+            } failure:^(NSString *errorDescripe) {
+                
+            }];
+            
+            for (id<DDMessageModuleDelegate> obj in _delegates) {
+                if ([obj respondsToSelector:@selector(onReceiveMessage:)]){
+                    [obj onReceiveMessage:object];
+                }
+            }
+            
+//            [[NSNotificationCenter defaultCenter]postNotificationName:DDNotificationReceiveMessage object:object];
         }
-        [[MTTDatabaseUtil instance] insertMessages:@[object] success:^{
-            
-        } failure:^(NSString *errorDescripe) {
-            
-        }];
-        [[NSNotificationCenter defaultCenter]postNotificationName:DDNotificationReceiveMessage object:object];
     }];
     
 }

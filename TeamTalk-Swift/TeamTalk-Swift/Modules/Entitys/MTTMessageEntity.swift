@@ -139,8 +139,7 @@ class MTTMessageEntity: NSObject {
        return  self.senderId == RuntimeStatus.instance().user.objID
     }
     var isEmotionMsg:Bool{
-        return false
-//        return   [[[EmotionsModule shareInstance].emotionUnicodeDic allKeys] containsObject:self.msgContent];
+        return  (MTTMessageEntity.mgjEmotionDic[self.msgContent] ?? "").length > 0
     }
 }
 
@@ -187,9 +186,58 @@ extension MTTMessageEntity {
     public convenience init(msgInfo:Im.BaseDefine.MsgInfo,sessionType:Im.BaseDefine.SessionType){
         self.init()
         
+        var mymsgInfo:[String:Any] = [:]
+    
+        self.msgType = MsgType_Objc.init(rawValue: msgInfo.msgType.rawValue) ?? .msgTypeSingleText
+        if self.isVoiceMessage {
+            self.msgContentType = .Voice
+            
+            if (msgInfo.msgData as NSData).length > 4 {
+                self.process(voiceData: msgInfo.msgData, compeletion: { (filepath , voiceLength) in
+                    self.msgContent = filepath
+                    
+                    mymsgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
+                    mymsgInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
+                })
+            }else {
+                self.msgContent = "語音存儲出錯"
+            }
+        }else{
+            if let tempStr = String.init(data: msgInfo.msgData, encoding: .utf8){
+                let indata = tempStr.cString(using: .utf8)
+                var pout:UnsafeMutablePointer<Int8>?
+                var outLen:UnsafeMutablePointer<UInt32>?
+                let inLen:Int32 = Int32(strlen(tempStr))
+                
+                DecryptMsg(indata, inLen, &pout, &outLen)
+                
+                if pout != nil {
+                    let decodeMsg = String.init(cString: pout!)
+                    self.msgContent = decodeMsg
+                }
+            }else{
+                debugPrint(self.classForCoder,"init with msgData、convert error")
+            }
+        }
+        
         self.msgTime =  msgInfo.createTime
-        //Fixme: upate values here
+//        self.msgID = msgInfo.msgId   //Fixme:here
 
+        self.sessionType = sessionType
+        if self.sessionType == .sessionTypeSingle{
+            self.sessionId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
+        }else {
+            self.sessionId = MTTGroupEntity.localIDFrom(pbID: msgInfo.fromSessionId)
+        }
+
+        self.toUserID = RuntimeStatus.instance().user.userId  //
+
+        if self.isEmotionMsg{
+            self.msgContentType = .Emotion
+        }
+        self.senderId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
+        
+        self.info = mymsgInfo
     }
     
     public convenience init(msgData:Im.Message.ImmsgData){

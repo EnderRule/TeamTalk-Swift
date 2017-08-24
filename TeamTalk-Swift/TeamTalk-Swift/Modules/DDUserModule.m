@@ -67,7 +67,7 @@
         _allUsersNick = [[NSMutableDictionary alloc] init];
     }
     [_allUsers setValue:user forKey:user.objID];
-    [_allUsersNick setValue:user forKey:user.nick];
+    [_allUsersNick setValue:user forKey:user.nickName];
     
 }
 -(NSArray *)getAllUsersNick

@@ -76,7 +76,7 @@ static NSInteger const reloginTimeinterval = 5;
 
 - (void)dealloc
 {
-    DDLog(@"DDClientStateMaintenanceManager release");
+//    DDLog(@"DDClientStateMaintenanceManager release");
     [[DDClientState shareInstance] removeObserver:self
                                        forKeyPath:DD_NETWORK_STATE_KEYPATH];
     
@@ -90,14 +90,12 @@ static NSInteger const reloginTimeinterval = 5;
 {
     DDClientState* clientState = [DDClientState shareInstance];
     
-    DDLog(@"%@ change ",keyPath);
-
+//    DDLog(@"%@ change ",keyPath);
     
     //网络状态变化
 
     if ([keyPath isEqualToString:DD_NETWORK_STATE_KEYPATH])
     {
-
         if ([DDClientState shareInstance].networkState != DDNetWorkDisconnect)
         {
            
@@ -105,7 +103,7 @@ static NSInteger const reloginTimeinterval = 5;
 
             if (shouldRelogin)
             {
-                NSLog(@"进入重连");
+//                NSLog(@"进入重连");
                 _reloginTimer = [NSTimer scheduledTimerWithTimeInterval:reloginTimeinterval target:self selector:@selector(p_onReloginTimer:) userInfo:nil repeats:YES];
                 _reloginInterval = 0;
                 [_reloginTimer fire];
@@ -113,42 +111,10 @@ static NSInteger const reloginTimeinterval = 5;
         }else
         {
             clientState.userState=DDUserOffLine;
-            
-            [RecentUsersViewController shareInstance].title=@"连接失败";
         }
     }
-    //用户状态变化
-    else if ([keyPath isEqualToString:DD_USER_STATE_KEYPATH])
-    {
-        
-        switch ([DDClientState shareInstance].userState)
-        {
-            case DDUserKickout:
-                [RecentUsersViewController shareInstance].title=@"未连接";
-                [self p_stopCheckServerHeartBeat];
-                [self p_stopHeartBeat];
-                break;
-            case DDUserOffLine:
-                [RecentUsersViewController shareInstance].title=@"未连接";
-                [self p_stopCheckServerHeartBeat];
-                [self p_stopHeartBeat];
-                [self p_startRelogin];
-                break;
-            case DDUserOffLineInitiative:
-                [RecentUsersViewController shareInstance].title=@"未连接";
-                [self p_stopCheckServerHeartBeat];
-                [self p_stopHeartBeat];
-                break;
-            case DDUserOnline:
-                [RecentUsersViewController shareInstance].title=APP_NAME;
-                [self p_startCheckServerHeartBeat];
-                [self p_startHeartBeat];
-                break;
-            case DDUserLogining:
-                [RecentUsersViewController shareInstance].title=@"收取中";
-                break;
-        }
-    }
+    
+    //Fixme: 用戶登入狀態變化
 }
 
 #pragma mark private API
@@ -198,7 +164,7 @@ static NSInteger const reloginTimeinterval = 5;
     //delete by kuaidao 20141022,In order to save mobile power,remove server heart beat
     if (!_serverHeartBeatTimer)
     {
-        DDLog(@"begin maintenance _serverHeartBeatTimer");
+//        DDLog(@"begin maintenance _serverHeartBeatTimer");
         _serverHeartBeatTimer = [NSTimer scheduledTimerWithTimeInterval:serverHeartBeatTimeinterval target:self selector:@selector(p_onCheckServerHeartTimer:) userInfo:nil repeats:YES];
         [_serverHeartBeatTimer fire];
     }
