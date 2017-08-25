@@ -38,7 +38,6 @@ class HMRecentSessionCell: HMBaseCell {
         unreadMsgLabel.font = UIFont.systemFont(ofSize: 12)
         unreadMsgLabel.textColor = UIColor.white
         unreadMsgLabel.backgroundColor  = UIColor.red
-        unreadMsgLabel.add(corners: .allCorners, radius: CGSize.init(width: 8, height: 8))
         unreadMsgLabel.textAlignment = .center
         
         self.contentView.addSubview(avatarView)
@@ -47,7 +46,8 @@ class HMRecentSessionCell: HMBaseCell {
         self.contentView.addSubview(dateLabel)
         self.contentView.addSubview(unreadMsgLabel)
         
-        avatarView.frame = .init(x: defaultPaddingWidth, y: defaultPaddingWidth, width: 64 - defaultPaddingWidth * 2, height: 64 - defaultPaddingWidth * 2)
+        let avatarWidth = HMRecentSessionCell.cellHeight - defaultPaddingWidth * 2
+        avatarView.frame = .init(x: defaultPaddingWidth, y: defaultPaddingWidth, width: avatarWidth, height: avatarWidth)
         
         dateLabel.mas_makeConstraints { (maker) in
             maker?.right.equalTo()(self.contentView.mas_right)?.offset()(-defaultPaddingWidth)
@@ -68,18 +68,25 @@ class HMRecentSessionCell: HMBaseCell {
             maker?.width.equalTo()(self.nameLabel.mas_width)
             maker?.height.equalTo()(18)
         }
-        unreadMsgLabel.mas_makeConstraints { (maker ) in
-            maker?.centerY.equalTo()(self.contentView.mas_centerY)
-            maker?.right.equalTo()(self.contentView.mas_right)?.offset()(-10)
-            maker?.width.equalTo()(100)
-            maker?.height.equalTo()(16)
-        }
+//        unreadMsgLabel.mas_makeConstraints { (maker ) in
+//            maker?.centerY.equalTo()(self.contentView.mas_centerY)
+//            maker?.right.equalTo()(self.contentView.mas_right)?.offset()(-10)
+//            maker?.width.equalTo()(26)
+//            maker?.height.equalTo()(16)
+//        }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        
+        if !unreadMsgLabel.isHidden{
+            unreadMsgLabel.height = 16
+            unreadMsgLabel.centerY = self.contentView.centerY
+            unreadMsgLabel.right = self.contentView.right - 10
+            
+            //Warning:使用这种方式设置圆角、将不能用 masnory 约束布局
+            unreadMsgLabel.add(corners: .allCorners, radius: CGSize.init(width: 8, height: 8))
+        }
     }
     
     
@@ -88,18 +95,18 @@ class HMRecentSessionCell: HMBaseCell {
         if let session = object as? MTTSessionEntity {
             self.session = session
             
-            self.avatarView.setImage(str: "setting")
-            
             self.nameLabel.text = session.name.appending("  (ID:\(session.sessionID))")
             
             let thedate = Date.init(timeIntervalSince1970: session.timeInterval)
-            self.dateLabel.text = (thedate as NSDate).transformToFuzzyDate() //"\(sss.timeInterval)"
-            if session.lastMsg.hasPrefix(DD_MESSAGE_IMAGE_PREFIX){
+            self.dateLabel.text = (thedate as NSDate).transformToFuzzyDate()
+            if session.lastMsg.hasPrefix(DD_MESSAGE_IMAGE_PREFIX) && session.lastMsg.hasSuffix(DD_MESSAGE_IMAGE_SUFFIX){
                 self.msgLabel.text = "[圖片]"
             }else if session.lastMsg.hasSuffix(".spx"){
                 self.msgLabel.text = "[語音]"
+            }else if session.lastMsg.hasSuffix("[") && session.lastMsg.hasSuffix("]"){
+                self.msgLabel.text = "[語音]"
             }else{
-                self.msgLabel.text = session.lastMsg
+                self.msgLabel.text = session.lastMsg //.nim_setText(session.lastMsg)
             }
             self.updateUnread(count: session.unReadMsgCount)
             
@@ -154,13 +161,13 @@ class HMRecentSessionCell: HMBaseCell {
     
     
     private func updateUnread(count:Int){
-        if count <= 0{
+        
+        guard count > 0 else {
             self.unreadMsgLabel.isHidden = true
             return ;
         }
         
         self.unreadMsgLabel.isHidden = false
-
         var width:CGFloat = 16.0
         if count < 10 {
             self.unreadMsgLabel.text = "\(count)"
@@ -172,10 +179,7 @@ class HMRecentSessionCell: HMBaseCell {
             self.unreadMsgLabel.text = "99+"
             width = 34
         }
-//        let newsize = unreadMsgLabel.sizeThatFits(CGSize.init(width: CGFloat.greatestFiniteMagnitude, height: unreadMsgLabel.height))
-        unreadMsgLabel.mas_updateConstraints { (maker ) in
-            maker?.width.equalTo()(width)
-        }
+        unreadMsgLabel.width = width
     }
     
 }

@@ -145,7 +145,11 @@ class MTTMessageEntity: NSObject,NSCopying {
        return  self.senderId == RuntimeStatus.instance().user.objID
     }
     var isEmotionMsg:Bool{
-        return  (MTTMessageEntity.mgjEmotionDic[self.msgContent] ?? "").length > 0
+//        let isEmoji =  MTTEmotionManager.shared.isEmotion(msgContent: self.msgContent)
+        let isEmoji = (MTTMessageEntity.mgjEmotionDic[self.msgContent] ?? "").length > 0 || self.msgContent.hasPrefix("[yc/yc")
+        
+//        debugPrint("isemotionMsg  \(isEmoji)  \(msgContent) ")
+        return isEmoji
     }
 }
 

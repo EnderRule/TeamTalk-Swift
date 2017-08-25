@@ -32,7 +32,7 @@ class HMChatImageCell: HMChatBaseCell {
         let imageURL:String = self.imageURLFrom(message: message)
         
         self.mainImgv.setImage(str: imageURL)
-        debugPrint("set content message imageURL:\(imageURL)")
+//        debugPrint("set content message imageURL:\(imageURL)")
     }
 
     override func layoutContentView(message: MTTMessageEntity) {

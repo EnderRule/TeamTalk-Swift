@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,DDMessageModuleDelegate,SessionModuelDelegate {
 
     static let shared = HMRecentSessionsViewController()
     
@@ -19,6 +19,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
    
     deinit {
         NotificationCenter.default.removeObserver(self )
+        DDMessageModule.shareInstance().remove(self)
     }
     
     override func viewDidLoad() {
@@ -48,6 +49,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         NotificationCenter.default.addObserver(self , selector: #selector(self.refreshData), name: HMNotification.reloadRecentContacts.notificationName(), object: nil )
         NotificationCenter.default.addObserver(self , selector: #selector(self.refreshData), name: HMNotification.recentContactsUpdate.notificationName(), object: nil )
         
+        DDMessageModule.shareInstance().add(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,9 +72,49 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK:DDmessagemodule delegate 
+    func onReceiveMessage(_ message: MTTMessageEntity!) {
+        
+        
+        
+        for session in self.sessions {
+            if message.sessionId == session.sessionID {
+            
+                session.lastMsg = message.msgContent
+                session.lastMsgID = message.msgID
+                session.timeInterval = TimeInterval(message.msgTime)
+                session.lastMessage = message
+                session.unReadMsgCount += 1
+                MTTDatabaseUtil.instance().updateRecentSession(session, completion: { (error ) in
+                    
+                })
+                tableview.reloadData()
+                
+                return
+            }
+        }
+        
+        let newsession = MTTSessionEntity.init(sessionID: message.sessionId, sessionName: nil , type: message.sessionType == .sessionTypeGroup ? SessionType_Objc.sessionTypeGroup : SessionType_Objc.sessionTypeSingle)
+
+        newsession.lastMsg = message.msgContent
+        newsession.lastMsgID = message.msgID
+        newsession.timeInterval = TimeInterval(message.msgTime)
+        newsession.lastMessage = message
+        newsession.unReadMsgCount = 1
+        SessionModule.instance().add(toSessionModel: newsession)
+        
+        self.refreshData()
+        
+        MTTDatabaseUtil.instance().updateRecentSession(newsession, completion: { (error ) in
+            
+        })
+        
+    }
     
-    
- 
+    //MARK: SessionModuelDelegate
+    func sessionUpdate(_ session: MTTSessionEntity!, action: SessionAction) {
+        self.refreshData()
+    }
 
     //MARK: UITableView datasource /delegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,7 +123,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         if indexPath.row < self.sessions.count{
             let session = self.sessions[indexPath.row]
             cell.configWith(object: session)
-//            self.preLoadMessageFor(session: session)
+            self.preLoadMessageFor(session: session)
         }
         return cell
     }
@@ -110,7 +152,30 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
             self.push(newVC: chattingVC, animated: true )
         }
     }
- 
+    
+    //移除会话 session
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "删除"
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if indexPath.row < self.sessions.count {
+                let session:MTTSessionEntity = self.sessions[indexPath.row]
+                
+                SessionModule.instance().removeSession(byServer: session)
+                
+                self.sessions.remove(at: indexPath.row)
+                tableview .deleteRows(at: [indexPath], with: .right)
+                
+                self.setTabbarBadge(count: Int(SessionModule.instance().getAllUnreadMessageCount()))
+            }
+            
+        }
+    }
+    
     
     
     //MARK:receive notifications

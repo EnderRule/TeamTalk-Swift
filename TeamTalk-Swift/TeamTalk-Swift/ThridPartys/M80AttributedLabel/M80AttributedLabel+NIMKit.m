@@ -21,14 +21,10 @@
         {
             NIMInputEmoticon *emoticon = [[NIMInputEmoticonManager sharedManager] emoticonByTag:token.text];
             UIImage *image = [UIImage imageNamed:emoticon.filename];
-            if (image)
-            {
-                [self appendImage:image
-                          maxSize:CGSizeMake(18, 18)];
+            if (image){
+                [self appendImage:image maxSize:CGSizeMake(18, 18)];
             }
-        }
-        else
-        {
+        }else {
             NSString *text = token.text;
             [self appendText:text];
         }

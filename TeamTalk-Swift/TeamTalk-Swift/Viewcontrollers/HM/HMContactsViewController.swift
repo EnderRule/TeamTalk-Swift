@@ -63,26 +63,18 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
     }
     
     func refreshContacts(){
-        
         self.users.removeAll()
         for obj in  DDUserModule.shareInstance().getAllMaintanceUser(){
-//            debugPrint("refreshContacts user? ",obj )
-            
             if let user = obj as? MTTUserEntity{
-                debugPrint(user.name,user.avatar)
                 self.users.append(user)
             }
         }
         
         self.groups.removeAll()
         for obj in DDGroupModule.instance().getAllGroups() {
-//            debugPrint("refreshContacts group?",obj )
-
             if let group = obj as? MTTGroupEntity {
-                debugPrint(group.name)
                 self.groups.append(group )
             }
-            
         }
         self.tableView.headerEndRefreshing()
         self.tableView.reloadData()

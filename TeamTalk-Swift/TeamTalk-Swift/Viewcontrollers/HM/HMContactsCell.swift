@@ -41,25 +41,13 @@ class HMContactsCell: HMBaseCell {
     
     override func configWith(object: Any) {
         if let user = object as? MTTUserEntity {
-//            debugPrint(self.classForCoder,"configwith user \(user.name)  \(user.avatar)")
-            
             avatarImgv.setImage(str: user.avatar)
             nameLabel.text = user.name
         }else if let group = object as? MTTGroupEntity {
-//            debugPrint(self.classForCoder,"configwith group \(group.name)  \(group.avatar)")
-
             avatarImgv.setImage(str: group.avatar)
             nameLabel.text = group.name
         }
     }
     
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }

@@ -6556,7 +6556,6 @@ public extension Im.Buddy {
                 return try Im.Buddy.ImchangeSignInfoReq.Builder.decodeToBuilder(jsonMap:jsDataCast)
             }
         }
-
     }
 
     final public class ImchangeSignInfoRsp : GeneratedMessage {

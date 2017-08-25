@@ -81,6 +81,12 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     
         self.refreshMessagesData(scrollToBottom: true)
 
+        //清空未读 = 0
+        self.chattingModule.sessionEntity.unReadMsgCount = 0
+        MTTDatabaseUtil.instance().updateRecentSession(self.chattingModule.sessionEntity) { (error ) in
+            
+        }
+        
         self.navigationItem.title = self.chattingModule.sessionEntity.name
     }
     
@@ -346,11 +352,14 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
         if message.sessionId == self.chattingModule.sessionEntity.sessionID {
             self.chattingModule.addShowMessage(message)
-            self.chattingModule.updateSessionUpdateTime(UInt(message.msgTime))
             
+            self.chattingModule.sessionEntity.lastMsg = message.msgContent
+            self.chattingModule.updateSessionUpdateTime(UInt(message.msgTime))
+
             self.refreshMessagesData(scrollToBottom: true )
             
             DDMessageModule.shareInstance().sendMsgRead(message)
+            
         }
     }
     

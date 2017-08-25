@@ -285,6 +285,9 @@
 		66BD02AB1F4D8D5600131E2D /* M80AttributedLabelURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BD02A61F4D8D5600131E2D /* M80AttributedLabelURL.m */; };
 		66BD02AC1F4D8D5600131E2D /* NSMutableAttributedString+M80.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BD02A81F4D8D5600131E2D /* NSMutableAttributedString+M80.m */; };
 		66BD02AF1F4D8D6900131E2D /* M80AttributedLabel+NIMKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BD02AE1F4D8D6900131E2D /* M80AttributedLabel+NIMKit.m */; };
+		66DDD4781F4FF26B0082A69C /* MTTEmotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DDD4771F4FF26B0082A69C /* MTTEmotionManager.swift */; };
+		66DDD47A1F50168C0082A69C /* HMPersonCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DDD4791F50168C0082A69C /* HMPersonCenterViewController.swift */; };
+		66DDD47C1F50227D0082A69C /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DDD47B1F50227D0082A69C /* Toast.swift */; };
 		66E436A61F4BCD95009D527D /* HMChatBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E436A51F4BCD95009D527D /* HMChatBaseCell.swift */; };
 		66E437801F4C41BC009D527D /* bk_media_picture_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E4374A1F4C41BC009D527D /* bk_media_picture_normal@2x.png */; };
 		66E437811F4C41BC009D527D /* bk_media_picture_normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E4374B1F4C41BC009D527D /* bk_media_picture_normal@3x.png */; };
@@ -948,6 +951,9 @@
 		66BD02A81F4D8D5600131E2D /* NSMutableAttributedString+M80.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+M80.m"; sourceTree = "<group>"; };
 		66BD02AD1F4D8D6900131E2D /* M80AttributedLabel+NIMKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "M80AttributedLabel+NIMKit.h"; sourceTree = "<group>"; };
 		66BD02AE1F4D8D6900131E2D /* M80AttributedLabel+NIMKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "M80AttributedLabel+NIMKit.m"; sourceTree = "<group>"; };
+		66DDD4771F4FF26B0082A69C /* MTTEmotionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTEmotionManager.swift; sourceTree = "<group>"; };
+		66DDD4791F50168C0082A69C /* HMPersonCenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMPersonCenterViewController.swift; path = HM/HMPersonCenterViewController.swift; sourceTree = "<group>"; };
+		66DDD47B1F50227D0082A69C /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		66E436A51F4BCD95009D527D /* HMChatBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatBaseCell.swift; path = HM/HMChatBaseCell.swift; sourceTree = "<group>"; };
 		66E4374A1F4C41BC009D527D /* bk_media_picture_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bk_media_picture_normal@2x.png"; sourceTree = "<group>"; };
 		66E4374B1F4C41BC009D527D /* bk_media_picture_normal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bk_media_picture_normal@3x.png"; sourceTree = "<group>"; };
@@ -1962,6 +1968,7 @@
 				66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */,
 				66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */,
 				6672CC291F4E65BF00DA46E6 /* HMContactsViewController.swift */,
+				66DDD4791F50168C0082A69C /* HMPersonCenterViewController.swift */,
 			);
 			name = HM;
 			sourceTree = "<group>";
@@ -2238,6 +2245,7 @@
 				66E6D3A51F428C38008E9590 /* DynamicColor */,
 				66E6D3A11F428BE8008E9590 /* DBScrollBannerView.swift */,
 				66E6D3A21F428BE8008E9590 /* SwiftyJSON.swift */,
+				66DDD47B1F50227D0082A69C /* Toast.swift */,
 				66E6D3581F4289D0008E9590 /* ProtocolBuffer-Swift */,
 			);
 			path = ThridPartys;
@@ -2589,6 +2597,7 @@
 				66F107F41F4333720035C888 /* MTTSessionEntity.swift */,
 				66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */,
 				6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */,
+				66DDD4771F4FF26B0082A69C /* MTTEmotionManager.swift */,
 			);
 			path = Entitys;
 			sourceTree = "<group>";
@@ -3201,6 +3210,7 @@
 				66686BB21F469CB2008B26BD /* PSTCollectionView.m in Sources */,
 				66F1074D1F42D1F50035C888 /* AFHTTPSessionManager.m in Sources */,
 				6672CC251F4E626200DA46E6 /* MJRefreshHeaderView.m in Sources */,
+				66DDD47C1F50227D0082A69C /* Toast.swift in Sources */,
 				66F10F5B1F4449570035C888 /* exc_10_16_table.c in Sources */,
 				66F1075B1F42D1F50035C888 /* UIWebView+AFNetworking.m in Sources */,
 				66E6D3BA1F428C38008E9590 /* DynamicColor+XYZ.swift in Sources */,
@@ -3251,6 +3261,7 @@
 				66F107EF1F42F1DA0035C888 /* MTTMessageEntity.swift in Sources */,
 				66E6D33F1F428922008E9590 /* defines.swift in Sources */,
 				66E6D34A1F428922008E9590 /* TableViewCell+Extention.swift in Sources */,
+				66DDD4781F4FF26B0082A69C /* MTTEmotionManager.swift in Sources */,
 				66686B8F1F4697C7008B26BD /* MBProgressHUD.m in Sources */,
 				66E6D3841F4289D0008E9590 /* Google.Protobuf.Timestamp.proto.swift in Sources */,
 				66F10F671F4449570035C888 /* hexc_table.c in Sources */,
@@ -3467,6 +3478,7 @@
 				66F10F631F4449570035C888 /* filters.c in Sources */,
 				66F10F771F4449570035C888 /* sb_celp.c in Sources */,
 				66F10F681F4449570035C888 /* high_lsp_tables.c in Sources */,
+				66DDD47A1F50168C0082A69C /* HMPersonCenterViewController.swift in Sources */,
 				66F10FB81F449F710035C888 /* security.cpp in Sources */,
 				66F107A41F42D3A90035C888 /* UIImage+Rotate_Flip.m in Sources */,
 				66E6D3961F428A33008E9590 /* Im.File.Imfile.proto.swift in Sources */,

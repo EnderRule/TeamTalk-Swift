@@ -227,10 +227,12 @@
     UITabBarController *maintabbar = [[UITabBarController alloc]init];
     UINavigationController *recentsnavi = [[UINavigationController alloc]initWithRootViewController:[[HMRecentSessionsViewController alloc]init]];
     UINavigationController *contactsNavi = [[UINavigationController alloc]initWithRootViewController:[[HMContactsViewController alloc]init]];
+    UINavigationController *centerNavi = [[UINavigationController alloc]initWithRootViewController: [[HMPersonCenterViewController alloc]init]];
+    
     recentsnavi.title = @"消息";
     contactsNavi.title = @"联系人";
-    
-    [maintabbar setViewControllers:@[recentsnavi,contactsNavi]];
+    centerNavi.title = @"我";
+    [maintabbar setViewControllers:@[recentsnavi,contactsNavi,centerNavi]];
     
     [self.navigationController pushViewController:maintabbar animated:true ];
     

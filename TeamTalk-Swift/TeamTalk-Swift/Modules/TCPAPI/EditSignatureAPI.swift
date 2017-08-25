@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditSignatureAPI: DDSuperAPI,DDAPIScheduleProtocol {
+class EditUserInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -33,23 +33,38 @@ class EditSignatureAPI: DDSuperAPI,DDAPIScheduleProtocol {
         let analysis:Analysis = { (data) in
             if let res = try? Im.Buddy.ImchangeSignInfoRsp.parseFrom(data: data ?? Data()) {
                 return res.resultCode
-                
             }else {
-                debugPrint("EditSignatureAPI analysisReturnData failure")
+                debugPrint("EditUserInfoAPI analysisReturnData failure")
                 return 0
             }
         }
         return analysis
     }
     
-    //打包數據,object 格式：[signature] as [String]
+    private var edit_signature:String?
+//    private var edit_avatar:Data?
+    
+    func setInfoEdit(signature:String?,avatarData:Data?){
+        self.edit_signature = signature
+//        self.edit_avatar = avatarData
+    }
+    
+    
+    //打包數據,object 格式： ["signature":签名,"avatar":头像图片Data]   [signature] as [String]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            let signature = "\((object as! [Any])[0])"
+//            let signature:String  = ((object as! [String:Any])["signature"]) as? String ?? ""
+//            let avatarData:Data = ((object as! [String:Any])["avatar"]) as? Data ?? Data()
             
             let builder = Im.Buddy.ImchangeSignInfoReq.Builder()
             builder.setUserId(MTTUserEntity.pbIDFrom(localID: RuntimeStatus.instance().user.objID))
-            builder.setSignInfo(signature)
+            
+            if self.edit_signature != nil {
+                builder.setSignInfo(self.edit_signature!)
+            }
+//            if  self.edit_avatar != nil {
+//                builder.setAttachData(self.edit_avatar!)
+//            }
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)
@@ -59,7 +74,7 @@ class EditSignatureAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("EditSignatureAPI package builded data failure")
+                debugPrint("EditUserInfoAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

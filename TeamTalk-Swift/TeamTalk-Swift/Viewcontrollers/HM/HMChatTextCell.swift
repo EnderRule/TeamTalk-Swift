@@ -21,7 +21,7 @@ class HMChatTextCell: HMChatBaseCell,M80AttributedLabelDelegate {
         attTextLabel.numberOfLines = 0
         attTextLabel.lineBreakMode = .byWordWrapping
         attTextLabel.backgroundColor = UIColor.clear
-        attTextLabel.font = fontNormal
+        attTextLabel.font = fontTitle
         
         
         self.contentView.addSubview(attTextLabel)
@@ -31,7 +31,7 @@ class HMChatTextCell: HMChatBaseCell,M80AttributedLabelDelegate {
         super.setContent(message: message)
         
         attTextLabel.nim_setText(message.msgContent)
-        
+
         self.attTextLabel.mas_remakeConstraints { (maker ) in
             maker?.left.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(self.bubbleLeftEdge())
             maker?.top.mas_equalTo()(self.bubbleImgv.mas_top)?.offset()(self.bubbleTopEdge())
@@ -47,7 +47,6 @@ class HMChatTextCell: HMChatBaseCell,M80AttributedLabelDelegate {
     
     override func contentSizeFor(message: MTTMessageEntity) -> CGSize {
         
-        let tempText:String = attTextLabel.text ?? ""
         
         attTextLabel.nim_setText(message.msgContent)
         
@@ -55,7 +54,6 @@ class HMChatTextCell: HMChatBaseCell,M80AttributedLabelDelegate {
         if size.width > maxChatContentWidth {
             size.width = maxChatContentWidth
         }
-        attTextLabel.nim_setText(tempText)
         return size
     }
     

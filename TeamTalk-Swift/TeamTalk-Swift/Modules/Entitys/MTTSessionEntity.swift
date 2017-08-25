@@ -98,12 +98,15 @@ class MTTSessionEntity: NSObject {
             s_timeInterval = newValue
         }
     }
+    
     var originId:String = ""
     var isShield:Bool = false
     var isFixedTop:Bool = false
     var lastMsg:String = ""
     var lastMsgID:UInt32 = 0
     var avatar:String = ""
+    
+    var lastMessage:MTTMessageEntity?
     
     var sessionUsers:[String] {
         get{
