@@ -89,11 +89,6 @@ static NSInteger const reloginTimeinterval = 5;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     DDClientState* clientState = [DDClientState shareInstance];
-    
-//    DDLog(@"%@ change ",keyPath);
-    
-    //网络状态变化
-
     if ([keyPath isEqualToString:DD_NETWORK_STATE_KEYPATH])
     {
         if ([DDClientState shareInstance].networkState != DDNetWorkDisconnect)
@@ -103,7 +98,6 @@ static NSInteger const reloginTimeinterval = 5;
 
             if (shouldRelogin)
             {
-//                NSLog(@"进入重连");
                 _reloginTimer = [NSTimer scheduledTimerWithTimeInterval:reloginTimeinterval target:self selector:@selector(p_onReloginTimer:) userInfo:nil repeats:YES];
                 _reloginInterval = 0;
                 [_reloginTimer fire];
@@ -113,8 +107,36 @@ static NSInteger const reloginTimeinterval = 5;
             clientState.userState=DDUserOffLine;
         }
     }
+
+    else if ([keyPath isEqualToString:DD_USER_STATE_KEYPATH])
+    {
+        switch ([DDClientState shareInstance].userState)
+        {
+            case DDUserKickout:
+
+                [self p_stopCheckServerHeartBeat];
+                [self p_stopHeartBeat];
+                break;
+            case DDUserOffLine:
+
+                [self p_stopCheckServerHeartBeat];
+                [self p_stopHeartBeat];
+                [self p_startRelogin];
+                break;
+            case DDUserOffLineInitiative:
+                [self p_stopCheckServerHeartBeat];
+                [self p_stopHeartBeat];
+                break;
+            case DDUserOnline:
+                [self p_startCheckServerHeartBeat];
+                [self p_startHeartBeat];
+                break;
+            case DDUserLogining:
+
+                break;
+        }
+    }
     
-    //Fixme: 用戶登入狀態變化
 }
 
 #pragma mark private API
@@ -193,7 +215,7 @@ static NSInteger const reloginTimeinterval = 5;
 //运行在发送心跳的Timer上
 - (void)p_onSendHeartBeatTimer:(NSTimer*)timer
 {
-    DDLog(@" *********嘣*********");
+    NSLog(@" *********嘣*********");
     
     HeartbeatAPI* heartBeatAPI = [[HeartbeatAPI alloc] init];
     [heartBeatAPI requestWithObject:nil Completion:nil];

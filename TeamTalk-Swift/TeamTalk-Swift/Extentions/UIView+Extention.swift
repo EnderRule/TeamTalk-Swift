@@ -118,7 +118,7 @@ extension UIView{
             return
         }else if self.isKind(of: UIScrollView.classForCoder()){
             let scrollview:UIScrollView = self as! UIScrollView
-            scrollview.scrollRectToVisible(.init(x: 0, y: scrollview.contentSize.height - 3, width: 2, height: 2), animated: true)
+            scrollview.scrollRectToVisible(.init(x: 0, y: scrollview.contentSize.height - 1, width: scrollview.frame.size.width, height: 1), animated: true)
         }else{
             for subview in self.subviews{
                 subview.checkScrollToBottom()

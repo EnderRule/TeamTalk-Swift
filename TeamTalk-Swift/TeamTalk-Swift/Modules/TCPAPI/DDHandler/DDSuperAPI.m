@@ -44,7 +44,6 @@ static uint16_t theSeqNo = 0;
     if (requestData)
     {
         [[DDAPISchedule instance] sendData:requestData];
-        [[DDTcpClientManager instance] writeToSocket:requestData];
     }
 }
 

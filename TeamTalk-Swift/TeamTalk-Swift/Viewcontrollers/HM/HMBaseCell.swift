@@ -44,3 +44,16 @@ class HMBaseCell: UITableViewCell {
     }
     
 }
+
+extension HMBaseCell{
+    
+    func cellReloadAsTableview(){
+        let tableview = self.superViewAs(aclass: UITableView.classForCoder())
+        if tableview != nil{
+            let indexPath = (tableview as! UITableView).indexPath(for: self)
+            if indexPath != nil{
+                (tableview as! UITableView).reloadRows(at: [indexPath!], with: .none)
+            }
+        }
+    }
+}

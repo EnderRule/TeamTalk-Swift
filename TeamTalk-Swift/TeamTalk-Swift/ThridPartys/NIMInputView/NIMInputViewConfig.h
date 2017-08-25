@@ -14,6 +14,12 @@
 
 
 @protocol NIMInputViewConfig <NSObject>
+
+/**
+ *  是否禁用輸入控件 中的 @ 某人符號
+ */
+- (BOOL)disableAtUser;
+
 @optional
 
 /**
@@ -40,10 +46,7 @@
 - (BOOL)disableInputView;
 
 
-/**
- *  是否禁用輸入控件 中的 @ 某人符號
- */
-- (BOOL)disableAtUser;
+
 
 
 @end

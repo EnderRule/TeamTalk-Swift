@@ -74,10 +74,11 @@ class HMChatBaseCell: HMBaseCell {
         self.activityView.hidesWhenStopped = true
         self.activityView.isHidden = true
         self.activityView.backgroundColor = UIColor.clear
+        self.activityView.frame.size = .init(width: 20, height: 20)
         
         self.resendButton.setTitle("重新發送", for: .normal)
-        self.resendButton.setImage(UIImage.init(named: "setting"), for: .normal)
         self.resendButton.addTarget(self , action: #selector(self.sendAgainAction), for: .touchUpInside)
+        self.resendButton.sizeToFit()
         
         self.contentView.addSubview(avatarImgv)
         self.contentView.addSubview(nameLabel)
@@ -170,21 +171,21 @@ class HMChatBaseCell: HMBaseCell {
         
         //设置菊花/重发按钮的位置
         if self.bubbleLocation == .right {
-            self.activityView.mas_updateConstraints({ (maker ) in
+            self.activityView.mas_remakeConstraints({ (maker ) in
                 maker?.right.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(-10)
                 maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)
             })
-            self.resendButton.mas_updateConstraints({ (maker ) in
+            self.resendButton.mas_remakeConstraints({ (maker ) in
                 maker?.right.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(-10)
                 maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)
             })
             
         }else{
-            self.activityView.mas_updateConstraints({ (maker ) in
+            self.activityView.mas_remakeConstraints({ (maker ) in
                 maker?.left.mas_equalTo()(self.bubbleImgv.mas_right)?.offset()(10)
                 maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)
             })
-            self.resendButton.mas_updateConstraints({ (maker ) in
+            self.resendButton.mas_remakeConstraints({ (maker ) in
                 maker?.left.mas_equalTo()(self.bubbleImgv.mas_right)?.offset()(10)
                 maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)
             })

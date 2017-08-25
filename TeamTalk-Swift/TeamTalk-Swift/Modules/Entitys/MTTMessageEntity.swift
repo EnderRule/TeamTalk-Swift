@@ -64,7 +64,7 @@ import UIKit
 }
 
 
-class MTTMessageEntity: NSObject {
+class MTTMessageEntity: NSObject,NSCopying {
     
     
     
@@ -82,6 +82,12 @@ class MTTMessageEntity: NSObject {
     var sessionType:Im.BaseDefine.SessionType = .sessionTypeSingle
     var state:DDMessageState = .Sending
     
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copyEntity = MTTMessageEntity.init(msgID: self.msgID, msgType: self.msgType, msgTime: self.msgTime, sessionID: self.sessionId, senderID: self.senderId, msgContent: self.msgContent, toUserID: self.toUserID)
+        copyEntity.info = self.info
+        
+        return copyEntity
+    }
     
     public convenience init(msgID:UInt32,msgType:MsgType_Objc,msgTime:UInt32,sessionID:String,senderID:String,msgContent:String,toUserID:String){
         self.init()
@@ -221,8 +227,7 @@ extension MTTMessageEntity {
         }
         
         self.msgTime =  msgInfo.createTime
-//        self.msgID = msgInfo.msgId   //Fixme:here
-
+//        self.msgID = UInt32(DDMessageModule.getMessageID())//Fixme:here    old style is: self.msgID = msgInfo.msgId
         self.sessionType = sessionType
         if self.sessionType == .sessionTypeSingle{
             self.sessionId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)

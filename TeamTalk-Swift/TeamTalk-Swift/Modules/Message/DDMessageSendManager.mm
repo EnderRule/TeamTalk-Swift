@@ -64,8 +64,6 @@ static uint32_t seqNo = 0;
 - (void)sendMessage:(MTTMessageEntity *)message isGroup:(BOOL)isGroup Session:(MTTSessionEntity*)session completion:(DDSendMessageCompletion)completion Error:(void (^)(NSError *))block
 {
     
-    NSLog(@"DDsendMessage Manager sending: %@   ",message.dicValues);
-    
     dispatch_async(self.sendMessageSendQueue, ^{
         SendMessageAPI* sendMessageAPI = [[SendMessageAPI alloc] init];
         uint32_t nowSeqNo = ++seqNo;
@@ -107,11 +105,11 @@ static uint32_t seqNo = 0;
             session.lastMsg=message.msgContent;
         }
         [[UnAckMessageManager instance] addMessageToUnAckQueue:message];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SentMessageSuccessfull" object:session];
+
         [sendMessageAPI requestWithObject:object Completion:^(id response, NSError *error) {
             if (!error)
             {
-                DDLog(@"发送消息成功");
+//                DDLog(@"发送消息成功");
                 [[MTTDatabaseUtil instance] deleteMesages:message completion:^(BOOL success){
                     
                 }];
@@ -155,6 +153,7 @@ static uint32_t seqNo = 0;
         
         NSString* myUserID = [RuntimeStatus instance].user.objID;
         NSArray* object = @[myUserID,sessionID,voice,@(msg.msgType),@(0)];
+       
         [sendVoiceMessageAPI requestWithObject:object Completion:^(id response, NSError *error) {
             if (!error)
             {

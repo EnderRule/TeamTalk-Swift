@@ -28,6 +28,8 @@
     NSMutableDictionary* _unreadMessages;
     
     NSMutableArray *_delegates;
+    
+    ReceiveMessageAPI *receiveMessageApi;
 }
 
 @end
@@ -55,6 +57,8 @@
         _unreadMessages = [[NSMutableDictionary alloc] init];
         _delegates = [[NSMutableArray alloc]init];
         
+        receiveMessageApi = [[ReceiveMessageAPI alloc]init];
+
         [self p_registerReceiveMessageAPI];
     }
     return self;
@@ -127,10 +131,12 @@
 #pragma mark - privateAPI
 - (void)p_registerReceiveMessageAPI
 {
-    ReceiveMessageAPI* receiveMessageAPI = [[ReceiveMessageAPI alloc] init];
-    [receiveMessageAPI registerAPIInAPIScheduleReceiveData:^(MTTMessageEntity* object, NSError *error) {
+
+    [receiveMessageApi registerAPIInAPIScheduleReceiveData:^(MTTMessageEntity* object, NSError *error) {
         if (object){
+            
             object.state = DDMessageStateSendSuccess;
+                        
             ReceiveMessageACKAPI *rmack = [[ReceiveMessageACKAPI alloc] init];
             [rmack requestWithObject:@[object.senderId,@(object.msgID),object.sessionId,@(object.sessionType)] Completion:^(id response, NSError *error) {
             }];

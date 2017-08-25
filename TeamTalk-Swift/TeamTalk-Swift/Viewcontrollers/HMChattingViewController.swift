@@ -12,7 +12,7 @@ let ChatInputView_MinHeight:CGFloat = 44.0
 
 
 class HMChattingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,
-NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControllerDelegate,DDMessageModuleDelegate {
+NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControllerDelegate,DDMessageModuleDelegate,HMChatCellActionDelegate {
 
     
     private var chattingModule:ChattingModule!
@@ -63,14 +63,16 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         }
         
         
-        
+
     }
  
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         DDMessageModule.shareInstance().add(self)
 
+        
         self.navigationController?.setNavigationBarHidden(false , animated: true )
     }
     
@@ -80,6 +82,12 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         self.refreshMessagesData(scrollToBottom: true)
 
         self.navigationItem.title = self.chattingModule.sessionEntity.name
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        DDMessageModule.shareInstance().remove(self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -287,6 +295,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
         //先上传图片、再发送含有图片URL 的消息。
         DDSendPhotoMessageAPI.sharedPhotoCache().uploadImage(imagePath, success: {[weak self ] (imageURL ) in
+            
+            debugPrint("chatting pick && upload image success :\(imageURL) ")
+            
             if imageURL != nil {
                 messageEntity.state = .Sending
                 
@@ -300,6 +311,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 messageEntity.updateToDB(compeletion: nil)
             }
         }) {[weak self ] (error ) in
+            debugPrint("chatting pick && upload image error :\(error.debugDescription) ")
+
+            
             messageEntity.state = .SendFailure
             messageEntity.updateToDB(compeletion: { (success ) in
                 if success {
@@ -342,6 +356,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     
     
     //MARK: NIMInputView related delegates
+    func disableAtUser() -> Bool {
+        return true
+    }
     
     func onInputViewActive(_ active: Bool) {
         if active{
@@ -435,5 +452,13 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     }
     func onStopRecording() {
         print("input view onStopRecording")
+    }
+    
+    func HMChatAction(type: HMChatCellActionType, message: MTTMessageEntity, sourceView: UIView?) {
+        if type == .sendAgain{
+            message.msgTime = UInt32(Date().timeIntervalSince1970)
+            
+            self.sendMessage(msgEntity: message)
+        }
     }
 }

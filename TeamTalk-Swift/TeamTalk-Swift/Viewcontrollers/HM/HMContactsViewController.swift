@@ -66,7 +66,7 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
         
         self.users.removeAll()
         for obj in  DDUserModule.shareInstance().getAllMaintanceUser(){
-            debugPrint("refreshContacts user? ",obj )
+//            debugPrint("refreshContacts user? ",obj )
             
             if let user = obj as? MTTUserEntity{
                 debugPrint(user.name,user.avatar)
@@ -76,7 +76,7 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
         
         self.groups.removeAll()
         for obj in DDGroupModule.instance().getAllGroups() {
-            debugPrint("refreshContacts group?",obj )
+//            debugPrint("refreshContacts group?",obj )
 
             if let group = obj as? MTTGroupEntity {
                 debugPrint(group.name)

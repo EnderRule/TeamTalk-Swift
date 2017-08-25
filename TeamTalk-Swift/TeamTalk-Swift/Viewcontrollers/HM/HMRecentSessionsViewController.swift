@@ -81,7 +81,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         if indexPath.row < self.sessions.count{
             let session = self.sessions[indexPath.row]
             cell.configWith(object: session)
-            self.preLoadMessageFor(session: session)
+//            self.preLoadMessageFor(session: session)
         }
         return cell
     }

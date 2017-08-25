@@ -56,11 +56,9 @@
 }
 -(void)addMessageToUnAckQueue:(MTTMessageEntity *)message
 {
-    DDLog(@"add message to %lu,%@",(unsigned long)message.msgID,[message description]);
     MessageAndTime *msgAndTime = [MessageAndTime new];
     msgAndTime.msg=message;
     msgAndTime.nowDate =[[NSDate date] timeIntervalSince1970];
-    DDLog(@"%lu",(unsigned long)msgAndTime.nowDate);
     if (self.msgDic) {
         [self.msgDic setObject:msgAndTime forKey:@(message.msgID)];
     }

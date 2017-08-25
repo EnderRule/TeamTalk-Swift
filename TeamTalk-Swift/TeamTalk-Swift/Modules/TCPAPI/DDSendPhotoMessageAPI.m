@@ -42,7 +42,7 @@ static int max_try_upload_times = 5;
     }
     return self;
 }
-- (void)uploadImage:(NSString*)imagekey success:(void(^)(NSString* imageURL))success failure:(void(^)(id error))failure
+- (void)uploadImage:(NSString*)imagePath success:(void(^)(NSString* imageURL))success failure:(void(^)(id error))failure
 {
     
     NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^(){
@@ -51,7 +51,7 @@ static int max_try_upload_times = 5;
        
         @autoreleasepool
         {
-            __block NSData *imageData = [[MTTPhotosCache sharedPhotoCache] photoFromDiskCacheForKey:imagekey];
+            __block NSData *imageData = [NSData dataWithContentsOfFile:imagePath];//  [[MTTPhotosCache sharedPhotoCache] photoFromDiskCacheForKey:imagePath];
             if (imageData == nil) {
                 failure(@"data is emplty");
                 return;
@@ -87,7 +87,7 @@ static int max_try_upload_times = 5;
                         if (max_try_upload_times > 0)
                         {
                             
-                            [self uploadImage:imagekey success:^(NSString *imageURL) {
+                            [self uploadImage:imagePath success:^(NSString *imageURL) {
                                 success(imageURL);
                             } failure:^(id error) {
                                 failure(error);
