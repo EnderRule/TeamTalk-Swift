@@ -95,7 +95,6 @@
             [MTTUtil setMsfsUrl:[dic objectForKey:@"msfsPrior"]];
             [_tcpServer loginTcpServerIP:_priorIP port:_port Success:^{
                 
-                
                 NSNumber* clientType = @(17);
                 NSString *clientVersion = [NSString stringWithFormat:@"MAC/%@-%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
                 NSArray* parameter = @[userName,password,clientVersion,clientType];
@@ -122,10 +121,7 @@
                             [RuntimeStatus instance].user=user;
                             
                             [[MTTDatabaseUtil instance] openCurrentUserDB];
-                            
-                            
-                            
-                            
+                             
                             //加载所有人信息，创建检索拼音
                             [self p_loadAllUsersCompletion:^{
                                 
@@ -162,64 +158,6 @@
                         failure(error.description);
                     }
                 }];
-                
-                return
-                
-                
-                [_msgServer checkUserID:userName Pwd:password token:@"" success:^(id object) {
-                    DDLog(@"login#登录验证成功 %@",userName);
-                    
-                    [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"password"];
-                    [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"username"];
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"autologin"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    
-                    _lastLoginPassword = password;
-                    _lastLoginUserName = userName;
-                    DDClientState* clientState = [DDClientState shareInstance];
-                    clientState.userState=DDUserOnline;
-                    _relogining=YES;
-                    MTTUserEntity* user = object[@"user"];
-                    [RuntimeStatus instance].user=user;
-                    
-                    [[MTTDatabaseUtil instance] openCurrentUserDB];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationUserLoginSuccess object:user];
-                    
-                    success(user);
-
-                    
-                    //加载所有人信息，创建检索拼音
-                    [self p_loadAllUsersCompletion:^{
-                        
-                        if ([[SpellLibrary instance] isEmpty]) {
-                            
-                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                [[[DDUserModule shareInstance] getAllMaintanceUser] enumerateObjectsUsingBlock:^(MTTUserEntity *obj, NSUInteger idx, BOOL *stop) {
-                                    [[SpellLibrary instance] addSpellForObject:obj];
-                                    [[SpellLibrary instance] addDeparmentSpellForObject:obj];
-                                    
-                                }];
-                                NSArray *array =  [[DDGroupModule instance] getAllGroups];
-                                [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                                    [[SpellLibrary instance] addSpellForObject:obj];
-                                }];
-                            });
-                        }
-                    }];
-
-                    [[SessionModule instance] loadLocalSession:^(bool isok) {}];
-                    
-                    
-                    
-                    
-                } failure:^(NSError *object) {
-                    
-                    DDLog(@"login#登录验证失败");
-                   
-                    failure(object.domain);
-                }];
-                
             } failure:^{
                 DDLog(@"连接消息服务器失败 1");
                 failure(@"连接消息服务器失败");
@@ -300,10 +238,7 @@
                                 completion();
                             }
                         });
-     
                     });
-                    
-                    
                 }
             }];
         }

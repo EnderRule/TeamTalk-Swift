@@ -29,10 +29,6 @@
 }
 
 
--(void)addContact:(MTTUserEntity *)user
-{
-    
-}
 /**
  *  按首字母展示
  *
