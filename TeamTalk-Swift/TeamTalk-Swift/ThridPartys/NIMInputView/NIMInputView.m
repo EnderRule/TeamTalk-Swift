@@ -95,18 +95,21 @@
     self.audioRecordIndicator.phase = _recordPhase;
     if(prevPhase == AudioRecordPhaseEnd) {
         if(AudioRecordPhaseStart == _recordPhase) {
+            [self setRecording:YES];
             if ([_actionDelegate respondsToSelector:@selector(onStartRecording)]) {
                 [_actionDelegate onStartRecording];
             }
         }
     } else if (prevPhase == AudioRecordPhaseStart || prevPhase == AudioRecordPhaseRecording) {
         if (AudioRecordPhaseEnd == _recordPhase) {
+            [self setRecording:NO];
             if ([_actionDelegate respondsToSelector:@selector(onStopRecording)]) {
                 [_actionDelegate onStopRecording];
             }
         }
     } else if (prevPhase == AudioRecordPhaseCancelling) {
         if(AudioRecordPhaseEnd == _recordPhase) {
+            [self setRecording:NO];
             if ([_actionDelegate respondsToSelector:@selector(onCancelRecording)]) {
                 [_actionDelegate onCancelRecording];
             }
@@ -121,6 +124,7 @@
     [_toolBar.emoticonBtn addTarget:self action:@selector(onTouchEmoticonBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_toolBar.moreMediaBtn addTarget:self action:@selector(onTouchMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_toolBar.voiceBtn addTarget:self action:@selector(onTouchVoiceBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
     [_toolBar.recordButton addTarget:self action:@selector(onTouchRecordBtnDown:) forControlEvents:UIControlEventTouchDown];
     [_toolBar.recordButton addTarget:self action:@selector(onTouchRecordBtnDragInside:) forControlEvents:UIControlEventTouchDragInside];
     [_toolBar.recordButton addTarget:self action:@selector(onTouchRecordBtnDragOutside:) forControlEvents:UIControlEventTouchDragOutside];
@@ -176,8 +180,12 @@
 
 - (void)setRecording:(BOOL)recording {
     if(recording) {
-        self.audioRecordIndicator.center = self.superview.center;
+        
+//        [[UIApplication sharedApplication].keyWindow addSubview:self.audioRecordIndicator];
+//        self.audioRecordIndicator.center = [UIApplication sharedApplication].keyWindow.center;
+        
         [self.superview addSubview:self.audioRecordIndicator];
+        self.audioRecordIndicator.center = self.superview.center;
         self.recordPhase = AudioRecordPhaseRecording;
     } else {
         [self.audioRecordIndicator removeFromSuperview];
@@ -257,7 +265,7 @@
 - (void)keyboardWillChangeFrame:(NSNotification *)notification
 {
     if (!self.window) {
-        printf("is not top vc now");
+//        printf("is not top vc now");
         return;//如果當前vc不是堆棧的top vc，則不需要監聽
     }
     NSDictionary *userInfo = notification.userInfo;
@@ -298,7 +306,7 @@
 
 - (void)willShowBottomHeight:(CGFloat)bottomHeight
 {
-    NSLog(@"input view willShowBottomHeight: %.1f",bottomHeight);
+//    NSLog(@"input view willShowBottomHeight: %.1f",bottomHeight);
     CGRect fromFrame = self.frame;
     CGFloat toHeight = self.toolBar.frame.size.height + bottomHeight;
     CGRect toFrame = CGRectMake(fromFrame.origin.x, fromFrame.origin.y + (fromFrame.size.height - toHeight), fromFrame.size.width, toHeight);
@@ -375,39 +383,18 @@
 - (void)onTouchVoiceBtn:(id)sender {
     // image change
     if (_inputType!= InputTypeAudio) {
-        
-        //Fixme:shoud check RecordPermission here or not ???
-//        if ([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)]) {
-//            [[AVAudioSession sharedInstance] performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
-//                if (granted) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-                        _inputType = InputTypeAudio;
-                        if ([self.toolBar.inputTextView isFirstResponder]) {
-                            _inputBottomViewHeight = 0;
-                            [self.toolBar.inputTextView resignFirstResponder];
-                        } else if (_inputBottomViewHeight > 0)
-                        {
-                            _inputBottomViewHeight = 0;
-                            [self willShowBottomHeight:_inputBottomViewHeight];
-                        }
-                        [self inputTextViewToHeight:InputViewTopHeight];;
-                        [self updateAllButtonImages];
-//                    });
-//                }
-//                else {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        
-//                        [[[UIAlertView alloc] initWithTitle:nil
-//                                                    message:@"沒有麥克風權限"
-//                                                   delegate:nil
-//                                          cancelButtonTitle:@"確定"
-//                                          otherButtonTitles:nil] show];
-//                    });
-//                }
-//            }];
-//        }
-    } else
-    {
+         _inputType = InputTypeAudio;
+        if ([self.toolBar.inputTextView isFirstResponder]) {
+            _inputBottomViewHeight = 0;
+            [self.toolBar.inputTextView resignFirstResponder];
+        } else if (_inputBottomViewHeight > 0)
+        {
+            _inputBottomViewHeight = 0;
+            [self willShowBottomHeight:_inputBottomViewHeight];
+        }
+        [self inputTextViewToHeight:InputViewTopHeight];;
+        [self updateAllButtonImages];
+    } else  {
         if (self.toolBar.inputTextView.superview) {
             _inputType = InputTypeText;
             [self inputTextViewToHeight:[self getTextViewContentH:self.toolBar.inputTextView]];;
@@ -475,8 +462,7 @@
         [UIView animateWithDuration:0.25 animations:^{
             [self willShowBottomHeight:_inputBottomViewHeight];
         }];
-    } else
-    {
+    } else  {
         _inputBottomViewHeight = 0;
         _inputType = InputTypeText;
         [self.toolBar.inputTextView becomeFirstResponder];

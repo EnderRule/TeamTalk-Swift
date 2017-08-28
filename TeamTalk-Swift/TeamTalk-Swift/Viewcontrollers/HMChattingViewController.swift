@@ -19,7 +19,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     private var audioPlayer:AVAudioPlayer?
     private var audioRecorder:AVAudioRecorder?
     private var recordVoicePath:String = ""
-    private var recordIndicatorView:NIMInputAudioRecordIndicatorView = NIMInputAudioRecordIndicatorView.init()
+    private var recordTimeInterval:TimeInterval = 0
+//    private var recordIndicatorView:NIMInputAudioRecordIndicatorView = NIMInputAudioRecordIndicatorView.init()
     private var chattingModule:ChattingModule!
 
     private var chatInputView:NIMInputView!
@@ -51,10 +52,16 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
         self.noMoreRecords = false
         
+        self.setupChatMessagesTableview()
+
         self.setupChatInputView()
         
-        self.setupChatMessagesTableview()
-        
+        tableView.mas_makeConstraints { (maker ) in
+            maker?.top.mas_equalTo()(self.view.mas_top)?.offset()(64)
+            maker?.left.mas_equalTo()(self.view.mas_left)
+            maker?.right.mas_equalTo()(self.view.mas_right)
+            maker?.bottom.mas_equalTo()(self.chatInputView.mas_top)
+        }
         
         chattingModule.loadMoreHistoryCompletion { (count , error ) in
             print("load more history  :\(count)",error?.localizedDescription ?? "nil error")
@@ -119,8 +126,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         chatInputView.backgroundColor = colorMainBg
         self.view.addSubview(chatInputView)
         
-        self.recordIndicatorView.frame = .init(x: 00, y: 0, width: 160, height: 160)
-        self.recordIndicatorView.recordTime = 0
+//        self.recordIndicatorView.frame = .init(x: 00, y: 0, width: 160, height: 160)
+//        self.recordIndicatorView.recordTime = 0
         
     }
     
@@ -143,12 +150,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
         self.view.addSubview(tableView)
         
-        tableView.mas_makeConstraints { (maker ) in
-            maker?.top.mas_equalTo()(self.view.mas_top)?.offset()(64)
-            maker?.left.mas_equalTo()(self.view.mas_left)
-            maker?.right.mas_equalTo()(self.view.mas_right)
-            maker?.bottom.mas_equalTo()(self.chatInputView.mas_top)
-        }
+        
         
         tableView.addHeader {
             if self.noMoreRecords {
@@ -498,7 +500,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             self.recordVoicePath = ""
         }
         
-        self.recordIndicatorView.removeFromSuperview()
+//        self.recordIndicatorView.removeFromSuperview()
         UIViewController.cancelPreviousPerformRequests(withTarget: self )
         
     }
@@ -516,11 +518,12 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
         if self.audioRecorder != nil {
             self.audioRecorder?.record()
-            self.recordIndicatorView.recordTime = 0
+            self.recordTimeInterval = 0
+//            self.recordIndicatorView.recordTime = 0
             
-            self.view.addSubview(self.recordIndicatorView)
-            self.recordIndicatorView.center = self.view.center
-            self.recordIndicatorView.isHidden = false
+//            self.view.addSubview(self.recordIndicatorView)
+//            self.recordIndicatorView.center = self.view.center
+//            self.recordIndicatorView.isHidden = false
             self.perform(#selector(self.updateRecordTime), with: nil , afterDelay: 1)
 
         }else{
@@ -530,7 +533,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     func onStopRecording() {
         print("input view onStopRecording")
         self.audioRecorder?.stop()
-        self.recordIndicatorView.removeFromSuperview()
+//        self.recordIndicatorView.removeFromSuperview()
         UIViewController.cancelPreviousPerformRequests(withTarget: self )
         
 //        let url = URL.init(string: self.recordVoicePath)!
@@ -550,8 +553,12 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         if audioPlayer != nil {
             audioPlayer?.delegate = self
             audioPlayer?.prepareToPlay()
-            audioPlayer?.play()
             
+            if audioPlayer!.duration > 3.0{
+                audioPlayer?.play()
+            }else{
+                self.view.makeToast("錄音時間太短啦")
+            }
             debugPrint("onStopRecording  voice file data lenght : \(data.length/1024)KB  duration: \(audioPlayer!.duration)seconds ")
         }else {
             self.view.makeToast("无法播放 -2")
@@ -559,11 +566,12 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     }
     
     func updateRecordTime(){
+        self.recordTimeInterval += 1
         
-        debugPrint("updateRecordTime updateRecordTime \(self.recordIndicatorView.recordTime)")
+        debugPrint("updateRecordTime updateRecordTime \(self.recordTimeInterval)")
         
-        self.recordIndicatorView.recordTime += 1
-        
+//        self.recordIndicatorView.recordTime += 1
+        self.chatInputView.updateAudioRecordTime(self.recordTimeInterval)
         self.perform(#selector(self.updateRecordTime), with: nil , afterDelay: 1)
         
     }
@@ -592,17 +600,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         recordSetting.updateValue(true , forKey: AVLinearPCMIsFloatKey)             //是否使用浮点数采样
         
         return recordSetting
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard  let touch = touches.first else {
-            return
-        }
-        if self.audioRecorder != nil && self.audioRecorder!.isRecording {
-            let point = touch.location(in: self.view)
-            
-        }
-        
     }
     
 }
