@@ -129,21 +129,27 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
-            RuntimeStatus.instance().user = nil
             
-            UserDefaults.standard.setValue("", forKey: "password")
-            UserDefaults.standard.setValue("", forKey: "username")
-            UserDefaults.standard.setValue(false, forKey: "autologin")
- 
+            UIAlertController.alert(sender: self , title: "確認退出嗎？", message: nil , buttons: ["再看看","退出"], clickHandler: { (title , index ) in
+                if index == 1 {
+                    RuntimeStatus.instance().user = nil
+                    
+                    UserDefaults.standard.setValue("", forKey: "password")
+                    UserDefaults.standard.setValue("", forKey: "username")
+                    UserDefaults.standard.setValue(false, forKey: "autologin")
+                    
+                    let loginvc = MTTLoginViewController.init()
+                    loginvc.hidesBottomBarWhenPushed = true
+                    (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.pushViewController(loginvc, animated: true )
+                    
+                    if let tabbarcontroller = self.navigationController?.tabBarController {
+                        tabbarcontroller.removeFromParentViewController()
+                    }
+                    
+                }
+            })
             
-            let loginvc = MTTLoginViewController.init()
-            loginvc.hidesBottomBarWhenPushed = true
             
-            (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.pushViewController(loginvc, animated: true )
-            
-            if let tabbarcontroller = self.navigationController?.tabBarController {
-                tabbarcontroller.removeFromParentViewController()
-            }
         }
     }
     

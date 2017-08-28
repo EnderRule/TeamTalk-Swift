@@ -25,7 +25,6 @@
 #import "MTTDDNotification.h"
 #import "TeamTalk_Swift-Swift.h"
 
-
 @interface LoginModule(privateAPI)
 
 - (void)p_loadAfterHttpServerWithToken:(NSString*)token userID:(NSString*)userID dao:(NSString*)dao password:(NSString*)password uname:(NSString*)uname success:(void(^)(MTTUserEntity* loginedUser))success failure:(void(^)(NSString* error))failure;

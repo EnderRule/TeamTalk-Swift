@@ -8,13 +8,18 @@
 
 import UIKit
 
+import AudioToolbox
+
 let ChatInputView_MinHeight:CGFloat = 44.0
 
 
 class HMChattingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,
-NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControllerDelegate,DDMessageModuleDelegate,HMChatCellActionDelegate {
+NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControllerDelegate,DDMessageModuleDelegate,HMChatCellActionDelegate,AVAudioPlayerDelegate {
 
-    
+    private var audioPlayer:AVAudioPlayer?
+    private var audioRecorder:AVAudioRecorder?
+    private var recordVoicePath:String = ""
+    private var recordIndicatorView:NIMInputAudioRecordIndicatorView = NIMInputAudioRecordIndicatorView.init()
     private var chattingModule:ChattingModule!
 
     private var chatInputView:NIMInputView!
@@ -30,13 +35,13 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         chattingModule.sessionEntity = session
         
         chattingModule.addObserver(self , forKeyPath: "showingMessages", options: .new, context: nil )
-        
+    
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self )
         chattingModule.removeObserver(self , forKeyPath: "showingMessages")
-        
+
         DDMessageModule.shareInstance().remove(self)
     }
     
@@ -113,6 +118,10 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
         chatInputView.backgroundColor = colorMainBg
         self.view.addSubview(chatInputView)
+        
+        self.recordIndicatorView.frame = .init(x: 00, y: 0, width: 160, height: 160)
+        self.recordIndicatorView.recordTime = 0
+        
     }
     
     func setupChatMessagesTableview(){
@@ -293,10 +302,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     
     //MARK: pick/shoot photos
     func onTapMediaItemPick(){
-        print("相册选照片")
-        
         let imagePickvc:TZImagePickerController = TZImagePickerController.init(maxImagesCount: 1, delegate: self)
-
         imagePickvc.allowPreview = true
         imagePickvc.allowTakePicture = true
         imagePickvc.allowPickingVideo = false
@@ -304,9 +310,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         imagePickvc.allowCrop = false
         
         self.present(imagePickvc, animated: true , completion: nil )
-        
-//        self.push(newVC: imagePickvc, animated: true )
-        
     }
     func onTapMediaItemShoot(){
         print("相机拍照片")
@@ -489,12 +492,80 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     
     func onCancelRecording() {
         print("input view onCancelRecording")
+        self.audioRecorder?.stop()
+        
+        if  ZQFileManager.shared.delete(filePath: self.recordVoicePath){
+            self.recordVoicePath = ""
+        }
+        
+        self.recordIndicatorView.removeFromSuperview()
+        UIViewController.cancelPreviousPerformRequests(withTarget: self )
+        
     }
     func onStartRecording() {
         print("input view onStartRecording")
+        
+        self.recordVoicePath = TempPath(name: "newVoice.acc")
+        let url = URL.init(string: self.recordVoicePath)!
+        
+        do{
+            self.audioRecorder = try AVAudioRecorder.init(url: url , settings: self.recordSettings())
+        }catch{
+            debugPrint("audiorecorder init error \(error.localizedDescription)")
+        }
+        
+        if self.audioRecorder != nil {
+            self.audioRecorder?.record()
+            self.recordIndicatorView.recordTime = 0
+            
+            self.view.addSubview(self.recordIndicatorView)
+            self.recordIndicatorView.center = self.view.center
+            self.recordIndicatorView.isHidden = false
+            self.perform(#selector(self.updateRecordTime), with: nil , afterDelay: 1)
+
+        }else{
+            self.view.makeToast("暂时无法录音")
+        }
     }
     func onStopRecording() {
         print("input view onStopRecording")
+        self.audioRecorder?.stop()
+        self.recordIndicatorView.removeFromSuperview()
+        UIViewController.cancelPreviousPerformRequests(withTarget: self )
+        
+//        let url = URL.init(string: self.recordVoicePath)!
+        
+        guard let data = NSData.init(contentsOfFile: self.recordVoicePath) else {
+            self.view.makeToast("无法播放 -1")
+            return
+        }
+
+        do {
+            self.audioPlayer = try  AVAudioPlayer.init(data: data as Data )
+        }catch {
+            self.view.makeToast("无法播放：\(error.localizedDescription)")
+        }
+        
+        
+        if audioPlayer != nil {
+            audioPlayer?.delegate = self
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+            
+            debugPrint("onStopRecording  voice file data lenght : \(data.length/1024)KB  duration: \(audioPlayer!.duration)seconds ")
+        }else {
+            self.view.makeToast("无法播放 -2")
+        }
+    }
+    
+    func updateRecordTime(){
+        
+        debugPrint("updateRecordTime updateRecordTime \(self.recordIndicatorView.recordTime)")
+        
+        self.recordIndicatorView.recordTime += 1
+        
+        self.perform(#selector(self.updateRecordTime), with: nil , afterDelay: 1)
+        
     }
     
     func HMChatAction(type: HMChatCellActionType, message: MTTMessageEntity, sourceView: UIView?) {
@@ -504,4 +575,34 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             self.sendMessage(msgEntity: message)
         }
     }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        self.audioPlayer = nil
+        self.audioRecorder = nil
+        
+        debugPrint(" audio played done? \(flag)")
+    }
+    
+    func recordSettings()->[String:Any]{
+        var recordSetting:[String:Any] = [:]
+        recordSetting.updateValue(kAudioFormatLinearPCM, forKey: AVFormatIDKey)     //格式
+        recordSetting.updateValue(8000, forKey: AVSampleRateKey)                    //采样率
+        recordSetting.updateValue(2, forKey: AVNumberOfChannelsKey)                 //设置通道为单声道
+        recordSetting.updateValue(8, forKey: AVLinearPCMBitDepthKey)                //每个采样点位数,分为8,16,24,32
+        recordSetting.updateValue(true , forKey: AVLinearPCMIsFloatKey)             //是否使用浮点数采样
+        
+        return recordSetting
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard  let touch = touches.first else {
+            return
+        }
+        if self.audioRecorder != nil && self.audioRecorder!.isRecording {
+            let point = touch.location(in: self.view)
+            
+        }
+        
+    }
+    
 }

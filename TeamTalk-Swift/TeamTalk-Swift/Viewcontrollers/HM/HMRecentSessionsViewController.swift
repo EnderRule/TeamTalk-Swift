@@ -75,7 +75,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     //MARK:DDmessagemodule delegate 
     func onReceiveMessage(_ message: MTTMessageEntity!) {
         
-        
+        var unreadCount =  SessionModule.instance().getAllUnreadMessageCount()
         
         for session in self.sessions {
             if message.sessionId == session.sessionID {
@@ -89,6 +89,9 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
                     
                 })
                 tableview.reloadData()
+                
+                unreadCount += 1
+                self.updateTotalUnread(count: Int(unreadCount))
                 
                 return
             }
@@ -109,6 +112,13 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
             
         })
         
+        unreadCount += 1
+        self.updateTotalUnread(count: Int(unreadCount))
+        
+    }
+    
+    func updateTotalUnread(count:Int){
+        self.setTabbarBadge(count: count)
     }
     
     //MARK: SessionModuelDelegate
@@ -200,16 +210,19 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func setTabbarBadge(count:Int){
+        
+        debugPrint("HMRecentSession update tabbar badge \(count)")
+        
         if count > 0 {
             if count > 99 {
-                self.tabBarItem.badgeValue = "99+"
+                self.navigationController?.tabBarItem.badgeValue = "99+"
             }else {
-                self.tabBarItem.badgeValue = "\(count)"
+                self.navigationController?.tabBarItem.badgeValue = "\(count)"
             }
         }else {
-            self.tabBarItem.badgeValue = nil
-            UIApplication.shared.applicationIconBadgeNumber = 0
+            self.navigationController?.tabBarItem.badgeValue = nil
         }
+        UIApplication.shared.applicationIconBadgeNumber = count
     }
     
     func refreshData(){

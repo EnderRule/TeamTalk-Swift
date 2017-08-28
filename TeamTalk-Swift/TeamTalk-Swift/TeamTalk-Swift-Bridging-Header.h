@@ -72,8 +72,11 @@
 #import "NSData+ImageContentType.h"
 
 #import "Masonry.h"
+
 #import "NIMInputView.h"
+#import "NIMInputAudioRecordIndicatorView.h"
 #import "UIImage+NIM.h"
+
 #import "M80AttributedLabel.h"
 #import "M80AttributedLabel+NIMKit.h"
 
@@ -81,3 +84,5 @@
 
 
 #import "TZImagePickerController.h"
+
+#import <AVFoundation/AVAudioRecorder.h>

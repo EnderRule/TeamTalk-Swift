@@ -59,6 +59,8 @@
 }
 
 - (void)setRecordTime:(NSTimeInterval)recordTime {
+    _recordTime = recordTime;
+    
     NSInteger minutes = (NSInteger)recordTime / 60;
     NSInteger seconds = (NSInteger)recordTime % 60;
     _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];

@@ -230,9 +230,15 @@
     UINavigationController *contactsNavi = [[UINavigationController alloc]initWithRootViewController:[[HMContactsViewController alloc]init]];
     UINavigationController *centerNavi = [[UINavigationController alloc]initWithRootViewController: [[HMPersonCenterViewController alloc]init]];
     
-    recentsnavi.title = @"消息";
-    contactsNavi.title = @"联系人";
-    centerNavi.title = @"我";
+    
+    UITabBarItem *item1 = [[UITabBarItem alloc]initWithTitle:@"消息" image:[UIImage imageNamed:@"conversation"] selectedImage:[UIImage imageNamed:@"conversation_selected"]];
+    UITabBarItem *item2 = [[UITabBarItem alloc]initWithTitle:@"联系人" image:[UIImage imageNamed:@"contact"] selectedImage:[UIImage imageNamed:@"contact_selected"]];
+    UITabBarItem *item3 = [[UITabBarItem alloc]initWithTitle:@"我" image:[UIImage imageNamed:@"myprofile"] selectedImage:[UIImage imageNamed:@"myprofile_selected"]];
+
+    recentsnavi.tabBarItem = item1;
+    contactsNavi.tabBarItem = item2;
+    centerNavi.tabBarItem = item3;
+    
     [maintabbar setViewControllers:@[recentsnavi,contactsNavi,centerNavi]];
     
     [self.navigationController pushViewController:maintabbar animated:true ];

@@ -56,41 +56,45 @@ extension UIViewController{
     }
     
     open func push(newVC:UIViewController,animated:Bool){
-        let rootVC = UIApplication.shared.keyWindow?.rootViewController
         
-        if let tabbar = rootVC as? UITabBarController{
+         if let naviga = self as? UINavigationController {
+            naviga.pushViewController(newVC, animated:animated )
+            return
+         }else if let naviga = self.navigationController {
+            naviga.pushViewController(newVC, animated:animated )
+            return
+        }
+        
+        if let tabbar = self.tabBarController {
             if let naviga = tabbar.selectedViewController as? UINavigationController {
                 naviga.pushViewController(newVC, animated: animated)
-            }else{
-                tabbar.present(newVC, animated: animated, completion: nil )
+                return
             }
-        }else if let naviga = rootVC as? UINavigationController {
-            naviga.pushViewController(newVC, animated: animated)
+        }
+        
+        let rootVC = UIApplication.shared.keyWindow?.rootViewController
+        if let tabbar =  rootVC as? UITabBarController{
+            if let naviga = tabbar.selectedViewController as? UINavigationController {
+                naviga.pushViewController(newVC, animated: animated)
+                return
+            }
+        }
+        
+        if let rootNaviga = rootVC as? UINavigationController {
+            if let tabbar = rootNaviga.viewControllers.first as? UITabBarController{
+                if let naviga = tabbar.selectedViewController as? UINavigationController {
+                    naviga.pushViewController(newVC, animated: animated)
+                    return
+                }
+            }
+            rootNaviga.pushViewController(newVC, animated: animated)
         }else {
             self.present(newVC, animated: animated, completion: nil)
         }
     }
     
-    
-    open func pushLoginVC(){
-//
-//        if !(self.rootNaviCtrl().topVC().isKind(of: UserLoginViewController.classForCoder())) {
-//            
-//            let loginVC = UserLoginViewController.init()
-//            loginVC.hidesBottomBarWhenPushed = true
-//            
-//            self.rootNaviCtrl().setViewControllers([loginVC], animated: true)
-//            debugPrint("rootNavi last VC viewTag:",self.rootNaviCtrl().childViewControllers.last?.view.tag ?? "no tag")
-//        }
-    }
-    
     func rootNaviCtrl()->UINavigationController{
         return (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController) ?? UINavigationController.init()
-    }
-    
-    
-    func forceLogout() {
-        self.pushLoginVC()
     }
     
     func topVC()->UIViewController {
@@ -103,8 +107,6 @@ extension UIViewController{
     }
     
     private func get_topVCFor(vc:UIViewController)->UIViewController {
-        
-//        debugPrint("\n\n \(self) \nget topvc for\n\(vc)")
         
         if vc.isKind(of: UINavigationController.classForCoder()) {
             if let lastVC = (vc as! UINavigationController).viewControllers.last{
