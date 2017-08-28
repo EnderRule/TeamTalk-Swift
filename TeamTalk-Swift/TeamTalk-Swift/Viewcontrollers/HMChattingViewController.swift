@@ -21,6 +21,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     private var tableView:UITableView = UITableView.init()
     
     private var showingMessages:[Any] = []
+    private var noMoreRecords:Bool = false
     
     public convenience init(session:MTTSessionEntity){
         self.init()
@@ -43,17 +44,13 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         super.viewDidLoad()
         self.view.backgroundColor = colorMainBg
         
+        self.noMoreRecords = false
+        
         self.setupChatInputView()
         
         self.setupChatMessagesTableview()
         
-        chattingModule.getNewMsg { (count , error) in
-            print("get newmsg :\(count)",error?.localizedDescription ?? "nil error")
-            
-            if count > 0{
-                self.refreshMessagesData(scrollToBottom: true)
-            }
-        }
+        
         chattingModule.loadMoreHistoryCompletion { (count , error ) in
             print("load more history  :\(count)",error?.localizedDescription ?? "nil error")
 
@@ -61,7 +58,13 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 self.refreshMessagesData(scrollToBottom: true )
             }
         }
-        
+        chattingModule.getNewMsg { (count , error) in
+            print("get newmsg :\(count)",error?.localizedDescription ?? "nil error")
+            
+            if count > 0{
+                self.refreshMessagesData(scrollToBottom: true)
+            }
+        }
         
 
     }
@@ -71,7 +74,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         super.viewWillAppear(animated)
 
         DDMessageModule.shareInstance().add(self)
-
+        self.noMoreRecords = false
         
         self.navigationController?.setNavigationBarHidden(false , animated: true )
     }
@@ -138,23 +141,34 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             maker?.bottom.mas_equalTo()(self.chatInputView.mas_top)
         }
         
-        tableView.headerRefreshingText = "正在載入..."
+        tableView.addHeader {
+            if self.noMoreRecords {
+                self.tableView.headerEndRefreshing()
+                
+                self.view.makeToast("没有更多了")
+            }else{
+                self.loadMoreHistoryRecords()
+            }
+        }
+        //必须先addHeader 再设置各类Text ,才能起效
         tableView.headerPullToRefreshText = "下拉載入更多"
         tableView.headerReleaseToRefreshText = "鬆開后載入"
-        tableView.addHeader { 
-            self.loadMoreHistoryRecords()
-        }
+        tableView.headerRefreshingText = "正在載入..."
+        
     }
     
     
     func loadMoreHistoryRecords(){
-        
         let contentSizeHeightOld:CGFloat = self.tableView.contentSize.height
         let contentOffsetYOld:CGFloat = self.tableView.contentOffset.y
         
-        
         self.chattingModule.loadMoreHistoryCompletion({[weak self ] (count , error ) in
             
+            if error != nil  && error!.localizedDescription.length > 0 {
+                self?.view.makeToast(error!.localizedDescription)
+                self?.tableView.headerEndRefreshing()
+                return
+            }
             
             if count > 0 {
                 self?.refreshMessagesData(scrollToBottom: false)
@@ -162,12 +176,11 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 
                 let contentSizeHeightNew:CGFloat = self?.tableView.contentSize.height ?? 0
                 let contentOffsetYNew:CGFloat = contentSizeHeightNew - contentSizeHeightOld + contentOffsetYOld
-                
                 self?.tableView.setContentOffset(CGPoint.init(x: 0, y: contentOffsetYNew), animated: false )
-                
-                
             }else {
                 debugPrint("load more history messages for session \(self?.chattingModule.sessionEntity.sessionID ?? "") ,but no more")
+
+                self?.noMoreRecords = true
                 self?.tableView.headerEndRefreshing()
             }
         })
@@ -175,6 +188,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     
     
     func refreshMessagesData(scrollToBottom:Bool){
+        
         
         self.showingMessages = chattingModule.showingMessages as! [Any]
         
@@ -251,6 +265,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false )
+        
+        
     }
     
     

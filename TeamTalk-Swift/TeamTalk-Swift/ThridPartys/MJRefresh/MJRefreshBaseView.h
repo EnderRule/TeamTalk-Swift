@@ -70,7 +70,15 @@ typedef enum {
 /**
  *  文字
  */
-@property (copy, nonatomic) NSString *pullToRefreshText;
-@property (copy, nonatomic) NSString *releaseToRefreshText;
-@property (copy, nonatomic) NSString *refreshingText;
+@property (nonatomic) NSString *pullToRefreshText;
+@property (nonatomic) NSString *releaseToRefreshText;
+@property (nonatomic) NSString *refreshingText;
+
+#pragma mark - 设置状态
+- (void)setPullToRefreshText:(NSString *)pullToRefreshText;
+
+- (void)setReleaseToRefreshText:(NSString *)releaseToRefreshText;
+
+- (void)setRefreshingText:(NSString *)refreshingText;
+
 @end

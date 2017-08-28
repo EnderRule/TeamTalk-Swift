@@ -12,6 +12,13 @@ class HMChatPromptCell: HMBaseCell {
 
     var promptLabel:UILabel = UILabel.init()
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(false, animated: animated)
+    }
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(false , animated: false )
+    }
+    
     override func setupCustom() {
         self.contentView.backgroundColor = UIColor.clear
         

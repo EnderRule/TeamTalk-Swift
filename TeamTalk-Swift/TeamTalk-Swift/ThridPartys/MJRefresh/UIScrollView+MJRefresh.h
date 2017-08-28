@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class MJRefreshHeaderView;
+@class MJRefreshFooterView;
+
 @interface UIScrollView (MJRefresh)
 #pragma mark - 下拉刷新
 /**
@@ -111,14 +114,19 @@
 /**
  *  设置尾部控件的文字
  */
-@property (copy, nonatomic) NSString *footerPullToRefreshText; // 默认:@"上拉可以加载更多数据"
-@property (copy, nonatomic) NSString *footerReleaseToRefreshText; // 默认:@"松开立即加载更多数据"
-@property (copy, nonatomic) NSString *footerRefreshingText; // 默认:@"MJ哥正在帮你加载数据..."
+@property (nonatomic) NSString *footerPullToRefreshText; // 默认:@"上拉可以加载更多数据"
+@property (nonatomic) NSString *footerReleaseToRefreshText; // 默认:@"松开立即加载更多数据"
+@property (nonatomic) NSString *footerRefreshingText; // 默认:@"MJ哥正在帮你加载数据..."
 
 /**
  *  设置头部控件的文字
  */
-@property (copy, nonatomic) NSString *headerPullToRefreshText; // 默认:@"下拉可以刷新"
-@property (copy, nonatomic) NSString *headerReleaseToRefreshText; // 默认:@"松开立即刷新"
-@property (copy, nonatomic) NSString *headerRefreshingText; // 默认:@"MJ哥正在帮你刷新..."
+@property (nonatomic) NSString *headerPullToRefreshText; // 默认:@"下拉可以刷新"
+@property (nonatomic) NSString *headerReleaseToRefreshText; // 默认:@"松开立即刷新"
+@property (nonatomic) NSString *headerRefreshingText; // 默认:@"MJ哥正在帮你刷新..."
+
+
+- (void)setHeader:(MJRefreshHeaderView *)header;
+- (void)setFooter:(MJRefreshFooterView *)footer;
+
 @end

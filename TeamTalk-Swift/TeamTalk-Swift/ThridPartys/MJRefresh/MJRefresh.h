@@ -6,6 +6,9 @@
 
 #import "UIScrollView+MJRefresh.h"
 
+#import "MJRefreshBaseView.h"
+#import "MJRefreshHeaderView.h"
+#import "MJRefreshFooterView.h"
 
 
 

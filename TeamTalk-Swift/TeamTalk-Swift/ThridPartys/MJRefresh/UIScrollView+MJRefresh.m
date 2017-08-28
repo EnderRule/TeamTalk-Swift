@@ -65,6 +65,10 @@ static char MJRefreshFooterViewKey;
         MJRefreshHeaderView *header = [MJRefreshHeaderView header];
         [self addSubview:header];
         self.header = header;
+    }else {
+        //将view移除再重新加入view
+        [self.header removeFromSuperview];
+        [self addSubview:self.header];
     }
     
     // 2.设置block回调
@@ -92,6 +96,10 @@ static char MJRefreshFooterViewKey;
         MJRefreshHeaderView *header = [MJRefreshHeaderView header];
         [self addSubview:header];
         self.header = header;
+    }else {
+        //将view移除再重新加入view
+        [self.header removeFromSuperview];
+        [self addSubview:self.header];
     }
     
     // 2.设置目标和回调方法
@@ -158,6 +166,10 @@ static char MJRefreshFooterViewKey;
         MJRefreshFooterView *footer = [MJRefreshFooterView footer];
         [self addSubview:footer];
         self.footer = footer;
+    }else {
+        //将view移除再重新加入view
+        [self.footer removeFromSuperview];
+        [self addSubview:self.footer];
     }
     
     // 2.设置block回调
@@ -177,6 +189,10 @@ static char MJRefreshFooterViewKey;
         MJRefreshFooterView *footer = [MJRefreshFooterView footer];
         [self addSubview:footer];
         self.footer = footer;
+    }else {
+        //将view移除再重新加入view
+        [self.footer removeFromSuperview];
+        [self addSubview:self.footer];
     }
     
     // 2.设置目标和回调方法
