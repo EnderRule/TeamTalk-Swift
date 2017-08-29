@@ -11,6 +11,8 @@
 
 @class LCActionSheet;
 
+typedef void(^clickHandler)(NSInteger index);  // index >= 0 means click on buttons ,index < 0 means click on blank place.
+
 @protocol LCActionSheetDelegate <NSObject>
 
 @optional
@@ -66,5 +68,11 @@
                      delegate:(id<LCActionSheetDelegate>)delegate;
 
 - (void)show;
+
+
++ (void)showWithTitle:(NSString *)title
+         buttonTitles:(NSArray *)titles
+       redButtonIndex:(NSInteger)buttonIndex
+         clickHandler:(clickHandler)clickHandler;
 
 @end

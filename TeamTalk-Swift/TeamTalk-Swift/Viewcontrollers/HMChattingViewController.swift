@@ -57,7 +57,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         self.setupChatInputView()
         
         tableView.mas_makeConstraints { (maker ) in
-            maker?.top.mas_equalTo()(self.view.mas_top)?.offset()(64)
+            maker?.top.mas_equalTo()(self.view.mas_top)
             maker?.left.mas_equalTo()(self.view.mas_left)
             maker?.right.mas_equalTo()(self.view.mas_right)
             maker?.bottom.mas_equalTo()(self.chatInputView.mas_top)
@@ -77,18 +77,17 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 self.refreshMessagesData(scrollToBottom: true)
             }
         }
-        
-
     }
  
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        self.navigationItem.title = self.chattingModule.sessionEntity.name
+        self.navigationController?.setNavigationBarHidden(false , animated: true )
+        
         DDMessageModule.shareInstance().add(self)
         self.noMoreRecords = false
-        
-        self.navigationController?.setNavigationBarHidden(false , animated: true )
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -101,8 +100,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         MTTDatabaseUtil.instance().updateRecentSession(self.chattingModule.sessionEntity) { (error ) in
             
         }
-        
-        self.navigationItem.title = self.chattingModule.sessionEntity.name
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -136,8 +133,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView.init()
-        tableView.separatorStyle = .singleLine
-        tableView.backgroundColor = UIColor.green
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor.clear
         tableView.keyboardDismissMode = .onDrag
         
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: UITableViewCell.cellIdentifier)
@@ -155,7 +152,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         tableView.addHeader {
             if self.noMoreRecords {
                 self.tableView.headerEndRefreshing()
-                
+//                self.view.makeToast("没有更多了", duration: 2.5, position: .center, title: nil , image: nil , style: ToastStyle.init(), completion: nil )
                 self.view.makeToast("没有更多了")
             }else{
                 self.loadMoreHistoryRecords()

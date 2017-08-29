@@ -34,7 +34,7 @@ typedef void(^DDChatLoadMoreHistoryCompletion)(NSUInteger addcount, NSError* err
 
 - (void)addPrompt:(NSString*)prompt;
 - (void)addShowMessage:(MTTMessageEntity*)message;
-- (void)addShowMessages:(NSArray*)messages;
+- (void)addShowMessages:(NSArray<MTTMessageEntity *> *)messages;
 
 - (void)updateSessionUpdateTime:(NSUInteger)time;
 

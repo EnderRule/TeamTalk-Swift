@@ -130,7 +130,7 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             
-            UIAlertController.alert(sender: self , title: "確認退出嗎？", message: nil , buttons: ["再看看","退出"], clickHandler: { (title , index ) in
+            LCActionSheet.show(withTitle: "確認退出嗎？", buttonTitles: ["再看看","退出"], redButtonIndex: 1, clickHandler: { (index) in
                 if index == 1 {
                     RuntimeStatus.instance().user = nil
                     
@@ -145,10 +145,12 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
                     if let tabbarcontroller = self.navigationController?.tabBarController {
                         tabbarcontroller.removeFromParentViewController()
                     }
-                    
                 }
             })
             
+        }else {
+            LCActionSheet .show(withTitle: "个人中心", buttonTitles: ["1","2","3","4"], redButtonIndex: 6, clickHandler: { (index) in
+            })
             
         }
     }

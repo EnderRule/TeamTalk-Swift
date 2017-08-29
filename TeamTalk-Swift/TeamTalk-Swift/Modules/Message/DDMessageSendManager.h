@@ -41,4 +41,6 @@ typedef NS_ENUM(NSUInteger, MessageType)
 
 
 - (void)sendVoiceMessage:(NSData*)voice filePath:(NSString*)filePath forSessionID:(NSString*)sessionID isGroup:(BOOL)isGroup Message:(MTTMessageEntity *)msg Session:(MTTSessionEntity*)session completion:(DDSendMessageCompletion)completion;
+
+
 @end

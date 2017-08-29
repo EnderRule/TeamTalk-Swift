@@ -85,6 +85,27 @@ class ZQFileManager: NSObject {
         return fullPath
     }
     
+    func docPath(folder folderName:String,fileName:String?)->String{
+        let folder = DocPath(name: folderName)
+        if !FileManager.default.fileExists(atPath: folder){
+            do {
+                try FileManager.default.createDirectory(atPath: folder, withIntermediateDirectories: false , attributes: nil)
+            }catch{
+                debugPrint("fail to create dir :\(folder)  error:\(error.localizedDescription)")
+            }
+        }
+        if fileName != nil  && fileName!.length > 0 {
+            let filePath = (folder as NSString).appendingPathComponent(fileName!)
+            if !FileManager.default.fileExists(atPath: filePath){
+                FileManager.default.createFile(atPath: filePath, contents: nil , attributes: nil)
+            }
+            return filePath
+        }
+        
+        return folder
+    }
+    
+    
     func userTempPath(fileName:String,userID:Int?)->String{
         let uID :Int = userID ?? 0
         

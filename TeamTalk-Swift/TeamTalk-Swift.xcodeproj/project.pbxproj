@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		66686A621F4522B5008B26BD /* MTTBubbleModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A611F4522B5008B26BD /* MTTBubbleModule.m */; };
 		66686A651F4522FD008B26BD /* MTTPhotosCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A641F4522FD008B26BD /* MTTPhotosCache.m */; };
-		66686A681F452310008B26BD /* EmotionsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A671F452310008B26BD /* EmotionsModule.m */; };
 		66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */; };
 		66686A6C1F452C12008B26BD /* DDDepartmentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */; };
 		66686A6E1F453176008B26BD /* DDFixedGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */; };
@@ -38,7 +37,6 @@
 		66686AA71F459ADC008B26BD /* UnAckMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA41F459ADC008B26BD /* UnAckMessageManager.m */; };
 		66686AAC1F45A769008B26BD /* ChattingModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA91F45A769008B26BD /* ChattingModule.m */; };
 		66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AAB1F45A769008B26BD /* ChattingEditModule.m */; };
-		66686AC11F45AA72008B26BD /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AC01F45AA72008B26BD /* TTTAttributedLabel.m */; };
 		66686ADD1F45AACC008B26BD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66686AC31F45AACC008B26BD /* Info.plist */; };
 		66686ADE1F45AACC008B26BD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AC51F45AACC008B26BD /* MASCompositeConstraint.m */; };
 		66686ADF1F45AACC008B26BD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AC81F45AACC008B26BD /* MASConstraint.m */; };
@@ -64,9 +62,6 @@
 		66686B8F1F4697C7008B26BD /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B8E1F4697C7008B26BD /* MBProgressHUD.m */; };
 		66686BDA1F46C718008B26BD /* MTTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BD81F46C718008B26BD /* MTTLoginViewController.m */; };
 		66686BDB1F46C718008B26BD /* MTTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66686BD91F46C718008B26BD /* MTTLoginViewController.xib */; };
-		66686C701F46CE44008B26BD /* bubble.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66686BDE1F46CE44008B26BD /* bubble.bundle */; };
-		66686C711F46CE44008B26BD /* emotions.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66686BDF1F46CE44008B26BD /* emotions.bundle */; };
-		66686CFF1F46CE44008B26BD /* msg.caf in Resources */ = {isa = PBXBuildFile; fileRef = 66686C6F1F46CE44008B26BD /* msg.caf */; };
 		66686D101F46D81E008B26BD /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686D021F46D81E008B26BD /* SCLAlertView.m */; };
 		66686D111F46D81E008B26BD /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686D041F46D81E008B26BD /* SCLAlertViewResponder.m */; };
 		66686D121F46D81E008B26BD /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686D061F46D81E008B26BD /* SCLAlertViewStyleKit.m */; };
@@ -121,6 +116,9 @@
 		66BD02AB1F4D8D5600131E2D /* M80AttributedLabelURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BD02A61F4D8D5600131E2D /* M80AttributedLabelURL.m */; };
 		66BD02AC1F4D8D5600131E2D /* NSMutableAttributedString+M80.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BD02A81F4D8D5600131E2D /* NSMutableAttributedString+M80.m */; };
 		66BD02AF1F4D8D6900131E2D /* M80AttributedLabel+NIMKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 66BD02AE1F4D8D6900131E2D /* M80AttributedLabel+NIMKit.m */; };
+		66D7F01A1F55006B00977897 /* bubble.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66D7F0171F55006B00977897 /* bubble.bundle */; };
+		66D7F01B1F55006B00977897 /* emotions.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66D7F0181F55006B00977897 /* emotions.bundle */; };
+		66D7F01C1F55006B00977897 /* msg.caf in Resources */ = {isa = PBXBuildFile; fileRef = 66D7F0191F55006B00977897 /* msg.caf */; };
 		66DDD4781F4FF26B0082A69C /* MTTEmotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DDD4771F4FF26B0082A69C /* MTTEmotionManager.swift */; };
 		66DDD47A1F50168C0082A69C /* HMPersonCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DDD4791F50168C0082A69C /* HMPersonCenterViewController.swift */; };
 		66DDD47C1F50227D0082A69C /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DDD47B1F50227D0082A69C /* Toast.swift */; };
@@ -410,8 +408,6 @@
 		66686A611F4522B5008B26BD /* MTTBubbleModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTBubbleModule.m; sourceTree = "<group>"; };
 		66686A631F4522FD008B26BD /* MTTPhotosCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTPhotosCache.h; sourceTree = "<group>"; };
 		66686A641F4522FD008B26BD /* MTTPhotosCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTPhotosCache.m; sourceTree = "<group>"; };
-		66686A661F452310008B26BD /* EmotionsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmotionsModule.h; sourceTree = "<group>"; };
-		66686A671F452310008B26BD /* EmotionsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmotionsModule.m; sourceTree = "<group>"; };
 		66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteMemberFromGroupAPI.swift; sourceTree = "<group>"; };
 		66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDDepartmentAPI.swift; sourceTree = "<group>"; };
 		66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDFixedGroupAPI.swift; sourceTree = "<group>"; };
@@ -446,8 +442,6 @@
 		66686AA91F45A769008B26BD /* ChattingModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingModule.m; sourceTree = "<group>"; };
 		66686AAA1F45A769008B26BD /* ChattingEditModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingEditModule.h; sourceTree = "<group>"; };
 		66686AAB1F45A769008B26BD /* ChattingEditModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingEditModule.m; sourceTree = "<group>"; };
-		66686ABF1F45AA72008B26BD /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
-		66686AC01F45AA72008B26BD /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		66686AC31F45AACC008B26BD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66686AC41F45AACC008B26BD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		66686AC51F45AACC008B26BD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
@@ -499,9 +493,6 @@
 		66686BD71F46C718008B26BD /* MTTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTLoginViewController.h; sourceTree = "<group>"; };
 		66686BD81F46C718008B26BD /* MTTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTLoginViewController.m; sourceTree = "<group>"; };
 		66686BD91F46C718008B26BD /* MTTLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MTTLoginViewController.xib; sourceTree = "<group>"; };
-		66686BDE1F46CE44008B26BD /* bubble.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = bubble.bundle; sourceTree = "<group>"; };
-		66686BDF1F46CE44008B26BD /* emotions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = emotions.bundle; sourceTree = "<group>"; };
-		66686C6F1F46CE44008B26BD /* msg.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = msg.caf; sourceTree = "<group>"; };
 		66686D011F46D81E008B26BD /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
 		66686D021F46D81E008B26BD /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
 		66686D031F46D81E008B26BD /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
@@ -591,6 +582,9 @@
 		66BD02A81F4D8D5600131E2D /* NSMutableAttributedString+M80.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+M80.m"; sourceTree = "<group>"; };
 		66BD02AD1F4D8D6900131E2D /* M80AttributedLabel+NIMKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "M80AttributedLabel+NIMKit.h"; sourceTree = "<group>"; };
 		66BD02AE1F4D8D6900131E2D /* M80AttributedLabel+NIMKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "M80AttributedLabel+NIMKit.m"; sourceTree = "<group>"; };
+		66D7F0171F55006B00977897 /* bubble.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = bubble.bundle; sourceTree = "<group>"; };
+		66D7F0181F55006B00977897 /* emotions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = emotions.bundle; sourceTree = "<group>"; };
+		66D7F0191F55006B00977897 /* msg.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = msg.caf; sourceTree = "<group>"; };
 		66DDD4771F4FF26B0082A69C /* MTTEmotionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTEmotionManager.swift; sourceTree = "<group>"; };
 		66DDD4791F50168C0082A69C /* HMPersonCenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMPersonCenterViewController.swift; path = HM/HMPersonCenterViewController.swift; sourceTree = "<group>"; };
 		66DDD47B1F50227D0082A69C /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
@@ -1170,15 +1164,6 @@
 			path = Viewcontrollers;
 			sourceTree = "<group>";
 		};
-		66686ABE1F45AA72008B26BD /* TTTAttributedLabel */ = {
-			isa = PBXGroup;
-			children = (
-				66686ABF1F45AA72008B26BD /* TTTAttributedLabel.h */,
-				66686AC01F45AA72008B26BD /* TTTAttributedLabel.m */,
-			);
-			path = TTTAttributedLabel;
-			sourceTree = "<group>";
-		};
 		66686AC21F45AACC008B26BD /* Masonry */ = {
 			isa = PBXGroup;
 			children = (
@@ -1279,27 +1264,11 @@
 		66686BDC1F46CE44008B26BD /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				66686BDD1F46CE44008B26BD /* Bundle */,
-				66686C6E1F46CE44008B26BD /* Voice */,
+				66D7F0171F55006B00977897 /* bubble.bundle */,
+				66D7F0181F55006B00977897 /* emotions.bundle */,
+				66D7F0191F55006B00977897 /* msg.caf */,
 			);
 			path = Resource;
-			sourceTree = "<group>";
-		};
-		66686BDD1F46CE44008B26BD /* Bundle */ = {
-			isa = PBXGroup;
-			children = (
-				66686BDE1F46CE44008B26BD /* bubble.bundle */,
-				66686BDF1F46CE44008B26BD /* emotions.bundle */,
-			);
-			path = Bundle;
-			sourceTree = "<group>";
-		};
-		66686C6E1F46CE44008B26BD /* Voice */ = {
-			isa = PBXGroup;
-			children = (
-				66686C6F1F46CE44008B26BD /* msg.caf */,
-			);
-			path = Voice;
 			sourceTree = "<group>";
 		};
 		66686D001F46D81E008B26BD /* SCLAlertView */ = {
@@ -1598,7 +1567,6 @@
 				66686D001F46D81E008B26BD /* SCLAlertView */,
 				66686B8C1F4697C7008B26BD /* MBProgressHUD */,
 				66686AC21F45AACC008B26BD /* Masonry */,
-				66686ABE1F45AA72008B26BD /* TTTAttributedLabel */,
 				66F10FAC1F449F700035C888 /* Security */,
 				66F10A541F43F14B0035C888 /* FMDB */,
 				66F107A51F42D4810035C888 /* SDWebImage */,
@@ -1693,8 +1661,6 @@
 				66F10A771F43F9CE0035C888 /* DDGroupModule.m */,
 				66686A601F4522B5008B26BD /* MTTBubbleModule.h */,
 				66686A611F4522B5008B26BD /* MTTBubbleModule.m */,
-				66686A661F452310008B26BD /* EmotionsModule.h */,
-				66686A671F452310008B26BD /* EmotionsModule.m */,
 				66686AA81F45A769008B26BD /* ChattingModule.h */,
 				66686AA91F45A769008B26BD /* ChattingModule.m */,
 				66686AAA1F45A769008B26BD /* ChattingEditModule.h */,
@@ -2295,19 +2261,20 @@
 			files = (
 				66E437841F4C41BC009D527D /* bk_media_position_normal@2x.png in Resources */,
 				66E437821F4C41BC009D527D /* bk_media_picture_pressed@2x.png in Resources */,
-				66686C701F46CE44008B26BD /* bubble.bundle in Resources */,
 				66E4378C1F4C41BC009D527D /* btn_bk_media_video_chat_normal@2x.png in Resources */,
 				66E437861F4C41BC009D527D /* bk_media_position_pressed@2x.png in Resources */,
 				66E437811F4C41BC009D527D /* bk_media_picture_normal@3x.png in Resources */,
+				66D7F01B1F55006B00977897 /* emotions.bundle in Resources */,
 				66F10F7A1F4449570035C888 /* speex_config_types.h.in in Resources */,
 				66E4378F1F4C41BC009D527D /* btn_bk_media_video_chat_pressed@3x.png in Resources */,
 				66E6D31C1F428700008E9590 /* LaunchScreen.storyboard in Resources */,
 				66E6D3191F428700008E9590 /* Assets.xcassets in Resources */,
 				66E437901F4C41BC009D527D /* NIMKitEmotion.bundle in Resources */,
 				66686B6A1F46967C008B26BD /* cellLine@2x.png in Resources */,
-				66686C711F46CE44008B26BD /* emotions.bundle in Resources */,
+				66D7F01C1F55006B00977897 /* msg.caf in Resources */,
 				66E4378B1F4C41BC009D527D /* bk_media_shoot_pressed@3x.png in Resources */,
 				66686BDB1F46C718008B26BD /* MTTLoginViewController.xib in Resources */,
+				66D7F01A1F55006B00977897 /* bubble.bundle in Resources */,
 				66686B691F46967C008B26BD /* bgImage_HL@2x.png in Resources */,
 				66E4378D1F4C41BC009D527D /* btn_bk_media_video_chat_normal@3x.png in Resources */,
 				66E437881F4C41BC009D527D /* bk_media_shoot_normal@2x.png in Resources */,
@@ -2320,7 +2287,6 @@
 				66E437871F4C41BC009D527D /* bk_media_position_pressed@3x.png in Resources */,
 				66E4378A1F4C41BC009D527D /* bk_media_shoot_pressed@2x.png in Resources */,
 				66BD02951F4D1CB100131E2D /* TZImagePickerController.bundle in Resources */,
-				66686CFF1F46CE44008B26BD /* msg.caf in Resources */,
 				66BD028E1F4D1CB100131E2D /* Localizable.strings in Resources */,
 				66E437891F4C41BC009D527D /* bk_media_shoot_normal@3x.png in Resources */,
 				66900F221F54050400B527D9 /* Images.xcassets in Resources */,
@@ -2442,7 +2408,6 @@
 				66E6D3861F4289D0008E9590 /* Google.Protobuf.Wrappers.proto.swift in Sources */,
 				66F10FB71F449F710035C888 /* md5.cpp in Sources */,
 				66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */,
-				66686A681F452310008B26BD /* EmotionsModule.m in Sources */,
 				66F108121F43E7180035C888 /* DDTcpServer.m in Sources */,
 				66E6D3761F4289D0008E9590 /* ExtendableMessage.swift in Sources */,
 				66F107151F42A36E0035C888 /* LoginAPI.swift in Sources */,
@@ -2540,7 +2505,6 @@
 				66F107531F42D1F50035C888 /* AFAutoPurgingImageCache.m in Sources */,
 				66F10F621F4449570035C888 /* filterbank.c in Sources */,
 				66BD02AB1F4D8D5600131E2D /* M80AttributedLabelURL.m in Sources */,
-				66686AC11F45AA72008B26BD /* TTTAttributedLabel.m in Sources */,
 				66F10F7D1F4449570035C888 /* speex_header.c in Sources */,
 				66F10F6E1F4449570035C888 /* lsp_tables_nb.c in Sources */,
 				66F10A631F43F14B0035C888 /* FMDatabaseAdditions.m in Sources */,

@@ -190,8 +190,6 @@ extension MTTMessageEntity {
                                 "[牙牙闪电]":"240"]
 }
 
-
-
 extension MTTMessageEntity {
     public convenience init(msgInfo:Im.BaseDefine.MsgInfo,sessionType:Im.BaseDefine.SessionType){
         self.init()
@@ -307,14 +305,10 @@ extension MTTMessageEntity {
     }
     
     private func process(voiceData:Data, compeletion: @escaping ((_ voiceFilePath:String,_ voiceLength:Int32) ->Void)){
-        
+        var filePath = ZQFileManager.shared.docPath(folder: "voice",fileName: "voice_\(TIMESTAMP()).acc")
         let tempData:NSData = voiceData as NSData
         let voiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData
-        let fileName:String = Encapsulator.defaultFileName()
-        
-        var filePath:String = ""
-        if voiceData.write(toFile: fileName, atomically: true){
-            filePath = fileName
+        if voiceData.write(toFile: filePath, atomically: true){
         }else{
             filePath = "語音存儲出錯"
         }

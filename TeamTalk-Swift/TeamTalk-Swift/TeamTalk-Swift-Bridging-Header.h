@@ -38,13 +38,12 @@
 #import "MTTDatabaseUtil.h"
 #import "security.h"
 
-
 //Module
 #import "LoginModule.h"
 #import "DDUserModule.h"
 #import "DDGroupModule.h"
 #import "MTTBubbleModule.h"
-#import "EmotionsModule.h"
+
 #import "DDMessageModule.h"
 #import "ChattingModule.h"
 #import "ChattingEditModule.h"
@@ -82,6 +81,7 @@
 
 #import "MJRefresh.h"
 
+#import "LCActionSheet.h"
 
 #import "TZImagePickerController.h"
 

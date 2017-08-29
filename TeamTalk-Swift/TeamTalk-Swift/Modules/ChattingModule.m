@@ -203,6 +203,7 @@ static NSUInteger const showPromptGap = 300;
 
 - (void)addPrompt:(NSString*)promptContent
 {
+
     DDPromptEntity* prompt = [[DDPromptEntity alloc] init];
     prompt.message = promptContent;
     [self.showingMessages addObject:prompt];
@@ -341,7 +342,7 @@ static NSUInteger const showPromptGap = 300;
                     {
                         //是图片,再拆分
                         NSString* imageContent = [NSString stringWithFormat:@"%@%@",DD_MESSAGE_IMAGE_PREFIX,[content substringToIndex:suffixRange.location + suffixRange.length]];
-                        MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:imageContent toUserID:message.toUserID];
+                        MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:imageContent toUserID:message.toUserID];
                         messageEntity.msgContentType = DDMessageContentTypeImage;
                         messageEntity.state = DDMessageStateSendSuccess;
                         [messageContentArray addObject:messageEntity];
@@ -350,7 +351,7 @@ static NSUInteger const showPromptGap = 300;
                         NSString* secondComponent = [content substringFromIndex:suffixRange.location + suffixRange.length];
                         if (secondComponent.length > 0)
                         {
-                            MTTMessageEntity* secondmessageEntity = [[MTTMessageEntity alloc] initWithMsgID:[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:secondComponent toUserID:message.toUserID];
+                            MTTMessageEntity* secondmessageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:secondComponent toUserID:message.toUserID];
                             secondmessageEntity.msgContentType = DDMessageContentTypeText;
                             secondmessageEntity.state = DDMessageStateSendSuccess;
                             [messageContentArray addObject:secondmessageEntity];
@@ -359,7 +360,7 @@ static NSUInteger const showPromptGap = 300;
                     else
                     {
                         
-                        MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:content toUserID:message.toUserID];
+                        MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:content toUserID:message.toUserID];
                         messageEntity.state = DDMessageStateSendSuccess;
                         [messageContentArray addObject:messageEntity];
                     }

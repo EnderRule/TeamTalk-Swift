@@ -16,7 +16,7 @@
 // 颜色
 #define LCColor(r, g, b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1.0f]
 
-@interface LCActionSheet () {
+@interface LCActionSheet ()  {
     
     /** 所有按钮 */
     NSArray *_buttonTitles;
@@ -29,6 +29,8 @@
     
     /** 代理 */
     id<LCActionSheetDelegate> _delegate;
+    
+    clickHandler _clickHandler;
 }
 
 @property (nonatomic, strong) UIWindow *backWindow;
@@ -173,6 +175,9 @@
         
         [_delegate actionSheet:self didClickedButtonAtIndex:btn.tag];
     }
+    if (_clickHandler != nil){
+        _clickHandler(btn.tag);
+    }
 }
 
 - (void)dismiss:(UITapGestureRecognizer *)tap {
@@ -180,6 +185,10 @@
         
         [_delegate actionSheet:self didClickedBlankPlace:0];
     }
+    if (_clickHandler != nil){
+        _clickHandler(-1);
+    }
+    
     
     [UIView animateWithDuration:0.3f
                           delay:0
@@ -227,6 +236,9 @@
                              
                              [_delegate actionSheet:self didClickedButtonAtIndex:_buttonTitles.count];
                          }
+                         if (_clickHandler != nil){
+                             _clickHandler(_buttonTitles.count);
+                         }
                      }];
 }
 
@@ -249,5 +261,18 @@
                      }
                      completion:nil];
 }
+
+-(void)setClickHandler:(clickHandler)handler
+{
+    _clickHandler = handler;
+}
+
++ (void)showWithTitle:(NSString *)title buttonTitles:(NSArray *)titles redButtonIndex:(NSInteger)buttonIndex clickHandler:(clickHandler)clickHandler{
+    LCActionSheet *sheet = [[LCActionSheet alloc] initWithTitle:title buttonTitles:titles redButtonIndex:buttonIndex delegate:nil];
+    [sheet setClickHandler:clickHandler];
+    [sheet show];
+}
+
+
 
 @end

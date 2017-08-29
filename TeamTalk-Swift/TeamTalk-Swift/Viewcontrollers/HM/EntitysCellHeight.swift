@@ -9,16 +9,6 @@
 import UIKit
 
 
-extension MTTMessageEntity{
-    func cellHeight()->CGFloat {
-        
-        
-        
-        
-        
-        return 120;
-    }
-}
 
 extension MTTUserEntity {
     func cellHeight()->CGFloat {

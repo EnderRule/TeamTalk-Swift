@@ -15,11 +15,11 @@
 
 #import "RuntimeStatus.h"
 
-#import "EmotionsModule.h"
+
 #import "NSDictionary+JSON.h"
 #import "UnAckMessageManager.h"
-#import "DDGroupModule.h"
-#import "DDClientState.h"
+
+
 #import "NSData+Conversion.h"
 #import "MTTDatabaseUtil.h"
 #import "security.h"
@@ -27,12 +27,6 @@
 #import "TeamTalk_Swift-Swift.h"
 
 static uint32_t seqNo = 0;
-
-@interface DDMessageSendManager(PrivateAPI)
-
-- (NSString* )toSendmessageContentFromContent:(NSString*)content;
-
-@end
 
 @implementation DDMessageSendManager
 {
@@ -65,7 +59,6 @@ static uint32_t seqNo = 0;
 {
     
     dispatch_async(self.sendMessageSendQueue, ^{
-        SendMessageAPI* sendMessageAPI = [[SendMessageAPI alloc] init];
         uint32_t nowSeqNo = ++seqNo;
         message.seqNo=nowSeqNo;
         
@@ -94,7 +87,6 @@ static uint32_t seqNo = 0;
         if(!message.msgID){
             return;
         }
-        NSArray* object = @[TheRuntime.user.objID,session.sessionID,data,@(message.msgType),@(message.msgID)];
         if ([message isImageMessage]) {
             session.lastMsg=@"[图片]";
         }else if ([message isVoiceMessage])
@@ -106,6 +98,9 @@ static uint32_t seqNo = 0;
         }
         [[UnAckMessageManager instance] addMessageToUnAckQueue:message];
 
+        
+        NSArray* object = @[TheRuntime.user.objID,session.sessionID,data,@(message.msgType),@(message.msgID)];
+        SendMessageAPI* sendMessageAPI = [[SendMessageAPI alloc] init];
         [sendMessageAPI requestWithObject:object Completion:^(id response, NSError *error) {
             if (!error)
             {
@@ -157,8 +152,6 @@ static uint32_t seqNo = 0;
         [sendVoiceMessageAPI requestWithObject:object Completion:^(id response, NSError *error) {
             if (!error)
             {
-                
-                
                 NSLog(@"发送消息成功");
                 [[MTTDatabaseUtil instance] deleteMesages:msg completion:^(BOOL success){
                     
@@ -191,26 +184,5 @@ static uint32_t seqNo = 0;
         
     });
 }
-
-#pragma mark Private API
-
-- (NSString* )toSendmessageContentFromContent:(NSString*)content
-{
-    EmotionsModule* emotionModule = [EmotionsModule shareInstance];
-    NSDictionary* unicodeDic = emotionModule.unicodeEmotionDic;
-    NSArray* allEmotions = emotionModule.emotions;
-    NSMutableString* newContent = [NSMutableString stringWithString:content];
-    [allEmotions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSString* emotion = (NSString*)obj;
-        if ([newContent rangeOfString:emotion].length > 0)
-        {
-            NSString* placeholder = unicodeDic[emotion];
-            NSRange range = NSMakeRange(0, newContent.length);
-            [newContent replaceOccurrencesOfString:emotion withString:placeholder options:0 range:range];
-        }
-    }];
-    return newContent;
-}
-
 
 @end
