@@ -19,7 +19,7 @@ class HMChatEmotionCell: HMChatImageCell {
             let image = UIImage.nim_loadChartlet(catagoryID, name: emojiName)
             self.mainImgv.image = image
             
-            debugPrint("set emotion :",message.msgContent ,catagoryID,emojiName,image ?? "nil emoji image")
+//            debugPrint("set emotion :",message.msgContent ,catagoryID,emojiName,image ?? "nil emoji image")
         }
     }
     

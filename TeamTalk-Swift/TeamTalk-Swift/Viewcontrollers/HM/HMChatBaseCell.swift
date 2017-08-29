@@ -31,7 +31,7 @@ enum HMChatCellActionType:Int{
 }
 
 protocol HMChatCellActionDelegate {
-    func HMChatAction(type:HMChatCellActionType,message:MTTMessageEntity,sourceView:UIView?) -> Void
+    func HMChatCellAction(type:HMChatCellActionType,message:MTTMessageEntity?,sourceView:UIView?) -> Void
 }
 
 //不可直接使用，需由子类继承再使用
@@ -62,6 +62,8 @@ class HMChatBaseCell: HMBaseCell {
     }
     
     override func setupCustom() {
+        self.backgroundColor = UIColor.clear
+        self.contentView.backgroundColor = UIColor.clear
         
         avatarImgv.backgroundColor = UIColor.clear
         
@@ -91,7 +93,6 @@ class HMChatBaseCell: HMBaseCell {
             maker?.left.mas_equalTo()(self.avatarImgv.mas_right)?.offset()(HMAvatarGap)
             maker?.top.mas_equalTo()(0)
         }
-        
     }
     
     
@@ -191,21 +192,7 @@ class HMChatBaseCell: HMBaseCell {
             })
         }
         
-        //发送状态
-        switch message.state {
-        case .SendFailure:
-            self.activityView.stopAnimating()
-            self.resendButton.isHidden = false
-            break
-        case .SendSuccess:
-            self.activityView.stopAnimating()
-            self.resendButton.isHidden = true
-            break
-        case .Sending:
-            self.activityView.startAnimating()
-            self.resendButton.isHidden = true
-            break
-        }
+        self.updateSendState(state:message.state)
         
         //内容位置
         self.layoutContentView(message: message)
@@ -228,7 +215,8 @@ class HMChatBaseCell: HMBaseCell {
         }else if message.msgContentType == .Audio || message.msgContentType == .GroupAudio {
             
         }else if message.msgContentType == .Voice{
-            contentSize = .init(width: 150, height: 54.0)
+            let cell = HMChatVoiceCell.init(style: .default, reuseIdentifier: HMChatVoiceCell.cellIdentifier )
+            contentSize = cell.contentSizeFor(message: message)
         }else if message.msgContentType == .Emotion {
             contentSize = .init(width: 150, height: 150)
         }
@@ -272,19 +260,30 @@ class HMChatBaseCell: HMBaseCell {
     
     
     func sendAgainAction(){
-        
+        if self.message != nil {
+            self.updateSendState(state: .Sending)
+            self.delegate?.HMChatCellAction(type: .sendAgain, message: self.message, sourceView: self )
+        }
     }
     
-    func showSending(){
-        
+    //发送状态
+    func updateSendState(state:DDMessageState){
+        switch state {
+        case .SendFailure:
+            self.activityView.stopAnimating()
+            self.resendButton.isHidden = false
+            break
+        case .SendSuccess:
+            self.activityView.stopAnimating()
+            self.resendButton.isHidden = true
+            break
+        case .Sending:
+            self.activityView.startAnimating()
+            self.resendButton.isHidden = true
+            break
+        }
     }
-    func showSendFailure(){
-    
-    }
-    func showSendSuccess(){
-    
-    }
-    
+ 
 
     
     

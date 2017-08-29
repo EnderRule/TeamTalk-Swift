@@ -52,8 +52,8 @@
 - (void)setLength:(NSUInteger)length
 {
     //Fixme: should not check lenght>0 here
-    if (length > 0) {
+//    if (length > 0) {
         [embeddedData setLength:length];
-    }
+//    }
 }
 @end

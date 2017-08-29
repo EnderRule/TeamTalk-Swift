@@ -103,25 +103,15 @@
         NSInteger m_total_cnt =[dic[@"m_total_cnt"] integerValue];
         NSArray *localsessions = dic[@"sessions"];
         [localsessions enumerateObjectsUsingBlock:^(MTTSessionEntity *obj, NSUInteger idx, BOOL *stop){
-         
             if ([self getSessionById:obj.sessionID]) {
-                
                 MTTSessionEntity *session = [self getSessionById:obj.sessionID];
-                NSInteger lostMsgCount =obj.lastMsgID-session.lastMsgID;
                 obj.lastMsg = session.lastMsg;
-                
-                //Fixme:here
-//                if ([[ChattingMainViewController shareInstance].module.SessionEntity.sessionID isEqualToString:obj.sessionID]) {
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChattingSessionUpdate" object:@{@"session":obj,@"count":@(lostMsgCount)}];
-//                }
                 session=obj;
                 [self addToSessionModel:obj];
             }
             if (self.delegate && [self.delegate respondsToSelector:@selector(sessionUpdate:Action:)]) {
                 [self.delegate sessionUpdate:obj Action:ADD];
             }
-            
-           
         }];
         
         //[self addSessionsToSessionModel:sessions];
@@ -189,7 +179,6 @@
     if ([[self.sessions allKeys] containsObject:message.sessionId]) {
         MTTSessionEntity *session = [self.sessions objectForKey:message.sessionId];
         session.unReadMsgCount=session.unReadMsgCount-1;
-        
     }
 }
 - (void)n_receiveMessageNotification:(NSNotification*)notification

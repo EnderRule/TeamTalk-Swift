@@ -21,6 +21,7 @@ class HMChatPromptCell: HMBaseCell {
     
     override func setupCustom() {
         self.contentView.backgroundColor = UIColor.clear
+        self.backgroundColor = UIColor.clear
         
         promptLabel.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         promptLabel.layer.cornerRadius = 8

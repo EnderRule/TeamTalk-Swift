@@ -11,11 +11,11 @@
 @class MTTSessionEntity;
 typedef void(^DDSendMessageCompletion)(MTTMessageEntity* message,NSError* error);
 
-typedef NS_ENUM(NSUInteger, MessageType)
-{
-    AllString,
-    HasImage
-};
+//typedef NS_ENUM(NSUInteger, MessageType)
+//{
+//    AllString,
+//    HasImage
+//};
 
 @class MTTMessageEntity;
 @interface DDMessageSendManager : NSObject

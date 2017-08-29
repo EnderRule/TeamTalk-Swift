@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         RuntimeStatus.instance()
         DDClientStateMaintenanceManager .shareInstance()
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (issuccess , error ) in
+                debugPrint("application notification requestAuthorization \(issuccess) \(error?.localizedDescription ?? "nil error ")")
+            }
+        } else {
+            application.registerForRemoteNotifications()
+        }
         
         let testString = "fsfsfsefef fs测试哈哈哈哈哈单独累吧😓④发数据考虑f睡覺覅是你"
         let encryptStr = testString.encrypt()
@@ -60,6 +69,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        debugPrint("application did fail to register remote : \(error.localizedDescription)")
+    }
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let deviceTokenString = String.init(data: deviceToken, encoding: .utf8) ?? ""
+        debugPrint("application did register remote Token:\(deviceTokenString)")
+    }
+    
 }
 

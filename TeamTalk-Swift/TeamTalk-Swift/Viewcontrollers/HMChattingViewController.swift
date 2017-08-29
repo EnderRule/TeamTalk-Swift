@@ -70,13 +70,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 self.refreshMessagesData(scrollToBottom: true )
             }
         }
-        chattingModule.getNewMsg { (count , error) in
-            print("get newmsg :\(count)",error?.localizedDescription ?? "nil error")
-            
-            if count > 0{
-                self.refreshMessagesData(scrollToBottom: true)
-            }
-        }
     }
  
     
@@ -221,7 +214,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count  = self.showingMessages.count
-        print("numberOfRowsInSection showingmessages ",self.showingMessages.count)
+//        print("numberOfRowsInSection showingmessages ",self.showingMessages.count)
         return count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -246,18 +239,27 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                     let cell:HMChatImageCell = tableView.dequeueReusableCell(withIdentifier: HMChatImageCell.cellIdentifier, for: indexPath) as! HMChatImageCell
                     
                     cell.setContent(message: message)
+                    cell.delegate = self
                     return cell
                     
                 }else if message.msgContentType == .Emotion {
                     let cell:HMChatEmotionCell = tableView.dequeueReusableCell(withIdentifier: HMChatEmotionCell.cellIdentifier, for: indexPath) as! HMChatEmotionCell
-                    
+                    cell.delegate = self
+
+                    cell.setContent(message: message)
+                    return cell
+                } else if message.msgContentType == .Voice {
+                    let cell:HMChatVoiceCell = tableView.dequeueReusableCell(withIdentifier: HMChatVoiceCell.cellIdentifier, for: indexPath) as! HMChatVoiceCell
+                    cell.delegate = self
+
                     cell.setContent(message: message)
                     return cell
                 }
-                let messageCell : HMChatTextCell = tableView.dequeueReusableCell(withIdentifier: HMChatTextCell.cellIdentifier, for: indexPath) as! HMChatTextCell
-                
-                messageCell.setContent(message: message)
-                return messageCell
+                let cell : HMChatTextCell = tableView.dequeueReusableCell(withIdentifier: HMChatTextCell.cellIdentifier, for: indexPath) as! HMChatTextCell
+                cell.delegate = self
+
+                cell.setContent(message: message)
+                return cell
             }else if let prompt = obj as? DDPromptEntity {
                 
                 let promptCell:HMChatPromptCell = tableView.dequeueReusableCell(withIdentifier: HMChatPromptCell.cellIdentifier, for: indexPath) as! HMChatPromptCell
@@ -281,21 +283,31 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     func sendMessage(msgEntity:MTTMessageEntity){
         self.tableView.checkScrollToBottom()
         
-        DDMessageSendManager.instance().sendMessage(msgEntity, isGroup: self.chattingModule.sessionEntity.isGroupSession, session: self.chattingModule.sessionEntity, completion: {[weak self] (messageentity, error ) in
-            
-            if messageentity != nil {
-                msgEntity.state = messageentity!.state
-            }else {
+        HMMessageManager.shared.sendNormal(message: msgEntity, session: self.chattingModule.sessionEntity) {[weak self] (message , error ) in
+            if error != nil {
                 msgEntity.state = .SendFailure
+            }else{
+                msgEntity.state = message.state
             }
-            dispatch(after: 0, task: { 
-                self?.tableView.reloadData()
-            })
-        }) {[weak self] (error ) in
-            msgEntity.state = .SendFailure
             
             self?.tableView.reloadData()
         }
+        
+//        DDMessageSendManager.instance().sendMessage(msgEntity, isGroup: self.chattingModule.sessionEntity.isGroupSession, session: self.chattingModule.sessionEntity, completion: {[weak self] (messageentity, error ) in
+//            
+//            if messageentity != nil {
+//                msgEntity.state = messageentity!.state
+//            }else {
+//                msgEntity.state = .SendFailure
+//            }
+//            dispatch(after: 0, task: { 
+//                self?.tableView.reloadData()
+//            })
+//        }) {[weak self] (error ) in
+//            msgEntity.state = .SendFailure
+//            
+//            self?.tableView.reloadData()
+//        }
         
     }
     
@@ -395,7 +407,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             self.refreshMessagesData(scrollToBottom: true )
             
             DDMessageModule.shareInstance().sendMsgRead(message)
-            
         }
     }
     
@@ -438,11 +449,10 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         guard text.length > 0 else {
             return
         }
-        let messageEntity = MTTMessageEntity.init(content: text, module: self.chattingModule, msgContentType: DDMessageContentType.Text)
+        let messageEntity = MTTMessageEntity.init(content: text, module: self.chattingModule, msgContentType: .Text)
         
-        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
-        }) { (error ) in
-        }
+        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: { }) { (error ) in }
+       
         self.sendMessage(msgEntity: messageEntity)
     }
     
@@ -461,7 +471,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             debugPrint("select \(msgcontent)")
             
             if msgcontent.length > 0 {
-                let messageEntity = MTTMessageEntity.init(content: msgcontent, module: self.chattingModule, msgContentType: DDMessageContentType.Emotion)
+                let messageEntity = MTTMessageEntity.init(content: msgcontent, module: self.chattingModule, msgContentType: .Emotion)
 
                 MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
                 }) { (error ) in
@@ -469,7 +479,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 self.sendMessage(msgEntity: messageEntity)
             }
         }else{
-            let messageEntity = MTTMessageEntity.init(content: "[\(catalogId!)/\(chartletId!)]", module: self.chattingModule, msgContentType: DDMessageContentType.Emotion)
+            let messageEntity = MTTMessageEntity.init(content: "[\(catalogId!)/\(chartletId!)]", module: self.chattingModule, msgContentType: .Emotion)
             
             MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
             }) { (error ) in
@@ -504,7 +514,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     func onStartRecording() {
         print("input view onStartRecording")
         
-        self.recordVoicePath = TempPath(name: "newVoice.acc")
+        self.recordVoicePath = TempPath(name: "Voice_\(TIMESTAMP()).acc")
         let url = URL.init(string: self.recordVoicePath)!
         
         do{
@@ -536,14 +546,14 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
 //        let url = URL.init(string: self.recordVoicePath)!
         
         guard let data = NSData.init(contentsOfFile: self.recordVoicePath) else {
-            self.view.makeToast("无法播放 -1")
+            self.view.makeToast("錄音失敗 -1")
             return
         }
 
         do {
             self.audioPlayer = try  AVAudioPlayer.init(data: data as Data )
         }catch {
-            self.view.makeToast("无法播放：\(error.localizedDescription)")
+            self.view.makeToast("錄音失敗：\(error.localizedDescription)")
         }
         
         
@@ -551,14 +561,26 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             audioPlayer?.delegate = self
             audioPlayer?.prepareToPlay()
             
-            if audioPlayer!.duration > 3.0{
+            if audioPlayer!.duration > 2.0{
                 audioPlayer?.play()
+                
+                let voicePath:String = self.recordVoicePath
+                
+                let newmessage = MTTMessageEntity.init(content: voicePath, module: self.chattingModule, msgContentType: .Voice)
+                newmessage.msgType = .msgTypeSingleAudio
+                
+                newmessage.info.updateValue(self.recordVoicePath, forKey: voicePath)
+                
+                MTTDatabaseUtil.instance().insertMessages([newmessage], success: {   }, failure: { (resultStr ) in  })
+                
+                self.sendMessage(msgEntity: newmessage)
+                
             }else{
                 self.view.makeToast("錄音時間太短啦")
             }
             debugPrint("onStopRecording  voice file data lenght : \(data.length/1024)KB  duration: \(audioPlayer!.duration)seconds ")
         }else {
-            self.view.makeToast("无法播放 -2")
+            self.view.makeToast("錄音失敗 -2")
         }
     }
     
@@ -573,11 +595,16 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
     }
     
-    func HMChatAction(type: HMChatCellActionType, message: MTTMessageEntity, sourceView: UIView?) {
-        if type == .sendAgain{
-            message.msgTime = UInt32(Date().timeIntervalSince1970)
+    func HMChatCellAction(type: HMChatCellActionType, message: MTTMessageEntity?, sourceView: UIView?) {
+        
+        debugPrint("HMChatCellAction \(type),message \(message?.msgContent ?? "nil msgcontent")")
+        
+        if type == .sendAgain && message != nil{
+            message!.msgTime = UInt32(Date().timeIntervalSince1970)
+            message?.state = .Sending
             
-            self.sendMessage(msgEntity: message)
+            message?.updateToDB(compeletion: nil )
+            self.sendMessage(msgEntity: message!)
         }
     }
     

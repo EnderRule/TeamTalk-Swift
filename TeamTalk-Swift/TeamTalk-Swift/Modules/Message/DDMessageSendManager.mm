@@ -50,7 +50,7 @@ static uint32_t seqNo = 0;
         _uploadImageCount = 0;
         _waitToSendMessage = [[NSMutableArray alloc] init];
         _sendMessageSendQueue = dispatch_queue_create("com.mogujie.Duoduo.sendMessageSend", NULL);
-        
+
     }
     return self;
 }

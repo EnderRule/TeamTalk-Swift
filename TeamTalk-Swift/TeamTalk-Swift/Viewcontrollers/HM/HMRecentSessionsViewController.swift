@@ -262,9 +262,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
                             })
                         }
                     })
-                    
                 }
-            
             }else {
                 if session.lastMsgID != 0 {
                     DDMessageModule.shareInstance().getMessageFromServer(Int(session.lastMsgID), currentSession: session, count: 20, block: { (array , error ) in

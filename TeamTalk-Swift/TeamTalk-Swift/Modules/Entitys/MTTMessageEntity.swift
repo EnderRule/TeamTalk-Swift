@@ -157,6 +157,8 @@ extension MTTMessageEntity {
     
     static  let  DDVOICE_PLAYED:String              =       "voicePlayed"
     static  let  VOICE_LENGTH:String                =       "voiceLength"
+    static  let  VOICE_LOCAL_KEY:String             =       "voiceLocalPath"
+    
     static  let  DD_IMAGE_LOCAL_KEY :String         =       "local"
     static  let  DD_IMAGE_URL_KEY :String           =       "url"
 
@@ -206,6 +208,7 @@ extension MTTMessageEntity {
                     
                     mymsgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
                     mymsgInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
+                    mymsgInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
                 })
             }else {
                 self.msgContent = "語音存儲出錯"
@@ -266,6 +269,7 @@ extension MTTMessageEntity {
                     
                     msgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
                     msgInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
+                    msgInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
                 })
             }else {
                 self.msgContent = "語音存儲出錯"
