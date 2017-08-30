@@ -71,10 +71,12 @@ class HMMessageManager: NSObject {
             
             var msgData = msgContent.utf8ToData()
             if message.isVoiceMessage {
-                let localPath:String = message.info["voiceLocalPath"] as? String ?? ""
+                let localPath:String = message.msgContent // message.info[MTTMessageEntity.VOICE_LOCAL_KEY] as? String ?? ""
                 if FileManager.default.fileExists(atPath: localPath){
                     do {
                         msgData = try  NSData.init(contentsOfFile: localPath) as Data
+                        
+                        debugPrint("HMMessageManager send voice data \(msgData.endIndex/1024) KB")
                     }catch {
                         let errorString = "send voice message read data error :\(error.localizedDescription)  \n at path \(localPath)"
                         let error = NSError.init(domain: errorString, code: 0, userInfo: nil )
@@ -128,12 +130,20 @@ class HMMessageManager: NSObject {
     
     
     public func sendVoice(voicePath:String, message:MTTMessageEntity,session:MTTSessionEntity,completion:@escaping HMSendMessageCompletion){
-        message.msgType = .msgTypeSingleAudio
+        let voiceDuration = HMMediaManager.shared.durationFor(filePath: voicePath)
         
-        message.info.updateValue(voicePath, forKey: "voiceLocalPath")
+        if voiceDuration > 1{
         
-        self.sendNormal(message: message, session: session) { (message , error ) in
-            completion(message,error)
+            message.msgType = .msgTypeSingleAudio
+            message.msgContentType = .Voice
+            message.msgContent = voicePath
+            message.info.updateValue(voicePath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+            
+            self.sendNormal(message: message, session: session) { (message , error ) in
+                completion(message,error)
+            }
+        }else{
+            completion(message,NSError.init(domain: "錄音時間太短", code: 0, userInfo: nil))
         }
     }
     

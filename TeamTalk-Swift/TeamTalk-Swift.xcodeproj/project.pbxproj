@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		663F0FDD1F5657E10041E3C5 /* HMMediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */; };
 		66686A621F4522B5008B26BD /* MTTBubbleModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A611F4522B5008B26BD /* MTTBubbleModule.m */; };
 		66686A651F4522FD008B26BD /* MTTPhotosCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A641F4522FD008B26BD /* MTTPhotosCache.m */; };
 		66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */; };
@@ -404,6 +405,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMMediaManager.swift; sourceTree = "<group>"; };
 		66686A601F4522B5008B26BD /* MTTBubbleModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTBubbleModule.h; sourceTree = "<group>"; };
 		66686A611F4522B5008B26BD /* MTTBubbleModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTBubbleModule.m; sourceTree = "<group>"; };
 		66686A631F4522FD008B26BD /* MTTPhotosCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTPhotosCache.h; sourceTree = "<group>"; };
@@ -1345,6 +1347,7 @@
 			isa = PBXGroup;
 			children = (
 				6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */,
+				663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -2389,6 +2392,7 @@
 				66F1075B1F42D1F50035C888 /* UIWebView+AFNetworking.m in Sources */,
 				66E6D3BA1F428C38008E9590 /* DynamicColor+XYZ.swift in Sources */,
 				66E437991F4C41BC009D527D /* NIMInputMoreContainerView.m in Sources */,
+				663F0FDD1F5657E10041E3C5 /* HMMediaManager.swift in Sources */,
 				66E6D3471F428922008E9590 /* NSString+Extention.swift in Sources */,
 				66F10F6D1F4449570035C888 /* lsp.c in Sources */,
 				66F10A721F43F8840035C888 /* DDUserModule.m in Sources */,

@@ -289,8 +289,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             }else{
                 msgEntity.state = message.state
             }
-            
-            self?.tableView.reloadData()
+            dispatch(after: 0.0, task: { 
+                self?.tableView.reloadData()
+            })
         }
         
 //        DDMessageSendManager.instance().sendMessage(msgEntity, isGroup: self.chattingModule.sessionEntity.isGroupSession, session: self.chattingModule.sessionEntity, completion: {[weak self] (messageentity, error ) in
@@ -557,6 +558,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         }
         
         
+        
         if audioPlayer != nil {
             audioPlayer?.delegate = self
             audioPlayer?.prepareToPlay()
@@ -569,8 +571,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 let newmessage = MTTMessageEntity.init(content: voicePath, module: self.chattingModule, msgContentType: .Voice)
                 newmessage.msgType = .msgTypeSingleAudio
                 
-                newmessage.info.updateValue(self.recordVoicePath, forKey: voicePath)
-                
+                newmessage.info.updateValue(self.recordVoicePath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+                newmessage.info.updateValue(audioPlayer!.duration, forKey: MTTMessageEntity.VOICE_LENGTH)
+
                 MTTDatabaseUtil.instance().insertMessages([newmessage], success: {   }, failure: { (resultStr ) in  })
                 
                 self.sendMessage(msgEntity: newmessage)

@@ -130,7 +130,7 @@ class MTTMessageEntity: NSObject,NSCopying {
     }
     var isVoiceMessage:Bool {
         get {
-            return ( self.msgType == .msgTypeGroupAudio || self.msgType == .msgTypeSingleAudio)
+            return ( self.msgType == .msgTypeGroupAudio || self.msgType == .msgTypeSingleAudio || self.msgContentType == .Voice)
         }
     }
     var isGroupVoiceMessage:Bool {
