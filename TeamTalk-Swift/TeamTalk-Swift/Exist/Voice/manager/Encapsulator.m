@@ -55,11 +55,8 @@ void writeString(unsigned char *dest, int offset, unsigned char *value, int leng
         
         [self setMode:0 sampleRate:8000 channels:1 frames:1 vbr:YES];
         
-        NSLog(@"size of version(%s)",speexHeader.speex_version);
         speex_init_header(&speexHeader, sampleRate, channels, &speex_nb_mode);
         
-        NSLog(@"size of version(%s)",speexHeader.speex_version);
-
         operationQueue = [[NSOperationQueue alloc] init];
     }
     return self;
@@ -144,7 +141,6 @@ void writeString(unsigned char *dest, int offset, unsigned char *value, int leng
 }
 
 - (void)encapsulatingOver:(NSNotification *)notification {
-    NSLog(@"encapsulatingOver by %@", [self description]);
     if (self.delegete) {
         [self.delegete encapsulatingOver];
     }
@@ -168,7 +164,7 @@ void writeString(unsigned char *dest, int offset, unsigned char *value, int leng
         if ([[self.mParent getPCMDatas] count] > 0) {
             NSData *pcmData = [[self.mParent getPCMDatas] objectAtIndex:0];
             
-            NSData *speexData = [codec encode:(short *)[pcmData bytes] length:[pcmData length]/sizeof(short)];
+            NSData *speexData = [codec encode:(short *)[pcmData bytes] length:(int)[pcmData length]/sizeof(short)];
             
             [self inputOggPacketFromSpeexData:speexData];
             
@@ -223,7 +219,7 @@ void writeString(unsigned char *dest, int offset, unsigned char *value, int leng
     int offset = 0;
     writeString(speexHeader, offset+0, (unsigned char *)"Speex   ", 8);    //  0 -  7: speex_string
     int versionSize = sizeof(self.mParent.speexHeader.speex_version);
-    NSLog(@"size of version(%s) chars array:%d",self.mParent.speexHeader.speex_version, versionSize);
+
     writeString(speexHeader, offset+8, (unsigned char *)self.mParent.speexHeader.speex_version, versionSize);  //8 - 27: speex_version
     writeInt(speexHeader, offset+28, 1);           // 28 - 31: speex_version_id
     writeInt(speexHeader, offset+32, 80);          // 32 - 35: header_size
@@ -249,7 +245,7 @@ void writeString(unsigned char *dest, int offset, unsigned char *value, int leng
     
     ogg_stream_packetin(&oggStreamState, &speexHeaderPacket);
     [self outputAPage:YES endOfSteam:NO];
-    NSLog(@"ogg header writed\n");
+
     
     
     
@@ -272,7 +268,7 @@ void writeString(unsigned char *dest, int offset, unsigned char *value, int leng
     
     ogg_stream_packetin(&oggStreamState, &speexCommentPacket);
     [self outputAPage:YES endOfSteam:NO];
-    NSLog(@"ogg comment writed\n");
+
 }
 
 - (void)inputOggPacketFromSpeexData:(NSData *)data {
@@ -304,13 +300,13 @@ void writeString(unsigned char *dest, int offset, unsigned char *value, int leng
         [[self.mParent getBufferData] setLength:0];
         
         if (endOfStream) {
-            NSLog(@"end of stream");
+//            NSLog(@"end of stream");
 //            self.mParent.moreDataInputing = NO;
         }
     }
     else {
         if (ogg_stream_pageout(&oggStreamState, &oggPage)) {
-            NSLog(@"page out");
+
             [[self.mParent getBufferData] appendBytes:oggPage.header length:oggPage.header_len];
             [[self.mParent getBufferData] appendBytes:oggPage.body length:oggPage.body_len];
             [self writeDataToFile:[self.mParent getBufferData]];

@@ -239,6 +239,12 @@
 		66E6D3DE1F4292CC008E9590 /* DDDataOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3D91F4292CC008E9590 /* DDDataOutputStream.m */; };
 		66E6D3DF1F4292CC008E9590 /* NSStream+NSStreamAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3DB1F4292CC008E9590 /* NSStream+NSStreamAddition.m */; };
 		66E6D3E21F4292E4008E9590 /* DDTcpClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3E11F4292E4008E9590 /* DDTcpClientManager.m */; };
+		66E835931F56899A00F14ED9 /* ZQFileBrowserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E835921F56899A00F14ED9 /* ZQFileBrowserVC.swift */; };
+		66E8359C1F56B2AB00F14ED9 /* CADebugMacros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E835951F56B2AB00F14ED9 /* CADebugMacros.cpp */; };
+		66E8359D1F56B2AB00F14ED9 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E835981F56B2AB00F14ED9 /* CAStreamBasicDescription.cpp */; };
+		66E8359E1F56B2AB00F14ED9 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E8359A1F56B2AB00F14ED9 /* CAXException.cpp */; };
+		66E835A11F56B2EF00F14ED9 /* AQRecorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66E835A01F56B2EF00F14ED9 /* AQRecorder.mm */; };
+		66E835A41F56B30B00F14ED9 /* RecorderManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66E835A31F56B30B00F14ED9 /* RecorderManager.mm */; };
 		66F1070C1F429CB80035C888 /* DDSuperAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1070B1F429CB80035C888 /* DDSuperAPI.m */; };
 		66F1070F1F429D7B0035C888 /* DDUnrequestSuperAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1070E1F429D7B0035C888 /* DDUnrequestSuperAPI.m */; };
 		66F107121F42A0F30035C888 /* HeartbeatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107111F42A0F30035C888 /* HeartbeatAPI.swift */; };
@@ -742,6 +748,19 @@
 		66E6D3DB1F4292CC008E9590 /* NSStream+NSStreamAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStream+NSStreamAddition.m"; sourceTree = "<group>"; };
 		66E6D3E01F4292E4008E9590 /* DDTcpClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTcpClientManager.h; sourceTree = "<group>"; };
 		66E6D3E11F4292E4008E9590 /* DDTcpClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTcpClientManager.m; sourceTree = "<group>"; };
+		66E835921F56899A00F14ED9 /* ZQFileBrowserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZQFileBrowserVC.swift; sourceTree = "<group>"; };
+		66E835951F56B2AB00F14ED9 /* CADebugMacros.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADebugMacros.cpp; sourceTree = "<group>"; };
+		66E835961F56B2AB00F14ED9 /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
+		66E835971F56B2AB00F14ED9 /* CAMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMath.h; sourceTree = "<group>"; };
+		66E835981F56B2AB00F14ED9 /* CAStreamBasicDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAStreamBasicDescription.cpp; sourceTree = "<group>"; };
+		66E835991F56B2AB00F14ED9 /* CAStreamBasicDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStreamBasicDescription.h; sourceTree = "<group>"; };
+		66E8359A1F56B2AB00F14ED9 /* CAXException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAXException.cpp; sourceTree = "<group>"; };
+		66E8359B1F56B2AB00F14ED9 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
+		66E8359F1F56B2EF00F14ED9 /* AQRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQRecorder.h; sourceTree = "<group>"; };
+		66E835A01F56B2EF00F14ED9 /* AQRecorder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AQRecorder.mm; sourceTree = "<group>"; };
+		66E835A21F56B30B00F14ED9 /* RecorderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderManager.h; sourceTree = "<group>"; };
+		66E835A31F56B30B00F14ED9 /* RecorderManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RecorderManager.mm; sourceTree = "<group>"; };
+		66E835A51F56B32100F14ED9 /* SpeexAllHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeexAllHeaders.h; sourceTree = "<group>"; };
 		66F1070A1F429CB80035C888 /* DDSuperAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSuperAPI.h; sourceTree = "<group>"; };
 		66F1070B1F429CB80035C888 /* DDSuperAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDSuperAPI.m; sourceTree = "<group>"; };
 		66F1070D1F429D7B0035C888 /* DDUnrequestSuperAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDUnrequestSuperAPI.h; sourceTree = "<group>"; };
@@ -1563,6 +1582,7 @@
 		66E6D3571F428990008E9590 /* ThridPartys */ = {
 			isa = PBXGroup;
 			children = (
+				66E835921F56899A00F14ED9 /* ZQFileBrowserVC.swift */,
 				6672CC101F4E626200DA46E6 /* MJRefresh */,
 				66BD029F1F4D8D5600131E2D /* M80AttributedLabel */,
 				66BD02711F4D1CB100131E2D /* TZImagePickerController */,
@@ -1722,6 +1742,20 @@
 				66F1070E1F429D7B0035C888 /* DDUnrequestSuperAPI.m */,
 			);
 			path = DDHandler;
+			sourceTree = "<group>";
+		};
+		66E835941F56B2AB00F14ED9 /* PublicUtility */ = {
+			isa = PBXGroup;
+			children = (
+				66E835951F56B2AB00F14ED9 /* CADebugMacros.cpp */,
+				66E835961F56B2AB00F14ED9 /* CADebugMacros.h */,
+				66E835971F56B2AB00F14ED9 /* CAMath.h */,
+				66E835981F56B2AB00F14ED9 /* CAStreamBasicDescription.cpp */,
+				66E835991F56B2AB00F14ED9 /* CAStreamBasicDescription.h */,
+				66E8359A1F56B2AB00F14ED9 /* CAXException.cpp */,
+				66E8359B1F56B2AB00F14ED9 /* CAXException.h */,
+			);
+			path = PublicUtility;
 			sourceTree = "<group>";
 		};
 		66F107131F42A3270035C888 /* Exist */ = {
@@ -2009,6 +2043,8 @@
 		66F10EDB1F4449570035C888 /* Voice */ = {
 			isa = PBXGroup;
 			children = (
+				66E835A51F56B32100F14ED9 /* SpeexAllHeaders.h */,
+				66E835941F56B2AB00F14ED9 /* PublicUtility */,
 				66F10EDC1F4449570035C888 /* Libs */,
 				66F10F491F4449570035C888 /* manager */,
 			);
@@ -2162,6 +2198,10 @@
 			isa = PBXGroup;
 			children = (
 				66F10F4A1F4449570035C888 /* Codec */,
+				66E8359F1F56B2EF00F14ED9 /* AQRecorder.h */,
+				66E835A01F56B2EF00F14ED9 /* AQRecorder.mm */,
+				66E835A21F56B30B00F14ED9 /* RecorderManager.h */,
+				66E835A31F56B30B00F14ED9 /* RecorderManager.mm */,
 				66F10F4E1F4449570035C888 /* Decapsulator.h */,
 				66F10F4F1F4449570035C888 /* Decapsulator.m */,
 				66F10F501F4449570035C888 /* Encapsulator.h */,
@@ -2357,6 +2397,7 @@
 				66E6D34E1F428922008E9590 /* UIScrollView+Extention.swift in Sources */,
 				66E6D3A31F428BE8008E9590 /* DBScrollBannerView.swift in Sources */,
 				66E6D3B71F428C38008E9590 /* DynamicColor+Lab.swift in Sources */,
+				66E8359E1F56B2AB00F14ED9 /* CAXException.cpp in Sources */,
 				66F107D41F42E0350035C888 /* ShakeAPI.swift in Sources */,
 				66E6D3521F428922008E9590 /* ZQEasyAlert.swift in Sources */,
 				66F107521F42D1F50035C888 /* AFURLSessionManager.m in Sources */,
@@ -2381,6 +2422,7 @@
 				66686A921F457903008B26BD /* GetGroupInfoAPI.swift in Sources */,
 				66E6D3871F4289D0008E9590 /* RingBuffer.swift in Sources */,
 				66686D101F46D81E008B26BD /* SCLAlertView.m in Sources */,
+				66E8359D1F56B2AB00F14ED9 /* CAStreamBasicDescription.cpp in Sources */,
 				66686A7E1F4562B0008B26BD /* RemoveSessionAPI.swift in Sources */,
 				66F10F801F4449570035C888 /* vq.c in Sources */,
 				66686AAC1F45A769008B26BD /* ChattingModule.m in Sources */,
@@ -2540,6 +2582,7 @@
 				66E6D3531F428922008E9590 /* ZQTextField.swift in Sources */,
 				66F10A661F43F14B0035C888 /* FMResultSet.m in Sources */,
 				66E6D37A1F4289D0008E9590 /* Google.Protobuf.Any.proto.swift in Sources */,
+				66E835A41F56B30B00F14ED9 /* RecorderManager.mm in Sources */,
 				6672CC221F4E626200DA46E6 /* MJRefreshBaseView.m in Sources */,
 				66F107F11F42FE490035C888 /* MTTUserEntity.swift in Sources */,
 				66F107D81F42EAC30035C888 /* CreateGroupAPI.swift in Sources */,
@@ -2548,6 +2591,7 @@
 				6682FE721F4AC4490048FA23 /* HMDefines.swift in Sources */,
 				66686D121F46D81E008B26BD /* SCLAlertViewStyleKit.m in Sources */,
 				66686AA51F459ADC008B26BD /* DDMessageModule.m in Sources */,
+				66E835A11F56B2EF00F14ED9 /* AQRecorder.mm in Sources */,
 				66F10F7B1F4449570035C888 /* speex.c in Sources */,
 				66F1074E1F42D1F50035C888 /* AFNetworkReachabilityManager.m in Sources */,
 				66F107931F42D3A90035C888 /* NSIndexSet+AQIndexesOutsideSet.m in Sources */,
@@ -2610,10 +2654,12 @@
 				66E6D37E1F4289D0008E9590 /* Google.Protobuf.Duration.proto.swift in Sources */,
 				66F10F701F4449570035C888 /* mdf.c in Sources */,
 				66E437971F4C41BC009D527D /* NIMInputEmoticonParser.m in Sources */,
+				66E835931F56899A00F14ED9 /* ZQFileBrowserVC.swift in Sources */,
 				66F108111F43E7180035C888 /* DDMsgServer.m in Sources */,
 				66686AE31F45AACC008B26BD /* MASViewConstraint.m in Sources */,
 				66686AE61F45AACC008B26BD /* View+MASAdditions.m in Sources */,
 				66E6D3991F428A33008E9590 /* Im.Message.Immessage.proto.swift in Sources */,
+				66E8359C1F56B2AB00F14ED9 /* CADebugMacros.cpp in Sources */,
 				66E6D3501F428922008E9590 /* UIView+Extention.swift in Sources */,
 				66E437921F4C41BC009D527D /* NIMInputAtCache.m in Sources */,
 				66F10F831F4449570035C888 /* Decapsulator.m in Sources */,

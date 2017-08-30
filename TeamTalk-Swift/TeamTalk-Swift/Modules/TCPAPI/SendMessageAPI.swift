@@ -12,7 +12,7 @@ import UIKit
 
 class SendMessageAPI: DDSuperAPI {
     func requestTimeOutTimeInterval() -> Int32 {
-        return 10
+        return 20
     }
     
     func requestServiceID() -> Int32 {

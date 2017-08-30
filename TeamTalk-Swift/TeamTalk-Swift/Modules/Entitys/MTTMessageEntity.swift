@@ -309,10 +309,10 @@ extension MTTMessageEntity {
     }
     
     private func process(voiceData:Data, compeletion: @escaping ((_ voiceFilePath:String,_ voiceLength:Int32) ->Void)){
-        var filePath = ZQFileManager.shared.docPath(folder: "voice",fileName: "voice_\(TIMESTAMP()).acc")
+        var filePath = ZQFileManager.shared.docPath(folder: "voice",fileName: "voice_\(TIMESTAMP()).spx")
         let tempData:NSData = voiceData as NSData
-        let voiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData
-        if voiceData.write(toFile: filePath, atomically: true){
+        let realVoiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData
+        if realVoiceData.write(toFile: filePath, atomically: true){
         }else{
             filePath = "語音存儲出錯"
         }
@@ -321,10 +321,10 @@ extension MTTMessageEntity {
         var ch2:Int32 = 0
         var ch3:Int32 = 0
         var ch4:Int32 = 0
-        voiceData.getBytes(&ch1, range: NSRange.init(location: 0, length: 1))
-        voiceData.getBytes(&ch2, range: NSRange.init(location: 1, length: 1))
-        voiceData.getBytes(&ch3, range: NSRange.init(location: 2, length: 1))
-        voiceData.getBytes(&ch4, range: NSRange.init(location: 3, length: 1))
+        tempData.getBytes(&ch1, range: NSRange.init(location: 0, length: 1))
+        tempData.getBytes(&ch2, range: NSRange.init(location: 1, length: 1))
+        tempData.getBytes(&ch3, range: NSRange.init(location: 2, length: 1))
+        tempData.getBytes(&ch4, range: NSRange.init(location: 3, length: 1))
         ch1 = ch1 & 0x0ff
         ch2 = ch2 & 0x0ff
         ch3 = ch3 & 0x0ff

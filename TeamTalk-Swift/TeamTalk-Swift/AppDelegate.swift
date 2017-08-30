@@ -29,6 +29,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotifications()
         }
         
+//        var length:Int = 51
+//        let muData:NSMutableData = NSMutableData.init()
+//        for index in 0..<4 {
+//            var byte = ((length >> ((3 - index)*8)) & 0x0ff)
+//            muData.append(&byte, length: 1)
+//        }
+//        print(muData)
+//        muData.append(&length, length: 4)
+//        print(muData)
+        
         let testString = "fsfsfsefef fs测试哈哈哈哈哈单独累吧😓④发数据考虑f睡覺覅是你"
         let encryptStr = testString.encrypt()
         let decryptStr = encryptStr.decrypt()

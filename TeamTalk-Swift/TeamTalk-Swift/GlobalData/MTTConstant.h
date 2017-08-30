@@ -38,7 +38,7 @@
 #define toInt(x)              (isNull(x) ? 0 : [x intValue])
 #define isEmptyString(x)      (isNull(x) || [x isEqual:@""] || [x isEqual:@"(null)"])
 
-#define sleep(s);             [NSThread sleepForTimeInterval:s];
+//#define sleep(s);             [NSThread sleepForTimeInterval:s];
 #define Syn(x)                @synthesize x = _##x
 
 #define RGBA(r,g,b,a)         [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]

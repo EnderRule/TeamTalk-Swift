@@ -14,13 +14,10 @@ let ChatInputView_MinHeight:CGFloat = 44.0
 
 
 class HMChattingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,
-NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControllerDelegate,DDMessageModuleDelegate,HMChatCellActionDelegate,AVAudioPlayerDelegate {
+NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControllerDelegate,DDMessageModuleDelegate,HMChatCellActionDelegate,RecordingDelegate,PlayingDelegate {
 
-    private var audioPlayer:AVAudioPlayer?
-    private var audioRecorder:AVAudioRecorder?
-    private var recordVoicePath:String = ""
-    private var recordTimeInterval:TimeInterval = 0
-//    private var recordIndicatorView:NIMInputAudioRecordIndicatorView = NIMInputAudioRecordIndicatorView.init()
+    private var currentVoicePlayingCell:HMChatVoiceCell?
+
     private var chattingModule:ChattingModule!
 
     private var chatInputView:NIMInputView!
@@ -285,6 +282,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
         HMMessageManager.shared.sendNormal(message: msgEntity, session: self.chattingModule.sessionEntity) {[weak self] (message , error ) in
             if error != nil {
+                
+                debugPrint("HMChatting send message \(message.msgContent) \n error: \(error!.localizedDescription)")
                 msgEntity.state = .SendFailure
             }else{
                 msgEntity.state = message.state
@@ -293,23 +292,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 self?.tableView.reloadData()
             })
         }
-        
-//        DDMessageSendManager.instance().sendMessage(msgEntity, isGroup: self.chattingModule.sessionEntity.isGroupSession, session: self.chattingModule.sessionEntity, completion: {[weak self] (messageentity, error ) in
-//            
-//            if messageentity != nil {
-//                msgEntity.state = messageentity!.state
-//            }else {
-//                msgEntity.state = .SendFailure
-//            }
-//            dispatch(after: 0, task: { 
-//                self?.tableView.reloadData()
-//            })
-//        }) {[weak self] (error ) in
-//            msgEntity.state = .SendFailure
-//            
-//            self?.tableView.reloadData()
-//        }
-        
     }
     
     //MARK: pick/shoot photos
@@ -501,103 +483,62 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     }
     
     func onCancelRecording() {
-        print("input view onCancelRecording")
-        self.audioRecorder?.stop()
-        
-        if  ZQFileManager.shared.delete(filePath: self.recordVoicePath){
-            self.recordVoicePath = ""
-        }
-        
-//        self.recordIndicatorView.removeFromSuperview()
-        UIViewController.cancelPreviousPerformRequests(withTarget: self )
-        
+        RecorderManager.shared().cancelRecording()
     }
     func onStartRecording() {
-        print("input view onStartRecording")
-        
-        self.recordVoicePath = TempPath(name: "Voice_\(TIMESTAMP()).acc")
-        let url = URL.init(string: self.recordVoicePath)!
-        
-        do{
-            self.audioRecorder = try AVAudioRecorder.init(url: url , settings: self.recordSettings())
-        }catch{
-            debugPrint("audiorecorder init error \(error.localizedDescription)")
-        }
-        
-        if self.audioRecorder != nil {
-            self.audioRecorder?.record()
-            self.recordTimeInterval = 0
-//            self.recordIndicatorView.recordTime = 0
-            
-//            self.view.addSubview(self.recordIndicatorView)
-//            self.recordIndicatorView.center = self.view.center
-//            self.recordIndicatorView.isHidden = false
-            self.perform(#selector(self.updateRecordTime), with: nil , afterDelay: 1)
+        RecorderManager.shared().delegate = self
+        RecorderManager.shared().startRecording()
 
-        }else{
-            self.view.makeToast("暂时无法录音")
-        }
     }
     func onStopRecording() {
-        print("input view onStopRecording")
-        self.audioRecorder?.stop()
-//        self.recordIndicatorView.removeFromSuperview()
-        UIViewController.cancelPreviousPerformRequests(withTarget: self )
-        
-//        let url = URL.init(string: self.recordVoicePath)!
-        
-        guard let data = NSData.init(contentsOfFile: self.recordVoicePath) else {
-            self.view.makeToast("錄音失敗 -1")
+        RecorderManager.shared().stopRecording()
+    }
+    
+    
+    //MARK:voice recording delegate
+    func recordingFinished(withFileName filePath: String!, time interval: TimeInterval) {
+        debugPrint("chatting recording Finished  \(interval)"  )
+       
+        guard  interval > 2 else {
+            dispatch(after: 0, task: { 
+                self.view.makeToast("錄音時間太短啦")
+            })
             return
         }
+        let voicePath:String = filePath
+        let newmessage = MTTMessageEntity.init(content: voicePath, module: self.chattingModule, msgContentType: .Voice)
+        newmessage.msgType = .msgTypeSingleAudio
+        newmessage.info.updateValue(voicePath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+        newmessage.info.updateValue(interval, forKey: MTTMessageEntity.VOICE_LENGTH)
+        
+        MTTDatabaseUtil.instance().insertMessages([newmessage], success: { }, failure: { (resultStr ) in  })
+        
+        self.sendMessage(msgEntity: newmessage)
+    }
+    
+    func recordingFailed(_ failureInfoString: String!) {
+        self.view.makeToast("錄音失敗：\(failureInfoString)")
+    }
+    func recordingStopped() {
+        self.chatInputView.updateAudioRecordTime(0)
+    }
+    func recordAudioProgress(_ currentTime: TimeInterval) {
+        debugPrint("chatting  update RecordTime \(currentTime)")
 
-        do {
-            self.audioPlayer = try  AVAudioPlayer.init(data: data as Data )
-        }catch {
-            self.view.makeToast("錄音失敗：\(error.localizedDescription)")
-        }
-        
-        
-        
-        if audioPlayer != nil {
-            audioPlayer?.delegate = self
-            audioPlayer?.prepareToPlay()
-            
-            if audioPlayer!.duration > 2.0{
-                audioPlayer?.play()
-                
-                let voicePath:String = self.recordVoicePath
-                
-                let newmessage = MTTMessageEntity.init(content: voicePath, module: self.chattingModule, msgContentType: .Voice)
-                newmessage.msgType = .msgTypeSingleAudio
-                
-                newmessage.info.updateValue(self.recordVoicePath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
-                newmessage.info.updateValue(audioPlayer!.duration, forKey: MTTMessageEntity.VOICE_LENGTH)
-
-                MTTDatabaseUtil.instance().insertMessages([newmessage], success: {   }, failure: { (resultStr ) in  })
-                
-                self.sendMessage(msgEntity: newmessage)
-                
-            }else{
-                self.view.makeToast("錄音時間太短啦")
-            }
-            debugPrint("onStopRecording  voice file data lenght : \(data.length/1024)KB  duration: \(audioPlayer!.duration)seconds ")
-        }else {
-            self.view.makeToast("錄音失敗 -2")
+        dispatch(after: 0) { 
+            self.chatInputView.updateAudioRecordTime(currentTime)
         }
     }
     
-    func updateRecordTime(){
-        self.recordTimeInterval += 1
-        
-        debugPrint("updateRecordTime updateRecordTime \(self.recordTimeInterval)")
-        
-//        self.recordIndicatorView.recordTime += 1
-        self.chatInputView.updateAudioRecordTime(self.recordTimeInterval)
-        self.perform(#selector(self.updateRecordTime), with: nil , afterDelay: 1)
-        
+    //MARK: voice playing Delegate
+    func playingStoped() {
+        dispatch(after: 0.0) {
+            self.currentVoicePlayingCell?.isVoicePlaying = false
+            self.currentVoicePlayingCell?.updatePlayState()
+        }
     }
     
+    //MARK: HMChat cell action delegate
     func HMChatCellAction(type: HMChatCellActionType, message: MTTMessageEntity?, sourceView: UIView?) {
         
         debugPrint("HMChatCellAction \(type),message \(message?.msgContent ?? "nil msgcontent")")
@@ -608,14 +549,19 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             
             message?.updateToDB(compeletion: nil )
             self.sendMessage(msgEntity: message!)
+        }else if  type == .voiceStop {
+            PlayerManager.shared().stopPlaying()
+        }else if type == .voicePlay{
+            let localPath = message?.msgContent.safeLocalPath() ?? ""
+            if FileManager.default.fileExists(atPath: localPath){
+                PlayerManager.shared().stopPlaying()  //必須 停止之前的播放  ，否則無法更新上個播放對應的cell的UI
+                
+                self.currentVoicePlayingCell  = sourceView as? HMChatVoiceCell
+                PlayerManager.shared().playAudio(withFileName: localPath, playerType: .DDSpeaker, delegate: self)
+            }else{
+                self.view.makeToast("音頻文件不存在")
+            }
         }
-    }
-    
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        self.audioPlayer = nil
-        self.audioRecorder = nil
-        
-        debugPrint(" audio played done? \(flag)")
     }
     
     func recordSettings()->[String:Any]{

@@ -83,7 +83,7 @@ static void AudioPlayerAQInputCallback(void *input, AudioQueueRef inQ, AudioQueu
     ////添加buffer区
     for(int i=0;i<QUEUE_BUFFER_SIZE;i++) {
         int result =  AudioQueueAllocateBuffer(audioQueue, MIN_SIZE_PER_FRAME, &audioQueueBuffers[i]);///创建buffer区，MIN_SIZE_PER_FRAME为每一侦所需要的最小的大小，该大小应该比每次往buffer里写的最大的一次还大
-        NSLog(@"AudioQueueAllocateBuffer i = %d,result = %d",i,result);
+        DDLog(@"AudioQueueAllocateBuffer i = %d,result = %d",i,result);
     }
 }
 
@@ -102,7 +102,7 @@ static void AudioPlayerAQInputCallback(void *input, AudioQueueRef inQ, AudioQueu
     isDataInputOver = dataInputOver;
     if (dataInputOver) {
         if ([emptyAudioQueueBufferIndexs count] == QUEUE_BUFFER_SIZE) {
-            NSLog(@"audio queue play over");
+
             [self stopPlay];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PLAY_OVER object:nil];
         }
@@ -122,7 +122,7 @@ static void AudioPlayerAQInputCallback(void *input, AudioQueueRef inQ, AudioQueu
             if (lengthLeft == 0 && isDataInputOver) {
                 //所有数据都输入并且读取完了
                 if ([emptyAudioQueueBufferIndexs count] == QUEUE_BUFFER_SIZE) {
-                    NSLog(@"audio queue play over");
+
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PLAY_OVER object:nil];
                 }
             }

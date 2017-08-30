@@ -123,6 +123,8 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         cell.textLabel?.text = "\(indexPath.section)-\(indexPath.row)"
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             cell.textLabel?.text = "退出登入"
+        }else if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 2 {
+            cell.textLabel?.text = "文件浏览"
         }
         return cell
     }
@@ -148,7 +150,11 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
                 }
             })
             
-        }else {
+        }else if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 2 {
+            let browser = ZQFileBrowserVC.init()
+            browser.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(browser, animated: true )
+        }else  {
             LCActionSheet .show(withTitle: "个人中心", buttonTitles: ["1","2","3","4"], redButtonIndex: 6, clickHandler: { (index) in
             })
             

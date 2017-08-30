@@ -13,7 +13,7 @@ class HMChatVoiceCell: HMChatBaseCell {
     var voiceImgv:UIImageView = UIImageView.init()
     var voiceDurationLabel:UILabel = UILabel.init()
     
-    private var isVoicePlaying:Bool = false
+    var isVoicePlaying:Bool = false
     
     override func setupCustom() {
         super.setupCustom()
@@ -144,29 +144,20 @@ class HMChatVoiceCell: HMChatBaseCell {
             }
             
             if isVoicePlaying {
-                HMMediaManager.shared.audioPlayStop()
                 self.isVoicePlaying = false
                 self.updatePlayState()
+                
+                self.delegate?.HMChatCellAction(type: .voiceStop, message: self.message!, sourceView: self)
             }else{
                 self.isVoicePlaying = true
                 self.updatePlayState()
                 
-                let voicePath = json[MTTMessageEntity.VOICE_LOCAL_KEY].stringValue
-                
-                debugPrint("HMChatVoice play voice at path : \(voicePath) \n voice duration: \(HMMediaManager.shared.durationFor(filePath: voicePath))")
-                
-                HMMediaManager.shared.audioPlay(filePath: voicePath, completion: { (errorString ) in
-                    if errorString != nil {
-                        self.makeToast(errorString!)
-                    }
-                    self.isVoicePlaying = false
-                    self.updatePlayState()
-                })
+                self.delegate?.HMChatCellAction(type: .voicePlay, message: self.message!, sourceView: self)
             }
         }
     }
     
-    func updatePlayState(){
+    public func updatePlayState(){
         
         if isVoicePlaying {
             if self.bubbleLocation == .right{
@@ -183,14 +174,6 @@ class HMChatVoiceCell: HMChatBaseCell {
         }
     }
     
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }
 
@@ -203,5 +186,28 @@ extension UIView {
             }
         }
         return nil
+    }
+}
+
+extension String {
+    func safeLocalPath()->String{
+        
+        let range:NSRange = (self as NSString).range(of: "/var/mobile/Containers/Data/Application/")
+        if range.length > 0{
+            
+            var newfilePath = self
+            if FileManager.default.fileExists(atPath: newfilePath){
+                return newfilePath
+            }else {
+                newfilePath  = (newfilePath as NSString).substring(from: range.location+range.length+36)
+                
+                newfilePath = NSHomeDirectory().appending(newfilePath)
+                
+                return newfilePath
+            }
+        }else{
+            return self
+        }
+        
     }
 }

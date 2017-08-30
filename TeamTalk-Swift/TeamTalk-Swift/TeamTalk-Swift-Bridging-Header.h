@@ -50,6 +50,9 @@
 #import "SessionModule.h"
 #import "ContactsModule.h"
 
+#import "RecorderManager.h"
+#import "PlayerManager.h"
+
 //API
 #import "DDSendPhotoMessageAPI.h"
 #import "DDMessageSendManager.h"

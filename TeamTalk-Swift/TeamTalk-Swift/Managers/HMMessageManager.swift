@@ -31,7 +31,7 @@ class HMMessageManager: NSObject {
     
     private var unAckQueueMessages:[HMMessageAndTime] = []
     private var unAckTimer:Timer?
-    private let MessageTimeOutSecond:TimeInterval = 10.0
+    private let MessageTimeOutSecond:TimeInterval = 20.0
     
     override init() {
         super.init()
@@ -61,43 +61,27 @@ class HMMessageManager: NSObject {
                 session.lastMsg = message.msgContent
             }
             
-            var msgContent:String = message.msgContent
-            if message.isImageMessage {
-                let dic:NSDictionary = NSDictionary.initWithJsonString(message.msgContent)! as NSDictionary
-                let imageurl = dic[MTTMessageEntity.DD_IMAGE_URL_KEY] as! String
-                msgContent = imageurl
-            }
-            msgContent = msgContent.encrypt()
-            
-            var msgData = msgContent.utf8ToData()
+            var msgData:Data = Data()
             if message.isVoiceMessage {
-                let localPath:String = message.msgContent // message.info[MTTMessageEntity.VOICE_LOCAL_KEY] as? String ?? ""
-                if FileManager.default.fileExists(atPath: localPath){
-                    do {
-                        msgData = try  NSData.init(contentsOfFile: localPath) as Data
-                        
-                        debugPrint("HMMessageManager send voice data \(msgData.endIndex/1024) KB")
-                    }catch {
-                        let errorString = "send voice message read data error :\(error.localizedDescription)  \n at path \(localPath)"
-                        let error = NSError.init(domain: errorString, code: 0, userInfo: nil )
-                        completion(message,error)
-                        return
-                    }
-                }else {
-                    let errorString = "send voice message file do not exist at path \(localPath)"
-                    let error = NSError.init(domain: errorString, code: 0, userInfo: nil )
-                    completion(message,error)
-                    return
+                msgData = self.getUploadVoiceDataAt(message: message)
+                
+                debugPrint("HMMessageManager send voice message datas \(msgData as NSData)")
+            }else {
+                var msgContent:String = message.msgContent
+                if message.isImageMessage {
+                    let dic:NSDictionary = NSDictionary.initWithJsonString(message.msgContent)! as NSDictionary
+                    let imageurl = dic[MTTMessageEntity.DD_IMAGE_URL_KEY] as! String
+                    msgContent = imageurl
                 }
-            }
-            
-            if !message.isVoiceMessage{
+                msgData = msgContent.encrypt().utf8ToData()
                 self.unAckQueueAdd(message: message)
             }
             
             Notification.Name.HMSendMessageSuccessfull.postWith(object: session)
            
-            let packObject:[Any] = [RuntimeStatus.instance().user.userId,session.sessionID,msgData,message.msgType,message.msgID]
+            let packObject:[Any] = [RuntimeStatus.instance().user.userId,session.sessionID,msgData,message.msgType.rawValue,message.msgID]
+            debugPrint("HMMessageManager send message \(message.dicValues() as Dictionary) \n packObject \(packObject as Array)")
+            
             let sendAPI = SendMessageAPI.init()
             sendAPI.request(with: packObject, completion: { (respone , error ) in
                 if error != nil {
@@ -130,9 +114,9 @@ class HMMessageManager: NSObject {
     
     
     public func sendVoice(voicePath:String, message:MTTMessageEntity,session:MTTSessionEntity,completion:@escaping HMSendMessageCompletion){
-        let voiceDuration = HMMediaManager.shared.durationFor(filePath: voicePath)
+//        let voiceDuration = HMMediaManager.shared.durationFor(filePath: voicePath)
         
-        if voiceDuration > 1{
+//        if voiceDuration > 1{
         
             message.msgType = .msgTypeSingleAudio
             message.msgContentType = .Voice
@@ -142,9 +126,9 @@ class HMMessageManager: NSObject {
             self.sendNormal(message: message, session: session) { (message , error ) in
                 completion(message,error)
             }
-        }else{
-            completion(message,NSError.init(domain: "錄音時間太短", code: 0, userInfo: nil))
-        }
+//        }else{
+//            completion(message,NSError.init(domain: "錄音時間太短", code: 0, userInfo: nil))
+//        }
     }
     
     public func sendImage(imagePath:String,message:MTTMessageEntity,session:MTTSessionEntity,completion:HMSendMessageCompletion){
@@ -198,6 +182,48 @@ class HMMessageManager: NSObject {
         }
     }
     
+    
+    func getUploadVoiceDataAt(message:MTTMessageEntity)->Data{
+        let localPath = message.msgContent.safeLocalPath()
+        if FileManager.default.fileExists(atPath: localPath){
+            do {
+                let voicedata = try  NSData.init(contentsOfFile: localPath) as Data
+                let json = JSON.init(message.info)
+                let length:Int = json[MTTMessageEntity.VOICE_LENGTH].intValue
+                let muData:NSMutableData = NSMutableData.init()
+                for index in 0..<4 {
+                    var byte = ((length >> ((3 - index)*8)) & 0x0ff)
+                    muData.append(&byte, length: 1)
+                }
+                muData.append(voicedata)
+                
+                return muData as Data
+            }catch {
+                return Data()
+            }
+        }else {
+            return Data()
+        }
+        
+//        let localPath:String = message.msgContent.safeLocalPath() // message.info[MTTMessageEntity.VOICE_LOCAL_KEY] as? String ?? ""
+//        if FileManager.default.fileExists(atPath: localPath){
+//            do {
+//                msgData =  try  NSData.init(contentsOfFile: localPath) as Data
+//                
+//                debugPrint("HMMessageManager send voice data \(msgData.endIndex/1024) KB")
+//            }catch {
+//                let errorString = "send voice message read data error :\(error.localizedDescription)  \n at path \(localPath)"
+//                let error = NSError.init(domain: errorString, code: 0, userInfo: nil )
+//                completion(message,error)
+//                return
+//            }
+//        }else {
+//            let errorString = "send voice message file do not exist at path \(localPath)"
+//            let error = NSError.init(domain: errorString, code: 0, userInfo: nil )
+//            completion(message,error)
+//            return
+//        }
+    }
 }
 
 

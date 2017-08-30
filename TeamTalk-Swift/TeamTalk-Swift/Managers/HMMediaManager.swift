@@ -16,32 +16,40 @@ class HMMediaManager: NSObject,AVAudioPlayerDelegate {
     
     private var audioPlayer:AVAudioPlayer?
     private var audioPlayedFinish:HMAudioPlayFinish?
+//    private var audioPlayerCalculate:AVAudioPlayer?
 
     private var audioRecorder:AVAudioRecorder?
     private var recordVoicePath:String = ""
     private var recordTimeInterval:TimeInterval = 0
 
-    func durationFor(filePath:String )->TimeInterval{
+    func durationFor(filePath:String,completion:@escaping ((TimeInterval)->Void) ){
+        
+        
         guard let url = URL.init(string: filePath) else {
-            return 0
+            completion(0.0)
+            return
         }
-        let asset = AVURLAsset.init(url:url)
-        let duration = asset.duration
-        return  CMTimeGetSeconds(duration)
+        let asset = AVURLAsset.init(url: url, options: [AVURLAssetPreferPreciseDurationAndTimingKey:true])
+        
+        asset.loadValuesAsynchronously(forKeys: [AVURLAssetPreferPreciseDurationAndTimingKey]) {
+            let valuestate =  asset.statusOfValue(forKey: AVURLAssetPreferPreciseDurationAndTimingKey, error: nil)
+            let duration =  CMTimeGetSeconds(asset.duration)
+            debugPrint("asset \(asset)  \(asset.duration)  \(valuestate)",duration)
+            completion(duration)
+        }
+        
     }
     
     //MARK: 錄音播放
     public func audioPlay(filePath:String,completion:@escaping HMAudioPlayFinish){
         
-        guard let url = URL.init(string: filePath) else {
+        guard FileManager.default.fileExists(atPath: filePath) else {
             completion("錄音文件不存在")
             return
         }
-        
+    
         do {
-            let data:Data = try Data.init(contentsOf: url)
-            
-//            debugPrint(data)
+            let data:Data = try NSData.init(contentsOfFile: filePath) as Data
             
             do {
                 self.audioPlayedFinish = completion
@@ -57,7 +65,8 @@ class HMMediaManager: NSObject,AVAudioPlayerDelegate {
                 return
             }
         }catch{
-            completion("無法讀取錄音文件")
+            let errorstr = "無法讀取錄音文件 \(error.localizedDescription)"
+            completion(errorstr)
         }
 //        guard let data = NSData.init(contentsOfFile: filePath) else {
 //            completion("無法讀取錄音文件")
@@ -65,13 +74,17 @@ class HMMediaManager: NSObject,AVAudioPlayerDelegate {
 //        }
         
     }
+    
+    public func audioPlayIsPlaying()->Bool{
+        return self.audioPlayer?.isPlaying ?? false
+    }
     public func audioPlayPause(){
         self.audioPlayer?.pause()
     }
     public func audioPlayStop(){
         self.audioPlayer?.stop()
         self.audioPlayer = nil
-        
+        self.audioPlayedFinish?(nil)
     }
     //MARK: AVAudioPlayerDelegate
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {

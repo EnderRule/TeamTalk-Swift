@@ -91,7 +91,7 @@
         memcpy(buffer, oggBytes, byteSizeToRead);    //!!!
         oggBytes += byteSizeToRead;
         readedBytes += byteSizeToRead;
-        NSLog(@"byteSizeToRead = %d, oggByteSize = %d, readedBytes = %d", byteSizeToRead, oggByteSize, readedBytes);
+//        NSLog(@"byteSizeToRead = %d, oggByteSize = %d, readedBytes = %d", byteSizeToRead, oggByteSize, readedBytes);
 //        oggSyncState.bodybytes = byteSizeToRead;
         
         int resultSyncWrote = ogg_sync_wrote(&oggSyncState, byteSizeToRead);
@@ -104,11 +104,11 @@
             ogg_page oggPage;
             int resultSyncPageout= ogg_sync_pageout(&oggSyncState, &oggPage);
             if (resultSyncPageout == 1) {
-                NSLog(@"to decode a page which was synced and returned");
+//                NSLog(@"to decode a page which was synced and returned");
                 
                 //检查header和comment
                 if(packetNo == 0) {
-                    NSLog(@"it's the header page, check the header later");
+//                    NSLog(@"it's the header page, check the header later");
                     if ([self readOggHeaderToStreamState:&oggStreamState fromOggPage:&oggPage]) {
                         oggStreamState.packetno = packetNo ++;
                         pageNo ++;
@@ -119,7 +119,7 @@
                     continue;
                 }
                 else if(packetNo == 1) {
-                    NSLog(@"it's the comment");
+//                    NSLog(@"it's the comment");
                     oggStreamState.packetno = packetNo ++;
                     pageNo ++;
                     continue;
@@ -162,7 +162,7 @@
                 codec = nil;
             }
             else if (resultSyncPageout == 0) {
-                NSLog(@"not enough to decode a page or error");
+//                NSLog(@"not enough to decode a page or error");
                 break;
             }
             else {
@@ -191,7 +191,7 @@
 }
 
 - (void)error:(NSString *)errorDesription {
-    NSLog(@"error:%@", errorDesription);
+    DDLog(@"Decapsulator error:%@", errorDesription);
 }
 
 - (void)dealloc {

@@ -33,9 +33,9 @@ typedef NS_ENUM(NSUInteger, PlayerType)
 
 + (PlayerManager *)sharedManager;
 
-- (void)playAudioWithFileName:(NSString *)filename delegate:(id<PlayingDelegate>)newDelegate;
 - (void)stopPlaying;
-
-- (void)playAudioWithFileName:(NSString *)filename playerType:(PlayerType)type delegate:(id<PlayingDelegate>)newDelegate;
 - (BOOL)playingFileName:(NSString*)fileName;
+- (void)playAudioWithFileName:(NSString *)filename delegate:(id<PlayingDelegate>)newDelegate;
+- (void)playAudioWithFileName:(NSString *)filename playerType:(PlayerType)type delegate:(id<PlayingDelegate>)newDelegate;
+
 @end
