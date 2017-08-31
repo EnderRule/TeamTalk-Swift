@@ -56,20 +56,17 @@
 {
     [super viewDidLoad];
   
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"username"]!=nil) {
-        _userNameTextField.text =[[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    if ([RuntimeStatus instance].userID.length > 0) {
+        _userNameTextField.text = [RuntimeStatus instance].userID;
     }
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"password"]!=nil) {
-        _userPassTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    if ([RuntimeStatus instance].token.length > 0) {
+        _userPassTextField.text= [RuntimeStatus instance].token;
     }
-    if(!self.isRelogin)
-    {
-        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"username"] && [[NSUserDefaults standardUserDefaults] objectForKey:@"password"])
-        {
-            if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"autologin"] boolValue] == YES) {
-                [self loginButtonPressed:nil];
-            }
-        }
+    if (!self.isRelogin
+            && _userNameTextField.text.length > 0
+            && _userPassTextField.text.length > 0
+            && [RuntimeStatus instance].autoLogin ){
+        [self loginButtonPressed:nil];
     }
     
     self.defaultCenter=self.view.center;
@@ -95,12 +92,6 @@
     
     // 设置用户名
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
-#ifdef DEBUG
-    self.userNameTextField.text = @"qing";
-    self.userPassTextField.text = @"qing";
-#endif
-    
     
     self.hud = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:self.hud];

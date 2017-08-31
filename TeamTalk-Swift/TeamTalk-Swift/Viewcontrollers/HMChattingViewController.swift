@@ -18,7 +18,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
 
     private var currentVoicePlayingCell:HMChatVoiceCell?
 
-    private var chattingModule:ChattingModule!
+    var chattingModule:ChattingModule!
 
     private var chatInputView:NIMInputView!
     private var tableView:UITableView = UITableView.init()
@@ -59,6 +59,13 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             maker?.right.mas_equalTo()(self.view.mas_right)
             maker?.bottom.mas_equalTo()(self.chatInputView.mas_top)
         }
+        
+//        MTTDatabaseUtil.instance().loadMessage(forSessionID: self.chattingModule.sessionEntity.sessionID, pageCount: 25, index: 0) {[weak self] (messages , error ) in
+//            self?.showingMessages = messages ?? []
+//            self?.tableView.reloadData()
+//            self?.tableView.checkScrollToBottom()
+//        }
+//        self.loadMoreHistoryRecords()
         
         chattingModule.loadMoreHistoryCompletion { (count , error ) in
             print("load more history  :\(count)",error?.localizedDescription ?? "nil error")

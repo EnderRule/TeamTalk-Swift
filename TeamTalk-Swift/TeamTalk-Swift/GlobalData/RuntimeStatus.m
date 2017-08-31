@@ -111,5 +111,28 @@
     [DDGroupModule instance];
 }
 
+-(NSString *)token{
+    return (NSString *)[[NSUserDefaults standardUserDefaults]objectForKey:@"im.HMPassword"];
+}
+-(void)setToken:(NSString *)token{
+    [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"im.HMPassword"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+-(NSString *)userID{
+    return (NSString *)[[NSUserDefaults standardUserDefaults]objectForKey:@"im.HMUserID"];
+}
+-(void)setUserID:(NSString *)userID{
+    [[NSUserDefaults standardUserDefaults]setObject:userID forKey:@"im.HMUserID"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+-(BOOL)autoLogin{
+    return [[NSUserDefaults standardUserDefaults]boolForKey:@"im.HMAutoLogin"];
+}
+-(void)setAutoLogin:(BOOL)autoLogin{
+    [[NSUserDefaults standardUserDefaults]setBool:autoLogin forKey:@"im.HMAutoLogin"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
 
 @end

@@ -12,7 +12,7 @@ class HMRecentSessionCell: HMBaseCell {
 
     var session:MTTSessionEntity?
     
-    var avatarView:MTTAvatarImageView = MTTAvatarImageView.init()// UIImageView.init()
+    var avatarView:MTTAvatarImageView = MTTAvatarImageView.init()
     var nameLabel:UILabel = UILabel.init()
     
     var msgLabel:UILabel = UILabel.init()
@@ -81,7 +81,7 @@ class HMRecentSessionCell: HMBaseCell {
         
         if !unreadMsgLabel.isHidden{
             unreadMsgLabel.height = 16
-            unreadMsgLabel.centerY = self.contentView.centerY
+            unreadMsgLabel.centerY = self.contentView.centerY + 8
             unreadMsgLabel.right = self.contentView.right - 10
             
             //Warning:使用这种方式设置圆角、将不能用 masnory 约束布局

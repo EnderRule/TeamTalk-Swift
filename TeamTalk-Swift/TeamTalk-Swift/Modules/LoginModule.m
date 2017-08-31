@@ -105,12 +105,6 @@
                         MTTUserEntity *user = (MTTUserEntity *) response[@"user"];
                         if (user && user.isValided){
                             DDLog(@"login#登录验证成功 %@",userName);
-
-                            [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"password"];
-                            [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"username"];
-                            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"autologin"];
-                            [[NSUserDefaults standardUserDefaults] synchronize];
-                            
                             _lastLoginPassword = password;
                             _lastLoginUserName = userName;
                             DDClientState* clientState = [DDClientState shareInstance];
@@ -118,6 +112,10 @@
                             _relogining=YES;
 
                             [RuntimeStatus instance].user=user;
+                            [RuntimeStatus instance].userID=userName;
+                            [RuntimeStatus instance].token=password;
+                            [RuntimeStatus instance].autoLogin=YES;
+
                             
                             [[MTTDatabaseUtil instance] openCurrentUserDB];
                              

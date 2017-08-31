@@ -54,14 +54,14 @@ static NSUInteger const showPromptGap = 300;
 
 - (void)setMTTSessionEntity:(MTTSessionEntity *)MTTSessionEntity
 {
-    self.SessionEntity = MTTSessionEntity;
+    self.sessionEntity = MTTSessionEntity;
     
     self.showingMessages = nil;
     self.showingMessages = [[NSMutableArray alloc] init];
 }
 -(void)getNewMsg:(DDChatLoadMoreHistoryCompletion)completion
 {
-    [[DDMessageModule shareInstance] getMessageFromServer:0 currentSession:self.SessionEntity count:20 Block:^(NSMutableArray *response, NSError *error) {
+    [[DDMessageModule shareInstance] getMessageFromServer:0 currentSession:self.sessionEntity count:20 Block:^(NSMutableArray *response, NSError *error) {
         //[self p_addHistoryMessages:response Completion:completion];
         NSUInteger msgID = [[response valueForKeyPath:@"@max.msgID"] integerValue];
         if ( msgID !=0) {
@@ -71,7 +71,7 @@ static NSUInteger const showPromptGap = 300;
                 [[MTTDatabaseUtil instance] insertMessages:response success:^{
                     MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
                     if(msgID){
-                        [readACK requestWithObject:@[self.SessionEntity.sessionID,@(msgID),@(self.SessionEntity.sessionType)] Completion:nil];
+                        [readACK requestWithObject:@[self.sessionEntity.sessionID,@(msgID),@(self.sessionEntity.sessionType)] Completion:nil];
                     }
                 } failure:^(NSString *errorDescripe) {
                     
@@ -92,22 +92,22 @@ static NSUInteger const showPromptGap = 300;
 }
 -(void)loadHisToryMessageFromServer:(NSUInteger)FromMsgID loadCount:(NSUInteger)count Completion:(DDChatLoadMoreHistoryCompletion)completion
 {
-    if (self.SessionEntity) {
+    if (self.sessionEntity) {
         if (FromMsgID !=1) {
-            [[DDMessageModule shareInstance] getMessageFromServer:FromMsgID currentSession:self.SessionEntity count:count Block:^(NSArray *response, NSError *error) {
+            [[DDMessageModule shareInstance] getMessageFromServer:FromMsgID currentSession:self.sessionEntity count:count Block:^(NSArray *response, NSError *error) {
                 //[self p_addHistoryMessages:response Completion:completion];
                 NSUInteger msgID = [[response valueForKeyPath:@"@max.msgID"] integerValue];
                 if ( msgID !=0) {
                     if (response) {
                         [[MTTDatabaseUtil instance] insertMessages:response success:^{
                             MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
-                            [readACK requestWithObject:@[self.SessionEntity.sessionID,@(msgID),@(self.SessionEntity.sessionType)] Completion:nil];
+                            [readACK requestWithObject:@[self.sessionEntity.sessionID,@(msgID),@(self.sessionEntity.sessionType)] Completion:nil];
                             
                         } failure:^(NSString *errorDescripe) {
                             
                         }];
                         NSUInteger count = [self p_getMessageCount];
-                        [[MTTDatabaseUtil instance] loadMessageForSessionID:self.SessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
+                        [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
                             [self p_addHistoryMessages:messages Completion:completion];
                             completion([response count],error);
                         }];
@@ -135,7 +135,7 @@ static NSUInteger const showPromptGap = 300;
     
     NSUInteger count = [self p_getMessageCount];
     
-    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.SessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
+    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
         //after loading finish ,then add to messages
         if ([DDClientState shareInstance].networkState == DDNetWorkDisconnect) {
             [self p_addHistoryMessages:messages Completion:completion];
@@ -179,14 +179,14 @@ static NSUInteger const showPromptGap = 300;
 }
 - (void)loadAllHistoryCompletion:(MTTMessageEntity*)message Completion:(DDChatLoadMoreHistoryCompletion)completion
 {
-    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.SessionEntity.sessionID afterMessage:message completion:^(NSArray *messages, NSError *error) {
+    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID afterMessage:message completion:^(NSArray *messages, NSError *error) {
         [self p_addHistoryMessages:messages Completion:completion];
     }];
 }
 -(NSUInteger )getMiniMsgId
 {
     if ([self.showingMessages count] == 0) {
-        return self.SessionEntity.lastMsgID;
+        return self.sessionEntity.lastMsgID;
     }
     __block NSInteger minMsgID =[self getMaxMsgId:self.showingMessages];
     
@@ -235,7 +235,7 @@ static NSUInteger const showPromptGap = 300;
 }
 -(void)getCurrentUser:(void(^)(MTTUserEntity *))block
 {
-    [[DDUserModule shareInstance] getUserForUserID:self.SessionEntity.sessionID  Block:^(MTTUserEntity *user) {
+    [[DDUserModule shareInstance] getUserForUserID:self.sessionEntity.sessionID  Block:^(MTTUserEntity *user) {
         block(user);
     }];
     
@@ -244,7 +244,7 @@ static NSUInteger const showPromptGap = 300;
 
 - (void)updateSessionUpdateTime:(NSUInteger)time
 {
-    [self.SessionEntity updateWithUpdateTime:time];
+    [self.sessionEntity updateWithUpdateTime:time];
     _lastestDate = time;
 }
 

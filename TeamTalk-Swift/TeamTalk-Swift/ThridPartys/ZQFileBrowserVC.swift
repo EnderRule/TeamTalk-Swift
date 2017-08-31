@@ -8,6 +8,8 @@
 
 import UIKit
 
+let FileBrowserBackID:String = "<< 返回上一級"
+
 class ZQFileBrowserVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
     public var browserPath:String = NSHomeDirectory()
@@ -17,6 +19,7 @@ class ZQFileBrowserVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     private var tableview:UITableView = UITableView.init()
     
     private var simpleTextView:UITextView = UITextView.init()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +75,12 @@ class ZQFileBrowserVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     
     
     func reloadFiles(){
+        if self.browserPath == NSHomeDirectory(){
+            self.title = "Home"
+        }else{
+            self.title = (self.browserPath as NSString).lastPathComponent
+        }
+        
         self.files = FileManager.default.getFilesAt(path: self.browserPath)
         self.tableview.reloadData()
     }
@@ -85,7 +94,7 @@ class ZQFileBrowserVC: UIViewController,UITableViewDataSource,UITableViewDelegat
             let subPath = files[indexPath.row]
             cell.textLabel?.text = subPath
 
-            if subPath != "..."{
+            if subPath != FileBrowserBackID{
                 let fullPath = (self.browserPath as NSString).appendingPathComponent(subPath)
                 
                 let folderSize:UInt64 = FileManager.default.folderSizeAt(path: fullPath)
@@ -128,8 +137,15 @@ class ZQFileBrowserVC: UIViewController,UITableViewDataSource,UITableViewDelegat
 
             let fileExtention = (subPath as NSString ).pathExtension
             
-            if subPath == "..."{
-               let _ = self.navigationController?.popViewController(animated: true)
+            if subPath == FileBrowserBackID{
+                
+                if browserPath == NSHomeDirectory(){
+                    let _ = self.navigationController?.popViewController(animated: true)
+                }else{                
+                    self.browserPath = (self.browserPath as NSString).deletingLastPathComponent
+                    self.reloadFiles()
+                }
+                
             }else if subPath.hasImageExtention() {
                 var imageFullPaths:[String] = []
                 var currentIndex:Int = 0
@@ -236,18 +252,18 @@ extension FileManager{
             if isDir.boolValue {
                 do{
                     var fileArr:[String] = try FileManager.default.contentsOfDirectory(atPath: path)
-                    fileArr.insert("...", at: 0)
+                    fileArr.insert(FileBrowserBackID, at: 0)
                     
                     return fileArr
                 }catch{
                     print(error.localizedDescription)
-                    return ["..."]
+                    return [FileBrowserBackID]
                 }
             }else{
-                return ["...",(path as NSString).lastPathComponent]
+                return [FileBrowserBackID,(path as NSString).lastPathComponent]
             }
         }else{
-            return ["..."]
+            return [FileBrowserBackID]
         }
     }
     

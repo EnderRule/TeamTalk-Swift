@@ -20,7 +20,7 @@ typedef void(^DDRequestGoodDetailCompletion)(NSDictionary* detail,NSError* error
 typedef void(^DDChatLoadMoreHistoryCompletion)(NSUInteger addcount, NSError* error);
 
 @interface ChattingModule : NSObject
-@property (strong,nonatomic)MTTSessionEntity* SessionEntity;
+@property (strong,nonatomic)MTTSessionEntity *sessionEntity;
 @property(strong)NSMutableArray *ids ;
 @property (strong)NSMutableArray* showingMessages;
 @property (assign) NSInteger isGroup;

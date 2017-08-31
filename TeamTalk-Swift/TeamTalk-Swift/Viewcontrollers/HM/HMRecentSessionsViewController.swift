@@ -17,6 +17,9 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     var tableview:UITableView = UITableView.init(frame: .zero, style: .grouped)
     var sessions:[MTTSessionEntity] = []
    
+    
+    
+    
     deinit {
         NotificationCenter.default.removeObserver(self )
         DDMessageModule.shareInstance().remove(self)
@@ -50,6 +53,13 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         NotificationCenter.default.addObserver(self , selector: #selector(self.refreshData), name: HMNotification.recentContactsUpdate.notificationName(), object: nil )
         
         DDMessageModule.shareInstance().add(self)
+        
+        //获取最新的会话列表
+        dispatch_globle(after: 0.0) {
+            SessionModule.instance().getRecentSession({ (count ) in
+                self.refreshData()
+            })
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,14 +94,23 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
                 session.lastMsgID = message.msgID
                 session.timeInterval = TimeInterval(message.msgTime)
                 session.lastMessage = message
-                session.unReadMsgCount += 1
-                MTTDatabaseUtil.instance().updateRecentSession(session, completion: { (error ) in
-                    
-                })
-                tableview.reloadData()
                 
-                unreadCount += 1
-                self.updateTotalUnread(count: Int(unreadCount))
+                if let chattingVC:HMChattingViewController = self.navigationController?.topViewController as? HMChattingViewController{
+                    if chattingVC.chattingModule.sessionEntity.sessionID != message.sessionId {
+                        session.unReadMsgCount += 1
+                        unreadCount += 1
+                    }
+                }else{
+                    session.unReadMsgCount += 1
+                    unreadCount += 1
+                }
+                
+                MTTDatabaseUtil.instance().updateRecentSession(session, completion: { (error ) in })
+                
+                self.refreshData()
+                
+//                tableview.reloadData()
+//                self.updateTotalUnread(count: Int(unreadCount))
                 
                 return
             }
@@ -232,19 +251,16 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         self.sortSessions()
     }
     
+    
+    private let sortDes1 = [NSSortDescriptor.init(key: "timeInterval", ascending: false)]
+    private let sortDes2 = [NSSortDescriptor.init(key: "isFixedTop", ascending: false )]
     func sortSessions(){
         self.sessions.removeAll()
         self.sessions = SessionModule.instance().getAllSessions() as? [MTTSessionEntity] ?? []
         
-        debugPrint("sort sessions :",self.sessions,self.sessions.count)
-        
         if self.sessions.count > 0 {
-            let sortDes1 = NSSortDescriptor.init(key: "timeInterval", ascending: false)
-            let sortDes2 = NSSortDescriptor.init(key: "isFixedTop", ascending: false )
-            
-            self.sessions = (self.sessions as NSArray).sortedArray(using: [sortDes1]) as! [MTTSessionEntity]
-            self.sessions = (self.sessions as NSArray).sortedArray(using: [sortDes2]) as! [MTTSessionEntity]
-            
+            self.sessions = (self.sessions as NSArray).sortedArray(using: sortDes1) as! [MTTSessionEntity]
+            self.sessions = (self.sessions as NSArray).sortedArray(using: sortDes2) as! [MTTSessionEntity]
         }
         self.tableview .reloadData()
     }
@@ -253,8 +269,10 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         MTTDatabaseUtil.instance().getLastestMessage(forSessionID: session.sessionID) { (message , error ) in
             if message != nil {
                 if message!.msgID != session.lastMsgID {
+                    
                     DDMessageModule.shareInstance().getMessageFromServer(Int(session.lastMsgID), currentSession: session, count: 20, block: { (array , error ) in
                         if array?.count ?? 0 > 0 {
+                            
                             MTTDatabaseUtil.instance().insertMessages(array! as! [Any], success: { 
                                 
                             }, failure: { (error ) in

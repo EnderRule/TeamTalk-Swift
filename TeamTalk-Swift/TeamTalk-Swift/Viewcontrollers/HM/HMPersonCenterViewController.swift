@@ -136,10 +136,10 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
                 if index == 1 {
                     RuntimeStatus.instance().user = nil
                     
-                    UserDefaults.standard.setValue("", forKey: "password")
-                    UserDefaults.standard.setValue("", forKey: "username")
-                    UserDefaults.standard.setValue(false, forKey: "autologin")
-                    
+                    RuntimeStatus.instance().token = ""
+                    RuntimeStatus.instance().userID = ""
+                    RuntimeStatus.instance().autoLogin = false
+                     
                     let loginvc = MTTLoginViewController.init()
                     loginvc.hidesBottomBarWhenPushed = true
                     (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.pushViewController(loginvc, animated: true )
