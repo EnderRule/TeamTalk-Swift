@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */; };
 		663F0FDD1F5657E10041E3C5 /* HMMediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */; };
 		66686A621F4522B5008B26BD /* MTTBubbleModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A611F4522B5008B26BD /* MTTBubbleModule.m */; };
 		66686A651F4522FD008B26BD /* MTTPhotosCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A641F4522FD008B26BD /* MTTPhotosCache.m */; };
@@ -411,6 +412,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMLoginManager.swift; sourceTree = "<group>"; };
 		663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMMediaManager.swift; sourceTree = "<group>"; };
 		66686A601F4522B5008B26BD /* MTTBubbleModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTBubbleModule.h; sourceTree = "<group>"; };
 		66686A611F4522B5008B26BD /* MTTBubbleModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTBubbleModule.m; sourceTree = "<group>"; };
@@ -1367,6 +1369,7 @@
 			children = (
 				6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */,
 				663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */,
+				6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -2377,6 +2380,7 @@
 				66E6D3BE1F428C38008E9590 /* HSL.swift in Sources */,
 				66686A881F457123008B26BD /* ChangeNightModeAPI.swift in Sources */,
 				66F107ED1F42F0750035C888 /* MTTBaseEntity.swift in Sources */,
+				6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */,
 				66F10F761F4449570035C888 /* resample.c in Sources */,
 				66E6D3741F4289D0008E9590 /* CodedOutputStream.swift in Sources */,
 				66686D141F46D81E008B26BD /* SCLTextView.m in Sources */,

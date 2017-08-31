@@ -64,8 +64,6 @@ class HMMessageManager: NSObject {
             var msgData:Data = Data()
             if message.isVoiceMessage {
                 msgData = self.getUploadVoiceDataAt(message: message)
-                
-                debugPrint("HMMessageManager send voice message datas \(msgData as NSData)")
             }else {
                 var msgContent:String = message.msgContent
                 if message.isImageMessage {
@@ -188,6 +186,7 @@ class HMMessageManager: NSObject {
         if FileManager.default.fileExists(atPath: localPath){
             do {
                 let voicedata = try  NSData.init(contentsOfFile: localPath) as Data
+                
                 let json = JSON.init(message.info)
                 let length:Int = json[MTTMessageEntity.VOICE_LENGTH].intValue
                 let muData:NSMutableData = NSMutableData.init()

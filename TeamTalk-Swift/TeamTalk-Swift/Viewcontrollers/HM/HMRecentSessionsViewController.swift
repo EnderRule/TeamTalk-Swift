@@ -84,10 +84,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     
     //MARK:DDmessagemodule delegate 
     func onReceiveMessage(_ message: MTTMessageEntity!) {
-        
-        var unreadCount =  SessionModule.instance().getAllUnreadMessageCount()
-        
-        for session in self.sessions {
+                for session in self.sessions {
             if message.sessionId == session.sessionID {
             
                 session.lastMsg = message.msgContent
@@ -98,20 +95,13 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
                 if let chattingVC:HMChattingViewController = self.navigationController?.topViewController as? HMChattingViewController{
                     if chattingVC.chattingModule.sessionEntity.sessionID != message.sessionId {
                         session.unReadMsgCount += 1
-                        unreadCount += 1
                     }
                 }else{
                     session.unReadMsgCount += 1
-                    unreadCount += 1
                 }
-                
                 MTTDatabaseUtil.instance().updateRecentSession(session, completion: { (error ) in })
                 
                 self.refreshData()
-                
-//                tableview.reloadData()
-//                self.updateTotalUnread(count: Int(unreadCount))
-                
                 return
             }
         }
@@ -125,20 +115,13 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         newsession.unReadMsgCount = 1
         SessionModule.instance().add(toSessionModel: newsession)
         
+        
+        MTTDatabaseUtil.instance().updateRecentSession(newsession, completion: { (error ) in })
+       
         self.refreshData()
-        
-        MTTDatabaseUtil.instance().updateRecentSession(newsession, completion: { (error ) in
-            
-        })
-        
-        unreadCount += 1
-        self.updateTotalUnread(count: Int(unreadCount))
         
     }
     
-    func updateTotalUnread(count:Int){
-        self.setTabbarBadge(count: count)
-    }
     
     //MARK: SessionModuelDelegate
     func sessionUpdate(_ session: MTTSessionEntity!, action: SessionAction) {
@@ -213,7 +196,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func n_receiveStartLoginNotification(notification:Notification){
-        self.title = holderTitle
+        self.title = "連接中..."
     }
     func n_receiveLoginSuccessNotification(notification:Notification){
         self.title = holderTitle

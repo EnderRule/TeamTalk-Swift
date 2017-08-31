@@ -135,31 +135,16 @@ class HMChatVoiceCell: HMChatBaseCell {
         self.showRedDot(show: false )
 
         if self.message != nil {
-            let json = JSON.init(message!.info)
+            self.message!.info.updateValue(true , forKey: MTTMessageEntity.DDVOICE_PLAYED)
+            self.message!.updateToDB(compeletion: nil )
             
-            let hadPlayed:Bool = json[MTTMessageEntity.DDVOICE_PLAYED].boolValue
-            if !hadPlayed {
-                self.message?.info.updateValue(true , forKey: MTTMessageEntity.DDVOICE_PLAYED)
-                self.message?.updateToDB(compeletion: nil )
-            }
-            
-            if isVoicePlaying {
-                self.isVoicePlaying = false
-                self.updatePlayState()
-                
-                self.delegate?.HMChatCellAction(type: .voiceStop, message: self.message!, sourceView: self)
-            }else{
-                self.isVoicePlaying = true
-                self.updatePlayState()
-                
-                self.delegate?.HMChatCellAction(type: .voicePlay, message: self.message!, sourceView: self)
-            }
+            self.delegate?.HMChatCellAction(type: .voicePlayOrStop, message: self.message!, sourceView: self)
         }
     }
     
-    public func updatePlayState(){
+    public func updatePlayState(isPlaying:Bool){
         
-        if isVoicePlaying {
+        if isPlaying {
             if self.bubbleLocation == .right{
                 voiceImgv.image = UIImage.animatedImage(with: [#imageLiteral(resourceName: "dd_right_voice_one"),#imageLiteral(resourceName: "dd_right_voice_two"),#imageLiteral(resourceName: "dd_right_voice_three")], duration: 1)
             }else {

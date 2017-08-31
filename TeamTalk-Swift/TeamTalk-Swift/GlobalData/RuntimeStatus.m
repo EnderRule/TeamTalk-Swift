@@ -119,6 +119,14 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
+-(NSString *)userName{
+    return (NSString *)[[NSUserDefaults standardUserDefaults]objectForKey:@"im.HMUserName"];
+}
+-(void)setUserName:(NSString *)userName{
+    [[NSUserDefaults standardUserDefaults]setObject:userName  forKey:@"im.HMUserName"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
 -(NSString *)userID{
     return (NSString *)[[NSUserDefaults standardUserDefaults]objectForKey:@"im.HMUserID"];
 }

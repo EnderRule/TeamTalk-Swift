@@ -202,10 +202,6 @@ class ZQFileBrowserVC: UIViewController,UITableViewDataSource,UITableViewDelegat
             }else {
                 self.browserPath = fullPath
                 self.reloadFiles()
-                
-//                let browserVC = ZQFileBrowserVC.init()
-//                browserVC.browserPath = fullPath
-//                self.navigationController?.pushViewController(browserVC, animated: true)
             }
         }
     }

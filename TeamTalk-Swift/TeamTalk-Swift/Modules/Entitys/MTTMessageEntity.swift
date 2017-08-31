@@ -233,6 +233,7 @@ extension MTTMessageEntity {
         
         self.msgTime =  msgInfo.createTime
 //        self.msgID = UInt32(DDMessageModule.getMessageID())//Fixme:here    old style is: self.msgID = msgInfo.msgId
+        self.msgID = msgInfo.msgId
         self.sessionType = sessionType
         if self.sessionType == .sessionTypeSingle{
             self.sessionId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)

@@ -33,6 +33,7 @@ typedef NS_ENUM(NSUInteger, PlayerType)
 
 + (PlayerManager *)sharedManager;
 
+- (BOOL)isPlaying;
 - (void)stopPlaying;
 - (BOOL)playingFileName:(NSString*)fileName;
 - (void)playAudioWithFileName:(NSString *)filename delegate:(id<PlayingDelegate>)newDelegate;

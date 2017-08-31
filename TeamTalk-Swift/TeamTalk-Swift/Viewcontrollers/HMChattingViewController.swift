@@ -540,8 +540,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     //MARK: voice playing Delegate
     func playingStoped() {
         dispatch(after: 0.0) {
-            self.currentVoicePlayingCell?.isVoicePlaying = false
-            self.currentVoicePlayingCell?.updatePlayState()
+            self.currentVoicePlayingCell?.updatePlayState(isPlaying: false)
+            self.currentVoicePlayingCell = nil
         }
     }
     
@@ -556,19 +556,37 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             
             message?.updateToDB(compeletion: nil )
             self.sendMessage(msgEntity: message!)
-        }else if  type == .voiceStop {
-            PlayerManager.shared().stopPlaying()
-        }else if type == .voicePlay{
-            let localPath = message?.msgContent.safeLocalPath() ?? ""
-            if FileManager.default.fileExists(atPath: localPath){
-                PlayerManager.shared().stopPlaying()  //必須 停止之前的播放  ，否則無法更新上個播放對應的cell的UI
-                
-                self.currentVoicePlayingCell  = sourceView as? HMChatVoiceCell
-                PlayerManager.shared().playAudio(withFileName: localPath, playerType: .DDSpeaker, delegate: self)
+        }else if  type == .voicePlayOrStop {
+            if PlayerManager.shared().isPlaying(){
+                PlayerManager.shared().stopPlaying()
+                self.currentVoicePlayingCell?.updatePlayState(isPlaying: false)
             }else{
-                self.view.makeToast("音頻文件不存在")
+                let localPath = message?.msgContent.safeLocalPath() ?? ""
+                if FileManager.default.fileExists(atPath: localPath){
+                    PlayerManager.shared().stopPlaying()  //必須 停止之前的播放  ，否則無法更新上個播放對應的cell的UI
+                    
+                    self.currentVoicePlayingCell  = sourceView as? HMChatVoiceCell
+                    self.currentVoicePlayingCell?.updatePlayState(isPlaying: true)
+
+                    PlayerManager.shared().playAudio(withFileName: localPath, playerType: .DDSpeaker, delegate: self)
+                    
+                }else{
+                    self.view.makeToast("音頻文件不存在")
+                }
             }
         }
+//        else if type == .voicePlay{
+//            let localPath = message?.msgContent.safeLocalPath() ?? ""
+//            if FileManager.default.fileExists(atPath: localPath){
+//                PlayerManager.shared().stopPlaying()  //必須 停止之前的播放  ，否則無法更新上個播放對應的cell的UI
+//                
+//                self.currentVoicePlayingCell  = sourceView as? HMChatVoiceCell
+//                PlayerManager.shared().playAudio(withFileName: localPath, playerType: .DDSpeaker, delegate: self)
+//                
+//            }else{
+//                self.view.makeToast("音頻文件不存在")
+//            }
+//        }
     }
     
     func recordSettings()->[String:Any]{

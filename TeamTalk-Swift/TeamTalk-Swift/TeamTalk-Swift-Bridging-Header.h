@@ -53,7 +53,11 @@
 #import "RecorderManager.h"
 #import "PlayerManager.h"
 
-//API
+//TCP or API
+#import "DDTcpServer.h"
+#import "DDMsgServer.h"
+#import "DDHttpServer.h"
+
 #import "DDSendPhotoMessageAPI.h"
 #import "DDMessageSendManager.h"
 //audio、videos
@@ -87,5 +91,3 @@
 #import "LCActionSheet.h"
 
 #import "TZImagePickerController.h"
-
-#import <AVFoundation/AVAudioRecorder.h>

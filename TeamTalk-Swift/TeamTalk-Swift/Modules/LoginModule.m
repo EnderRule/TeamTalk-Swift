@@ -23,6 +23,7 @@
 #import "MTTUtil.h"
 
 #import "MTTDDNotification.h"
+
 #import "TeamTalk_Swift-Swift.h"
 
 @interface LoginModule(privateAPI)
@@ -37,8 +38,8 @@
     NSString* _lastLoginUser;       //最后登录的用户ID
     NSString* _lastLoginPassword;
     NSString* _lastLoginUserName;
-    NSString* _dao;
-    NSString * _priorIP;
+    
+     NSString * _priorIP;
     NSInteger _port;
     BOOL _relogining;
 }
@@ -173,6 +174,9 @@
     if ([DDClientState shareInstance].userState == DDUserOffLine && _lastLoginPassword && _lastLoginUserName) {
         
         [self loginWithUsername:_lastLoginUserName password:_lastLoginPassword success:^(MTTUserEntity *user) {
+            
+            
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationUserReloginSuccess object:user];
             success(YES);
         } failure:^(NSString *error) {

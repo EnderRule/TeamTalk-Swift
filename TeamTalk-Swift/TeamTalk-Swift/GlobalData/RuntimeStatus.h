@@ -19,6 +19,7 @@
 
 
 @property(nonatomic,copy)NSString *token;
+@property(nonatomic,copy)NSString *userName;
 @property(nonatomic,copy)NSString *userID;
 @property(nonatomic) BOOL autoLogin;
 

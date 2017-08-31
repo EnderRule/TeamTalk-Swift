@@ -207,6 +207,10 @@ static PlayerManager *mPlayerManager = nil;
     }
 }
 
+-(BOOL)isPlaying{
+    return self.avAudioPlayer.isPlaying;
+}
+
 - (void)stopPlaying {
     _playingFileName = nil;
     [self stopProximityMonitering];

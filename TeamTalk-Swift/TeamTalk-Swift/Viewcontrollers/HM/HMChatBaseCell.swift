@@ -25,8 +25,8 @@ enum HMChatCellActionType:Int{
     case sendAgain  = 1
     case showMenu   = 2
     case showSender = 4
-    case voicePlay  = 8
-    case voiceStop  = 16
+    case voicePlayOrStop  = 8
+
     case delete     = 32
 }
 
