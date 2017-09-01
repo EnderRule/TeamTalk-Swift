@@ -54,6 +54,13 @@ class HMChatTextCell: HMChatBaseCell,M80AttributedLabelDelegate {
         if size.width > maxChatContentWidth {
             size.width = maxChatContentWidth
         }
+        //为了协调，最小宽度20、高度20
+        if size.height < 20{
+            size.height = 20
+        }
+        if size.width < 20 {
+            size.width = 20
+        }
         return size
     }
     

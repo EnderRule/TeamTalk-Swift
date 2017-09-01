@@ -25,31 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (issuccess , error ) in
                 debugPrint("application notification requestAuthorization \(issuccess) \(error?.localizedDescription ?? "nil error ")")
             }
-        } else {
-            application.registerForRemoteNotifications()
         }
+        application.registerForRemoteNotifications()
+        let notiSettings:UIUserNotificationSettings = UIUserNotificationSettings.init(types: [.alert,.badge,.sound], categories: nil)
+        application.registerUserNotificationSettings(notiSettings)
         
-//        var length:Int = 51
-//        let muData:NSMutableData = NSMutableData.init()
-//        for index in 0..<4 {
-//            var byte = ((length >> ((3 - index)*8)) & 0x0ff)
-//            muData.append(&byte, length: 1)
-//        }
-//        print(muData)
-//        muData.append(&length, length: 4)
-//        print(muData)
-        
-        let encodeString = "Qo4lP7wUjxZpDl56invDaYqC2AXu3sSlElta7gLuOAlXKAj0dsogFc8/ZsYCc5EU"
-        let decodeString = "{\"type\":10,\"data\":\"{\"text\":\"grededt\"}\"}"
-        
-        let decoderesult = encodeString.decrypt()
-        
-        print("decoderesult",decoderesult)
-        
-        let testString = "fsfsfsefef fs测试哈哈哈哈哈单独累吧😓④发数据考虑f睡覺覅是你"
+        let testString = "fsfef fs测试哈哈哈哈哈单独累吧😓④发数据考虑f睡覺覅是你"
         let encryptStr = testString.encrypt()
         let decryptStr = encryptStr.decrypt()
-        
         print(self.classForCoder,"security test ","\n\(testString)\n\(encryptStr)\n\(decryptStr)")
         
         let loginVC = MTTLoginViewController.init()

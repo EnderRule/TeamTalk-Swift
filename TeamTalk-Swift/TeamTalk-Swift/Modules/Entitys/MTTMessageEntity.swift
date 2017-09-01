@@ -157,15 +157,7 @@ extension MTTMessageEntity {
     
     static  let  DD_IMAGE_LOCAL_KEY :String         =       "local"
     static  let  DD_IMAGE_URL_KEY :String           =       "url"
-
-    static  let  DD_COMMODITY_ORGPRICE:String        =       "orgprice"
-    static  let  DD_COMMODITY_PICURL:String          =       "picUrl"
-    static  let  DD_COMMODITY_PRICE:String           =       "price"
-    static  let  DD_COMMODITY_TIMES:String           =       "times"
-    static  let  DD_COMMODITY_TITLE :String          =       "title"
-    static  let  DD_COMMODITY_URL:String             =       "URL"
-    static  let  DD_COMMODITY_ID:String              =       "CommodityID"
-    
+ 
     static let mgjEmotionDic = ["[牙牙撒花]":"221",
                                 "[牙牙尴尬]":"222",
                                 "[牙牙大笑]":"223",
@@ -209,11 +201,11 @@ extension MTTMessageEntity {
         
         if type == 10 {
             self.msgContentType = .Text
-            
             self.msgContent = json["data"]["text"].stringValue
         }else if type == 11{
             self.msgContentType = .Image
             self.msgContent = json["data"]["url"].stringValue
+            self.info.updateValue(self.msgContent, forKey: MTTMessageEntity.DD_IMAGE_URL_KEY)
         }else if type == 12{
             self.msgContentType = .Emotion
             self.msgContent = json["data"]["sticker"].stringValue
@@ -269,17 +261,18 @@ extension MTTMessageEntity {
         }else{
             self.toUserID = sessionId
         }
-        var mymsgInfo:[String:Any] = [:]
         if self.isVoiceMessage {
             self.msgContentType = .Voice
             
             if (msgInfo.msgData as NSData).length > 4 {
-                self.saveVoice(voiceData: msgInfo.msgData, compeletion: { (filepath , voiceLength) in
+                self.saveDownloadVoice(data: msgInfo.msgData, compeletion: { (filepath , voiceLength) in
                     self.msgContent = filepath
                     
-                    mymsgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
-                    mymsgInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
-                    mymsgInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+                    var extraInfo:[String:Any] = [:]
+                    extraInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
+                    extraInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
+                    extraInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+                    self.info = extraInfo
                 })
             }else {
                 self.msgContent = "[語音存儲出錯]"
@@ -291,7 +284,6 @@ extension MTTMessageEntity {
                 debugPrint(self.classForCoder,"init with msgInfo、convert error")
             }
         }
-        self.info = mymsgInfo
     }
     
     public convenience init(msgData:Im.Message.ImmsgData){
@@ -313,17 +305,18 @@ extension MTTMessageEntity {
         }else{
             self.toUserID = sessionId
         }
-        var msgInfo:[String:Any] = [:]
         if self.isVoiceMessage {
             self.msgContentType = .Voice
             
             if (msgData.msgData as NSData).length > 4 {
-                self.saveVoice(voiceData: msgData.msgData, compeletion: { (filepath , voiceLength) in
+                self.saveDownloadVoice(data: msgData.msgData, compeletion: { (filepath , voiceLength) in
                     self.msgContent = filepath
                     
-                    msgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
-                    msgInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
-                    msgInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+                    var extraInfo:[String:Any] = [:]
+                    extraInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
+                    extraInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
+                    extraInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+                    self.info = extraInfo
                 })
             }else {
                 self.msgContent = "[語音存儲出錯]"
@@ -336,12 +329,11 @@ extension MTTMessageEntity {
                 debugPrint(self.classForCoder,"init with msgData、convert error")
             }
         }
-        self.info = msgInfo
     }
     
-    private func saveVoice(voiceData:Data, compeletion: @escaping ((_ voiceFilePath:String,_ voiceLength:Int32) ->Void)){
+    private func saveDownloadVoice(data:Data, compeletion: @escaping ((_ voiceFilePath:String,_ voiceLength:Int32) ->Void)){
         var filePath = ZQFileManager.shared.docPath(folder: "voice",fileName: "voice_\(TIMESTAMP()).spx")
-        let tempData:NSData = voiceData as NSData
+        let tempData:NSData = data as NSData
         let realVoiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData
         if realVoiceData.write(toFile: filePath, atomically: true){
         }else{
