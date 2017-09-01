@@ -41,25 +41,6 @@
         self.user = [MTTUserEntity new];
         [self registerAPI];
         [self checkUpdateVersion];
-        
-        
-        int length = 51;
-        
-        int8_t ch[4];
-        for(int32_t i = 0;i<4;i++){
-            ch[i] = ((length >> ((3 - i)*8)) & 0x0ff);
-        }
-        
-        NSMutableData *data  = [[NSMutableData alloc]initWithBytes:ch  length:4];
-
-        
-        NSString *lengthStr = [NSString stringWithFormat:@"%d",length];
-        NSString *str2 = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-        
-        NSLog(@"test:%hhd %hhd %hhd %hhd  \ntest2:%@ \ntest3:%@ \ntest4:%@",ch[0],ch[2],ch[2],ch[3],
-              [lengthStr dataUsingEncoding:NSUTF8StringEncoding],
-              str2,
-              data);
     }
     return self;
 }

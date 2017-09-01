@@ -39,6 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        muData.append(&length, length: 4)
 //        print(muData)
         
+        let encodeString = "Qo4lP7wUjxZpDl56invDaYqC2AXu3sSlElta7gLuOAlXKAj0dsogFc8/ZsYCc5EU"
+        let decodeString = "{\"type\":10,\"data\":\"{\"text\":\"grededt\"}\"}"
+        
+        let decoderesult = encodeString.decrypt()
+        
+        print("decoderesult",decoderesult)
+        
         let testString = "fsfsfsefef fs测试哈哈哈哈哈单独累吧😓④发数据考虑f睡覺覅是你"
         let encryptStr = testString.encrypt()
         let decryptStr = encryptStr.decrypt()

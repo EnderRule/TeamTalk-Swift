@@ -145,11 +145,7 @@ class MTTMessageEntity: NSObject,NSCopying {
        return  self.senderId == RuntimeStatus.instance().user.objID
     }
     var isEmotionMsg:Bool{
-//        let isEmoji =  MTTEmotionManager.shared.isEmotion(msgContent: self.msgContent)
-        let isEmoji = (MTTMessageEntity.mgjEmotionDic[self.msgContent] ?? "").length > 0 || self.msgContent.hasPrefix("[yc/yc")
-        
-//        debugPrint("isemotionMsg  \(isEmoji)  \(msgContent) ")
-        return isEmoji
+        return   self.msgContentType == .Emotion
     }
 }
 
@@ -192,18 +188,93 @@ extension MTTMessageEntity {
                                 "[牙牙闪电]":"240"]
 }
 
+
+
+
 extension MTTMessageEntity {
+    
+//    文本 {"type":10,"data":"{\"text\":\"ghj\"}"}
+//    圖片 {"type":11,"data":"{\"url\":\"http:.......789000.jpg\"}"}
+//    表情 {"type":12,"data":"{\"sticker\":\"xxx\"}"}
+    public func decode(content:String){
+        
+        let realConent = content.decrypt()
+        let dic = NSDictionary.initWithJsonString(realConent) ?? [:]
+        
+        NSLog("MTTMessageEntity decode content %@ \nreal:%@ \ndic:%@",content,realConent,dic )
+        
+        let json = JSON.init(dic)
+
+        let type = json["type"].intValue
+        
+        if type == 10 {
+            self.msgContentType = .Text
+            
+            self.msgContent = json["data"]["text"].stringValue
+        }else if type == 11{
+            self.msgContentType = .Image
+            self.msgContent = json["data"]["url"].stringValue
+        }else if type == 12{
+            self.msgContentType = .Emotion
+            self.msgContent = json["data"]["sticker"].stringValue
+        }else{
+            self.msgContentType = .Text
+            self.msgContent = "[未知消息]"
+        }
+    }
+    
+    public func encodeContent()->String{
+        var dic:[AnyHashable:Any] = [:]
+        
+        var dataDic:[AnyHashable:Any] = [:]
+        var type:Int = 0
+        if self.msgContentType == .Text {
+            dataDic.updateValue(self.msgContent, forKey: "text")
+            type = 10
+        }else if self.msgContentType == .Image{
+            dataDic.updateValue(self.msgContent, forKey: "url")
+            type = 11
+        }else if self.msgContentType == .Emotion {
+            dataDic.updateValue(self.msgContent, forKey: "sticker")
+            type = 12
+        }
+        
+        dic.updateValue(type, forKey: "type")
+        dic.updateValue(dataDic, forKey: "data")
+
+        let contentStr:String = (dic as NSDictionary).jsonString() ?? ""
+        let encryptContent:String = contentStr.encrypt()
+        
+        NSLog("MTTMessageEntity encode contentStr %@ \n dic:%@ \n encrypt:%@",contentStr,dic,encryptContent)
+        
+        return encryptContent
+    }
+    
+    
     public convenience init(msgInfo:Im.BaseDefine.MsgInfo,sessionType:Im.BaseDefine.SessionType){
         self.init()
         
-        var mymsgInfo:[String:Any] = [:]
-    
+        self.msgID = msgInfo.msgId
+        self.msgTime =  msgInfo.createTime
         self.msgType = MsgType_Objc.init(rawValue: msgInfo.msgType.rawValue) ?? .msgTypeSingleText
+        self.sessionType = sessionType
+        self.senderId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
+        if self.sessionType == .sessionTypeSingle{
+            self.sessionId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
+        }else {
+            self.sessionId = MTTGroupEntity.localIDFrom(pbID: msgInfo.fromSessionId)
+        }
+        if senderId == sessionId{
+            self.toUserID =  RuntimeStatus.instance().user.userId
+        }else{
+            self.toUserID = sessionId
+        }
+        var mymsgInfo:[String:Any] = [:]
         if self.isVoiceMessage {
             self.msgContentType = .Voice
             
             if (msgInfo.msgData as NSData).length > 4 {
-                self.process(voiceData: msgInfo.msgData, compeletion: { (filepath , voiceLength) in
+                self.saveVoice(voiceData: msgInfo.msgData, compeletion: { (filepath , voiceLength) in
                     self.msgContent = filepath
                     
                     mymsgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
@@ -211,61 +282,43 @@ extension MTTMessageEntity {
                     mymsgInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
                 })
             }else {
-                self.msgContent = "語音存儲出錯"
+                self.msgContent = "[語音存儲出錯]"
             }
         }else{
             if let tempStr = String.init(data: msgInfo.msgData, encoding: .utf8){
-                let indata = tempStr.cString(using: .utf8)
-                var pout:UnsafeMutablePointer<Int8>?
-                var outLen:UnsafeMutablePointer<UInt32>?
-                let inLen:Int32 = Int32(strlen(tempStr))
-                
-                DecryptMsg(indata, inLen, &pout, &outLen)
-                
-                if pout != nil {
-                    let decodeMsg = String.init(cString: pout!)
-                    self.msgContent = decodeMsg
-                }
+                self.decode(content: tempStr)
             }else{
-                debugPrint(self.classForCoder,"init with msgData、convert error")
+                debugPrint(self.classForCoder,"init with msgInfo、convert error")
             }
         }
-        
-        self.msgTime =  msgInfo.createTime
-//        self.msgID = UInt32(DDMessageModule.getMessageID())//Fixme:here    old style is: self.msgID = msgInfo.msgId
-        self.msgID = msgInfo.msgId
-        self.sessionType = sessionType
-        if self.sessionType == .sessionTypeSingle{
-            self.sessionId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
-        }else {
-            self.sessionId = MTTGroupEntity.localIDFrom(pbID: msgInfo.fromSessionId)
-        }
-
-        self.toUserID = RuntimeStatus.instance().user.userId  //
-
-        if self.isEmotionMsg{
-            self.msgContentType = .Emotion
-        }
-        self.senderId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
-        
         self.info = mymsgInfo
     }
     
     public convenience init(msgData:Im.Message.ImmsgData){
         self.init()
         
+        self.msgID = msgData.msgId
         self.msgTime = msgData.createTime
-        
         self.msgType = MsgType_Objc.init(rawValue: msgData.msgType.rawValue) ?? .msgTypeSingleText
-        
         self.sessionType = self.isGroupMessage ? .sessionTypeGroup: .sessionTypeSingle
-
+        if self.sessionType == .sessionTypeSingle{
+            self.sessionId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
+        }else {
+            self.sessionId = MTTGroupEntity.localIDFrom(pbID: msgData.toSessionId)
+        }
+        self.senderId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
+        
+        if senderId == sessionId{
+            self.toUserID = RuntimeStatus.instance().user?.userId ?? ""
+        }else{
+            self.toUserID = sessionId
+        }
         var msgInfo:[String:Any] = [:]
         if self.isVoiceMessage {
             self.msgContentType = .Voice
             
             if (msgData.msgData as NSData).length > 4 {
-                self.process(voiceData: msgData.msgData, compeletion: { (filepath , voiceLength) in
+                self.saveVoice(voiceData: msgData.msgData, compeletion: { (filepath , voiceLength) in
                     self.msgContent = filepath
                     
                     msgInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
@@ -273,43 +326,20 @@ extension MTTMessageEntity {
                     msgInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
                 })
             }else {
-                self.msgContent = "語音存儲出錯"
+                self.msgContent = "[語音存儲出錯]"
             }
         }else{
-            if let tempStr = String.init(data: msgData.msgData, encoding: .utf8){
-                let indata = tempStr.cString(using: .utf8)
-                var pout:UnsafeMutablePointer<Int8>?
-                var outLen:UnsafeMutablePointer<UInt32>?
-                let inLen:Int32 = Int32(strlen(tempStr))
             
-                DecryptMsg(indata, inLen, &pout, &outLen)
-                
-                if pout != nil {
-                    let decodeMsg = String.init(cString: pout!)
-                    self.msgContent = decodeMsg
-                }
+            if let tempStr = String.init(data: msgData.msgData, encoding: .utf8){
+                self.decode(content: tempStr)
             }else{
                 debugPrint(self.classForCoder,"init with msgData、convert error")
             }
         }
-        
-        if self.sessionType == .sessionTypeSingle{
-            self.sessionId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
-        }else {
-            self.sessionId = MTTGroupEntity.localIDFrom(pbID: msgData.toSessionId)
-        }
-        
-        if self.isEmotionMsg{
-            self.msgContentType = .Emotion
-        }
-        self.msgID = msgData.msgId
-        self.toUserID = self.sessionId
-        self.senderId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
-        
         self.info = msgInfo
     }
     
-    private func process(voiceData:Data, compeletion: @escaping ((_ voiceFilePath:String,_ voiceLength:Int32) ->Void)){
+    private func saveVoice(voiceData:Data, compeletion: @escaping ((_ voiceFilePath:String,_ voiceLength:Int32) ->Void)){
         var filePath = ZQFileManager.shared.docPath(folder: "voice",fileName: "voice_\(TIMESTAMP()).spx")
         let tempData:NSData = voiceData as NSData
         let realVoiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData
@@ -337,6 +367,30 @@ extension MTTMessageEntity {
         
         compeletion(filePath,voiceLength)
     }
+    
+    public func getUploadVoiceData()->Data{
+        let localPath = self.msgContent.safeLocalPath()
+        if FileManager.default.fileExists(atPath: localPath){
+            do {
+                let voicedata = try  NSData.init(contentsOfFile: localPath) as Data
+                
+                let json = JSON.init(self.info)
+                let length:Int = json[MTTMessageEntity.VOICE_LENGTH].intValue
+                let muData:NSMutableData = NSMutableData.init()
+                for index in 0..<4 {
+                    var byte = ((length >> ((3 - index)*8)) & 0x0ff)
+                    muData.append(&byte, length: 1)
+                }
+                muData.append(voicedata)
+                
+                return muData as Data
+            }catch {
+                return Data()
+            }
+        }else {
+            return Data()
+        }
+    }
 }
 
 extension MTTMessageEntity {
@@ -350,19 +404,20 @@ extension MTTMessageEntity {
 extension String {
     
     func decrypt()->String {
-     let tempStr = self
-        let indata = tempStr.cString(using: .utf8)
+
+        let indata = self.cString(using: .utf8)
         var pout:UnsafeMutablePointer<Int8>?
         var outLen:UnsafeMutablePointer<UInt32>?
-        let inLen:Int32 = Int32(strlen(tempStr))
+        let inLen:Int32 = Int32(strlen(self))
         
         DecryptMsg(indata, inLen, &pout, &outLen)
         
         if pout != nil {
             let deResult = String.init(cString: pout!)
             return deResult
+        }else{
+            return ""
         }
-        return ""
     }
     
     func encrypt()->String {

@@ -63,15 +63,9 @@ class HMMessageManager: NSObject {
             
             var msgData:Data = Data()
             if message.isVoiceMessage {
-                msgData = self.getUploadVoiceDataAt(message: message)
+                msgData = message.getUploadVoiceData()// self.getUploadVoiceDataAt(message: message)
             }else {
-                var msgContent:String = message.msgContent
-                if message.isImageMessage {
-                    let dic:NSDictionary = NSDictionary.initWithJsonString(message.msgContent)! as NSDictionary
-                    let imageurl = dic[MTTMessageEntity.DD_IMAGE_URL_KEY] as! String
-                    msgContent = imageurl
-                }
-                msgData = msgContent.encrypt().utf8ToData()
+                msgData = message.encodeContent().utf8ToData()
                 self.unAckQueueAdd(message: message)
             }
             
@@ -92,7 +86,6 @@ class HMMessageManager: NSObject {
                 }else if let resultIDs = respone as? [UInt32] {
                     MTTDatabaseUtil.instance().deleteMesages(message, completion: { ( success ) in  })
                     
-
                     self.unAckQueueRemove(message: message)
                     
                     message.msgID = resultIDs[0]
@@ -131,7 +124,6 @@ class HMMessageManager: NSObject {
     
     public func sendImage(imagePath:String,message:MTTMessageEntity,session:MTTSessionEntity,completion:HMSendMessageCompletion){
         message.msgContentType = .Image
-        
         
     }
     
@@ -203,25 +195,6 @@ class HMMessageManager: NSObject {
         }else {
             return Data()
         }
-        
-//        let localPath:String = message.msgContent.safeLocalPath() // message.info[MTTMessageEntity.VOICE_LOCAL_KEY] as? String ?? ""
-//        if FileManager.default.fileExists(atPath: localPath){
-//            do {
-//                msgData =  try  NSData.init(contentsOfFile: localPath) as Data
-//                
-//                debugPrint("HMMessageManager send voice data \(msgData.endIndex/1024) KB")
-//            }catch {
-//                let errorString = "send voice message read data error :\(error.localizedDescription)  \n at path \(localPath)"
-//                let error = NSError.init(domain: errorString, code: 0, userInfo: nil )
-//                completion(message,error)
-//                return
-//            }
-//        }else {
-//            let errorString = "send voice message file do not exist at path \(localPath)"
-//            let error = NSError.init(domain: errorString, code: 0, userInfo: nil )
-//            completion(message,error)
-//            return
-//        }
     }
 }
 
