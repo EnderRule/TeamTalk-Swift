@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         RuntimeStatus.instance()
         DDClientStateMaintenanceManager .shareInstance()
         
+        print("HMNotification. userReloginSuccess ",HMNotification.userReloginSuccess.notificationName().rawValue)
+        
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (issuccess , error ) in
                 debugPrint("application notification requestAuthorization \(issuccess) \(error?.localizedDescription ?? "nil error ")")

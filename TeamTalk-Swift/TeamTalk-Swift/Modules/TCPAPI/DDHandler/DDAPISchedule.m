@@ -142,12 +142,12 @@ typedef NS_ENUM(NSInteger, APIErrorCode){
             
             if (response != nil ){
                 dispatch_async(dispatch_get_main_queue(), ^{
-//                    @try {
+                    @try {
                         completion(response,nil);
-//                    }
-//                    @catch (NSException *exception) {
-//                        DDLog(@"completion,response is nil");
-//                    }
+                    }
+                    @catch (NSException *exception) {
+                        DDLog(@"completion,response is nil");
+                    }
                 });
             }
         }

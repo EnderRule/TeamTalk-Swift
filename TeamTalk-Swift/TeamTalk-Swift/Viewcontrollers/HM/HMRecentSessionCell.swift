@@ -104,7 +104,7 @@ class HMRecentSessionCell: HMBaseCell {
             }else if session.lastMsg.hasSuffix(".spx"){
                 self.msgLabel.text = "[語音]"
             }else if session.lastMsg.hasSuffix("[") && session.lastMsg.hasSuffix("]"){
-                self.msgLabel.text = "[語音]"
+                self.msgLabel.text = "[貼圖]"
             }else{
                 self.msgLabel.text = session.lastMsg //.nim_setText(session.lastMsg)
             }

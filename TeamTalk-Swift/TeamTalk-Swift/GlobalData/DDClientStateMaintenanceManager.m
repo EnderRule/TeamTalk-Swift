@@ -254,36 +254,67 @@ static NSInteger const reloginTimeinterval = 5;
     time ++;
     if (time >= _reloginInterval)
     {
-        [[LoginModule instance] reloginSuccess:^{
+        [[HMLoginManager shared]reloginWithSuccess:^(MTTUserEntity * _Nonnull user ) {
             DDLog(@"relogin success");
-
+            
             [_reloginTimer invalidate];
             _reloginTimer = nil;
             time=0;
             _reloginInterval = 0;
             powN = 0;
-//            [RecentUsersViewController shareInstance].title=APP_NAME;
+            
             [[NSNotificationCenter defaultCenter]postNotificationName:DDNotificationUserLoginSuccess object:nil ];
             DDClientState.shareInstance.userState = DDUserOnline;
-            
-        } failure:^(NSString *error) {
+            [HMRecentSessionsViewController shared].title = APP_NAME;
+        } failure:^(NSString * _Nonnull error ) {
             DDLog(@"relogin failure:%@",error);
-                if ([error isEqualToString:@"未登录"]) {
-                    [_reloginTimer invalidate];
-                    _reloginTimer = nil;
-                    time = 0;
-                    _reloginInterval = 0;
-                    powN = 0;
-//                    [RecentUsersViewController shareInstance].title=APP_NAME;
-                }else{
-//                    [RecentUsersViewController shareInstance].title=@"未连接";
-                    
-                    powN ++;
-                    time = 0;
-                    _reloginInterval = pow(2, powN);
-                }
-            
+            if ([error isEqualToString:@"未登录"]) {
+                [_reloginTimer invalidate];
+                _reloginTimer = nil;
+                time = 0;
+                _reloginInterval = 0;
+                powN = 0;
+                [HMRecentSessionsViewController shared].title = APP_NAME;
+            }else{
+                [HMRecentSessionsViewController shared].title = @"未连接";
+                powN ++;
+                time = 0;
+                _reloginInterval = pow(2, powN);
+            }
         }];
+        
+        
+        
+        
+//        [[LoginModule instance] reloginSuccess:^{
+//            DDLog(@"relogin success");
+//
+//            [_reloginTimer invalidate];
+//            _reloginTimer = nil;
+//            time=0;
+//            _reloginInterval = 0;
+//            powN = 0;
+//
+//            [[NSNotificationCenter defaultCenter]postNotificationName:DDNotificationUserLoginSuccess object:nil ];
+//            DDClientState.shareInstance.userState = DDUserOnline;
+//            [HMRecentSessionsViewController shared].title = APP_NAME;
+//        } failure:^(NSString *error) {
+//            DDLog(@"relogin failure:%@",error);
+//            if ([error isEqualToString:@"未登录"]) {
+//                [_reloginTimer invalidate];
+//                _reloginTimer = nil;
+//                time = 0;
+//                _reloginInterval = 0;
+//                powN = 0;
+//                [HMRecentSessionsViewController shared].title = APP_NAME;
+//            }else{
+//                [HMRecentSessionsViewController shared].title = @"未连接";
+//                powN ++;
+//                time = 0;
+//                _reloginInterval = pow(2, powN);
+//            }
+//            
+//        }];
        
     }
 }

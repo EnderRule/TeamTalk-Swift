@@ -36,6 +36,7 @@
 #import "DDClientStateMaintenanceManager.h"
 #import "RuntimeStatus.h"
 #import "MTTDatabaseUtil.h"
+#import "MTTUtil.h"
 #import "security.h"
 
 //Module
@@ -52,6 +53,7 @@
 
 #import "RecorderManager.h"
 #import "PlayerManager.h"
+#import "SpellLibrary.h"
 
 //TCP or API
 #import "DDTcpServer.h"
@@ -60,6 +62,7 @@
 
 #import "DDSendPhotoMessageAPI.h"
 #import "DDMessageSendManager.h"
+
 //audio、videos
 #import "Encapsulator.h"
 

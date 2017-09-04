@@ -35,7 +35,6 @@ let EMAIL_SPLIT = "!@#$~email~#$@!"
 
 enum HMNotification:Int {
     
-    //
     case tcpLinkConnectComplete = 1
     case tcpLinkConnectFailure
     case tcpLinkDisconnect
@@ -71,7 +70,85 @@ enum HMNotification:Int {
     case sessionShieldAndFixed          //最近联系人置顶或者屏蔽
     
     func notificationName()->Notification.Name{
-        let nameStr = "HMNotification\(self)"
+        var nameStr = ""
+        switch self  {
+        case .tcpLinkDisconnect:
+            nameStr = "Notification_Tcp_link_Disconnect"
+            break
+        case .tcpLinkConnectFailure:
+            nameStr = "Notification_Tcp_Link_conntect_Failure"
+            break
+        case .tcpLinkConnectComplete:
+            nameStr = "Notification_Tcp_Link_connect_complete"
+            break
+        case .serverHeartBeat:
+            nameStr = "Notification_Server_heart_beat"
+            break
+        case .userStartLogin:
+            nameStr = "Notification_Start_login"
+            break
+        case .userLoginSuccess:
+            nameStr = "Notification_user_login_success"
+            break
+        case .userLoginFailure:
+            nameStr = "Notification_user_login_failure"
+            break
+        case .userLogout:
+            nameStr = "Notification_user_logout"
+            break
+//        case .userReloginSuccess:
+//            nameStr = ""
+//            break
+//        case .userReloginFailure:
+//            nameStr = ""
+//            break
+        case .pcLoginStatusChanged:
+            nameStr = "Notification_pc_login_status_changed"
+            break
+        case .userOffline:
+            nameStr = "Notification_user_off_line"
+            break
+        case .userKickouted:
+            nameStr = "Notification_user_kick_out"
+            break
+        case .userInitiativeOffline:
+            nameStr = "Notification_user_initiative_Offline"
+            break
+        case .userSignatureChanged:
+            nameStr = "Notification_user_sign_changed"
+            break
+        case .removeSessionSuccess:
+            nameStr = "Notification_Remove_Session"
+            break
+        case .reloadRecentContacts:
+            nameStr = "Notification_reload_recent_contacts"
+            break
+        case .receiveMessage:
+            nameStr = "Notification_receive_message"
+            break
+        case .receiveP2PShakeMessage:
+            nameStr = "Notification_receive_P2P_Shake_message"
+            break
+        case .receiveP2PInputingMessage:
+            nameStr = "Notifictaion_receive_P2P_Inputing_message"
+            break
+        case .receiveP2PStopInputingMessage:
+            nameStr = "ReceiveP2PStopInputingMessage"
+            break
+        case .loadLocalGroupFinish:
+            nameStr = "Notification_local_group"
+            break
+        case .recentContactsUpdate:
+            nameStr = "Notification_RecentContactsUpdate"
+            break
+        case .sessionShieldAndFixed:
+            nameStr = "Notification_SessionShieldAndFixed"
+            break
+        
+        default:
+            nameStr = "HMNotification_\(self)_\(self.rawValue)"
+        }
+        
         return Notification.Name.init(nameStr)
     }
 

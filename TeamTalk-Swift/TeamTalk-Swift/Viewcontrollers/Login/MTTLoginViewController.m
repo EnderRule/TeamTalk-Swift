@@ -155,37 +155,33 @@
     HUD.dimBackground = YES;
     HUD.labelText = @"正在登录";
     
-    [[LoginModule instance] loginWithUsername:userName password:password success:^(MTTUserEntity *user) {
+    [[HMLoginManager shared]loginWithUserName:userName password:password success:^(MTTUserEntity * _Nonnull user ) {
         
         [HUD removeFromSuperview];
         
         DDLog(@"login success:%@ %@ %@",user.userId,user.name ,user.avatar);
         
         [self.userLoginBtn setEnabled:YES];
-        if (user) {
-            TheRuntime.user=user ;
-            [TheRuntime updateData];
-            
-            [self loginSuccessHandler];
 
-            
-            if (TheRuntime.pushToken) {
-                SendPushTokenAPI *pushToken = [[SendPushTokenAPI alloc] init];
-                [pushToken requestWithObject:TheRuntime.pushToken Completion:^(id response, NSError *error) {
-                    
-                }];
-            }
-            
-            
-        }
-    } failure:^(NSString *error) {
+        TheRuntime.user=user ;
+        [TheRuntime updateData];
         
+        [self loginSuccessHandler];
+        
+        
+        if (TheRuntime.pushToken) {
+            SendPushTokenAPI *pushToken = [[SendPushTokenAPI alloc] init];
+            [pushToken requestWithObject:TheRuntime.pushToken Completion:^(id response, NSError *error) {
+                
+            }];
+        }
+    } failure:^(NSString * _Nonnull error ) {
         [HUD removeFromSuperview];
         
         if([error isEqualToString:@"版本过低"])
         {
             DDLog(@"login version too low 强制更新");
-
+            
             SCLAlertView *alert = [SCLAlertView new];
             [alert addButton:@"确定" actionBlock:^{
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://tt.mogu.io"]];
@@ -202,6 +198,55 @@
             [self.hud hide:YES afterDelay:3];
         }
     }];
+    
+    
+//    [[LoginModule instance] loginWithUsername:userName password:password success:^(MTTUserEntity *user) {
+//        
+//        [HUD removeFromSuperview];
+//        
+//        DDLog(@"login success:%@ %@ %@",user.userId,user.name ,user.avatar);
+//        
+//        [self.userLoginBtn setEnabled:YES];
+//        if (user) {
+//            TheRuntime.user=user ;
+//            [TheRuntime updateData];
+//            
+//            [self loginSuccessHandler];
+//
+//            
+//            if (TheRuntime.pushToken) {
+//                SendPushTokenAPI *pushToken = [[SendPushTokenAPI alloc] init];
+//                [pushToken requestWithObject:TheRuntime.pushToken Completion:^(id response, NSError *error) {
+//                    
+//                }];
+//            }
+//            
+//            
+//        }
+//    } failure:^(NSString *error) {
+//        
+//        [HUD removeFromSuperview];
+//        
+//        if([error isEqualToString:@"版本过低"])
+//        {
+//            DDLog(@"login version too low 强制更新");
+//
+//            SCLAlertView *alert = [SCLAlertView new];
+//            [alert addButton:@"确定" actionBlock:^{
+//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://tt.mogu.io"]];
+//            }];
+//            [alert showError:self title:@"升级提示" subTitle:@"版本过低，需要强制更新" closeButtonTitle:nil duration:0];
+//            
+//        }else{
+//            [self.userLoginBtn setEnabled:YES];
+//            DDLog(@"login error %@",error);
+//            
+//            [self.hud setHidden:NO];
+//            self.hud.labelText = error;
+//            
+//            [self.hud hide:YES afterDelay:3];
+//        }
+//    }];
     
 }
 
