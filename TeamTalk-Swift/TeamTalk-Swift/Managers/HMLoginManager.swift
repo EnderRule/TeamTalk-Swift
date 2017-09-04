@@ -8,19 +8,65 @@
 
 import UIKit
 
+@objc enum HMLoginState:Int {
+    case online = 0
+    case kickout            //被挤下线
+    case offLine
+    case offLineInitiative  //主动下线
+    case logining           //正在连线
+}
+
+@objc enum HMNetworkState:Int{
+    case wifi
+    case G3
+    case G2
+    case disconnect
+}
+@objc enum HMSocketState:Int{
+    case linkingLoginServer
+    case linkingMessageServer
+    case disconnect
+}
+
+
 @objc protocol HMLoginManagerDelegate {
     
     func loginSuccess(user:MTTUserEntity)
     func loginFailure(error:String)
-    
-    
     @objc optional func reloginSuccess()
     @objc optional func reloginFailure(error:String)
+    @objc optional func loginStateChanged(state:HMLoginState)
+
+    @objc optional func networkStateChanged(state:HMNetworkState)
+    @objc optional func socketStateChangeD(state:HMSocketState)
+    
 }
 
 class HMLoginManager: NSObject {
 
     static let shared:HMLoginManager = HMLoginManager()
+    
+    var currentUser:MTTUserEntity{
+        get{
+            return s_currentUser
+        }
+    }
+    private var s_currentUser:MTTUserEntity = MTTUserEntity.init()
+    
+    var loginState:HMLoginState{
+        get{
+            return s_loginState
+        }
+    }
+    var networkState:HMNetworkState{
+        get {
+            return s_networkState
+        }
+    }
+    private var s_networkState:HMNetworkState = .disconnect
+    private var s_loginState:HMLoginState = .offLine
+    
+    private var reachability:DDReachability = DDReachability.forInternetConnection()
     
     private var httpServer: DDHttpServer = DDHttpServer.init()
     private var msgServer:DDMsgServer = DDMsgServer.init()
@@ -35,7 +81,48 @@ class HMLoginManager: NSObject {
     private var priorport:Int = 0
     private var reloginning:Bool = false
     
+    
     private var delegates:[HMLoginManagerDelegate] = []
+    
+    
+    override init() {
+        super.init()
+        
+        self.registerAPI()
+        
+        
+        
+        
+        NotificationCenter.default.addObserver(self , selector: #selector(self.n_receiveReachabilityChanged(notification:)), name: Notification.Name.init("kDDReachabilityChangedNotification"), object: nil )
+        
+        reachability.startNotifier()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self )
+    }
+    
+    func registerAPI(){
+        let receiveKickOffApi = ReceiveKickOffAPI.init()
+        receiveKickOffApi.registerAPI { (object, error ) in
+            HMNotification.userKickouted.postWith(obj: object, userInfo: nil )
+        }
+        
+        let signaturechange = SignNotifyAPI.init()
+        signaturechange.registerAPI { (object , error ) in
+            HMNotification.userSignatureChanged.postWith(obj: object, userInfo: nil )
+        }
+        
+        let pclogin = LoginStatusNotifyAPI.init()
+        pclogin.registerAPI { (object , error ) in
+            HMNotification.pcLoginStatusChanged.postWith(obj: object, userInfo: nil )
+        }
+    }
+    
+    func checkUpdateVersion(){
+    
+        
+    }
     
     func loginWith(userName:String,password:String,success:@escaping ((MTTUserEntity)->Void),failure:@escaping ((String)->Void)){
         httpServer.getMsgIp({ [weak self] (dic ) in
@@ -124,6 +211,7 @@ class HMLoginManager: NSObject {
         if DDClientState.shareInstance().userState == .offLine && lastLoginUserName.length > 0 && lastLoginPassword.length > 0 {
             self .loginWith(userName: lastLoginUserName, password: lastLoginPassword, success: { (user ) in
                 HMNotification.userReloginSuccess.postWith(obj: user , userInfo: nil )
+                
                 success(user)
             }, failure: { (error ) in
                 let error = "重新登陆失败".appending( error)
@@ -175,7 +263,6 @@ class HMLoginManager: NSObject {
                         })
                     }
                 })
-                
             }
         }
         
@@ -188,9 +275,7 @@ class HMLoginManager: NSObject {
                 let users:[MTTUserEntity] = dic["userlist"] as? [MTTUserEntity] ?? []
                 if users.count > 0 {
                     MTTDatabaseUtil.instance().insertUsers(users, completion: { (error ) in
-                        print("login load all users ")
                     })
-//                    MTTDatabaseUtil.instance().insertUsers(users, completion: { ( error ) in   })
                     dispatch_globle(after: 0, task: {
                         for obj in  users.enumerated(){
                             DDUserModule.shareInstance().addMaintanceUser(obj.element)
@@ -205,4 +290,24 @@ class HMLoginManager: NSObject {
         
     }
     
+    
+    @objc private func n_receiveReachabilityChanged(notification:Notification){
+        if let reach:DDReachability = notification.object as? DDReachability{
+            let networkstate = reach.currentReachabilityStatus()
+            
+            switch networkstate {
+            case .NotReachable:
+                self.s_networkState = .disconnect
+                 break
+            case .ReachableViaWiFi:
+                self.s_networkState = .wifi
+                break
+            case .ReachableViaWWAN:
+                self.s_networkState = .G3
+            }
+            
+        }
+        
+        
+    }
 }

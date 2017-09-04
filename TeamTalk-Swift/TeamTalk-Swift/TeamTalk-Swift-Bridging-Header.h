@@ -29,7 +29,7 @@
 #import "MTTAvatarImageView.h"
 #import "MTTPhotosCache.h"
 #import "NSDictionary+JSON.h"
-
+#import "DDReachability.h"
 
 //GlobalData
 #import "DDClientState.h"
@@ -40,7 +40,7 @@
 #import "security.h"
 
 //Module
-#import "LoginModule.h"
+//#import "LoginModule.h"
 #import "DDUserModule.h"
 #import "DDGroupModule.h"
 #import "MTTBubbleModule.h"

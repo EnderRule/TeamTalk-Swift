@@ -481,9 +481,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     }
     
     func onAtStart() -> Bool {
-        
-        print("input view atStart")
-        
         self.chatInputView.didFinishedSelect([["uid":"2213","name":"哈哈哈😆"],["uid":"22133","name":"哈哈哈222😆"],])
         
         return false
@@ -587,17 +584,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
 //                self.view.makeToast("音頻文件不存在")
 //            }
 //        }
-    }
-    
-    func recordSettings()->[String:Any]{
-        var recordSetting:[String:Any] = [:]
-        recordSetting.updateValue(kAudioFormatLinearPCM, forKey: AVFormatIDKey)     //格式
-        recordSetting.updateValue(8000, forKey: AVSampleRateKey)                    //采样率
-        recordSetting.updateValue(2, forKey: AVNumberOfChannelsKey)                 //设置通道为单声道
-        recordSetting.updateValue(8, forKey: AVLinearPCMBitDepthKey)                //每个采样点位数,分为8,16,24,32
-        recordSetting.updateValue(true , forKey: AVLinearPCMIsFloatKey)             //是否使用浮点数采样
-        
-        return recordSetting
     }
     
 }
