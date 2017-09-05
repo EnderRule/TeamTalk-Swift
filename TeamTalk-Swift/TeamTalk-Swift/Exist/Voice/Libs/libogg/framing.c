@@ -372,7 +372,7 @@ int ogg_stream_packetin(ogg_stream_state *os,ogg_packet *op){
 static int ogg_stream_flush_i(ogg_stream_state *os,ogg_page *og, int force, int nfill){
   int i;
   int vals=0;
-  int maxvals=(os->lacing_fill>255?255:os->lacing_fill);
+  int maxvals=(int)(os->lacing_fill>255?255:os->lacing_fill);
   int bytes=0;
   long acc=0;
   ogg_int64_t granule_pos=-1;
@@ -632,7 +632,7 @@ char *ogg_sync_buffer(ogg_sync_state *oy, long size){
       return NULL;
     }
     oy->data=ret;
-    oy->storage=newsize;
+    oy->storage=(int)newsize;
   }
 
   /* expose a segment at least as large as requested at the fill mark */
@@ -839,7 +839,7 @@ int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og){
 
   /* are we in sequence? */
   if(pageno!=os->pageno){
-    int i;
+    long i;
 
     /* unroll previous partial packet (if any) */
     for(i=os->lacing_packet;i<os->lacing_fill;i++)
@@ -872,7 +872,7 @@ int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og){
   }
 
   if(bodysize){
-    if(_os_body_expand(os,bodysize)) return -1;
+    if(_os_body_expand(os,(int)bodysize)) return -1;
     memcpy(os->body_data+os->body_fill,body,bodysize);
     os->body_fill+=bodysize;
   }
@@ -889,7 +889,7 @@ int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og){
         bos=0;
       }
 
-      if(val<255)saved=os->lacing_fill;
+      if(val<255)saved= (int)os->lacing_fill;
 
       os->lacing_fill++;
       segptr++;
@@ -961,7 +961,7 @@ static int _packetout(ogg_stream_state *os,ogg_packet *op,int adv){
      segments.  Now we need to group them into packets (or return the
      out of sync markers) */
 
-  int ptr=os->lacing_returned;
+  int ptr=(int)os->lacing_returned;
 
   if(os->lacing_packet<=ptr)return(0);
 

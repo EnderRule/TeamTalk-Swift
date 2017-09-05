@@ -70,7 +70,7 @@ int AQRecorder::ComputeRecordBufferSize(const AudioStreamBasicDescription *forma
             errorStatus = AudioQueueGetProperty(mQueue, kAudioQueueProperty_MaximumOutputPacketSize, &maxPacketSize,
                                                 &propertySize);
             if (errorStatus) {
-                NSLog(@"ComputeRecordBufferSize error:%ld", errorStatus);
+                NSLog(@"ComputeRecordBufferSize error:%d", errorStatus);
                 return 0;
             }
         }
@@ -109,7 +109,7 @@ void AQRecorder::MyInputBufferHandler(	void *								inUserData,
     if (aqr->IsRunning()) {
         OSStatus errorStatus = AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
         if (errorStatus) {
-            NSLog(@"MyInputBufferHandler error:%ld", errorStatus);
+            NSLog(@"MyInputBufferHandler error:%d", errorStatus);
             return;
         }
     }

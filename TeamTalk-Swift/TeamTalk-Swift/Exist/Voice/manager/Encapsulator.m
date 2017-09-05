@@ -252,7 +252,7 @@ void writeString(unsigned char *dest, int offset, unsigned char *value, int leng
     //second. write the ogg comment page
     offset = 0;
     const char *commentChars = [comment cStringUsingEncoding:NSUTF8StringEncoding];
-    int length = [comment lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    int length = (int)[comment lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
     unsigned char speexCommentHeader[length + 8];
     writeInt(speexCommentHeader, offset, length);       // vendor comment size
     writeString(speexCommentHeader, offset+4, (unsigned char *)commentChars, length); // vendor comment
