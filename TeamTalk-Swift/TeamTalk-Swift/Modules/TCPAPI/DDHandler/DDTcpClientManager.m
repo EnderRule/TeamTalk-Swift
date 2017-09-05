@@ -14,9 +14,11 @@
 #import "DDDataInputStream.h"
 #import "DDDataOutputStream.h"
 #import "DDAPISchedule.h"
-#import "DDClientState.h"
+
 
 #import "MTTDDNotification.h"
+
+#import "TeamTalk_Swift-Swift.h"
 
 @interface DDTcpClientManager(PrivateAPI)
 
@@ -175,7 +177,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkConnectComplete object:nil  userInfo:nil ];
 
-         [DDClientState shareInstance].userState = DDUserOnline;
+        [HMLoginManager shared].loginState = HMLoginStateOnline;
     }
 }
 
@@ -245,7 +247,7 @@
         return;
     }
     @catch (NSException *exception) {
-        DDLog(@" ***** NSException in MGJMTalkCleint :%@  ******* ",exception);
+//        DDLog(@" ***** NSException in MGJMTalkCleint :%@  ******* ",exception);
     }
     @finally {
         [_sendLock unlock];
@@ -256,8 +258,7 @@
 {
 //    DDLog(@"handle eventErrorOccurred");
     [self disconnect];
-    
-    [DDClientState shareInstance].userState = DDUserOffLine;
+    [HMLoginManager shared].loginState = HMLoginStateOnline;
 }
 
 - (void)p_handleEventEndEncounteredStream:(NSStream *)aStream

@@ -149,7 +149,7 @@
     }
     
     
-    NSString *dbPath = [directorPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@",TheRuntime.user.objID,DB_FILE_NAME]];
+    NSString *dbPath = [directorPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@",[HMLoginManager shared].currentUser.userId,DB_FILE_NAME]];
     return dbPath;
 }
 
@@ -1040,7 +1040,7 @@
     session.avatar=[resultSet stringForColumn:@"avatar"];
     session.timeInterval=[resultSet longForColumn:@"updated"];
     session.lastMsg = [resultSet stringForColumn:@"lasMsg"];
-    session.lastMsgID = [resultSet longForColumn:@"lastMsgId"];
+    session.lastMsgID = (uint32_t)[resultSet longForColumn:@"lastMsgId"];
     session.unReadMsgCount = [resultSet longForColumn:@"unreadCount"];
     return session;
 }

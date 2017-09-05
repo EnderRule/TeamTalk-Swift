@@ -18,9 +18,7 @@
 
 +(char)getFirstChar:(const NSString *)str;
 
-#pragma mark - loginOut
 
-+(void)loginOut;
 
 #pragma mark - OriginalID & sessionID
 

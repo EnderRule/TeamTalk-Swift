@@ -148,7 +148,7 @@ class ZQFileBrowserVC: UIViewController,UITableViewDataSource,UITableViewDelegat
                 
             }else if subPath.hasImageExtention() {
                 var imageFullPaths:[String] = []
-                var currentIndex:Int = 0
+//                var currentIndex:Int = 0
                 for index in 0..<files.count
                 {
                     let tempSubpath = files[index]
@@ -157,7 +157,7 @@ class ZQFileBrowserVC: UIViewController,UITableViewDataSource,UITableViewDelegat
                         imageFullPaths.append(tempFullPath)
                         
                         if tempSubpath == subPath{
-                            currentIndex = imageFullPaths.count - 1
+//                            currentIndex = imageFullPaths.count - 1
                         }
                     }
                 } 

@@ -115,7 +115,7 @@ class MTTMessageEntity: NSObject,NSCopying {
         self.msgID = UInt32(DDMessageModule.getMessageID())
         self.sessionId = module.sessionEntity.sessionID
         self.toUserID = module.sessionEntity.sessionID
-        self.senderId = RuntimeStatus.instance().user.userId
+        self.senderId = currentUser().userId
         self.state = .Sending
         self.msgTime = UInt32(Date().timeIntervalSince1970)
 
@@ -142,7 +142,7 @@ class MTTMessageEntity: NSObject,NSCopying {
         return self.msgContentType == .Image
     }
     var isSendBySelf:Bool {
-       return  self.senderId == RuntimeStatus.instance().user.objID
+       return  self.senderId == currentUser().userId
     }
     var isEmotionMsg:Bool{
         return   self.msgContentType == .Emotion
@@ -257,7 +257,7 @@ extension MTTMessageEntity {
             self.sessionId = MTTGroupEntity.localIDFrom(pbID: msgInfo.fromSessionId)
         }
         if senderId == sessionId{
-            self.toUserID =  RuntimeStatus.instance().user.userId
+            self.toUserID =  currentUser().userId
         }else{
             self.toUserID = sessionId
         }
@@ -301,7 +301,7 @@ extension MTTMessageEntity {
         self.senderId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
         
         if senderId == sessionId{
-            self.toUserID = RuntimeStatus.instance().user?.userId ?? ""
+            self.toUserID = currentUser().userId
         }else{
             self.toUserID = sessionId
         }

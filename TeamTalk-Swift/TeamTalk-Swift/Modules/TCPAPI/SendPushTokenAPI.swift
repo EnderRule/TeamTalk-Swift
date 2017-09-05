@@ -42,7 +42,7 @@ class SendPushTokenAPI: DDSuperAPI,DDAPIScheduleProtocol {
             let pushToken:String = object as? String ?? ""
             
             let builder = Im.Login.ImdeviceTokenReq.Builder()
-            builder.setUserId(MTTUserEntity.pbIDFrom(localID: RuntimeStatus.instance().user.objID))
+            builder.setUserId(MTTUserEntity.pbIDFrom(localID: currentUser().userId))
             builder.setDeviceToken(pushToken)
            
             let dataOut = DDDataOutputStream.init()

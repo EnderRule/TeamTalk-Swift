@@ -8,11 +8,8 @@
 
 #import "MTTLoginViewController.h"
 
-//#import "LoginModule.h"
-
 #import "MBProgressHUD.h"
 
-#import "RuntimeStatus.h"
 #import "SCLAlertView.h"
 #import "MBProgressHUD.h"
 #import "MTTDDNotification.h"
@@ -56,16 +53,16 @@
 {
     [super viewDidLoad];
   
-    if ([RuntimeStatus instance].userID.length > 0) {
-        _userNameTextField.text = [RuntimeStatus instance].userID;
+    if ( [HMLoginManager shared].currentUserName.length > 0) {
+        _userNameTextField.text = [HMLoginManager shared].currentUserName;
     }
-    if ([RuntimeStatus instance].token.length > 0) {
-        _userPassTextField.text= [RuntimeStatus instance].token;
+    if ( [HMLoginManager shared].currentPassword.length > 0) {
+        _userPassTextField.text= [HMLoginManager shared].currentPassword;
     }
     if (!self.isRelogin
             && _userNameTextField.text.length > 0
             && _userPassTextField.text.length > 0
-            && [RuntimeStatus instance].autoLogin ){
+            && [HMLoginManager shared].shouldAutoLogin ){
         [self loginButtonPressed:nil];
     }
     
@@ -162,16 +159,12 @@
         DDLog(@"login success:%@ %@ %@",user.userId,user.name ,user.avatar);
         
         [self.userLoginBtn setEnabled:YES];
-
-        TheRuntime.user=user ;
-        [TheRuntime updateData];
-        
+ 
         [self loginSuccessHandler];
         
-        
-        if (TheRuntime.pushToken) {
+        if ([HMLoginManager shared].pushTtoken.length > 0) {
             SendPushTokenAPI *pushToken = [[SendPushTokenAPI alloc] init];
-            [pushToken requestWithObject:TheRuntime.pushToken Completion:^(id response, NSError *error) {
+            [pushToken requestWithObject:[HMLoginManager shared].pushTtoken Completion:^(id response, NSError *error) {
                 
             }];
         }
@@ -198,55 +191,6 @@
             [self.hud hide:YES afterDelay:3];
         }
     }];
-    
-    
-//    [[LoginModule instance] loginWithUsername:userName password:password success:^(MTTUserEntity *user) {
-//        
-//        [HUD removeFromSuperview];
-//        
-//        DDLog(@"login success:%@ %@ %@",user.userId,user.name ,user.avatar);
-//        
-//        [self.userLoginBtn setEnabled:YES];
-//        if (user) {
-//            TheRuntime.user=user ;
-//            [TheRuntime updateData];
-//            
-//            [self loginSuccessHandler];
-//
-//            
-//            if (TheRuntime.pushToken) {
-//                SendPushTokenAPI *pushToken = [[SendPushTokenAPI alloc] init];
-//                [pushToken requestWithObject:TheRuntime.pushToken Completion:^(id response, NSError *error) {
-//                    
-//                }];
-//            }
-//            
-//            
-//        }
-//    } failure:^(NSString *error) {
-//        
-//        [HUD removeFromSuperview];
-//        
-//        if([error isEqualToString:@"版本过低"])
-//        {
-//            DDLog(@"login version too low 强制更新");
-//
-//            SCLAlertView *alert = [SCLAlertView new];
-//            [alert addButton:@"确定" actionBlock:^{
-//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://tt.mogu.io"]];
-//            }];
-//            [alert showError:self title:@"升级提示" subTitle:@"版本过低，需要强制更新" closeButtonTitle:nil duration:0];
-//            
-//        }else{
-//            [self.userLoginBtn setEnabled:YES];
-//            DDLog(@"login error %@",error);
-//            
-//            [self.hud setHidden:NO];
-//            self.hud.labelText = error;
-//            
-//            [self.hud hide:YES afterDelay:3];
-//        }
-//    }];
     
 }
 

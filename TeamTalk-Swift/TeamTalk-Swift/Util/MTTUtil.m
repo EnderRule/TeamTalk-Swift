@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MTTUtil.h"
-#import "RuntimeStatus.h"
 
  #import "DDTcpClientManager.h"
-#import "DDClientState.h"
+
 //#import "SessionModule.h"
 //#import "DDMessageModule.h"
 
@@ -44,17 +43,6 @@
     else {
         return [MTTUtil pinyinFirstLetter:[str characterAtIndex:0]];
     }
-}
-
-#pragma mark - loginOut
-
-+(void)loginOut{
-    TheRuntime.user =nil;
-    TheRuntime.userID =nil;
-//    [[DDMessageModule shareInstance] removeAllUnreadMessages];
-//    [[SessionModule instance] clearSession];
-    [[DDTcpClientManager instance] disconnect];
-    [DDClientState shareInstance].userState = DDUserOffLineInitiative;
 }
 
 

@@ -71,7 +71,7 @@ class HMMessageManager: NSObject {
             
             Notification.Name.HMSendMessageSuccessfull.postWith(object: session)
            
-            let packObject:[Any] = [RuntimeStatus.instance().user.userId,session.sessionID,msgData,message.msgType.rawValue,message.msgID]
+            let packObject:[Any] = [currentUser().userId,session.sessionID,msgData,message.msgType.rawValue,message.msgID]
             debugPrint("HMMessageManager send message \(message.dicValues() as Dictionary) \n packObject \(packObject as Array)")
             
             let sendAPI = SendMessageAPI.init()

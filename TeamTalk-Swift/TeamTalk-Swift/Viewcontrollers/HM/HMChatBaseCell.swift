@@ -107,7 +107,7 @@ class HMChatBaseCell: HMBaseCell {
         let bubbleHeight:CGFloat = self.bubbleTopEdge() + size.height + self.bubbleBottomEdge()
         
         //头像位置
-        if message.senderId == RuntimeStatus.instance().user.userId {
+        if message.senderId == currentUser().userId  {
             self.bubbleLocation = .right
             
             self.avatarImgv.mas_remakeConstraints({ (maker ) in
@@ -201,7 +201,7 @@ class HMChatBaseCell: HMBaseCell {
     func cellHeightFor(message:MTTMessageEntity)->CGFloat{
         // 昵称高度 + 实际内容高度 + 气泡与cell的间隔 + 气泡与内容的间隔。 总高度必须 >= 头像高度 + 头像与cell的间隔
         var nameHeight:CGFloat = nameLabel.height
-        if message.sessionType == .sessionTypeSingle || message.senderId == RuntimeStatus.instance().user.userId {
+        if message.sessionType == .sessionTypeSingle || message.senderId == currentUser().userId {
             nameHeight = 0
         }
         

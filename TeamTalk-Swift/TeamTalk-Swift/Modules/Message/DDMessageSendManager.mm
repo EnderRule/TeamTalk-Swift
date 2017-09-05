@@ -13,7 +13,7 @@
 #import "DDMessageModule.h"
 #import "DDTcpClientManager.h"
 
-#import "RuntimeStatus.h"
+
 
 
 #import "NSDictionary+JSON.h"
@@ -99,7 +99,7 @@ static uint32_t seqNo = 0;
         [[UnAckMessageManager instance] addMessageToUnAckQueue:message];
 
         
-        NSArray* object = @[TheRuntime.user.objID,session.sessionID,data,@(message.msgType),@(message.msgID)];
+        NSArray* object = @[[HMLoginManager shared].currentUser.userId,session.sessionID,data,@(message.msgType),@(message.msgID)];
         SendMessageAPI* sendMessageAPI = [[SendMessageAPI alloc] init];
         [sendMessageAPI requestWithObject:object Completion:^(id response, NSError *error) {
             if (!error)
@@ -146,7 +146,7 @@ static uint32_t seqNo = 0;
     dispatch_async(self.sendMessageSendQueue, ^{
         SendMessageAPI* sendVoiceMessageAPI = [[SendMessageAPI alloc] init];
         
-        NSString* myUserID = [RuntimeStatus instance].user.objID;
+        NSString* myUserID = [HMLoginManager shared].currentUser.userId;
         NSArray* object = @[myUserID,sessionID,voice,@(msg.msgType),@(0)];
        
         [sendVoiceMessageAPI requestWithObject:object Completion:^(id response, NSError *error) {

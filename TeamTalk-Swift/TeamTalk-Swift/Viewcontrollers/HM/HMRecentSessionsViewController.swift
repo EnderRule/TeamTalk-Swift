@@ -212,9 +212,6 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func setTabbarBadge(count:Int){
-        
-        debugPrint("HMRecentSession update tabbar badge \(count)")
-        
         if count > 0 {
             if count > 99 {
                 self.navigationController?.tabBarItem.badgeValue = "99+"

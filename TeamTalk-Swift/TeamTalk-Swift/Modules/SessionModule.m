@@ -99,7 +99,7 @@
 -(void)getHadUnreadMessageSession:(void(^)(NSUInteger count))block
 {
     GetUnreadMessagesAPI *getUnreadMessage = [GetUnreadMessagesAPI new];
-    [getUnreadMessage requestWithObject:TheRuntime.user.objID Completion:^(NSDictionary *dic, NSError *error) {
+    [getUnreadMessage requestWithObject:[HMLoginManager shared].currentUser.userId Completion:^(NSDictionary *dic, NSError *error) {
         NSInteger m_total_cnt =[dic[@"m_total_cnt"] integerValue];
         NSArray *localsessions = dic[@"sessions"];
         [localsessions enumerateObjectsUsingBlock:^(MTTSessionEntity *obj, NSUInteger idx, BOOL *stop){
@@ -256,7 +256,7 @@
 }
 -(void)cleanMessageFromNotifi:(NSUInteger)messageID  SessionID:(NSString *)sessionid Session:(SessionType_Objc)type
 {
-    if(![sessionid isEqualToString:TheRuntime.user.objID]){
+    if(![sessionid isEqualToString:[HMLoginManager shared].currentUser.userId]){
         MTTSessionEntity *session = [self getSessionById:sessionid];
         if (session) {
             NSInteger readCount =messageID-session.lastMsgID;

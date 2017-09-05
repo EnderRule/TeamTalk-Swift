@@ -63,7 +63,7 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         
         tableView.addHeader {
             
-            DDUserModule.shareInstance().getUserForUserID(RuntimeStatus.instance().user.userId, block: { (user ) in
+            DDUserModule.shareInstance().getUserForUserID(currentUser().userId, block: { (user ) in
                 
                 self.tableView.headerEndRefreshing()
                 
@@ -134,12 +134,9 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
             
             LCActionSheet.show(withTitle: "確認退出嗎？", buttonTitles: ["再看看","退出"], redButtonIndex: 1, clickHandler: { (index) in
                 if index == 1 {
-                    RuntimeStatus.instance().user = nil
                     
-                    RuntimeStatus.instance().token = ""
-                    RuntimeStatus.instance().userID = ""
-                    RuntimeStatus.instance().autoLogin = false
-                     
+                    HMLoginManager.shared.logout()
+                    
                     let loginvc = MTTLoginViewController.init()
                     loginvc.hidesBottomBarWhenPushed = true
                     (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.pushViewController(loginvc, animated: true )
@@ -174,12 +171,12 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         print("ready to upload avatar Image:\(imagePath)")
         
         //先上传图片、再发送含有图片URL 的消息。
-        DDSendPhotoMessageAPI.sharedPhotoCache().uploadImage(imagePath, success: {[weak self ] (imageURL ) in
+        DDSendPhotoMessageAPI.sharedPhotoCache().uploadImage(imagePath, success: { (imageURL) in
             
-            debugPrint("  upload avatar image success :\(imageURL) ")
             
             if imageURL != nil {
-                
+//                debugPrint("  upload avatar image success :\(imageURL) ")
+
             }
         }) {[weak self ] (error ) in
             debugPrint("chatting pick && upload image error :\(error.debugDescription) ")

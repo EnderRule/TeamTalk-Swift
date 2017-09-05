@@ -20,9 +20,6 @@
 
 #import "MTTUtil.h"
 
-
-
-
 //Categorys from TeamTalk-Objc
 #import "NSString+Additions.h"
 #import "NSDate+DDAddition.h"
@@ -32,15 +29,11 @@
 #import "DDReachability.h"
 
 //GlobalData
-#import "DDClientState.h"
-#import "DDClientStateMaintenanceManager.h"
-#import "RuntimeStatus.h"
 #import "MTTDatabaseUtil.h"
 #import "MTTUtil.h"
 #import "security.h"
 
 //Module
-//#import "LoginModule.h"
 #import "DDUserModule.h"
 #import "DDGroupModule.h"
 #import "MTTBubbleModule.h"

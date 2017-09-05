@@ -16,11 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-       
-        RuntimeStatus.instance()
-        DDClientStateMaintenanceManager .shareInstance()
         
+        HMLoginManager.shared.setup()
+         
         print("HMNotification. userReloginSuccess ",HMNotification.userReloginSuccess.notificationName().rawValue)
         
         if #available(iOS 10.0, *) {
@@ -77,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let deviceTokenString = String.init(data: deviceToken, encoding: .utf8) ?? ""
         debugPrint("application did register remote Token:\(deviceTokenString)")
+        
+        HMLoginManager.shared.pushTtoken = deviceTokenString
     }
     
 }

@@ -8,13 +8,12 @@
 
 #import "NSString+DDPath.h"
 #import "DDUserModule.h"
-#import "RuntimeStatus.h"
 #import "TeamTalk_Swift-Swift.h"
 
 @implementation NSString (DDPath)
 + (NSString*)userExclusiveDirection
 {
-    NSString* myName = TheRuntime.user.objID;
+    NSString* myName = [HMLoginManager shared].currentUser.userId;
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];

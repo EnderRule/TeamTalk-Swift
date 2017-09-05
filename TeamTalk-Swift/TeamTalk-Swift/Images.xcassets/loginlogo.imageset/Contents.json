@@ -7,17 +7,12 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "loginlogo.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
       "scale" : "3x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "loginlogo.png",
-      "unassigned" : true,
-      "scale" : "1x"
     }
   ],
   "info" : {

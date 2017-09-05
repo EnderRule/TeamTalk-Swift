@@ -65,7 +65,7 @@ class DeleteMemberFromGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
             
             
             let builder = Im.Group.ImgroupChangeMemberReq.Builder()
-            builder.setUserId(MTTUserEntity.pbIDFrom(localID: RuntimeStatus.instance().user.objID))
+            builder.setUserId(MTTUserEntity.pbIDFrom(localID: currentUser().userId))
             builder.setChangeType(.groupModifyTypeDel)
             builder.setGroupId(groupid)
             builder.setMemberIdList([userid])

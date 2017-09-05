@@ -17,7 +17,6 @@
 
 #import <math.h>
 
-#import "DDClientState.h"
 #import "SDWebImageManager.h"
 #import "SDImageCache.h"
 #import "MTTUtil.h"
@@ -137,7 +136,7 @@ static NSUInteger const showPromptGap = 300;
     
     [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
         //after loading finish ,then add to messages
-        if ([DDClientState shareInstance].networkState == DDNetWorkDisconnect) {
+        if ([HMLoginManager shared].networkState == HMNetworkStateDisconnect) {
             [self p_addHistoryMessages:messages Completion:completion];
         }else{
             if ([messages count] !=0) {
