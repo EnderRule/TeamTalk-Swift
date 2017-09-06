@@ -47,7 +47,8 @@ class HMChatEmotionCell: HMChatImageCell {
             
             if msgContent.hasPrefix("[牙牙"){ //蘑菇街的表情
                 catagoryID = "mgj"
-                EmojiName = MTTMessageEntity.mgjEmotionDic[msgContent] ?? ""
+                EmojiName = MTTEmotionManager.mgjEmotionDic[msgContent] ?? ""
+                
             }else{
             
                 msgContent = msgContent.replacingOccurrences(of: "[", with: "")
