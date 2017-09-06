@@ -53,9 +53,6 @@
 #import "DDMsgServer.h"
 #import "DDHttpServer.h"
 
-#import "DDSendPhotoMessageAPI.h"
-#import "DDMessageSendManager.h"
-
 //audio、videos
 #import "Encapsulator.h"
 

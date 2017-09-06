@@ -19,12 +19,61 @@ class SendPhotoMessageAPI: NSObject {
     override init() {
         super.init()
         
-        self.manager.responseSerializer.accessibilityElements = ["text/html"]
+        self.manager.responseSerializer.acceptableContentTypes = NSSet.init(objects: "text/html","image/jpeg") as? Set<String>
         self.queue.maxConcurrentOperationCount = 1
+    }
+    
+    public func uploadAvatar(imagePath:String,
+                             progress:@escaping ((Progress)->Void),
+                             success:@escaping ((String)->Void),
+                             failure:@escaping ((String)->Void))
+    {
+        let msgType:Int = 21
+        let fromUserID:Int = HMLoginManager.shared.currentUser.intUserID
+
+        let time:TimeInterval = HMLoginManager.shared.serverTime
+        
+        let authDic:[String : Any] = ["msg_type":msgType,"from_user_id":fromUserID,"to_session_id":"","time":time]
+        let authString:String  = (authDic as NSDictionary).jsonString()
+        let auth:String = authString.encrypt()
+        
+        self.uploadPhoto(imagePath: imagePath, auth: auth, progress: { (pro ) in
+            progress(pro)
+        }, success: { (imageURL) in
+            success(imageURL)
+        }) { (error ) in
+            failure(error)
+        }
     }
     
     public func uploadPhoto(imagePath:String ,
                             to session:MTTSessionEntity,
+                            progress:@escaping ((Progress)->Void),
+                            success:@escaping ((String)->Void),
+                            failure:@escaping ((String)->Void))
+    {
+        let msgType:Int = session.isGroupSession ? 17 : 1
+        let fromUserID:Int = HMLoginManager.shared.currentUser.intUserID
+        let toSessionID:UInt32 = MTTBaseEntity.pbIDFrom(localID: session.sessionID)
+        let time:TimeInterval = HMLoginManager.shared.serverTime
+        
+        let authDic:[String : Any] = ["msg_type":msgType,"from_user_id":fromUserID,"to_session_id":toSessionID,"time":time]
+        let authString:String  = (authDic as NSDictionary).jsonString()
+        let auth:String = authString.encrypt()
+        
+        self.uploadPhoto(imagePath: imagePath, auth: auth, progress: { (pro ) in
+            progress(pro)
+        }, success: { (imageURL) in
+            success(imageURL)
+        }) { (error ) in
+            failure(error)
+        }
+        
+    }
+    
+    
+    private func uploadPhoto(imagePath:String,
+                            auth:String,
                             progress:@escaping ((Progress)->Void),
                             success:@escaping ((String)->Void),
                             failure:@escaping ((String)->Void))
@@ -37,21 +86,11 @@ class SendPhotoMessageAPI: NSObject {
                     failure("invalid image data")
                     return
                 }
-                let msgType:Int = session.isGroupSession ? 17 : 1
-                let fromUserID:Int = HMLoginManager.shared.currentUser.intUserID
-                let toSessionID:UInt32 = MTTBaseEntity.pbIDFrom(localID: session.sessionID)
-                let time:TimeInterval = HMLoginManager.shared.serverTime
-                
-                let authDic:[String : Any] = ["msg_type":msgType,"from_user_id":fromUserID,"to_session_id":toSessionID,"time":time]
-                let authString:String  = (authDic as NSDictionary).jsonString()
-                let auth:String = authString.encrypt()
-                
-                let urlString:String = HMLoginManager.shared.msfsUrl.addingPercentEncoding(withAllowedCharacters: CharacterSet.init())!
+                let urlString:String = HMLoginManager.shared.msfsUrl
                 let paras:[AnyHashable:Any] = ["type":"im_image","auth":auth]
                 let image:UIImage = UIImage.init(data: imageData as Data) ?? UIImage()
                 let imageName:String = "image_\(image.size.width)x\(image.size.height).png"
 
-                debugPrint(HMLoginManager.shared.msfsUrl)
                 debugPrint("upload image to url:\(urlString)")
                 
                 self.manager.post(urlString, parameters: paras, constructingBodyWith: { (formData) in
@@ -77,13 +116,14 @@ class SendPhotoMessageAPI: NSObject {
                     }else{
                         self.max_try_upload_times -= 1
                         if self.max_try_upload_times > 0{
-                            self.uploadPhoto(imagePath: imagePath, to: session, progress: { (pro ) in
+                            
+                            self.uploadPhoto(imagePath: imagePath, auth: auth, progress: { (pro ) in
                                 progress(pro)
-                            }, success: { (url ) in
-                                success(url)
-                            }, failure: { (error ) in
+                            }, success: { (imageURL) in
+                                success(imageURL)
+                            }) { (error ) in
                                 failure(error)
-                            })
+                            }
                         }else{
                             self.max_try_upload_times = 5
 
@@ -93,18 +133,6 @@ class SendPhotoMessageAPI: NSObject {
                 }, failure: { (task , error ) in
                     self.max_try_upload_times = 5
                     failure (error.localizedDescription)
-                    
-//                    let nserror:NSError = (error as NSError)
-//                    let response:URLResponse = task?.response //nserror.userInfo[AFNetworkingOperationFailingURLResponseErrorKey] as! HTTPURLResponse
-//                    let stateCode:Int = response.statusCode
-//                    
-//                    self.max_try_upload_times = 5
-//
-//                    if !(stateCode >= 300 && stateCode <= 307){
-//                        failure("上傳失敗：网络连接已断开。code=\(stateCode)")
-//                    }else{
-//                        failure("上傳失敗：code=\(stateCode)")
-//                    }
                 })
             }catch{
                 self.max_try_upload_times = 5

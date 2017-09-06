@@ -11,8 +11,8 @@ import UIKit
 //用到的一些常量
 
 
-let DD_MESSAGE_IMAGE_PREFIX:String             = "&$#@~^@[{:"
-let DD_MESSAGE_IMAGE_SUFFIX:String             = ":}]&$~@#@"
+//let DD_MESSAGE_IMAGE_PREFIX:String             = "&$#@~^@[{:"
+//let DD_MESSAGE_IMAGE_SUFFIX:String             = ":}]&$~@#@"
 
 
 // url phone email 正则

@@ -218,12 +218,9 @@ static NSUInteger const showPromptGap = 300;
             NSDate* date = [NSDate dateWithTimeIntervalSince1970:message.msgTime];
             prompt.message = [date promptDateString];
             [self.showingMessages addObject:prompt];
-            
         }
-        NSArray *array = [[self class] p_spliteMessage:message];
-        [array enumerateObjectsUsingBlock:^(MTTMessageEntity* obj, NSUInteger idx, BOOL *stop) {
-            [[self mutableArrayValueForKeyPath:@"showingMessages"] addObject:obj];
-        }];
+        
+        [[self mutableArrayValueForKeyPath:@"showingMessages"] addObject:message];
     }
 }
 
@@ -237,7 +234,6 @@ static NSUInteger const showPromptGap = 300;
     [[DDUserModule shareInstance] getUserForUserID:self.sessionEntity.sessionID  Block:^(MTTUserEntity *user) {
         block(user);
     }];
-    
 }
 
 
@@ -294,12 +290,9 @@ static NSUInteger const showPromptGap = 300;
             [tempMessages addObject:prompt];
         }
         tempLasteestDate = message.msgTime;
-        NSArray *array = [[self class] p_spliteMessage:message];
-        [array enumerateObjectsUsingBlock:^(MTTMessageEntity * obj, NSUInteger idx, BOOL *stop) {
-            
-            [self.ids addObject:@(message.msgID)];
-            [tempMessages addObject:obj];
-        }];
+        
+        [self.ids addObject:@(message.msgID)];
+        [tempMessages addObject:message]; 
     }
     
     if ([self.showingMessages count] == 0)
@@ -317,65 +310,7 @@ static NSUInteger const showPromptGap = 300;
     completion(newItemCount - itemCount,nil);
 }
 
-+ (NSArray*)p_spliteMessage:(MTTMessageEntity*)message
-{
-    message.msgContent = [message.msgContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSMutableArray* messageContentArray = [[NSMutableArray alloc] init];
-    
-    if ( [ message.msgContent rangeOfString:DD_MESSAGE_IMAGE_PREFIX].length > 0)
-    {
-        NSString* messageContent = [message msgContent];
-        if ([messageContent rangeOfString:DD_MESSAGE_IMAGE_PREFIX].length > 0 && [messageContent rangeOfString:MTTMessageEntity.DD_IMAGE_LOCAL_KEY].length > 0 && [messageContent rangeOfString:MTTMessageEntity.DD_IMAGE_URL_KEY].length > 0) {
-            MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:messageContent toUserID:message.toUserID];
-            messageEntity.msgContentType = DDMessageContentTypeImage;
-            messageEntity.state = DDMessageStateSendSuccess;
-        }else{
-            
-            NSArray* tempMessageContent = [messageContent componentsSeparatedByString:DD_MESSAGE_IMAGE_PREFIX];
-            [tempMessageContent enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSString* content = (NSString*)obj;
-                if ([content length] > 0)
-                {
-                    NSRange suffixRange = [content rangeOfString:DD_MESSAGE_IMAGE_SUFFIX];
-                    if (suffixRange.length > 0)
-                    {
-                        //是图片,再拆分
-                        NSString* imageContent = [NSString stringWithFormat:@"%@%@",DD_MESSAGE_IMAGE_PREFIX,[content substringToIndex:suffixRange.location + suffixRange.length]];
-                        MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:imageContent toUserID:message.toUserID];
-                        messageEntity.msgContentType = DDMessageContentTypeImage;
-                        messageEntity.state = DDMessageStateSendSuccess;
-                        [messageContentArray addObject:messageEntity];
-                        
-                        
-                        NSString* secondComponent = [content substringFromIndex:suffixRange.location + suffixRange.length];
-                        if (secondComponent.length > 0)
-                        {
-                            MTTMessageEntity* secondmessageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:secondComponent toUserID:message.toUserID];
-                            secondmessageEntity.msgContentType = DDMessageContentTypeText;
-                            secondmessageEntity.state = DDMessageStateSendSuccess;
-                            [messageContentArray addObject:secondmessageEntity];
-                        }
-                    }
-                    else
-                    {
-                        
-                        MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:content toUserID:message.toUserID];
-                        messageEntity.state = DDMessageStateSendSuccess;
-                        [messageContentArray addObject:messageEntity];
-                    }
-                }
-            }];
-        }
-    }
-    
-    if ([messageContentArray count] == 0)
-    {
-        [messageContentArray addObject:message];
-    }
-    
-    return messageContentArray;
-    
-}
+
 -(NSInteger)getMaxMsgId:(NSArray *)array
 {
     __block NSInteger maxMsgID =0;

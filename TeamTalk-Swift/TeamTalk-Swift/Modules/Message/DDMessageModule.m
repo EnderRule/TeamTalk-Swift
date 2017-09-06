@@ -177,56 +177,6 @@
     
 }
 
-
-- (NSArray*)p_spliteMessage:(MTTMessageEntity*)message
-{
-    NSMutableArray* messageContentArray = [[NSMutableArray alloc] init];
-    if (message.msgContentType == DDMessageContentTypeImage || (message.msgContentType == DDMessageContentTypeText && [message.msgContent rangeOfString:DD_MESSAGE_IMAGE_PREFIX].length > 0))
-    {
-        NSString* messageContent = [message msgContent];
-        NSArray* tempMessageContent = [messageContent componentsSeparatedByString:DD_MESSAGE_IMAGE_PREFIX];
-        [tempMessageContent enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSString* content = (NSString*)obj;
-            if ([content length] > 0)
-            {
-                NSRange suffixRange = [content rangeOfString:DD_MESSAGE_IMAGE_SUFFIX];
-                if (suffixRange.length > 0)
-                {
-                    //是图片,再拆分
-                    NSString* imageContent = [NSString stringWithFormat:@"%@%@",DD_MESSAGE_IMAGE_PREFIX,[content substringToIndex:suffixRange.location + suffixRange.length]];
-                    MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:imageContent toUserID:message.toUserID];
-                    messageEntity.msgContentType = DDMessageContentTypeImage;
-                    messageEntity.state = DDMessageStateSendSuccess;
-                    [messageContentArray addObject:messageEntity];
-                    
-                    
-                    NSString* secondComponent = [content substringFromIndex:suffixRange.location + suffixRange.length];
-                    if (secondComponent.length > 0)
-                    {
-                        MTTMessageEntity* secondmessageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:secondComponent toUserID:message.toUserID];
-                        secondmessageEntity.msgContentType = DDMessageContentTypeText;
-                        secondmessageEntity.state = DDMessageStateSendSuccess;
-                        [messageContentArray addObject:secondmessageEntity];
-                    }
-                }
-                else
-                {
-           
-                    MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)[DDMessageModule getMessageID] msgType:message.msgType msgTime:message.msgTime sessionID:message.sessionId senderID:message.senderId msgContent:content toUserID:message.toUserID];
-                    messageEntity.msgContentType = DDMessageContentTypeText;
-                    messageEntity.state = DDMessageStateSendSuccess;
-                    [messageContentArray addObject:messageEntity];
-                }
-            }
-        }];
-    }
-    if ([messageContentArray count] == 0)
-    {
-        [messageContentArray addObject:message];
-    }
-    return messageContentArray;
-}
-
 -(void)setApplicationUnreadMsgCount
 {
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[self getUnreadMessgeCount]];

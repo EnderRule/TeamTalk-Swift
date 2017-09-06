@@ -41,7 +41,7 @@ typedef void(^DDChatLoadMoreHistoryCompletion)(NSUInteger addcount, NSError* err
 -(void)getCurrentUser:(void(^)(MTTUserEntity *))block;
 -(void)loadHisToryMessageFromServer:(NSUInteger)FromMsgID loadCount:(NSUInteger)count Completion:(DDChatLoadMoreHistoryCompletion)completion;
 -(void)loadHostoryMessageFromServer:(NSUInteger)FromMsgID Completion:(DDChatLoadMoreHistoryCompletion)completion;
-+ (NSArray*)p_spliteMessage:(MTTMessageEntity*)message;
+
 -(void)getNewMsg:(DDChatLoadMoreHistoryCompletion)completion;
 @end
 

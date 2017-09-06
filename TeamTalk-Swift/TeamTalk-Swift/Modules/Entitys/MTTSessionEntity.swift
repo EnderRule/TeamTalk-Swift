@@ -102,6 +102,7 @@ class MTTSessionEntity: NSObject {
     var originId:String = ""
     var isShield:Bool = false
     var isFixedTop:Bool = false
+    
     var lastMsg:String = ""
     var lastMsgID:UInt32 = 0
     var avatar:String = ""

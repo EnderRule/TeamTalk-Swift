@@ -42,7 +42,11 @@ class HMMessageManager: NSObject {
     }
     
     private func setupTimer(){
+        unAckTimer?.invalidate()
+        unAckTimer = nil
+        
         unAckTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self , selector: #selector(self.checkMessageTimeout), userInfo: nil , repeats: true )
+        unAckTimer?.fire()
     }
     
     public func sendNormal(message:MTTMessageEntity,session:MTTSessionEntity,completion:@escaping HMSendMessageCompletion){
@@ -72,7 +76,7 @@ class HMMessageManager: NSObject {
             Notification.Name.HMSendMessageSuccessfull.postWith(object: session)
            
             let packObject:[Any] = [currentUser().userId,session.sessionID,msgData,message.msgType.rawValue,message.msgID]
-            debugPrint("HMMessageManager send message \(message.dicValues() as Dictionary) \n packObject \(packObject as Array)")
+            debugPrint("HMMessageManager send message \(message.dicValues() as NSDictionary) \n packObject \(packObject as NSArray)")
             
             let sendAPI = SendMessageAPI.init()
             sendAPI.request(with: packObject, completion: { (respone , error ) in
@@ -123,7 +127,6 @@ class HMMessageManager: NSObject {
     }
     
     
-    
     //MARK: UnAckQueue and Timer func
     func unAckQueueAdd(message:MTTMessageEntity){
         let mat = HMMessageAndTime.init()
@@ -131,6 +134,8 @@ class HMMessageManager: NSObject {
         mat.nowDate = Date().timeIntervalSince1970
         
         self.unAckQueueMessages.append(mat)
+        
+        self.setupTimer()
     }
     
     func unAckQueueRemove(message:MTTMessageEntity){
@@ -156,13 +161,19 @@ class HMMessageManager: NSObject {
     
     func checkMessageTimeout(){
         debugPrint("\(self.classForCoder) checkMessageTimeout messagesCount\(self.unAckQueueMessages.count)")
-        for obj in self.unAckQueueMessages.enumerated(){
-            let timeNow = Date().timeIntervalSince1970
-            let msgTimeout = obj.element.nowDate + self.MessageTimeOutSecond
-            if timeNow >= msgTimeout {
-                obj.element.msg.state = .SendFailure
-                MTTDatabaseUtil.instance().updateMessage(forMessage: obj.element.msg, completion: { ( issuccess ) in  })
-                self.unAckQueueRemove(message: obj.element.msg)
+       
+        if unAckQueueMessages.count == 0{
+            self.unAckTimer?.invalidate()
+            self.unAckTimer = nil
+        }else {
+            for obj in self.unAckQueueMessages.enumerated(){
+                let timeNow = Date().timeIntervalSince1970
+                let msgTimeout = obj.element.nowDate + self.MessageTimeOutSecond
+                if timeNow >= msgTimeout {
+                    obj.element.msg.state = .SendFailure
+                    MTTDatabaseUtil.instance().updateMessage(forMessage: obj.element.msg, completion: { ( issuccess ) in  })
+                    self.unAckQueueRemove(message: obj.element.msg)
+                }
             }
         }
     }

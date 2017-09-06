@@ -99,7 +99,10 @@ class HMRecentSessionCell: HMBaseCell {
             
             let thedate = Date.init(timeIntervalSince1970: session.timeInterval)
             self.dateLabel.text = (thedate as NSDate).transformToFuzzyDate()
-            if session.lastMsg.hasPrefix(DD_MESSAGE_IMAGE_PREFIX) && session.lastMsg.hasSuffix(DD_MESSAGE_IMAGE_SUFFIX){
+            if session.lastMsg.hasSuffix(".gif")  ||
+                session.lastMsg.hasSuffix(".jpg") ||
+                session.lastMsg.hasSuffix(".png") ||
+                session.lastMsg.hasSuffix(".jpeg")  {
                 self.msgLabel.text = "[圖片]"
             }else if session.lastMsg.hasSuffix(".spx"){
                 self.msgLabel.text = "[語音]"

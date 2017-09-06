@@ -326,11 +326,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         }
         print("ready to upload messageImage:\(imagePath)")
         
-        let messageContentDic = NSDictionary.init(dictionary: [MTTMessageEntity.DD_IMAGE_LOCAL_KEY:imagePath])
-        let messageContentStr = messageContentDic.jsonString() ?? ""
+        let messageEntity = MTTMessageEntity.init(content: imagePath, module: self.chattingModule, msgContentType: DDMessageContentType.Image)
+        messageEntity.info.updateValue(imagePath, forKey: MTTMessageEntity.DD_IMAGE_LOCAL_KEY)
         
-        let messageEntity = MTTMessageEntity.init(content: messageContentStr, module: self.chattingModule, msgContentType: DDMessageContentType.Image)
-    
         MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
             
         }) { (error ) in
@@ -346,11 +344,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             if imageURL.length > 0 {
                 messageEntity.state = .Sending
                 
-                var tempContentDic = NSDictionary.initWithJsonString(messageEntity.msgContent) ?? [:]
-                tempContentDic.updateValue(imageURL, forKey: MTTMessageEntity.DD_IMAGE_URL_KEY)
-                let tempMsgContent = (tempContentDic as NSDictionary).jsonString() ?? ""
-                messageEntity.msgContent = tempMsgContent
-                
+                messageEntity.info.updateValue(imageURL, forKey: MTTMessageEntity.DD_IMAGE_URL_KEY)
+                messageEntity.msgContent = imageURL
                 
                 self?.sendMessage(msgEntity: messageEntity)
                 messageEntity.updateToDB(compeletion: nil)
@@ -368,38 +363,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 }
             })
         }
-        
-        
-//        DDSendPhotoMessageAPI.sharedPhotoCache().uploadImage(imagePath, success: {[weak self ] (imageURL ) in
-//            
-//            debugPrint("chatting pick && upload image success :\(String(describing: imageURL)) ")
-//            
-//            if imageURL != nil {
-//                messageEntity.state = .Sending
-//                
-//                var tempContentDic = NSDictionary.initWithJsonString(messageEntity.msgContent) ?? [:]
-//                tempContentDic.updateValue(imageURL!, forKey: MTTMessageEntity.DD_IMAGE_URL_KEY)
-//                let tempMsgContent = (tempContentDic as NSDictionary).jsonString() ?? ""
-//                messageEntity.msgContent = tempMsgContent
-//                
-//                
-//                self?.sendMessage(msgEntity: messageEntity)
-//                messageEntity.updateToDB(compeletion: nil)
-//            }
-//        }) {[weak self ] (error ) in
-//            debugPrint("chatting pick && upload image error :\(error.debugDescription) ")
-//
-//            
-//            messageEntity.state = .SendFailure
-//            messageEntity.updateToDB(compeletion: { (success ) in
-//                if success {
-//                    dispatch(after: 0, task: { 
-//                         self?.tableView.reloadData()
-//                    })
-//                }
-//            })
-//        }
-        
     }
     
     //MARK: 消息管理代理 DDMessageModuleDelegate
@@ -484,7 +447,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         if catalogId == "mgj" && chartletId.length > 0{
 
             var msgcontent:String = ""
-            for keyValue in MTTMessageEntity.mgjEmotionDic.enumerated(){
+            for keyValue in MTTEmotionManager.mgjEmotionDic.enumerated(){
                if keyValue.element.value == chartletId  {
                     msgcontent = keyValue.element.key
                     break

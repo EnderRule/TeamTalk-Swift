@@ -91,23 +91,22 @@ class HMChatImageCell: HMChatBaseCell {
 
     
     private func imageURLFrom(message:MTTMessageEntity)->String{
+        
         var imageURL:String = message.msgContent
-        if  imageURL.hasPrefix(DD_MESSAGE_IMAGE_PREFIX) && imageURL.hasSuffix(DD_MESSAGE_IMAGE_SUFFIX){
-            imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_PREFIX, with: "")
-            imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_SUFFIX, with: "")
+        if FileManager.default.fileExists(atPath: imageURL){
             return imageURL
-        }else if FileManager.default.fileExists(atPath: imageURL){
-            return imageURL
-        }  else {
-            let contentDic = NSDictionary.initWithJsonString(message.msgContent) ?? [:]
-            imageURL = contentDic[MTTMessageEntity.DD_IMAGE_LOCAL_KEY] as? String ?? ""
-            if FileManager.default.fileExists(atPath: imageURL){
-                return imageURL
-            }
-            imageURL = contentDic[MTTMessageEntity.DD_IMAGE_URL_KEY] as? String ?? ""
-            imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_PREFIX, with: "")
-            imageURL = imageURL.replacingOccurrences(of: DD_MESSAGE_IMAGE_SUFFIX, with: "")
         }
+        
+        imageURL = message.info[MTTMessageEntity.DD_IMAGE_LOCAL_KEY] as? String ?? ""
+        if FileManager.default.fileExists(atPath: imageURL){
+            return imageURL
+        }
+            
+        if message.msgContent .hasPrefix("http"){
+            return message.msgContent
+        }
+        
+        imageURL = message.info[MTTMessageEntity.DD_IMAGE_URL_KEY] as? String ?? ""
         return imageURL
     }
     

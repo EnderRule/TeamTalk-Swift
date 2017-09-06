@@ -126,7 +126,7 @@ class HMLoginManager: NSObject {
             UserDefaults.standard.synchronize()
         }
         get {
-            return  UserDefaults.standard.object(forKey: "im.HMShouldAutoLogin") as? String ?? ""
+            return  UserDefaults.standard.object(forKey: "im.HMMessageServerFileServer") as? String ?? ""
         }
     }
     
@@ -218,6 +218,8 @@ class HMLoginManager: NSObject {
                 
                 
                 self?.msfsUrl = json["msfsPrior"].stringValue
+                
+//                debugPrint(json["msfsPrior"].stringValue,"fffffff   ",self?.msfsUrl)
                 
                 self?.tcpServer.loginTcpServerIP(ip, port: port, success: {
                     let clientVersion:String = "iOS/\(APP_VERSION)-\(APP_BUILD_VERSION)"

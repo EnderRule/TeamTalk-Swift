@@ -150,38 +150,13 @@ class MTTMessageEntity: NSObject,NSCopying {
 }
 
 extension MTTMessageEntity {
-    
     static  let  DDVOICE_PLAYED:String              =       "voicePlayed"
     static  let  VOICE_LENGTH:String                =       "voiceLength"
     static  let  VOICE_LOCAL_KEY:String             =       "voiceLocalPath"
     
     static  let  DD_IMAGE_LOCAL_KEY :String         =       "local"
     static  let  DD_IMAGE_URL_KEY :String           =       "url"
- 
-    static let mgjEmotionDic = ["[牙牙撒花]":"221",
-                                "[牙牙尴尬]":"222",
-                                "[牙牙大笑]":"223",
-                                "[牙牙组团]":"224",
-                                "[牙牙凄凉]":"225",
-                                "[牙牙吐血]":"226",
-                                "[牙牙花痴]":"227",
-                                "[牙牙疑问]":"228",
-                                "[牙牙爱心]":"229",
-                                "[牙牙害羞]":"230",
-                                "[牙牙牙买碟]":"231",
-                                "[牙牙亲一下]":"232",
-                                "[牙牙大哭]":"233",
-                                "[牙牙愤怒]":"234",
-                                "[牙牙挖鼻屎]":"235",
-                                "[牙牙嘻嘻]":"236",
-                                "[牙牙漂漂]":"237",
-                                "[牙牙冰冻]":"238",
-                                "[牙牙傲娇]":"239",
-                                "[牙牙闪电]":"240"]
 }
-
-
-
 
 extension MTTMessageEntity {
     
@@ -224,7 +199,7 @@ extension MTTMessageEntity {
             dataDic.updateValue(self.msgContent, forKey: "text")
             type = 10
         }else if self.msgContentType == .Image{
-            dataDic.updateValue(self.msgContent, forKey: "url")
+            dataDic.updateValue(self.info[MTTMessageEntity.DD_IMAGE_URL_KEY] as? String ?? "", forKey: "url")
             type = 11
         }else if self.msgContentType == .Emotion {
             dataDic.updateValue(self.msgContent, forKey: "sticker")
@@ -237,10 +212,11 @@ extension MTTMessageEntity {
         let contentStr:String = (dic as NSDictionary).jsonString() ?? ""
         let encryptContent:String = contentStr.encrypt()
         
-        NSLog("MTTMessageEntity encode contentStr %@ \n dic:%@ \n encrypt:%@",contentStr,dic,encryptContent)
+//        NSLog("MTTMessageEntity encode contentStr %@ \n dic:%@ \n encrypt:%@",contentStr,dic,encryptContent)
         
         return encryptContent
     }
+    
     
     
     public convenience init(msgInfo:Im.BaseDefine.MsgInfo,sessionType:Im.BaseDefine.SessionType){

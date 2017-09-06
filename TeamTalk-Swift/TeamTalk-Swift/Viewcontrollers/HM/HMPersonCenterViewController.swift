@@ -170,8 +170,28 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         }
         print("ready to upload avatar Image:\(imagePath)")
         
-        //先上传图片、再发送含有图片URL 的消息。
-        //Fixme:here
-//        SendPhotoMessageAPI.shared.uploadPhoto(ima
+        let progressView:UIProgressView = UIProgressView.init()
+        progressView.frame = .init(x: 0, y: 0, width: SCREEN_WIDTH()/2, height: 30)
+        progressView.setProgress(0, animated: true )
+        
+        SendPhotoMessageAPI.shared.uploadAvatar(imagePath: imagePath, progress: { (progress ) in
+            dispatch(after: 0, task: {
+                let floatPro = CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount)
+                self.view.showToast(progressView, point: self.view.center)
+                progressView.setProgress(Float(floatPro), animated: true )
+            })
+        }, success: { (imageurl ) in
+            dispatch(after: 0, task: {
+                progressView.removeFromSuperview()
+                self.avatarImgv.setImage(str: imageurl)
+                HMLoginManager.shared.currentUser.avatar = imageurl
+            })
+//            MTTDatabaseUtil.instance().updateContacts([HMLoginManager.shared.currentUser], inDBCompletion: { (error ) in  })
+        }) { (error ) in
+            dispatch(after: 0, task: {
+                progressView.removeFromSuperview()
+                self.view.makeToast(error)
+            })
+        }
     }
 }
