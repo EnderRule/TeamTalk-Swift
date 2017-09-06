@@ -171,19 +171,7 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         print("ready to upload avatar Image:\(imagePath)")
         
         //先上传图片、再发送含有图片URL 的消息。
-        DDSendPhotoMessageAPI.sharedPhotoCache().uploadImage(imagePath, success: { (imageURL) in
-            
-            
-            if imageURL != nil {
-//                debugPrint("  upload avatar image success :\(imageURL) ")
-
-            }
-        }) {[weak self ] (error ) in
-            debugPrint("chatting pick && upload image error :\(error.debugDescription) ")
-            
-            self?.view.makeToast(error.debugDescription, duration: 3.0, position: .center, title: "上传失败", image: nil , style:ToastStyle.init(), completion: nil )
-            
-        }
-        
+        //Fixme:here
+//        SendPhotoMessageAPI.shared.uploadPhoto(ima
     }
 }

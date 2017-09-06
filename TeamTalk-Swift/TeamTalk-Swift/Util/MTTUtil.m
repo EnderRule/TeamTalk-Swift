@@ -195,14 +195,5 @@
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:@"lastDbVersion"];
 }
-+(void)setMsfsUrl:(NSString*)url
-{
-    [[NSUserDefaults standardUserDefaults] setObject:url forKey:@"msfsurl"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-+(NSString*)getMsfsUrl
-{
-     return [[NSUserDefaults standardUserDefaults] objectForKey:@"msfsurl"];
-}
 
 @end

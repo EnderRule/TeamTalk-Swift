@@ -120,7 +120,23 @@ class HMLoginManager: NSObject {
             return  UserDefaults.standard.bool(forKey: "im.HMShouldAutoLogin")
         }
     }
+    var msfsUrl:String {  //消息服务器之文件服务器的地址 ，用于上传图片、文件
+        set{
+            UserDefaults.standard.setValue(newValue, forKey: "im.HMMessageServerFileServer")
+            UserDefaults.standard.synchronize()
+        }
+        get {
+            return  UserDefaults.standard.object(forKey: "im.HMShouldAutoLogin") as? String ?? ""
+        }
+    }
     
+    var serverTime:TimeInterval {
+        get{
+            return s_serverTime
+        }
+    }
+    
+    private var s_serverTime:TimeInterval = Date().timeIntervalSince1970
     private var s_currentUser:MTTUserEntity = MTTUserEntity.init()
     private var s_networkState:HMNetworkState = .disconnect
     private var s_loginState:HMLoginState = .offLine{
@@ -200,7 +216,9 @@ class HMLoginManager: NSObject {
                 self?.priorIP = ip
                 self?.priorport = port
                 
-                MTTUtil.setMsfsUrl(json["msfsPrior"].stringValue)
+                
+                self?.msfsUrl = json["msfsPrior"].stringValue
+                
                 self?.tcpServer.loginTcpServerIP(ip, port: port, success: {
                     let clientVersion:String = "iOS/\(APP_VERSION)-\(APP_BUILD_VERSION)"
                     let clientType:Int = 17
@@ -214,8 +232,16 @@ class HMLoginManager: NSObject {
                             debugPrint("\(ip)  \(port)  登入驗證  # ### \(dic)  \(json2["user"].object)")
 
                             
+                            
                             if let user:MTTUserEntity = dic["user"] as? MTTUserEntity {
                                 debugPrint("登入驗證成功 # ###")
+                                
+                                
+                                if json["serverTime"].doubleValue > 3600 {
+                                    self?.s_serverTime = json["serverTime"].doubleValue
+                                    self?.startCountServerTime()
+                                }
+                                
                                 self?.s_loginState = .online
 
                                 self?.s_currentUser = user
@@ -404,6 +430,20 @@ class HMLoginManager: NSObject {
     }
     
     
+    //维护服务器时间
+    private var serverTimeTimer:Timer?
+    private func startCountServerTime(){
+        self.serverTimeTimer?.invalidate()
+        self.serverTimeTimer = nil
+        
+        self.serverTimeTimer = Timer.scheduledTimer(timeInterval: 1, target: self , selector: #selector(self.serverTimeCounter), userInfo: nil , repeats: true  )
+        self.serverTimeTimer?.fire()
+        
+    }
+    @objc private func serverTimeCounter(){
+        self.s_serverTime += 1
+    }
+    
     private var sendHeartBeatTimer:Timer?
     private var reloginTimer:Timer?
     private var checkServerHeartBeatTimer:Timer?
@@ -412,7 +452,6 @@ class HMLoginManager: NSObject {
     private var reloginInterval:Int = 0
     private var reloginTimeN:Int = 0
     private var powN:Int = 0
-    
     
     private func p_startCheckServerHeartBeat(){
         self.checkServerHeartBeatTimer?.invalidate()
@@ -470,8 +509,6 @@ class HMLoginManager: NSObject {
             self.p_stopHeartBeat()
             
             self.p_startRelogin()
-            
-            
         }
     }
     

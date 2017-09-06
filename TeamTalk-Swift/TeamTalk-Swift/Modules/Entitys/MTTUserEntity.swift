@@ -42,6 +42,10 @@ class MTTUserEntity: MTTBaseEntity {
             return self.objID
         }
     }
+    var intUserID:Int {
+        return Int(MTTUserEntity.pbIDFrom(localID: self.objID))
+    }
+    
     
     var isValided:Bool {
         get{

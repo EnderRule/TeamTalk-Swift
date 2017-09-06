@@ -61,9 +61,7 @@
 +(NSInteger)getDBVersion;
 +(void)setLastDBVersion:(NSInteger)version;
 +(NSInteger)getLastDBVersion;
-#pragma mark - msfs
-+(void)setMsfsUrl:(NSString*)url;
-+(NSString*)getMsfsUrl;
+
 @end
 
 

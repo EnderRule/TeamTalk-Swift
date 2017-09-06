@@ -193,7 +193,7 @@ extension MTTMessageEntity {
         let realConent = content.decrypt()
         let dic = NSDictionary.initWithJsonString(realConent) ?? [:]
         
-        NSLog("MTTMessageEntity decode content %@ \nreal:%@ \ndic:%@",content,realConent,dic )
+//        NSLog("MTTMessageEntity decode content %@ \nreal:%@ \ndic:%@",content,realConent,dic )
         
         let json = JSON.init(dic)
 

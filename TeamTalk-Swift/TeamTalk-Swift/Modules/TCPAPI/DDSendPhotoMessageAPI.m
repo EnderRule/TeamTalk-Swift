@@ -42,29 +42,52 @@ static int max_try_upload_times = 5;
     }
     return self;
 }
-- (void)uploadImage:(NSString*)imagePath success:(void(^)(NSString* imageURL))success failure:(void(^)(id error))failure
+- (void)uploadImage:(NSString*)imagePath toSession:(MTTSessionEntity *)session success:(void(^)(NSString* imageURL))success failure:(void(^)(id error))failure
 {
     
     NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^(){
-        NSURL *url = [NSURL URLWithString:[MTTUtil getMsfsUrl]];
+        NSURL *url = [NSURL URLWithString: [HMLoginManager shared].msfsUrl];
         NSString *urlString =  [url.absoluteString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
        
         @autoreleasepool
         {
             __block NSData *imageData = [NSData dataWithContentsOfFile:imagePath];//  [[MTTPhotosCache sharedPhotoCache] photoFromDiskCacheForKey:imagePath];
             if (imageData == nil) {
-                failure(@"data is emplty");
+                failure(@"image data is emplty");
                 return;
             }
             __block UIImage *image = [UIImage imageWithData:imageData];
             NSString *imageName = [NSString stringWithFormat:@"image.png_%fx%f.png",image.size.width,image.size.height];
-            NSDictionary *params =[NSDictionary dictionaryWithObjectsAndKeys:@"im_image",@"type", nil];
+            
+//            上传图片带post参数:
+//            auth =
+//            加密(
+//               json(
+//                    array (
+//                           'msg_type' ,
+//                           'from_user_id',
+//                           'time'
+//                           )
+//                    )
+//               )
+//            还写少一个 to_session_id  ,
+            
+            NSInteger msgType = session.isGroupSession ? 17 : 1;
+            NSInteger fromuserid = [MTTUserEntity pbIDFromLocalID:[HMLoginManager shared].currentUser.userId];
+            NSInteger toSessionid = [MTTBaseEntity pbIDFromLocalID:session.sessionID];
+            NSTimeInterval time = [HMLoginManager shared].serverTime;
+            NSDictionary *authDic = @{@"msg_type":@(msgType),@"from_user_id":@(fromuserid),@"to_session_id":@(toSessionid),@"time":@(time)};
+            NSString *authString = [authDic jsonString];
+            
+            
+            NSDictionary *params = @{@"type":@"im_image",@"auth":@"authString"};
+            
             
             [self.manager POST:urlString parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                 [formData appendPartWithFileData:imageData name:@"image" fileName:imageName mimeType:@"image/jpeg"];
             } progress:^(NSProgress * _Nonnull uploadProgress) {
                 
-            } success:^(NSURLSessionDataTask *task, id responseObject) {
+            } success:^(NSURLSessionDataTask *taskdd, id responseObject) {
     
                 imageData =nil;
                 image=nil;
@@ -80,14 +103,13 @@ static int max_try_upload_times = 5;
                         
                     }
                    
-                    NSMutableString *url = [NSMutableString stringWithFormat:@"%@",DD_MESSAGE_IMAGE_PREFIX];
                     if (!imageURL)
                     {
                         max_try_upload_times --;
                         if (max_try_upload_times > 0)
                         {
                             
-                            [self uploadImage:imagePath success:^(NSString *imageURL) {
+                            [self uploadImage:imagePath toSession:session success:^(NSString *imageURL) {
                                 success(imageURL);
                             } failure:^(id error) {
                                 failure(error);
@@ -99,7 +121,9 @@ static int max_try_upload_times = 5;
                         }
                         
                     }
+                
                     if (imageURL) {
+                        NSMutableString *url = [NSMutableString stringWithFormat:@"%@",DD_MESSAGE_IMAGE_PREFIX];
                         [url appendString:imageURL];
                         [url appendString:@":}]&$~@#@"];
                         success(url);
@@ -124,16 +148,16 @@ static int max_try_upload_times = 5;
     [self.queue addOperation:operation];
     
 }
-+(NSString *)imageUrl:(NSString *)content{
-    NSRange range = [content rangeOfString:@"path="];
-    NSString* url = nil;
-    if ([content length] > range.location + range.length)
-    {
-        url = [content substringFromIndex:range.location+range.length];
-    }
-    url = [(NSString *)url stringByReplacingOccurrencesOfString:@"+" withString:@" "];
-    url = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    return url;
-}
+//+(NSString *)imageUrl:(NSString *)content{
+//    NSRange range = [content rangeOfString:@"path="];
+//    NSString* url = nil;
+//    if ([content length] > range.location + range.length)
+//    {
+//        url = [content substringFromIndex:range.location+range.length];
+//    }
+//    url = [(NSString *)url stringByReplacingOccurrencesOfString:@"+" withString:@" "];
+//    url = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    return url;
+//}
 
 @end

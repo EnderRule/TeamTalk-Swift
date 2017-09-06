@@ -95,6 +95,7 @@
 		6682FE801F4AF28B0048FA23 /* HMChatVoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE7F1F4AF28B0048FA23 /* HMChatVoiceCell.swift */; };
 		6682FE821F4AF2B00048FA23 /* HMChatVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE811F4AF2B00048FA23 /* HMChatVideoCell.swift */; };
 		6682FE841F4AF2E80048FA23 /* HMChatEmotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE831F4AF2E80048FA23 /* HMChatEmotionCell.swift */; };
+		668BA1DB1F5F94B6001B786C /* SendPhotoMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668BA1DA1F5F94B6001B786C /* SendPhotoMessageAPI.swift */; };
 		66900F221F54050400B527D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66900F211F54050400B527D9 /* Images.xcassets */; };
 		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
 		66BD028E1F4D1CB100131E2D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66BD02721F4D1CB100131E2D /* Localizable.strings */; };
@@ -546,6 +547,7 @@
 		6682FE7F1F4AF28B0048FA23 /* HMChatVoiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatVoiceCell.swift; path = HM/HMChatVoiceCell.swift; sourceTree = "<group>"; };
 		6682FE811F4AF2B00048FA23 /* HMChatVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatVideoCell.swift; path = HM/HMChatVideoCell.swift; sourceTree = "<group>"; };
 		6682FE831F4AF2E80048FA23 /* HMChatEmotionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMChatEmotionCell.swift; sourceTree = "<group>"; };
+		668BA1DA1F5F94B6001B786C /* SendPhotoMessageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPhotoMessageAPI.swift; sourceTree = "<group>"; };
 		66900F211F54050400B527D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
 		66BD02721F4D1CB100131E2D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -1133,6 +1135,7 @@
 				66686A981F458037008B26BD /* GetMessageQueueAPI.swift */,
 				66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */,
 				66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */,
+				668BA1DA1F5F94B6001B786C /* SendPhotoMessageAPI.swift */,
 				66686A951F457E80008B26BD /* DDSendPhotoMessageAPI.h */,
 				66686A961F457E80008B26BD /* DDSendPhotoMessageAPI.m */,
 			);
@@ -2355,6 +2358,7 @@
 				6672CC271F4E626200DA46E6 /* UIScrollView+MJRefresh.m in Sources */,
 				66F10F821F4449570035C888 /* SpeexCodec.m in Sources */,
 				66686BDA1F46C718008B26BD /* MTTLoginViewController.m in Sources */,
+				668BA1DB1F5F94B6001B786C /* SendPhotoMessageAPI.swift in Sources */,
 				66BD02901F4D1CB100131E2D /* TZAssetCell.m in Sources */,
 				66F10A6E1F43F5BC0035C888 /* MTTDatabaseUtil.m in Sources */,
 				66E6D3BE1F428C38008E9590 /* HSL.swift in Sources */,

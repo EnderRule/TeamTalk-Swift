@@ -338,15 +338,16 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         }
         
         //先上传图片、再发送含有图片URL 的消息。
-        DDSendPhotoMessageAPI.sharedPhotoCache().uploadImage(imagePath, success: {[weak self ] (imageURL ) in
-            
-            debugPrint("chatting pick && upload image success :\(String(describing: imageURL)) ")
-            
-            if imageURL != nil {
+        
+        SendPhotoMessageAPI.shared.uploadPhoto(imagePath: imagePath, to: self.chattingModule.sessionEntity, progress: { (progress ) in
+            debugPrint("upload progress \(progress.completedUnitCount)/\(progress.totalUnitCount)  \(CGFloat(progress.completedUnitCount/progress.totalUnitCount))")
+        }, success: {[weak self] (imageURL ) in
+            debugPrint("upload success url: \(imageURL)")
+            if imageURL.length > 0 {
                 messageEntity.state = .Sending
                 
                 var tempContentDic = NSDictionary.initWithJsonString(messageEntity.msgContent) ?? [:]
-                tempContentDic.updateValue(imageURL!, forKey: MTTMessageEntity.DD_IMAGE_URL_KEY)
+                tempContentDic.updateValue(imageURL, forKey: MTTMessageEntity.DD_IMAGE_URL_KEY)
                 let tempMsgContent = (tempContentDic as NSDictionary).jsonString() ?? ""
                 messageEntity.msgContent = tempMsgContent
                 
@@ -354,19 +355,50 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 self?.sendMessage(msgEntity: messageEntity)
                 messageEntity.updateToDB(compeletion: nil)
             }
-        }) {[weak self ] (error ) in
-            debugPrint("chatting pick && upload image error :\(error.debugDescription) ")
-
+        }) {[weak self ] (errorString ) in
+            
+            debugPrint("upload error :\(errorString)")
             
             messageEntity.state = .SendFailure
             messageEntity.updateToDB(compeletion: { (success ) in
                 if success {
-                    dispatch(after: 0, task: { 
-                         self?.tableView.reloadData()
+                    dispatch(after: 0, task: {
+                        self?.tableView.reloadData()
                     })
                 }
             })
         }
+        
+        
+//        DDSendPhotoMessageAPI.sharedPhotoCache().uploadImage(imagePath, success: {[weak self ] (imageURL ) in
+//            
+//            debugPrint("chatting pick && upload image success :\(String(describing: imageURL)) ")
+//            
+//            if imageURL != nil {
+//                messageEntity.state = .Sending
+//                
+//                var tempContentDic = NSDictionary.initWithJsonString(messageEntity.msgContent) ?? [:]
+//                tempContentDic.updateValue(imageURL!, forKey: MTTMessageEntity.DD_IMAGE_URL_KEY)
+//                let tempMsgContent = (tempContentDic as NSDictionary).jsonString() ?? ""
+//                messageEntity.msgContent = tempMsgContent
+//                
+//                
+//                self?.sendMessage(msgEntity: messageEntity)
+//                messageEntity.updateToDB(compeletion: nil)
+//            }
+//        }) {[weak self ] (error ) in
+//            debugPrint("chatting pick && upload image error :\(error.debugDescription) ")
+//
+//            
+//            messageEntity.state = .SendFailure
+//            messageEntity.updateToDB(compeletion: { (success ) in
+//                if success {
+//                    dispatch(after: 0, task: { 
+//                         self?.tableView.reloadData()
+//                    })
+//                }
+//            })
+//        }
         
     }
     
@@ -572,6 +604,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 }
             }
         }
+        
 //        else if type == .voicePlay{
 //            let localPath = message?.msgContent.safeLocalPath() ?? ""
 //            if FileManager.default.fileExists(atPath: localPath){

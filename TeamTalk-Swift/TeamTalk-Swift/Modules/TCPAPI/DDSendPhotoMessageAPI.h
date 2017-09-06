@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class  MTTSessionEntity;
 @interface DDSendPhotoMessageAPI : NSObject
 + (DDSendPhotoMessageAPI *)sharedPhotoCache;
-- (void)uploadImage:(NSString*)imagePath success:(void(^)(NSString* imageURL))success failure:(void(^)(id error))failure;
+- (void)uploadImage:(NSString*)imagePath toSession:(MTTSessionEntity *)session success:(void(^)(NSString* imageURL))success failure:(void(^)(id error))failure;
 @end

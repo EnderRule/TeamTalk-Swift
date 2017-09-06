@@ -105,26 +105,21 @@ class HMMessageManager: NSObject {
     
     
     public func sendVoice(voicePath:String, message:MTTMessageEntity,session:MTTSessionEntity,completion:@escaping HMSendMessageCompletion){
-//        let voiceDuration = HMMediaManager.shared.durationFor(filePath: voicePath)
         
-//        if voiceDuration > 1{
+        message.msgType = .msgTypeSingleAudio
+        message.msgContentType = .Voice
+        message.msgContent = voicePath
+        message.info.updateValue(voicePath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
         
-            message.msgType = .msgTypeSingleAudio
-            message.msgContentType = .Voice
-            message.msgContent = voicePath
-            message.info.updateValue(voicePath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
-            
-            self.sendNormal(message: message, session: session) { (message , error ) in
-                completion(message,error)
-            }
-//        }else{
-//            completion(message,NSError.init(domain: "錄音時間太短", code: 0, userInfo: nil))
-//        }
+        self.sendNormal(message: message, session: session) { (message , error ) in
+            completion(message,error)
+        }
     }
     
     public func sendImage(imagePath:String,message:MTTMessageEntity,session:MTTSessionEntity,completion:HMSendMessageCompletion){
         message.msgContentType = .Image
         
+        //Fixme:Here
     }
     
     
