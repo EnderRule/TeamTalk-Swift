@@ -14,12 +14,12 @@ class HMChatEmotionCell: HMChatImageCell {
     override func setContent(message: MTTMessageEntity) {
         super.setContent(message: message)
         
-        self.handleEmotion(message: message) { (catagoryID,emojiName ) in
+        self.handleEmotion(message: message) { (catagoryID,emojiID ) in
             
-            let image = UIImage.nim_loadChartlet(catagoryID, name: emojiName)
+            let image = UIImage.nim_loadChartlet(catagoryID, name: emojiID)
             self.mainImgv.image = image
             
-//            debugPrint("set emotion :",message.msgContent ,catagoryID,emojiName,image ?? "nil emoji image")
+            debugPrint("set emotion :",message.msgContent ,catagoryID,emojiID,image ?? "nil emoji image")
         }
     }
     
@@ -35,37 +35,20 @@ class HMChatEmotionCell: HMChatImageCell {
     }
     
     override func contentSizeFor(message: MTTMessageEntity) -> CGSize {
-        return CGSize.init(width: 150, height: 150)
+        return CGSize.init(width: 120, height: 120)
     }
     
     private func handleEmotion(message:MTTMessageEntity,compeletion:((String,String)->Void)){  //返回 表情分类ID 和 表情文件名
-        var catagoryID:String = ""
-        var EmojiName:String = ""
         
-        var msgContent = String.init(stringLiteral: message.msgContent)
-        if msgContent.hasPrefix("[") && msgContent.hasSuffix("]"){
+        var categoryID:String = message.info[MTTMessageEntity.kEmojiCategory] as? String ?? ""
+        var EmojiID:String = message.info[MTTMessageEntity.kEmojiName] as? String ?? ""
+        let EmojiText:String = message.info[MTTMessageEntity.kEmojiText] as? String ?? ""
+        EmojiID = (EmojiID as NSString).deletingPathExtension
+        if EmojiText.hasPrefix("[牙牙") && EmojiText.hasSuffix("]"){
+            categoryID = "mgj"
             
-            if msgContent.hasPrefix("[牙牙"){ //蘑菇街的表情
-                catagoryID = "mgj"
-                EmojiName = MTTEmotionManager.mgjEmotionDic[msgContent] ?? ""
-                
-            }else{
-            
-                msgContent = msgContent.replacingOccurrences(of: "[", with: "")
-                msgContent = msgContent.replacingOccurrences(of: "]", with: "")
-                
-                let components = msgContent.components(separatedBy: "/")
-                if components.count >= 2{
-                    catagoryID = components[0]
-                    EmojiName = components[1]
-                }else {
-                    catagoryID = msgContent
-                    EmojiName = msgContent
-                }
-            }
+            EmojiID = MTTEmotionManager.mgjEmotionDic[EmojiText] ?? "" 
         }
-        
-        compeletion(catagoryID,EmojiName)
-    }
-
+        compeletion(categoryID,EmojiID)
+     }
 }

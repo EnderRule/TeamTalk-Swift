@@ -63,10 +63,7 @@ import UIKit
     }
 }
 
-
 class MTTMessageEntity: NSObject,NSCopying {
-    
-    
     
     var msgID:UInt32 = 0
     var msgType:MsgType_Objc = .msgTypeSingleText
@@ -150,12 +147,18 @@ class MTTMessageEntity: NSObject,NSCopying {
 }
 
 extension MTTMessageEntity {
-    static  let  DDVOICE_PLAYED:String              =       "voicePlayed"
-    static  let  VOICE_LENGTH:String                =       "voiceLength"
-    static  let  VOICE_LOCAL_KEY:String             =       "voiceLocalPath"
+    static let kVoiceHadPlayed:String             = "voiceHadPlayed"
+    static let kVoiceLength:String                = "voiceLength"
+    static let kVoiceLocalPath:String             = "voiceLocalPath"
     
-    static  let  DD_IMAGE_LOCAL_KEY :String         =       "local"
-    static  let  DD_IMAGE_URL_KEY :String           =       "url"
+    static let kImageLocalPath :String            = "imageLocalPath"
+    static let kImageUrl :String                  = "imageUrl"
+    static let kImageScale:String                 = "imageScale"
+    
+    static let kEmojiText:String                  = "emojiText"
+    static let kEmojiCategory:String              = "emojiCategory"
+    static let kEmojiName:String                  = "emojiName"
+
 }
 
 extension MTTMessageEntity {
@@ -168,7 +171,7 @@ extension MTTMessageEntity {
         let realConent = content.decrypt()
         let dic = NSDictionary.initWithJsonString(realConent) ?? [:]
         
-//        NSLog("MTTMessageEntity decode content %@ \nreal:%@ \ndic:%@",content,realConent,dic )
+        NSLog("MTTMessageEntity decode \ndic:%@",content,realConent,dic as NSDictionary )
         
         let json = JSON.init(dic)
 
@@ -177,13 +180,21 @@ extension MTTMessageEntity {
         if type == 10 {
             self.msgContentType = .Text
             self.msgContent = json["data"]["text"].stringValue
-        }else if type == 11{
+        }else if type == 11 {
             self.msgContentType = .Image
-            self.msgContent = json["data"]["url"].stringValue
-            self.info.updateValue(self.msgContent, forKey: MTTMessageEntity.DD_IMAGE_URL_KEY)
+
+            self.info.updateValue(json["data"]["url"].stringValue, forKey: MTTMessageEntity.kImageUrl)
+            self.info.updateValue(json["data"]["scale"].floatValue, forKey: MTTMessageEntity.kImageScale)
+ 
+            self.msgContent = "[圖片]"
         }else if type == 12{
             self.msgContentType = .Emotion
-            self.msgContent = json["data"]["sticker"].stringValue
+            
+            self.info.updateValue(json["data"]["name"].stringValue, forKey: MTTMessageEntity.kEmojiName)
+            self.info.updateValue(json["data"]["category"].stringValue, forKey: MTTMessageEntity.kEmojiCategory)
+            self.info.updateValue(json["data"]["text"].stringValue, forKey: MTTMessageEntity.kEmojiText)
+ 
+            self.msgContent = json["data"]["text"].stringValue
         }else{
             self.msgContentType = .Text
             self.msgContent = "[未知消息]"
@@ -194,25 +205,33 @@ extension MTTMessageEntity {
         var dic:[AnyHashable:Any] = [:]
         
         var dataDic:[AnyHashable:Any] = [:]
+        
+        let json = JSON.init(self.info)
+        
         var type:Int = 0
         if self.msgContentType == .Text {
             dataDic.updateValue(self.msgContent, forKey: "text")
             type = 10
         }else if self.msgContentType == .Image{
-            dataDic.updateValue(self.info[MTTMessageEntity.DD_IMAGE_URL_KEY] as? String ?? "", forKey: "url")
+            dataDic.updateValue(json[MTTMessageEntity.kImageUrl].stringValue, forKey: "url")
+            dataDic.updateValue(json[MTTMessageEntity.kImageScale].floatValue, forKey: "scale")
+            
             type = 11
-        }else if self.msgContentType == .Emotion {
-            dataDic.updateValue(self.msgContent, forKey: "sticker")
+        }else if self.msgContentType == .Emotion  {
+            dataDic.updateValue(json[MTTMessageEntity.kEmojiText].stringValue, forKey: "text")
+            dataDic.updateValue(json[MTTMessageEntity.kEmojiCategory].stringValue, forKey: "category")
+            dataDic.updateValue(json[MTTMessageEntity.kEmojiName].stringValue, forKey: "name")
+
             type = 12
         }
         
         dic.updateValue(type, forKey: "type")
         dic.updateValue(dataDic, forKey: "data")
 
+        NSLog("MTTMessageEntity encode \ndic:%@",dic as NSDictionary )
+        
         let contentStr:String = (dic as NSDictionary).jsonString() ?? ""
         let encryptContent:String = contentStr.encrypt()
-        
-//        NSLog("MTTMessageEntity encode contentStr %@ \n dic:%@ \n encrypt:%@",contentStr,dic,encryptContent)
         
         return encryptContent
     }
@@ -245,9 +264,9 @@ extension MTTMessageEntity {
                     self.msgContent = filepath
                     
                     var extraInfo:[String:Any] = [:]
-                    extraInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
-                    extraInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
-                    extraInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+                    extraInfo.updateValue(voiceLength, forKey: MTTMessageEntity.kVoiceLength )
+                    extraInfo.updateValue(0, forKey: MTTMessageEntity.kVoiceHadPlayed)
+                    extraInfo.updateValue(filepath, forKey: MTTMessageEntity.kVoiceLocalPath)
                     self.info = extraInfo
                 })
             }else {
@@ -289,9 +308,9 @@ extension MTTMessageEntity {
                     self.msgContent = filepath
                     
                     var extraInfo:[String:Any] = [:]
-                    extraInfo.updateValue(voiceLength, forKey: MTTMessageEntity.VOICE_LENGTH )
-                    extraInfo.updateValue(0, forKey: MTTMessageEntity.DDVOICE_PLAYED)
-                    extraInfo.updateValue(filepath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+                    extraInfo.updateValue(voiceLength, forKey: MTTMessageEntity.kVoiceLength )
+                    extraInfo.updateValue(0, forKey: MTTMessageEntity.kVoiceHadPlayed)
+                    extraInfo.updateValue(filepath, forKey: MTTMessageEntity.kVoiceLocalPath)
                     self.info = extraInfo
                 })
             }else {
@@ -343,7 +362,7 @@ extension MTTMessageEntity {
                 let voicedata = try  NSData.init(contentsOfFile: localPath) as Data
                 
                 let json = JSON.init(self.info)
-                let length:Int = json[MTTMessageEntity.VOICE_LENGTH].intValue
+                let length:Int = json[MTTMessageEntity.kVoiceLength].intValue
                 let muData:NSMutableData = NSMutableData.init()
                 for index in 0..<4 {
                     var byte = ((length >> ((3 - index)*8)) & 0x0ff)

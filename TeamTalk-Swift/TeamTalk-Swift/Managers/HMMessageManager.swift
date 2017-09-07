@@ -67,7 +67,7 @@ class HMMessageManager: NSObject {
             
             var msgData:Data = Data()
             if message.isVoiceMessage {
-                msgData = message.getUploadVoiceData()// self.getUploadVoiceDataAt(message: message)
+                msgData = message.getUploadVoiceData()
             }else {
                 msgData = message.encodeContent().utf8ToData()
                 self.unAckQueueAdd(message: message)
@@ -76,7 +76,8 @@ class HMMessageManager: NSObject {
             Notification.Name.HMSendMessageSuccessfull.postWith(object: session)
            
             let packObject:[Any] = [currentUser().userId,session.sessionID,msgData,message.msgType.rawValue,message.msgID]
-            debugPrint("HMMessageManager send message \(message.dicValues() as NSDictionary) \n packObject \(packObject as NSArray)")
+            
+//            debugPrint("HMMessageManager send message \(message.dicValues() as NSDictionary) \n packObject \(packObject as NSArray)")
             
             let sendAPI = SendMessageAPI.init()
             sendAPI.request(with: packObject, completion: { (respone , error ) in
@@ -113,7 +114,7 @@ class HMMessageManager: NSObject {
         message.msgType = .msgTypeSingleAudio
         message.msgContentType = .Voice
         message.msgContent = voicePath
-        message.info.updateValue(voicePath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
+        message.info.updateValue(voicePath, forKey: MTTMessageEntity.kVoiceLocalPath)
         
         self.sendNormal(message: message, session: session) { (message , error ) in
             completion(message,error)
@@ -186,7 +187,7 @@ class HMMessageManager: NSObject {
                 let voicedata = try  NSData.init(contentsOfFile: localPath) as Data
                 
                 let json = JSON.init(message.info)
-                let length:Int = json[MTTMessageEntity.VOICE_LENGTH].intValue
+                let length:Int = json[MTTMessageEntity.kVoiceLength].intValue
                 let muData:NSMutableData = NSMutableData.init()
                 for index in 0..<4 {
                     var byte = ((length >> ((3 - index)*8)) & 0x0ff)

@@ -42,10 +42,10 @@ class HMChatVoiceCell: HMChatBaseCell {
         super.setContent(message: message)
         
         let json = JSON.init(message.info)
-        let hadPlayed:Bool = json[MTTMessageEntity.DDVOICE_PLAYED].boolValue
+        let hadPlayed:Bool = json[MTTMessageEntity.kVoiceHadPlayed].boolValue
         self.showRedDot(show: !hadPlayed && !message.isSendBySelf)
         
-        let duration:Int = json[MTTMessageEntity.VOICE_LENGTH].intValue
+        let duration:Int = json[MTTMessageEntity.kVoiceLength].intValue
         let durationString = "\(duration)''"
         self.voiceDurationLabel.text = durationString
         
@@ -104,7 +104,7 @@ class HMChatVoiceCell: HMChatBaseCell {
         let maxWidth:CGFloat = maxChatContentWidth * 0.6
         
         let json = JSON.init(message.info)
-        let duration:CGFloat = CGFloat(json[MTTMessageEntity.VOICE_LENGTH].floatValue)
+        let duration:CGFloat = CGFloat(json[MTTMessageEntity.kVoiceLength].floatValue)
         let extraWidth:CGFloat = duration/60.0 * (maxWidth - minWidth)
         
         var defaultSize:CGSize = .init(width: minWidth, height: 30)
@@ -135,7 +135,7 @@ class HMChatVoiceCell: HMChatBaseCell {
         self.showRedDot(show: false )
 
         if self.message != nil {
-            self.message!.info.updateValue(true , forKey: MTTMessageEntity.DDVOICE_PLAYED)
+            self.message!.info.updateValue(true , forKey: MTTMessageEntity.kVoiceHadPlayed)
             self.message!.updateToDB(compeletion: nil )
             
             self.delegate?.HMChatCellAction(type: .voicePlayOrStop, message: self.message!, sourceView: self)

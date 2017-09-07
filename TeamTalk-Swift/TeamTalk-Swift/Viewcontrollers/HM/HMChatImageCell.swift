@@ -29,10 +29,11 @@ class HMChatImageCell: HMChatBaseCell {
     override func setContent(message: MTTMessageEntity) {
         super.setContent(message: message)
         
-        let imageURL:String = self.imageURLFrom(message: message)
-        
-        self.mainImgv.setImage(str: imageURL)
-//        debugPrint("set content message imageURL:\(imageURL)")
+        if message.isImageMessage{
+            let imageURL:String = self.imageURLFrom(message: message)
+            self.mainImgv.setImage(str: imageURL)
+            debugPrint("set content message imageURL:\(imageURL)")
+        }
     }
 
     override func layoutContentView(message: MTTMessageEntity) {
@@ -53,9 +54,16 @@ class HMChatImageCell: HMChatBaseCell {
     }
     
     override func contentSizeFor(message: MTTMessageEntity) -> CGSize {
-        let maxImgvWidth:CGFloat = maxChatContentWidth/2
         
-        var defaultSize:CGSize = .init(width: maxImgvWidth, height: maxImgvWidth * 0.618)  //默认 0.618 黄金比例
+        var scale:CGFloat = CGFloat(JSON.init(message.info)[MTTMessageEntity.kImageScale].floatValue)
+        if scale == 0 {
+            scale = 1.618   //寬高比 默认 0.618 黄金比例
+        }
+        
+        let maxImgvWidth:CGFloat = maxChatContentWidth/2
+        let minImgvWidth:CGFloat = 64
+        
+        var defaultSize:CGSize = .init(width: maxImgvWidth, height: maxImgvWidth / scale)
         
         let imageURL:String = self.imageURLFrom(message: message)
  
@@ -78,13 +86,12 @@ class HMChatImageCell: HMChatBaseCell {
             
             theImage = image
         }
-        guard (theImage != nil) else {
+        
+        if theImage != nil {
+            defaultSize.width = min( max(theImage!.size.width, minImgvWidth),maxImgvWidth/scale )
+            defaultSize.height = defaultSize.width * theImage!.size.height/theImage!.size.width  //计算好宽度后、根据图片的宽高比例来计算高度
             return defaultSize
         }
-        
-        defaultSize.width = min( max(theImage!.size.width, 40),maxImgvWidth * 0.618 )  // 至少40 的宽度
-
-        defaultSize.height = defaultSize.width * theImage!.size.height/theImage!.size.width  //计算好宽度后、根据图片的宽高比例来计算高度
 
         return defaultSize
     }
@@ -92,22 +99,14 @@ class HMChatImageCell: HMChatBaseCell {
     
     private func imageURLFrom(message:MTTMessageEntity)->String{
         
-        var imageURL:String = message.msgContent
+//        print("imageURLFrom(message ",message.info as NSDictionary)
+        
+        var imageURL:String = message.info[MTTMessageEntity.kImageLocalPath] as? String ?? ""
+        imageURL = imageURL.safeLocalPath()
         if FileManager.default.fileExists(atPath: imageURL){
             return imageURL
         }
-        
-        imageURL = message.info[MTTMessageEntity.DD_IMAGE_LOCAL_KEY] as? String ?? ""
-        if FileManager.default.fileExists(atPath: imageURL){
-            return imageURL
-        }
-            
-        if message.msgContent .hasPrefix("http"){
-            return message.msgContent
-        }
-        
-        imageURL = message.info[MTTMessageEntity.DD_IMAGE_URL_KEY] as? String ?? ""
-        return imageURL
+        return message.info[MTTMessageEntity.kImageUrl] as? String ?? ""
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

@@ -280,7 +280,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false )
         
-        
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.chatInputView.resignFirstResponder()
     }
     
     
@@ -324,19 +326,26 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         guard imagePath.length > 0 else {
             return
         }
+        
+        self.sendLocalImage(imagePath: imagePath)
+    }
+    
+    private func sendLocalImage(imagePath:String){
+        
         print("ready to upload messageImage:\(imagePath)")
         
-        let messageEntity = MTTMessageEntity.init(content: imagePath, module: self.chattingModule, msgContentType: DDMessageContentType.Image)
-        messageEntity.info.updateValue(imagePath, forKey: MTTMessageEntity.DD_IMAGE_LOCAL_KEY)
+        var scale:CGFloat = 1.618
+        if let image:UIImage = UIImage.init(contentsOfFile: imagePath){
+            scale = image.size.width/image.size.height
+         }
+
+        let messageEntity = MTTMessageEntity.init(content: "[圖片]", module: self.chattingModule, msgContentType: DDMessageContentType.Image)
+        messageEntity.info.updateValue(imagePath, forKey: MTTMessageEntity.kImageLocalPath)
+        messageEntity.info.updateValue(scale, forKey: MTTMessageEntity.kImageScale)
         
-        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
-            
-        }) { (error ) in
-            
-        }
+        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: { }) { (error ) in   }
         
         //先上传图片、再发送含有图片URL 的消息。
-        
         SendPhotoMessageAPI.shared.uploadPhoto(imagePath: imagePath, to: self.chattingModule.sessionEntity, progress: { (progress ) in
             debugPrint("upload progress \(progress.completedUnitCount)/\(progress.totalUnitCount)  \(CGFloat(progress.completedUnitCount/progress.totalUnitCount))")
         }, success: {[weak self] (imageURL ) in
@@ -344,8 +353,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             if imageURL.length > 0 {
                 messageEntity.state = .Sending
                 
-                messageEntity.info.updateValue(imageURL, forKey: MTTMessageEntity.DD_IMAGE_URL_KEY)
-                messageEntity.msgContent = imageURL
+                messageEntity.info.updateValue(imageURL, forKey: MTTMessageEntity.kImageUrl)
                 
                 self?.sendMessage(msgEntity: messageEntity)
                 messageEntity.updateToDB(compeletion: nil)
@@ -363,7 +371,10 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
                 }
             })
         }
+    
+        
     }
+    
     
     //MARK: 消息管理代理 DDMessageModuleDelegate
     func onReceiveMessage(_ message: MTTMessageEntity!) {
@@ -441,38 +452,35 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         self.sendMessage(msgEntity: messageEntity)
     }
     
-    func onSelectChartlet(_ chartletId: String!, catalog catalogId: String!) {
-        print("input ivew select chartlet : \(chartletId) \(catalogId)")
+    func onSelectChartlet(_ chartletId: String!, catalog categoryId: String!) {
+        print("input ivew select chartlet : \(chartletId) \(categoryId)")
         
-        if catalogId == "mgj" && chartletId.length > 0{
-
-            var msgcontent:String = ""
+        var msgcontent:String = ""
+        if categoryId == "mgj" && chartletId.length > 0{
             for keyValue in MTTEmotionManager.mgjEmotionDic.enumerated(){
                if keyValue.element.value == chartletId  {
                     msgcontent = keyValue.element.key
                     break
                 }
             }
-            debugPrint("select \(msgcontent)")
-            
-            if msgcontent.length > 0 {
-                let messageEntity = MTTMessageEntity.init(content: msgcontent, module: self.chattingModule, msgContentType: .Emotion)
-
-                MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
-                }) { (error ) in
-                }
-                self.sendMessage(msgEntity: messageEntity)
+            if msgcontent.length <= 0 {
+                msgcontent = "[貼圖]"
             }
         }else{
-            let messageEntity = MTTMessageEntity.init(content: "[\(catalogId!)/\(chartletId!)]", module: self.chattingModule, msgContentType: .Emotion)
-            
-            MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
-            }) { (error ) in
-            }
-            self.sendMessage(msgEntity: messageEntity)
-            
+            msgcontent = "[貼圖]"
         }
+        debugPrint("select charlet \(msgcontent)   \(categoryId!)   \(chartletId!)")
         
+        let messageEntity = MTTMessageEntity.init(content: msgcontent, module: self.chattingModule, msgContentType: .Emotion)
+
+        messageEntity.info.updateValue(msgcontent, forKey: MTTMessageEntity.kEmojiText)
+        messageEntity.info.updateValue(categoryId, forKey: MTTMessageEntity.kEmojiCategory)
+        messageEntity.info.updateValue(chartletId, forKey: MTTMessageEntity.kEmojiName)
+        
+        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
+        }) { (error ) in
+        }
+        self.sendMessage(msgEntity: messageEntity)
     }
     
     func onAtStart() -> Bool {
@@ -507,8 +515,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         let voicePath:String = filePath
         let newmessage = MTTMessageEntity.init(content: voicePath, module: self.chattingModule, msgContentType: .Voice)
         newmessage.msgType = .msgTypeSingleAudio
-        newmessage.info.updateValue(voicePath, forKey: MTTMessageEntity.VOICE_LOCAL_KEY)
-        newmessage.info.updateValue(interval, forKey: MTTMessageEntity.VOICE_LENGTH)
+        newmessage.info.updateValue(voicePath, forKey: MTTMessageEntity.kVoiceLocalPath)
+        newmessage.info.updateValue(interval, forKey: MTTMessageEntity.kVoiceLength)
         
         MTTDatabaseUtil.instance().insertMessages([newmessage], success: { }, failure: { (resultStr ) in  })
         
@@ -543,11 +551,34 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         debugPrint("HMChatCellAction \(type),message \(message?.msgContent ?? "nil msgcontent")")
         
         if type == .sendAgain && message != nil{
-            message!.msgTime = UInt32(Date().timeIntervalSince1970)
-            message?.state = .Sending
             
-            message?.updateToDB(compeletion: nil )
-            self.sendMessage(msgEntity: message!)
+            
+            if message!.isImageMessage{
+                let imageurl = message!.info[MTTMessageEntity.kImageUrl] as? String ?? ""
+                var imageLocal = message!.info[MTTMessageEntity.kImageLocalPath] as? String ?? ""
+                imageLocal = imageLocal.safeLocalPath()
+                if imageurl.length <= 0 && FileManager.default.fileExists(atPath: imageLocal){
+                    self.sendLocalImage(imagePath: imageLocal)
+
+                    MTTDatabaseUtil.instance().deleteMesages(message!, completion: { (success ) in
+                    })
+                }else if imageurl.length > 0 {
+                    message!.msgTime = UInt32(Date().timeIntervalSince1970)
+                    message?.state = .Sending
+                    
+                    message?.updateToDB(compeletion: nil )
+                    self.sendMessage(msgEntity: message!)
+                } else{
+                    sourceView?.makeToast("圖片不存在")
+                }
+            }else{
+                message!.msgTime = UInt32(Date().timeIntervalSince1970)
+                message?.state = .Sending
+                
+                message?.updateToDB(compeletion: nil )
+                self.sendMessage(msgEntity: message!)
+            }
+            
         }else if  type == .voicePlayOrStop {
             if PlayerManager.shared().isPlaying(){
                 PlayerManager.shared().stopPlaying()
