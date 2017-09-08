@@ -9,6 +9,13 @@
 import UIKit
 
 class GetRecentSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var latestUpdateTime:UInt32 = 0
+    public convenience init(latestUpdateTime:UInt32){
+        self.init()
+        self.latestUpdateTime = latestUpdateTime
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -50,11 +57,10 @@ class GetRecentSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
             
-            let latestupdatetime:Int32 = ( "\((object as! [Any])[0])" as NSString).intValue
             
             let builder = Im.Buddy.ImrecentContactSessionReq.Builder()
             builder.setUserId(0)
-            builder.setLatestUpdateTime(UInt32(latestupdatetime))
+            builder.setLatestUpdateTime(self.latestUpdateTime)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

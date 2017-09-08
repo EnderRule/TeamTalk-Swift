@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 typedef id(^Analysis)(NSData* data);
-typedef NSMutableData*(^Package)(id object,uint16_t seqNO);
+typedef NSMutableData*(^Package)(NSDictionary *parasDic,uint16_t seqNO);
 
 @protocol DDAPIScheduleProtocol <NSObject>
 @required

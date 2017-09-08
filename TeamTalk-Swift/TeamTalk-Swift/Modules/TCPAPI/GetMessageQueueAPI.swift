@@ -9,6 +9,20 @@
 import UIKit
 
 class GetMessageQueueAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var msgIDBegin:UInt32 = 0
+    var count:Int = 0
+    var sessionType:Im.BaseDefine.SessionType = .sessionTypeSingle
+    var sessionID:UInt32 = 0
+    
+    public convenience init(sessionID:UInt32,sessionType:SessionType_Objc,msgIDBegin:UInt32,count:Int){
+        self.init()
+        self.sessionID = sessionID
+        self.sessionType = (sessionType == .sessionTypeSingle) ?  .sessionTypeSingle : .sessionTypeGroup
+        self.count = count
+        self.msgIDBegin = msgIDBegin
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return 20
     }
@@ -52,26 +66,14 @@ class GetMessageQueueAPI: DDSuperAPI,DDAPIScheduleProtocol {
         return analysis
     }
     
-    //打包數據,object 格式：[msgIDbegin,msgcount, sessiontype,sessiongid] as [String]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            
-            let msgIDbegin:Int32 = ( "\((object as! [Any])[0])" as NSString).intValue
-            let count:Int32 = ( "\((object as! [Any])[1])" as NSString).intValue
-            let typeint:Int32 = ( "\((object as! [Any])[2])" as NSString).intValue
-            let sessionID:UInt32 = MTTBaseEntity.pbIDFrom(localID: "\((object as! [Any])[3])" )
-            
-            var sessionType:Im.BaseDefine.SessionType = .sessionTypeSingle
-            if typeint == 2 {
-                sessionType = Im.BaseDefine.SessionType.sessionTypeGroup
-            }
-            
             let builder = Im.Message.ImgetMsgListReq.Builder()
             builder.setUserId(0)
-            builder.setMsgIdBegin(UInt32(msgIDbegin))
-            builder.setMsgCnt(UInt32(count))
-            builder.setSessionType(sessionType)
-            builder.setSessionId(sessionID)
+            builder.setMsgIdBegin(self.msgIDBegin)
+            builder.setMsgCnt(UInt32(self.count))
+            builder.setSessionType(self.sessionType)
+            builder.setSessionId(self.sessionID)
 
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

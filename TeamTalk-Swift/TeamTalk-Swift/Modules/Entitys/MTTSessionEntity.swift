@@ -45,6 +45,10 @@ import UIKit
 
 class MTTSessionEntity: NSObject {
     var sessionID:String = ""
+    var sessionIntID:UInt32{
+        return MTTBaseEntity.pbIDFrom(localID: self.sessionID)
+    }
+    
     var sessionType:SessionType_Objc = .sessionTypeSingle
     
     private var s_name:String = ""

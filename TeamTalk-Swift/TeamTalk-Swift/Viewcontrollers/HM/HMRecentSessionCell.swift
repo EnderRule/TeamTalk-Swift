@@ -100,19 +100,7 @@ class HMRecentSessionCell: HMBaseCell {
             let thedate = Date.init(timeIntervalSince1970: session.timeInterval)
             self.dateLabel.text = (thedate as NSDate).transformToFuzzyDate()
             
-            print("config recent session cell lastMsg:\(session.lastMsg)")
-            if session.lastMsg.hasSuffix(".gif")  ||
-                session.lastMsg.hasSuffix(".jpg") ||
-                session.lastMsg.hasSuffix(".png") ||
-                session.lastMsg.hasSuffix(".jpeg")  {
-                self.msgLabel.text = "[圖片]"
-            }else if session.lastMsg.hasSuffix(".spx"){
-                self.msgLabel.text = "[語音]"
-            }else if session.lastMsg.hasSuffix("[") && session.lastMsg.hasSuffix("]"){
-                self.msgLabel.text = "[貼圖]"
-            }else{
-                self.msgLabel.text = session.lastMsg //.nim_setText(session.lastMsg)
-            }
+            self.msgLabel.text = session.lastMsg
             self.updateUnread(count: session.unReadMsgCount)
             
             self.unreadMsgLabel.backgroundColor = UIColor.red

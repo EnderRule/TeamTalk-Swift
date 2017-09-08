@@ -163,10 +163,8 @@
         [self loginSuccessHandler];
         
         if ([HMLoginManager shared].pushTtoken.length > 0) {
-            SendPushTokenAPI *pushToken = [[SendPushTokenAPI alloc] init];
-            [pushToken requestWithObject:[HMLoginManager shared].pushTtoken Completion:^(id response, NSError *error) {
-                
-            }];
+            SendPushTokenAPI *pushToken = [[SendPushTokenAPI alloc] initWithPushToken:[HMLoginManager shared].pushTtoken];
+            [pushToken requestWithParameters:nil  Completion:^(id response, NSError *error) { }];
         }
     } failure:^(NSString * _Nonnull error ) {
         [HUD removeFromSuperview];

@@ -9,6 +9,20 @@
 import UIKit
 
 class RemoveSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var sessionID:UInt32 = 0
+    var sessionType:Im.BaseDefine.SessionType = .sessionTypeSingle
+    
+    public convenience init(ID:UInt32,type:SessionType_Objc){
+        self.init()
+        self.sessionID = ID;
+        if type == .sessionTypeSingle{
+            self.sessionType = .sessionTypeSingle
+        }else{
+            self.sessionType = .sessionTypeGroup
+        }
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -39,19 +53,10 @@ class RemoveSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
     //打包數據,object 格式：[latestupdatetime] as [String]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            let sessionID:UInt32 = MTTBaseEntity.pbIDFrom(localID: "\((object as! [Any])[0])" )
-            let typeID:UInt32 =  UInt32(("\((object as! [Any])[1])" as NSString).intValue)
-            
-            var sesssionType = Im.BaseDefine.SessionType.sessionTypeSingle
-            if typeID == 2 {
-                sesssionType = Im.BaseDefine.SessionType.sessionTypeGroup
-            }
-            
-            
             let builder = Im.Buddy.ImremoveSessionReq.Builder()
             builder.setUserId(0)
-            builder.setSessionId(sessionID)
-            builder.setSessionType(sesssionType)
+            builder.setSessionId(self.sessionID)
+            builder.setSessionType(self.sessionType)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

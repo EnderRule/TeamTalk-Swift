@@ -99,7 +99,7 @@
 -(void)getHadUnreadMessageSession:(void(^)(NSUInteger count))block
 {
     GetUnreadMessagesAPI *getUnreadMessage = [GetUnreadMessagesAPI new];
-    [getUnreadMessage requestWithObject:[HMLoginManager shared].currentUser.userId Completion:^(NSDictionary *dic, NSError *error) {
+    [getUnreadMessage requestWithParameters:nil Completion:^(NSDictionary *dic, NSError *error) {
         NSInteger m_total_cnt =[dic[@"m_total_cnt"] integerValue];
         NSArray *localsessions = dic[@"sessions"];
         [localsessions enumerateObjectsUsingBlock:^(MTTSessionEntity *obj, NSUInteger idx, BOOL *stop){
@@ -131,9 +131,10 @@
 }
 -(void)getRecentSession:(void(^)(NSUInteger count))block
 {
-    GetRecentSessionAPI *getRecentSession = [[GetRecentSessionAPI alloc] init];
     NSInteger localMaxTime = [self getMaxTime];
-    [getRecentSession requestWithObject:@[@(localMaxTime)] Completion:^(NSArray *response, NSError *error) {
+
+    GetRecentSessionAPI *getRecentSession = [[GetRecentSessionAPI alloc] initWithLatestUpdateTime:(uint32_t)localMaxTime];
+    [getRecentSession requestWithParameters:nil  Completion:^(NSArray *response, NSError *error) {
 
         NSMutableArray *array = [NSMutableArray arrayWithArray:response];
         
@@ -162,10 +163,9 @@
 {
     [self.sessions removeObjectForKey:session.sessionID];
     [[MTTDatabaseUtil instance] removeSession:session.sessionID];
-    RemoveSessionAPI *removeSession = [RemoveSessionAPI new];
-    SessionType_Objc sessionType = session.sessionType;
-    [removeSession requestWithObject:@[session.sessionID,@(sessionType)] Completion:^(id response, NSError *error) {
-       
+    uint32_t sessionid = [MTTBaseEntity pbIDFromLocalID:session.sessionID];
+    RemoveSessionAPI *removeSession = [[RemoveSessionAPI alloc]initWithID: sessionid type:session.sessionType];
+    [removeSession requestWithParameters:nil  Completion:^(id response, NSError *error) {
     }];
 }
 
@@ -274,8 +274,9 @@
                 }
                 [self updateToDatabase:session];
             }
-            MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
-            [readACK requestWithObject:@[sessionid,@(messageID),@(type)] Completion:nil];
+            MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] initWithSessionID:session.sessionIntID msgID:(uint32_t)messageID sessionType:session.sessionType];
+            [readACK requestWithParameters:nil Completion:nil];
+
         }
         
     }

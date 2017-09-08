@@ -9,6 +9,22 @@
 import UIKit
 
 class MsgReadACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    private var sessionID:UInt32 = 0
+    private var msgID:UInt32 = 0
+    private var type:Im.BaseDefine.SessionType = .sessionTypeSingle
+    
+    public convenience init(sessionID:UInt32,msgID:UInt32,sessionType:SessionType_Objc) {
+        self.init()
+        self.sessionID = sessionID
+        self.msgID = msgID
+        if sessionType == .sessionTypeSingle{
+            self.type = .sessionTypeSingle
+        }else{
+            self.type = .sessionTypeGroup
+        }
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return 0
     }
@@ -39,20 +55,12 @@ class MsgReadACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
     // object 格式 [sessoinID,msgID,sessionType] as [String]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            let sessionID:UInt32 = MTTBaseEntity.pbIDFrom(localID: "\((object as! [Any])[0])" )
-            let msgID:UInt32 =  UInt32(("\((object as! [Any])[1])" as NSString).intValue)
-            let typeID:UInt32 =  UInt32(("\((object as! [Any])[2])" as NSString).intValue)
-            
-            var sesssionType = Im.BaseDefine.SessionType.sessionTypeSingle
-            if typeID == 2 {
-                sesssionType = Im.BaseDefine.SessionType.sessionTypeGroup
-            }
             
             let builder = Im.Message.ImmsgDataReadAck.Builder()
             builder.setUserId(0)
-            builder.setSessionId(sessionID)
-            builder.setMsgId(msgID)
-            builder.setSessionType(sesssionType)
+            builder.setSessionId(self.sessionID)
+            builder.setMsgId(self.msgID)
+            builder.setSessionType(self.type)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

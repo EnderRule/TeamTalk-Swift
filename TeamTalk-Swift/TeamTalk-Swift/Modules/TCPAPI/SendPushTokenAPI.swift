@@ -9,6 +9,13 @@
 import UIKit
 
 class SendPushTokenAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var pushToken:String = ""
+    public convenience init(pushToken:String){
+        self.init()
+        self.pushToken = pushToken
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -39,11 +46,10 @@ class SendPushTokenAPI: DDSuperAPI,DDAPIScheduleProtocol {
     // object即为pushToken
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            let pushToken:String = object as? String ?? ""
             
             let builder = Im.Login.ImdeviceTokenReq.Builder()
-            builder.setUserId(MTTUserEntity.pbIDFrom(localID: currentUser().userId))
-            builder.setDeviceToken(pushToken)
+            builder.setUserId(UInt32(currentUser().intUserID))
+            builder.setDeviceToken(self.pushToken)
            
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

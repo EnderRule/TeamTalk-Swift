@@ -75,12 +75,10 @@ class HMMessageManager: NSObject {
             
             Notification.Name.HMSendMessageSuccessfull.postWith(object: session)
            
-            let packObject:[Any] = [currentUser().userId,session.sessionID,msgData,message.msgType.rawValue,message.msgID]
-            
-//            debugPrint("HMMessageManager send message \(message.dicValues() as NSDictionary) \n packObject \(packObject as NSArray)")
-            
-            let sendAPI = SendMessageAPI.init()
-            sendAPI.request(with: packObject, completion: { (respone , error ) in
+            let fromid = UInt32(currentUser().intUserID)
+            let toid = MTTBaseEntity.pbIDFrom(localID: session.sessionID)
+            let sendAPI = SendMessageAPI.init(fromUID: fromid, toUID: toid, type: message.msgType, data: msgData)
+            sendAPI.request(withParameters: [:], completion: { (respone , error ) in
                 if error != nil {
                     message.state = .SendFailure
                     

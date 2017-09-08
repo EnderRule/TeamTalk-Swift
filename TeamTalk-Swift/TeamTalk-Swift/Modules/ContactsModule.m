@@ -162,7 +162,7 @@
 +(void)getDepartmentData:(void(^)(id response))block
 {
     DDDepartmentAPI* api = [[DDDepartmentAPI alloc] init];
-    [api requestWithObject:nil Completion:^(id response, NSError *error) {
+    [api requestWithParameters:nil  Completion:^(id response, NSError *error) {
         if (!error)
         {
             if (response)

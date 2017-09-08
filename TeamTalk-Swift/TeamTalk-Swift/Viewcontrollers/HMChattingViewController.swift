@@ -347,7 +347,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
         //先上传图片、再发送含有图片URL 的消息。
         SendPhotoMessageAPI.shared.uploadPhoto(imagePath: imagePath, to: self.chattingModule.sessionEntity, progress: { (progress ) in
-            debugPrint("upload progress \(progress.completedUnitCount)/\(progress.totalUnitCount)  \(CGFloat(progress.completedUnitCount/progress.totalUnitCount))")
+            debugPrint("upload progress \(progress.completedUnitCount)/\(progress.totalUnitCount)  \(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))")
         }, success: {[weak self] (imageURL ) in
             debugPrint("upload success url: \(imageURL)")
             if imageURL.length > 0 {

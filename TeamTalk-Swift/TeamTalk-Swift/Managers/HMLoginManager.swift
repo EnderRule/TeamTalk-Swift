@@ -149,7 +149,6 @@ class HMLoginManager: NSObject {
     private var reachability:DDReachability = DDReachability.forInternetConnection()
     
     private var httpServer: DDHttpServer = DDHttpServer.init()
-    private var msgServer:DDMsgServer = DDMsgServer.init()
     private var tcpServer:DDTcpServer = DDTcpServer.init()
     
     private var priorIP:String = ""
@@ -222,12 +221,9 @@ class HMLoginManager: NSObject {
 //                debugPrint(json["msfsPrior"].stringValue,"fffffff   ",self?.msfsUrl)
                 
                 self?.tcpServer.loginTcpServerIP(ip, port: port, success: {
-                    let clientVersion:String = "iOS/\(APP_VERSION)-\(APP_BUILD_VERSION)"
-                    let clientType:Int = 17
-                    let parameters:[Any] = [userName,password,clientVersion,clientType]
                     
-                    let api = LoginAPI.init()
-                    api.request(with: parameters, completion: { (response , error ) in
+                    let api = LoginAPI.init(name: userName, password: password)
+                    api.request(withParameters: [:], completion:  { (response , error ) in
                         if let dic = response as? [AnyHashable:Any]{
                             let json2 = JSON.init(dic)
                             
@@ -236,8 +232,7 @@ class HMLoginManager: NSObject {
                             
                             
                             if let user:MTTUserEntity = dic["user"] as? MTTUserEntity {
-                                debugPrint("登入驗證成功 # ###")
-                                
+                                debugPrint("登入驗證成功 # ###  serverTime :\(json["serverTime"].doubleValue)")
                                 
                                 if json["serverTime"].doubleValue > 3600 {
                                     self?.s_serverTime = json["serverTime"].doubleValue
@@ -351,8 +346,8 @@ class HMLoginManager: NSObject {
                 
             }else{
                 version = 0
-                let api = AllUserAPI.init()
-                api.request(with: [0], completion: { (response, error ) in
+                let api = AllUserAPI.init(lastUpdateTime: 0)
+                api.request(withParameters: [:], completion: { (response, error ) in
                     if let dic = response as? [String:Any] {
                         let rsversion:Int = dic[key] as? Int ?? 0
                         UserDefaults.standard.set(rsversion, forKey: key)
@@ -373,8 +368,8 @@ class HMLoginManager: NSObject {
             }
         }
         
-        let api2 = AllUserAPI.init()
-        api2.request(with: [version]) { (response , error ) in
+        let api2 = AllUserAPI.init(lastUpdateTime: version)
+        api2.request(withParameters: [:]) { (response , error ) in
             if let dic = response as? [String:Any] {
                 let rsversion:Int = dic[key] as? Int ?? 0
                 UserDefaults.standard.set(rsversion, forKey: key)
@@ -428,6 +423,7 @@ class HMLoginManager: NSObject {
             break;
         }
         
+        self.startCountServerTime()
     }
     
     
@@ -443,6 +439,8 @@ class HMLoginManager: NSObject {
     }
     @objc private func serverTimeCounter(){
         self.s_serverTime += 1
+        
+        print("serverTime:\(Int(self.s_serverTime))  phoneTime:\(Int(Date().timeIntervalSince1970))")
     }
     
     private var sendHeartBeatTimer:Timer?
@@ -495,7 +493,7 @@ class HMLoginManager: NSObject {
     
     @objc private func sendHeartBeat(timer:Timer){
         debugPrint(" ********** send 嘣 ***********")
-        HeartbeatAPI.init().request(with: nil) { (object , error ) in }
+        HeartbeatAPI.init().request(withParameters: nil) { (object , error ) in }
     }
     @objc private func checkServerHeartBeat(timer:Timer){
 

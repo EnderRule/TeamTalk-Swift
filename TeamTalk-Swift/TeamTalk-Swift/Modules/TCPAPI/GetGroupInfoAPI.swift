@@ -9,6 +9,15 @@
 import UIKit
 
 class GetGroupInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var groupID:UInt32 = 0
+    var groupVersion:UInt32 = 0
+    public convenience init(groupID:UInt32,groupVersion:UInt32){
+        self.init()
+        self.groupID = groupID
+        self.groupVersion = groupVersion
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return 0
     }
@@ -48,12 +57,9 @@ class GetGroupInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
     //[groupid_intvalue , groupversion_intvalue]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            
-            let groupid =   ( "\((object as! Array<Any>)[0])" as NSString).intValue
-            let version =   ( "\((object as! Array<Any>)[1])" as NSString).intValue
             let versionBuilder = Im.BaseDefine.GroupVersionInfo.Builder()
-            versionBuilder.setGroupId(UInt32(groupid))
-            versionBuilder.setVersion(UInt32(version))
+            versionBuilder.setGroupId(self.groupID)
+            versionBuilder.setVersion(self.groupVersion)
             
             let listBuilder = Im.Group.ImgroupInfoListReq.Builder()
             listBuilder.setUserId(0)

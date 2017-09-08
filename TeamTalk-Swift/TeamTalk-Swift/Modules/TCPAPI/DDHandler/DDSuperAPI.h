@@ -24,6 +24,6 @@ typedef void(^RequestCompletion)(id response,NSError* error);
 @property (nonatomic,copy)RequestCompletion completion;
 @property (nonatomic,readonly)uint16_t seqNo;
 
-- (void)requestWithObject:(id)object Completion:(RequestCompletion)completion;
+- (void)requestWithParameters:(NSDictionary *)parameters Completion:(RequestCompletion)completion;
 
 @end

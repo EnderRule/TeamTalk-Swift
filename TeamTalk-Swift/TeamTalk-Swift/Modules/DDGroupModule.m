@@ -28,9 +28,10 @@
                 if(group.objID)
                 {
                     [self addGroup:group];
-
-                    GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] init];
-                    [request requestWithObject:@[@([MTTUtil changeIDToOriginal:group.objID]),@(group.objectVersion)] Completion:^(id response, NSError *error) {
+                    uint32_t groupid = [MTTUtil changeIDToOriginal:group.objID];
+                    uint32_t groupversion = (uint32_t)group.objectVersion;
+                    GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] initWithGroupID:groupid groupVersion:groupversion];
+                    [request requestWithParameters:nil  Completion: ^(id response, NSError *error) {
                         if (!error)
                         {
                             if ([response count]) {
@@ -97,8 +98,10 @@
     if (group) {
         completion(group);
     }else{
-        GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] init];
-        [request requestWithObject:@[@([MTTUtil changeIDToOriginal:groupID]),@(group.objectVersion)] Completion:^(id response, NSError *error) {
+        uint32_t groupid = [MTTUtil changeIDToOriginal:group.objID];
+        uint32_t groupversion = (uint32_t)group.objectVersion;
+        GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] initWithGroupID:groupid groupVersion:groupversion];
+        [request requestWithParameters:nil  Completion: ^(id response, NSError *error) {
             if (!error)
             {
                 if ([response count]) {

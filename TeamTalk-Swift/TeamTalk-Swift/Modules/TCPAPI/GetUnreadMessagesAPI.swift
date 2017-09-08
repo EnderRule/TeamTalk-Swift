@@ -9,6 +9,9 @@
 import UIKit
 
 class GetUnreadMessagesAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return 20
     }
@@ -51,7 +54,6 @@ class GetUnreadMessagesAPI: DDSuperAPI,DDAPIScheduleProtocol {
         return analysis
     }
     
-    //打包數據,object 格式：[msgIDbegin,msgcount, sessiontype,sessiongid] as [String]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
             

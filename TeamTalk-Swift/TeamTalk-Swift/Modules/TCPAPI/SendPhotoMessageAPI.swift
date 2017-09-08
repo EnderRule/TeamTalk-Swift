@@ -109,7 +109,7 @@ class SendPhotoMessageAPI: NSObject {
                     if resultJson["error_code"].intValue == 0{
                         imageURL = resultJson["url"].stringValue
                     }else{
-                        failure(resultJson["error_msg"].stringValue)
+                        failure(resultJson["error_msg"].stringValue.appending("error code = \(resultJson["error_code"].intValue)"))
                         return
                     }
                     
@@ -135,7 +135,7 @@ class SendPhotoMessageAPI: NSObject {
                     }
                 }, failure: { (task , error ) in
                     self.max_try_upload_times = 5
-                    failure (error.localizedDescription)
+                    failure (error.localizedDescription.appending("error code = \((error as NSError).code)"))
                 })
             }catch{
                 self.max_try_upload_times = 5

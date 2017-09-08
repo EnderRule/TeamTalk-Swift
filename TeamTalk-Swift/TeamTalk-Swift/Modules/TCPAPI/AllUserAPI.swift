@@ -9,6 +9,13 @@
 import UIKit
 
 class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var lastUpdateTime:Int = 0
+    public convenience init(lastUpdateTime:Int) {
+        self.init()
+        self.lastUpdateTime = lastUpdateTime
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -53,11 +60,10 @@ class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            let lastupdatetime:Int = NSString.init(format: "%@", (object as? Array<Any>)?[0] as? CVarArg ?? "0").integerValue
             
             let builder = Im.Buddy.ImallUserReq.Builder()
             builder.setUserId(0)
-            builder.setLatestUpdateTime(UInt32(lastupdatetime))
+            builder.setLatestUpdateTime(UInt32(self.lastUpdateTime))
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

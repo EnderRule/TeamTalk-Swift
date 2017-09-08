@@ -88,7 +88,7 @@ class HMChatImageCell: HMChatBaseCell {
         }
         
         if theImage != nil {
-            defaultSize.width = min( max(theImage!.size.width, minImgvWidth),maxImgvWidth/scale )
+            defaultSize.width = min( max(theImage!.size.width, minImgvWidth),maxImgvWidth)
             defaultSize.height = defaultSize.width * theImage!.size.height/theImage!.size.width  //计算好宽度后、根据图片的宽高比例来计算高度
             return defaultSize
         }

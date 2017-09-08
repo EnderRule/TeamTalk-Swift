@@ -107,8 +107,13 @@
 
 -(void)sendMsgRead:(MTTMessageEntity *)message
 {
-    MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
-    [readACK requestWithObject:@[message.sessionId,@(message.msgID),@(message.sessionType)] Completion:nil];
+    SessionType_Objc type = SessionType_ObjcSessionTypeSingle;
+    if (message.sessionType == SessionType_ObjcSessionTypeGroup){
+        type = SessionType_ObjcSessionTypeGroup;
+    }
+    uint32_t sessionid = [MTTBaseEntity pbIDFromLocalID:message.sessionId];
+    MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] initWithSessionID:sessionid  msgID:message.msgID sessionType:type];
+    [readACK requestWithParameters:nil Completion:nil];
 }
 
 -(void)removeAllUnreadMessages{
@@ -136,17 +141,18 @@
         if (object){
             
             object.state = DDMessageStateSendSuccess;
-                        
-            ReceiveMessageACKAPI *rmack = [[ReceiveMessageACKAPI alloc] init];
-            [rmack requestWithObject:@[object.senderId,@(object.msgID),object.sessionId,@(object.sessionType)] Completion:^(id response, NSError *error) {
+            
+            uint32_t sessionid = [MTTBaseEntity pbIDFromLocalID:object.sessionId];
+            SessionType_Objc type = (SessionType_Objc)object.sessionType;
+            ReceiveMessageACKAPI *rmack = [[ReceiveMessageACKAPI alloc] initWithMsgID:object.msgID sessionID:sessionid sessionType:type];
+            [rmack requestWithParameters:nil Completion:^(id response, NSError *error) {
             }];
             
             
             if ([object isGroupMessage]) {
                 MTTGroupEntity *group = [[DDGroupModule instance] getGroupByGId:object.sessionId];
                 if (group.isShield == 1) {
-                    MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
-                    [readACK requestWithObject:@[object.sessionId,@(object.msgID),@(object.sessionType)] Completion:nil];
+                    [self sendMsgRead:object];
                 }
             }
             [[MTTDatabaseUtil instance] insertMessages:@[object] success:^{
@@ -169,10 +175,11 @@
 
 -(void)getMessageFromServer:(NSInteger)fromMsgID currentSession:(MTTSessionEntity *)session count:(NSInteger)count Block:(void(^)(NSMutableArray *array, NSError *error))block
 {
-    GetMessageQueueAPI *getMessageQueue = [GetMessageQueueAPI new];
-    [getMessageQueue requestWithObject:@[@(fromMsgID),@(count),@(session.sessionType),session.sessionID] Completion:^(NSMutableArray *response, NSError *error) {
+    uint32_t sessionid = [MTTBaseEntity pbIDFromLocalID:session.sessionID];
+    GetMessageQueueAPI *getMessageQueue = [[GetMessageQueueAPI alloc]initWithSessionID:sessionid sessionType:session.sessionType msgIDBegin:(int)fromMsgID count:count];
+    
+    [getMessageQueue requestWithParameters:nil Completion:^(NSMutableArray *response, NSError *error) {
         block(response,error);
-        
     }];
     
 }

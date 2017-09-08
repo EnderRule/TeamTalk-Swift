@@ -319,7 +319,6 @@
 		66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */; };
 		66F108031F43D9DB0035C888 /* DDReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108021F43D9DB0035C888 /* DDReachability.m */; };
 		66F108101F43E7180035C888 /* DDHttpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1080B1F43E7180035C888 /* DDHttpServer.m */; };
-		66F108111F43E7180035C888 /* DDMsgServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1080D1F43E7180035C888 /* DDMsgServer.m */; };
 		66F108121F43E7180035C888 /* DDTcpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1080F1F43E7180035C888 /* DDTcpServer.m */; };
 		66F108151F43E77D0035C888 /* MTTAFNetworkingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108141F43E77D0035C888 /* MTTAFNetworkingClient.m */; };
 		66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108171F43E7E40035C888 /* MTTSundriesCenter.m */; };
@@ -889,8 +888,6 @@
 		66F108041F43DE4B0035C888 /* MTTConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTConstant.h; sourceTree = "<group>"; };
 		66F1080A1F43E7180035C888 /* DDHttpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHttpServer.h; sourceTree = "<group>"; };
 		66F1080B1F43E7180035C888 /* DDHttpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHttpServer.m; sourceTree = "<group>"; };
-		66F1080C1F43E7180035C888 /* DDMsgServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMsgServer.h; sourceTree = "<group>"; };
-		66F1080D1F43E7180035C888 /* DDMsgServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMsgServer.m; sourceTree = "<group>"; };
 		66F1080E1F43E7180035C888 /* DDTcpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTcpServer.h; sourceTree = "<group>"; };
 		66F1080F1F43E7180035C888 /* DDTcpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTcpServer.m; sourceTree = "<group>"; };
 		66F108131F43E77D0035C888 /* MTTAFNetworkingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTAFNetworkingClient.h; sourceTree = "<group>"; };
@@ -1696,8 +1693,6 @@
 				66E6D3E11F4292E4008E9590 /* DDTcpClientManager.m */,
 				66F1080A1F43E7180035C888 /* DDHttpServer.h */,
 				66F1080B1F43E7180035C888 /* DDHttpServer.m */,
-				66F1080C1F43E7180035C888 /* DDMsgServer.h */,
-				66F1080D1F43E7180035C888 /* DDMsgServer.m */,
 				66F1080E1F43E7180035C888 /* DDTcpServer.h */,
 				66F1080F1F43E7180035C888 /* DDTcpServer.m */,
 				66E6D3D41F4292CC008E9590 /* DataOutputStream+Addition.h */,
@@ -2625,7 +2620,6 @@
 				66F10F701F4449570035C888 /* mdf.c in Sources */,
 				66E437971F4C41BC009D527D /* NIMInputEmoticonParser.m in Sources */,
 				66E835931F56899A00F14ED9 /* ZQFileBrowserVC.swift in Sources */,
-				66F108111F43E7180035C888 /* DDMsgServer.m in Sources */,
 				66686AE31F45AACC008B26BD /* MASViewConstraint.m in Sources */,
 				66686AE61F45AACC008B26BD /* View+MASAdditions.m in Sources */,
 				66E6D3991F428A33008E9590 /* Im.Message.Immessage.proto.swift in Sources */,

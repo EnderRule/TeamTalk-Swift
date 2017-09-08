@@ -68,10 +68,10 @@ static NSUInteger const showPromptGap = 300;
                 NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"msgTime" ascending:YES];
                 [response sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
                 [[MTTDatabaseUtil instance] insertMessages:response success:^{
-                    MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
-                    if(msgID){
-                        [readACK requestWithObject:@[self.sessionEntity.sessionID,@(msgID),@(self.sessionEntity.sessionType)] Completion:nil];
-                    }
+                    
+                    MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] initWithSessionID:self.sessionEntity.sessionIntID msgID:(uint32_t)msgID sessionType:self.sessionEntity.sessionType];
+                    [readACK requestWithParameters:nil Completion:nil];
+
                 } failure:^(NSString *errorDescripe) {
                     
                 }];
@@ -99,9 +99,9 @@ static NSUInteger const showPromptGap = 300;
                 if ( msgID !=0) {
                     if (response) {
                         [[MTTDatabaseUtil instance] insertMessages:response success:^{
-                            MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] init];
-                            [readACK requestWithObject:@[self.sessionEntity.sessionID,@(msgID),@(self.sessionEntity.sessionType)] Completion:nil];
-                            
+                            MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] initWithSessionID:self.sessionEntity.sessionIntID msgID:(uint32_t)msgID sessionType:self.sessionEntity.sessionType];
+                            [readACK requestWithParameters:nil Completion:nil];
+                        
                         } failure:^(NSString *errorDescripe) {
                             
                         }];

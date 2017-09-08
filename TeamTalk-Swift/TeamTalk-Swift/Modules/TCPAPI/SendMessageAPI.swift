@@ -11,6 +11,20 @@ import UIKit
 // object 数组 [fromID,toID,data,messageType,messageID]
 
 class SendMessageAPI: DDSuperAPI {
+    
+    var fromUID:UInt32 = 0
+    var toUID:UInt32 = 0
+    var msgType:Im.BaseDefine.MsgType = .msgTypeSingleText
+    var msgData:Data = Data()
+    
+    public convenience init(fromUID:UInt32,toUID:UInt32,type:MsgType_Objc,data:Data){
+        self.init()
+        self.fromUID = fromUID
+        self.toUID = toUID
+        self.msgType = Im.BaseDefine.MsgType(rawValue:type.rawValue) ?? .msgTypeSingleText
+        self.msgData = data
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return 20
     }
@@ -47,17 +61,12 @@ class SendMessageAPI: DDSuperAPI {
     
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            
-            let toID:UInt32 = MTTBaseEntity.pbIDFrom(localID:  "\((object as! [Any])[1])")
-            let data:Data = (object as! [Any])[2] as? Data ?? Data()
-            let msgtypeInt:Int32   = ( "\((object as! [Any])[3])" as NSString).intValue
-            let msgtype:Im.BaseDefine.MsgType = Im.BaseDefine.MsgType(rawValue:msgtypeInt) ?? .msgTypeSingleText
-           
             let builder = Im.Message.ImmsgData.Builder()
             builder.setFromUserId(0)
-            builder.setToSessionId(toID)
-            builder.setMsgData(data)
-            builder.setMsgType(msgtype)
+
+            builder.setToSessionId(self.toUID)
+            builder.setMsgData(self.msgData)
+            builder.setMsgType(self.msgType)
             builder.setMsgId(0)
             builder.setCreateTime(0)
             
