@@ -45,7 +45,7 @@ import UIKit
 
 class MTTSessionEntity: NSObject {
     var sessionID:String = ""
-    var sessionType:SessionType_Objc = .sessionTypeGroup
+    var sessionType:SessionType_Objc = .sessionTypeSingle
     
     private var s_name:String = ""
     var name:String {
@@ -191,9 +191,35 @@ extension MTTSessionEntity {
             self.sessionType = .sessionTypeSingle
         }
         self.unReadMsgCount = Int(unreadInfo.unreadCnt)
+        
         self.lastMsgID = UInt32(unreadInfo.latestMsgId)
-        self.lastMsg = String.init(data: unreadInfo.latestMsgData!, encoding: .utf8) ?? "" // unreadInfo.latestMsgData
+        
+        
+        if let encryMsg = String.init(data: unreadInfo.latestMsgData, encoding: .utf8){
+            MTTMessageEntity.tempShared.decode(content: encryMsg)
+            self.lastMsg = MTTMessageEntity.tempShared.msgContent
+        }
     }
+    public convenience init(sessionInfo:Im.BaseDefine.ContactSessionInfo){
+        self.init()
+        
+        self.sessionType = SessionType_Objc(rawValue:  sessionInfo.sessionType.rawValue) ?? .sessionTypeSingle
+        
+        if sessionType == .sessionTypeSingle {
+            self.sessionID = MTTUserEntity.localIDFrom(pbID: sessionInfo.sessionId)
+        }else{
+            self.sessionID = MTTGroupEntity.localIDFrom(pbID: sessionInfo.sessionId)
+        }
+        
+        self.lastMsgID = UInt32( sessionInfo.latestMsgId)
+        self.timeInterval = TimeInterval(sessionInfo.updatedTime)
+        
+        if let encryMsg = String.init(data: sessionInfo.latestMsgData, encoding: .utf8){
+            MTTMessageEntity.tempShared.decode(content: encryMsg)
+            self.lastMsg = MTTMessageEntity.tempShared.msgContent
+        }
+    }
+    
     
     class func sessionIDFrom(pbID:UInt32,sessionType:SessionType_Objc) -> String{
         if sessionType == .sessionTypeSingle{

@@ -86,6 +86,8 @@ class MTTMessageEntity: NSObject,NSCopying {
         return copyEntity
     }
     
+    static let tempShared:MTTMessageEntity = MTTMessageEntity() //用於過渡、解析數據
+    
     public convenience init(msgID:UInt32,msgType:MsgType_Objc,msgTime:UInt32,sessionID:String,senderID:String,msgContent:String,toUserID:String){
         self.init()
         
@@ -147,18 +149,93 @@ class MTTMessageEntity: NSObject,NSCopying {
 }
 
 extension MTTMessageEntity {
+    //聲音消息
     static let kVoiceHadPlayed:String             = "voiceHadPlayed"
     static let kVoiceLength:String                = "voiceLength"
     static let kVoiceLocalPath:String             = "voiceLocalPath"
+    var voiceHadPlayed:Bool{
+        get{
+            return self.info[MTTMessageEntity.kVoiceHadPlayed] as? Bool ?? false
+        }
+        set{
+            self.info.updateValue(newValue, forKey: MTTMessageEntity.kVoiceHadPlayed)
+        }
+    }
+    var voiceLocalPath:String{
+        get{
+            return (self.info[MTTMessageEntity.kVoiceLocalPath] as? String ?? "").safeLocalPath()
+        }
+        set{
+            self.info.updateValue(newValue, forKey: MTTMessageEntity.kVoiceLocalPath)
+        }
+    }
+    var voiceLength:Int{
+        get{
+            return self.info[MTTMessageEntity.kVoiceLength] as? Int ?? 0
+        }
+        set{
+            self.info.updateValue(newValue, forKey: MTTMessageEntity.kVoiceLength)
+        }
+    }
     
+    //圖片消息
     static let kImageLocalPath :String            = "imageLocalPath"
     static let kImageUrl :String                  = "imageUrl"
     static let kImageScale:String                 = "imageScale"
-    
+    var imageLocalPath:String{
+        get{
+            return (self.info[MTTMessageEntity.kImageLocalPath] as? String ?? "").safeLocalPath()
+        }
+        set{
+            self.info.updateValue(newValue, forKey: MTTMessageEntity.kImageLocalPath)
+        }
+    }
+    var imageUrl:String{
+        get{
+            return self.info[MTTMessageEntity.kImageUrl] as? String ?? ""
+        }
+        set{
+            self.info.updateValue(newValue, forKey: MTTMessageEntity.kImageUrl)
+        }
+    }
+    var imageScale:CGFloat{
+        get{
+            return self.info[MTTMessageEntity.kImageScale] as? CGFloat ?? 1.618
+        }
+        set{
+            self.info.updateValue(newValue, forKey: MTTMessageEntity.kImageScale)
+        }
+    }
+
+    //MARK:貼圖表情
     static let kEmojiText:String                  = "emojiText"
     static let kEmojiCategory:String              = "emojiCategory"
     static let kEmojiName:String                  = "emojiName"
-
+    var emojiText:String{
+        get{
+            return self.info[MTTMessageEntity.kEmojiText] as? String ?? ""
+        }
+        set{
+            self.info.updateValue(newValue, forKey: MTTMessageEntity.kEmojiText)
+        }
+    }
+    var emojiCategory:String{
+        get{
+            return self.info[MTTMessageEntity.kEmojiCategory] as? String ?? ""
+        }
+        set{
+            self.info.updateValue(newValue, forKey: MTTMessageEntity.kEmojiCategory)
+        }
+    }
+    var emojiName:String{
+        get{
+            return self.info[MTTMessageEntity.kEmojiName] as? String ?? ""
+        }
+        set{
+            self.info.updateValue(newValue, forKey: MTTMessageEntity.kEmojiName)
+        }
+    }
+    
 }
 
 extension MTTMessageEntity {
@@ -171,7 +248,7 @@ extension MTTMessageEntity {
         let realConent = content.decrypt()
         let dic = NSDictionary.initWithJsonString(realConent) ?? [:]
         
-        NSLog("MTTMessageEntity decode \ndic:%@",content,realConent,dic as NSDictionary )
+//        NSLog("MTTMessageEntity decode \ndic:%@",realConent,dic as NSDictionary )
         
         let json = JSON.init(dic)
 
@@ -183,16 +260,16 @@ extension MTTMessageEntity {
         }else if type == 11 {
             self.msgContentType = .Image
 
-            self.info.updateValue(json["data"]["url"].stringValue, forKey: MTTMessageEntity.kImageUrl)
-            self.info.updateValue(json["data"]["scale"].floatValue, forKey: MTTMessageEntity.kImageScale)
+            self.imageUrl = json["data"]["url"].stringValue
+            self.imageScale = CGFloat(json["data"]["scale"].floatValue)
  
             self.msgContent = "[圖片]"
         }else if type == 12{
             self.msgContentType = .Emotion
             
-            self.info.updateValue(json["data"]["name"].stringValue, forKey: MTTMessageEntity.kEmojiName)
-            self.info.updateValue(json["data"]["category"].stringValue, forKey: MTTMessageEntity.kEmojiCategory)
-            self.info.updateValue(json["data"]["text"].stringValue, forKey: MTTMessageEntity.kEmojiText)
+            self.emojiName = json["data"]["name"].stringValue
+            self.emojiCategory = json["data"]["category"].stringValue
+            self.emojiText = json["data"]["text"].stringValue
  
             self.msgContent = json["data"]["text"].stringValue
         }else{
@@ -202,29 +279,25 @@ extension MTTMessageEntity {
     }
     
     public func encodeContent()->String{
-        var dic:[AnyHashable:Any] = [:]
-        
         var dataDic:[AnyHashable:Any] = [:]
-        
-        let json = JSON.init(self.info)
-        
         var type:Int = 0
         if self.msgContentType == .Text {
             dataDic.updateValue(self.msgContent, forKey: "text")
             type = 10
         }else if self.msgContentType == .Image{
-            dataDic.updateValue(json[MTTMessageEntity.kImageUrl].stringValue, forKey: "url")
-            dataDic.updateValue(json[MTTMessageEntity.kImageScale].floatValue, forKey: "scale")
+            dataDic.updateValue(self.imageUrl, forKey: "url")
+            dataDic.updateValue(self.imageScale, forKey: "scale")
             
             type = 11
         }else if self.msgContentType == .Emotion  {
-            dataDic.updateValue(json[MTTMessageEntity.kEmojiText].stringValue, forKey: "text")
-            dataDic.updateValue(json[MTTMessageEntity.kEmojiCategory].stringValue, forKey: "category")
-            dataDic.updateValue(json[MTTMessageEntity.kEmojiName].stringValue, forKey: "name")
+            dataDic.updateValue(self.emojiText, forKey: "text")
+            dataDic.updateValue(self.emojiCategory, forKey: "category")
+            dataDic.updateValue(self.emojiName, forKey: "name")
 
             type = 12
         }
         
+        var dic:[AnyHashable:Any] = [:]
         dic.updateValue(type, forKey: "type")
         dic.updateValue(dataDic, forKey: "data")
 
@@ -261,13 +334,11 @@ extension MTTMessageEntity {
             
             if (msgInfo.msgData as NSData).length > 4 {
                 self.saveDownloadVoice(data: msgInfo.msgData, compeletion: { (filepath , voiceLength) in
-                    self.msgContent = filepath
+                    self.msgContent = "[語音]"
                     
-                    var extraInfo:[String:Any] = [:]
-                    extraInfo.updateValue(voiceLength, forKey: MTTMessageEntity.kVoiceLength )
-                    extraInfo.updateValue(0, forKey: MTTMessageEntity.kVoiceHadPlayed)
-                    extraInfo.updateValue(filepath, forKey: MTTMessageEntity.kVoiceLocalPath)
-                    self.info = extraInfo
+                    self.voiceLength = Int(voiceLength)
+                    self.voiceHadPlayed = false
+                    self.voiceLocalPath = filepath
                 })
             }else {
                 self.msgContent = "[語音存儲出錯]"
@@ -306,12 +377,9 @@ extension MTTMessageEntity {
             if (msgData.msgData as NSData).length > 4 {
                 self.saveDownloadVoice(data: msgData.msgData, compeletion: { (filepath , voiceLength) in
                     self.msgContent = filepath
-                    
-                    var extraInfo:[String:Any] = [:]
-                    extraInfo.updateValue(voiceLength, forKey: MTTMessageEntity.kVoiceLength )
-                    extraInfo.updateValue(0, forKey: MTTMessageEntity.kVoiceHadPlayed)
-                    extraInfo.updateValue(filepath, forKey: MTTMessageEntity.kVoiceLocalPath)
-                    self.info = extraInfo
+                    self.voiceLocalPath = filepath
+                    self.voiceLength = Int(voiceLength)
+                    self.voiceHadPlayed = false
                 })
             }else {
                 self.msgContent = "[語音存儲出錯]"
@@ -356,13 +424,13 @@ extension MTTMessageEntity {
     }
     
     public func getUploadVoiceData()->Data{
-        let localPath = self.msgContent.safeLocalPath()
+        
+        let localPath = self.voiceLocalPath
+        let length:Int = self.voiceLength
+
         if FileManager.default.fileExists(atPath: localPath){
             do {
                 let voicedata = try  NSData.init(contentsOfFile: localPath) as Data
-                
-                let json = JSON.init(self.info)
-                let length:Int = json[MTTMessageEntity.kVoiceLength].intValue
                 let muData:NSMutableData = NSMutableData.init()
                 for index in 0..<4 {
                     var byte = ((length >> ((3 - index)*8)) & 0x0ff)

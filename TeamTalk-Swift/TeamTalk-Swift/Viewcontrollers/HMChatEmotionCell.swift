@@ -19,7 +19,7 @@ class HMChatEmotionCell: HMChatImageCell {
             let image = UIImage.nim_loadChartlet(catagoryID, name: emojiID)
             self.mainImgv.image = image
             
-            debugPrint("set emotion :",message.msgContent ,catagoryID,emojiID,image ?? "nil emoji image")
+//            debugPrint("set emotion :",message.msgContent ,catagoryID,emojiID,image ?? "nil emoji image")
         }
     }
     
@@ -40,10 +40,11 @@ class HMChatEmotionCell: HMChatImageCell {
     
     private func handleEmotion(message:MTTMessageEntity,compeletion:((String,String)->Void)){  //返回 表情分类ID 和 表情文件名
         
-        var categoryID:String = message.info[MTTMessageEntity.kEmojiCategory] as? String ?? ""
-        var EmojiID:String = message.info[MTTMessageEntity.kEmojiName] as? String ?? ""
-        let EmojiText:String = message.info[MTTMessageEntity.kEmojiText] as? String ?? ""
+        var categoryID:String = message.emojiCategory
+        var EmojiID:String = message.emojiName
         EmojiID = (EmojiID as NSString).deletingPathExtension
+
+        let EmojiText:String = message.emojiText
         if EmojiText.hasPrefix("[牙牙") && EmojiText.hasSuffix("]"){
             categoryID = "mgj"
             

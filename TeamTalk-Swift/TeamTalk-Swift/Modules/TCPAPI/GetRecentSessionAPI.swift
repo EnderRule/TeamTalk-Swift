@@ -34,24 +34,7 @@ class GetRecentSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let res = try? Im.Buddy.ImrecentContactSessionRsp.parseFrom(data: data ?? Data()) {
                 var array:[MTTSessionEntity] = []
                 for sessionInfo in res.contactSessionList {
-                    let sessionType:SessionType_Objc = SessionType_Objc(rawValue:  sessionInfo.sessionType.rawValue) ?? .sessionTypeSingle
-                    
-                    var sessionID:String = ""
-                    if sessionType == .sessionTypeSingle {
-                        sessionID = MTTUserEntity.localIDFrom(pbID: sessionInfo.sessionId)
-                    }else{
-                        sessionID = MTTGroupEntity.localIDFrom(pbID: sessionInfo.sessionId)
-                    }
-                    
-                    let sessionEntity = MTTSessionEntity.init(sessionID: sessionID, sessionName: nil , type: sessionType)
-                    
-                    if let encryMsg = String.init(data: sessionInfo.latestMsgData, encoding: .utf8){
-                        sessionEntity.lastMsg = encryMsg.decrypt()
-                    }
-                    
-                    sessionEntity.lastMsgID = UInt32( sessionInfo.latestMsgId)
-                    sessionEntity.timeInterval = TimeInterval(sessionInfo.updatedTime)
-                    
+                    let sessionEntity = MTTSessionEntity.init(sessionInfo: sessionInfo)// .init(sessionID: sessionID, sessionName: nil , type: sessionType)
                     array.append(sessionEntity)
                 }
                 return array

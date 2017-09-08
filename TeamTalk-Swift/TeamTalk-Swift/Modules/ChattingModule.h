@@ -13,8 +13,7 @@
 
 #define DD_PAGE_ITEM_COUNT                  20
 
-typedef void(^DDReuestServiceCompletion)(MTTUserEntity* user);
-typedef void(^DDRequestGoodDetailCompletion)(NSDictionary* detail,NSError* error);
+
 @class DDCommodity;
 @class MTTMessageEntity;
 typedef void(^DDChatLoadMoreHistoryCompletion)(NSUInteger addcount, NSError* error);
@@ -35,6 +34,7 @@ typedef void(^DDChatLoadMoreHistoryCompletion)(NSUInteger addcount, NSError* err
 - (void)addPrompt:(NSString*)prompt;
 - (void)addShowMessage:(MTTMessageEntity*)message;
 - (void)addShowMessages:(NSArray<MTTMessageEntity *> *)messages;
+- (void)deleteShowMessage:(MTTMessageEntity *)message;
 
 - (void)updateSessionUpdateTime:(NSUInteger)time;
 

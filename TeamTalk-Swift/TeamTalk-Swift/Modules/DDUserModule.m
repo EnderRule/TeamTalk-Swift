@@ -103,9 +103,9 @@
     if (![allKeys containsObject:user.objID])
     {
         [self.recentUsers setValue:user forKey:user.objID];
-        [[MTTDatabaseUtil instance] insertUsers:@[user] completion:^(NSError *error) {
-            
-        }];
+//        [[MTTDatabaseUtil instance] insertUsers:@[user] completion:^(NSError *error) {
+//            
+//        }];
     }
    
 }

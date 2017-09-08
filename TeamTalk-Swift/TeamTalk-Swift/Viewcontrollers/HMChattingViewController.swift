@@ -340,8 +340,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
          }
 
         let messageEntity = MTTMessageEntity.init(content: "[圖片]", module: self.chattingModule, msgContentType: DDMessageContentType.Image)
-        messageEntity.info.updateValue(imagePath, forKey: MTTMessageEntity.kImageLocalPath)
-        messageEntity.info.updateValue(scale, forKey: MTTMessageEntity.kImageScale)
+        messageEntity.imageLocalPath = imagePath
+        messageEntity.imageScale = scale
         
         MTTDatabaseUtil.instance().insertMessages([messageEntity], success: { }) { (error ) in   }
         
@@ -353,7 +353,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             if imageURL.length > 0 {
                 messageEntity.state = .Sending
                 
-                messageEntity.info.updateValue(imageURL, forKey: MTTMessageEntity.kImageUrl)
+                messageEntity.imageUrl = imageURL
                 
                 self?.sendMessage(msgEntity: messageEntity)
                 messageEntity.updateToDB(compeletion: nil)
@@ -473,9 +473,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
         
         let messageEntity = MTTMessageEntity.init(content: msgcontent, module: self.chattingModule, msgContentType: .Emotion)
 
-        messageEntity.info.updateValue(msgcontent, forKey: MTTMessageEntity.kEmojiText)
-        messageEntity.info.updateValue(categoryId, forKey: MTTMessageEntity.kEmojiCategory)
-        messageEntity.info.updateValue(chartletId, forKey: MTTMessageEntity.kEmojiName)
+        messageEntity.emojiText = msgcontent
+        messageEntity.emojiCategory = categoryId
+        messageEntity.emojiName = chartletId
         
         MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
         }) { (error ) in
@@ -502,32 +502,36 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
     }
     
     
-    //MARK:voice recording delegate
+    //MARK:voice recording delegate  //錄音代理中更新UI 需切換到主線程中來
     func recordingFinished(withFileName filePath: String!, time interval: TimeInterval) {
         debugPrint("chatting recording Finished  \(interval)"  )
-       
-        guard  interval > 2 else {
-            dispatch(after: 0, task: { 
+       dispatch(after: 0) {
+            guard  interval > 2 else {
                 self.view.makeToast("錄音時間太短啦")
-            })
-            return
+                return
+            }
+            
+            let voicePath:String = filePath
+            let newmessage = MTTMessageEntity.init(content: voicePath, module: self.chattingModule, msgContentType: .Voice)
+            newmessage.msgType = .msgTypeSingleAudio
+            newmessage.voiceLocalPath = voicePath
+            newmessage.voiceLength = Int(interval)
+            
+            MTTDatabaseUtil.instance().insertMessages([newmessage], success: { }, failure: { (resultStr ) in  })
+            
+            self.sendMessage(msgEntity: newmessage)
         }
-        let voicePath:String = filePath
-        let newmessage = MTTMessageEntity.init(content: voicePath, module: self.chattingModule, msgContentType: .Voice)
-        newmessage.msgType = .msgTypeSingleAudio
-        newmessage.info.updateValue(voicePath, forKey: MTTMessageEntity.kVoiceLocalPath)
-        newmessage.info.updateValue(interval, forKey: MTTMessageEntity.kVoiceLength)
-        
-        MTTDatabaseUtil.instance().insertMessages([newmessage], success: { }, failure: { (resultStr ) in  })
-        
-        self.sendMessage(msgEntity: newmessage)
     }
     
     func recordingFailed(_ failureInfoString: String!) {
-        self.view.makeToast("錄音失敗：\(failureInfoString)")
+        dispatch(after: 0) { 
+            self.view.makeToast("錄音失敗：\(failureInfoString)")
+        }
     }
     func recordingStopped() {
-        self.chatInputView.updateAudioRecordTime(0)
+        dispatch(after: 0) { 
+            self.chatInputView.updateAudioRecordTime(0)
+        }
     }
     func recordAudioProgress(_ currentTime: TimeInterval) {
         debugPrint("chatting  update RecordTime \(currentTime)")
@@ -554,14 +558,19 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,TZImagePickerControll
             
             
             if message!.isImageMessage{
-                let imageurl = message!.info[MTTMessageEntity.kImageUrl] as? String ?? ""
-                var imageLocal = message!.info[MTTMessageEntity.kImageLocalPath] as? String ?? ""
-                imageLocal = imageLocal.safeLocalPath()
-                if imageurl.length <= 0 && FileManager.default.fileExists(atPath: imageLocal){
-                    self.sendLocalImage(imagePath: imageLocal)
+                let imageurl = message!.imageUrl
+                let imageLocal = message!.imageLocalPath.safeLocalPath()
 
+                if imageurl.length <= 0 && FileManager.default.fileExists(atPath: imageLocal){
                     MTTDatabaseUtil.instance().deleteMesages(message!, completion: { (success ) in
+                        dispatch(after: 0, task: {
+                            self.chattingModule.deleteShowMessage(message!)
+                            self.showingMessages = self.chattingModule.showingMessages as! [Any]
+                            self.tableView.reloadData()
+                            self.tableView.checkScrollToBottom()
+                        })
                     })
+                    self.sendLocalImage(imagePath: imageLocal)
                 }else if imageurl.length > 0 {
                     message!.msgTime = UInt32(Date().timeIntervalSince1970)
                     message?.state = .Sending

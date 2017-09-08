@@ -358,7 +358,7 @@ class HMLoginManager: NSObject {
                         UserDefaults.standard.set(rsversion, forKey: key)
                         
                         let users:[MTTUserEntity] = dic["userlist"] as? [MTTUserEntity] ?? []
-                        MTTDatabaseUtil.instance().insertUsers(users, completion: { ( error ) in   })
+//                        MTTDatabaseUtil.instance().insertUsers(users, completion: { ( error ) in   })
                         dispatch_globle(after: 0, task: {
                             for obj in  users.enumerated(){
                                 DDUserModule.shareInstance().addMaintanceUser(obj.element)
@@ -381,8 +381,7 @@ class HMLoginManager: NSObject {
                 
                 let users:[MTTUserEntity] = dic["userlist"] as? [MTTUserEntity] ?? []
                 if users.count > 0 {
-                    MTTDatabaseUtil.instance().insertUsers(users, completion: { (error ) in
-                    })
+//                    MTTDatabaseUtil.instance().insertUsers(users, completion: { (error ) in   })
                     dispatch_globle(after: 0, task: {
                         for obj in  users.enumerated(){
                             DDUserModule.shareInstance().addMaintanceUser(obj.element)

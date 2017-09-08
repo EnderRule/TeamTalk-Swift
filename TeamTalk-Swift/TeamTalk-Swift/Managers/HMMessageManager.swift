@@ -114,7 +114,7 @@ class HMMessageManager: NSObject {
         message.msgType = .msgTypeSingleAudio
         message.msgContentType = .Voice
         message.msgContent = voicePath
-        message.info.updateValue(voicePath, forKey: MTTMessageEntity.kVoiceLocalPath)
+        message.voiceLocalPath = voicePath
         
         self.sendNormal(message: message, session: session) { (message , error ) in
             completion(message,error)
@@ -176,31 +176,6 @@ class HMMessageManager: NSObject {
                     self.unAckQueueRemove(message: obj.element.msg)
                 }
             }
-        }
-    }
-    
-    
-    func getUploadVoiceDataAt(message:MTTMessageEntity)->Data{
-        let localPath = message.msgContent.safeLocalPath()
-        if FileManager.default.fileExists(atPath: localPath){
-            do {
-                let voicedata = try  NSData.init(contentsOfFile: localPath) as Data
-                
-                let json = JSON.init(message.info)
-                let length:Int = json[MTTMessageEntity.kVoiceLength].intValue
-                let muData:NSMutableData = NSMutableData.init()
-                for index in 0..<4 {
-                    var byte = ((length >> ((3 - index)*8)) & 0x0ff)
-                    muData.append(&byte, length: 1)
-                }
-                muData.append(voicedata)
-                
-                return muData as Data
-            }catch {
-                return Data()
-            }
-        }else {
-            return Data()
         }
     }
 }

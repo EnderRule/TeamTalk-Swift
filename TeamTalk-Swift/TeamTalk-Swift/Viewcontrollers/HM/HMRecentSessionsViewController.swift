@@ -86,7 +86,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     func onReceiveMessage(_ message: MTTMessageEntity!) {
                 for session in self.sessions {
             if message.sessionId == session.sessionID {
-            
+                
                 session.lastMsg = message.msgContent
                 session.lastMsgID = message.msgID
                 session.timeInterval = TimeInterval(message.msgTime)

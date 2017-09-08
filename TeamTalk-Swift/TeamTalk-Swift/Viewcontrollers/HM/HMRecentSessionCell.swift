@@ -99,6 +99,8 @@ class HMRecentSessionCell: HMBaseCell {
             
             let thedate = Date.init(timeIntervalSince1970: session.timeInterval)
             self.dateLabel.text = (thedate as NSDate).transformToFuzzyDate()
+            
+            print("config recent session cell lastMsg:\(session.lastMsg)")
             if session.lastMsg.hasSuffix(".gif")  ||
                 session.lastMsg.hasSuffix(".jpg") ||
                 session.lastMsg.hasSuffix(".png") ||

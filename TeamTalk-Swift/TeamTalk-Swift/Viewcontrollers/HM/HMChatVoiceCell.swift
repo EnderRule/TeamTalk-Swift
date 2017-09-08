@@ -41,12 +41,12 @@ class HMChatVoiceCell: HMChatBaseCell {
     override func setContent(message: MTTMessageEntity) {
         super.setContent(message: message)
         
-        let json = JSON.init(message.info)
-        let hadPlayed:Bool = json[MTTMessageEntity.kVoiceHadPlayed].boolValue
-        self.showRedDot(show: !hadPlayed && !message.isSendBySelf)
+//        let json = JSON.init(message.info)
+
+        self.showRedDot(show: !message.voiceHadPlayed && !message.isSendBySelf)
         
-        let duration:Int = json[MTTMessageEntity.kVoiceLength].intValue
-        let durationString = "\(duration)''"
+//        let duration:Int = json[MTTMessageEntity.kVoiceLength].intValue
+        let durationString = "\(message.voiceLength)''"
         self.voiceDurationLabel.text = durationString
         
         if self.bubbleLocation == .right {
@@ -103,8 +103,8 @@ class HMChatVoiceCell: HMChatBaseCell {
         let minWidth:CGFloat = maxChatContentWidth * 0.2
         let maxWidth:CGFloat = maxChatContentWidth * 0.6
         
-        let json = JSON.init(message.info)
-        let duration:CGFloat = CGFloat(json[MTTMessageEntity.kVoiceLength].floatValue)
+//        let json = JSON.init(message.info)
+        let duration:CGFloat = CGFloat(message.voiceLength) // CGFloat(json[MTTMessageEntity.kVoiceLength].floatValue)
         let extraWidth:CGFloat = duration/60.0 * (maxWidth - minWidth)
         
         var defaultSize:CGSize = .init(width: minWidth, height: 30)
@@ -135,7 +135,7 @@ class HMChatVoiceCell: HMChatBaseCell {
         self.showRedDot(show: false )
 
         if self.message != nil {
-            self.message!.info.updateValue(true , forKey: MTTMessageEntity.kVoiceHadPlayed)
+            self.message!.voiceHadPlayed = true
             self.message!.updateToDB(compeletion: nil )
             
             self.delegate?.HMChatCellAction(type: .voicePlayOrStop, message: self.message!, sourceView: self)

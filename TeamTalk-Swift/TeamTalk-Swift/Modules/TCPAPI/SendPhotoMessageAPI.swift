@@ -55,7 +55,7 @@ class SendPhotoMessageAPI: NSObject {
         let msgType:Int = session.isGroupSession ? 17 : 1
         let fromUserID:Int = HMLoginManager.shared.currentUser.intUserID
         let toSessionID:UInt32 = MTTBaseEntity.pbIDFrom(localID: session.sessionID)
-        let time:TimeInterval = HMLoginManager.shared.serverTime
+        let time:Int32 = Int32(HMLoginManager.shared.serverTime)
         
         let authDic:[String : Any] = ["msg_type":msgType,"from_user_id":fromUserID,"to_session_id":toSessionID,"time":time]
         let authString:String  = (authDic as NSDictionary).jsonString()

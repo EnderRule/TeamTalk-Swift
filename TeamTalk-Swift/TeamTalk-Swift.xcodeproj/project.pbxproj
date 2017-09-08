@@ -83,6 +83,7 @@
 		6672CC2A1F4E65BF00DA46E6 /* HMContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC291F4E65BF00DA46E6 /* HMContactsViewController.swift */; };
 		6672CC2D1F4E849E00DA46E6 /* HMContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC2C1F4E849E00DA46E6 /* HMContactsCell.swift */; };
 		6672CC301F4ECCD000DA46E6 /* HMMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */; };
+		6682061B1F62404D0088BE65 /* HMChattingModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682061A1F62404D0088BE65 /* HMChattingModule.swift */; };
 		6682FE721F4AC4490048FA23 /* HMDefines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE711F4AC4490048FA23 /* HMDefines.swift */; };
 		6682FE741F4AEB7E0048FA23 /* MTTPromtEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */; };
 		6682FE761F4AED8F0048FA23 /* HMChatPromptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */; };
@@ -529,6 +530,7 @@
 		6672CC291F4E65BF00DA46E6 /* HMContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMContactsViewController.swift; path = HM/HMContactsViewController.swift; sourceTree = "<group>"; };
 		6672CC2C1F4E849E00DA46E6 /* HMContactsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMContactsCell.swift; path = HM/HMContactsCell.swift; sourceTree = "<group>"; };
 		6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMMessageManager.swift; sourceTree = "<group>"; };
+		6682061A1F62404D0088BE65 /* HMChattingModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMChattingModule.swift; sourceTree = "<group>"; };
 		6682FE711F4AC4490048FA23 /* HMDefines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMDefines.swift; path = HM/HMDefines.swift; sourceTree = "<group>"; };
 		6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTPromtEntity.swift; sourceTree = "<group>"; };
 		6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatPromptCell.swift; path = HM/HMChatPromptCell.swift; sourceTree = "<group>"; };
@@ -1663,6 +1665,7 @@
 				66686A611F4522B5008B26BD /* MTTBubbleModule.m */,
 				66686AA81F45A769008B26BD /* ChattingModule.h */,
 				66686AA91F45A769008B26BD /* ChattingModule.m */,
+				6682061A1F62404D0088BE65 /* HMChattingModule.swift */,
 				66686AAA1F45A769008B26BD /* ChattingEditModule.h */,
 				66686AAB1F45A769008B26BD /* ChattingEditModule.m */,
 				66686AE81F45ABC3008B26BD /* SessionModule.h */,
@@ -2382,6 +2385,7 @@
 				66F107511F42D1F50035C888 /* AFURLResponseSerialization.m in Sources */,
 				66F10F861F4449570035C888 /* RawAudioDataPlayer.m in Sources */,
 				66F107121F42A0F30035C888 /* HeartbeatAPI.swift in Sources */,
+				6682061B1F62404D0088BE65 /* HMChattingModule.swift in Sources */,
 				66F10F721F4449570035C888 /* modes_wb.c in Sources */,
 				66686A721F45374C008B26BD /* DDUserDetailInfoAPI.swift in Sources */,
 				66F107C61F42D4810035C888 /* SDWebImageDecoder.m in Sources */,

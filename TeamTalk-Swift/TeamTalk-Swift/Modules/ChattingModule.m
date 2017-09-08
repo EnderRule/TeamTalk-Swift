@@ -223,6 +223,22 @@ static NSUInteger const showPromptGap = 300;
         [[self mutableArrayValueForKeyPath:@"showingMessages"] addObject:message];
     }
 }
+- (void)deleteShowMessage:(MTTMessageEntity *)message{
+    if ([self.ids containsObject:@(message.msgID)]) {
+        [self.ids removeObject:@(message.msgID)];
+        
+        for (NSInteger index = 0;index < self.showingMessages.count;index++)
+        {
+            id obj = self.showingMessages[index];
+            if ([obj isKindOfClass:[MTTMessageEntity class]] && ((MTTMessageEntity *)obj).msgID == message.msgID){
+                
+                [self.showingMessages removeObjectAtIndex:index];
+                break;
+            }
+        }
+        [[self mutableArrayValueForKeyPath:@"showingMessages"] removeObject:message];
+    }
+}
 
 - (void)addShowMessages:(NSArray*)messages
 {

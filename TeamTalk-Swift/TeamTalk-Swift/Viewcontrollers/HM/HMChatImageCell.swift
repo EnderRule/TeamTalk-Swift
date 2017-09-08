@@ -32,7 +32,7 @@ class HMChatImageCell: HMChatBaseCell {
         if message.isImageMessage{
             let imageURL:String = self.imageURLFrom(message: message)
             self.mainImgv.setImage(str: imageURL)
-            debugPrint("set content message imageURL:\(imageURL)")
+//            debugPrint("set content message imageURL:\(imageURL)")
         }
     }
 
@@ -55,7 +55,7 @@ class HMChatImageCell: HMChatBaseCell {
     
     override func contentSizeFor(message: MTTMessageEntity) -> CGSize {
         
-        var scale:CGFloat = CGFloat(JSON.init(message.info)[MTTMessageEntity.kImageScale].floatValue)
+        var scale:CGFloat = message.imageScale
         if scale == 0 {
             scale = 1.618   //寬高比 默认 0.618 黄金比例
         }
@@ -101,12 +101,12 @@ class HMChatImageCell: HMChatBaseCell {
         
 //        print("imageURLFrom(message ",message.info as NSDictionary)
         
-        var imageURL:String = message.info[MTTMessageEntity.kImageLocalPath] as? String ?? ""
+        var imageURL:String = message.imageLocalPath
         imageURL = imageURL.safeLocalPath()
         if FileManager.default.fileExists(atPath: imageURL){
             return imageURL
         }
-        return message.info[MTTMessageEntity.kImageUrl] as? String ?? ""
+        return message.imageUrl
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
