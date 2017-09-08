@@ -23,7 +23,6 @@ class DDSuperAPI: NSObject {
     var completion:RequestCompletion?
     var seqNo:UInt16 = 0
     
-    
     public func requestWith(object:Any,completion:@escaping RequestCompletion){
         theSeqNo += 1
         self.seqNo = theSeqNo

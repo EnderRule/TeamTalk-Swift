@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 @objc enum HMLoginState:Int {
     case online = 0
     case kickout            //被挤下线
@@ -150,6 +152,7 @@ class HMLoginManager: NSObject {
     
     private var httpServer: DDHttpServer = DDHttpServer.init()
     private var tcpServer:DDTcpServer = DDTcpServer.init()
+    private var getMsgIPManager:AFHTTPSessionManager = AFHTTPSessionManager.init()
     
     private var priorIP:String = ""
     private var priorport:Int = 0
@@ -162,7 +165,8 @@ class HMLoginManager: NSObject {
         
         self.registerAPI()
         
-        
+        self.getMsgIPManager.responseSerializer.acceptableContentTypes = NSSet.init(objects: "text/html") as? Set<String>
+
         NotificationCenter.default.addObserver(self , selector: #selector(self.n_receiveReachabilityChanged(notification:)), name: Notification.Name.init("kDDReachabilityChangedNotification"), object: nil )
         NotificationCenter.default.addObserver(self , selector: #selector(self.n_receiveServerHeartBeat), name: HMNotification.serverHeartBeat.notificationName(), object: nil )
         
@@ -205,54 +209,63 @@ class HMLoginManager: NSObject {
         
     }
     
+    
+    private func getMsgIP(success:@escaping (([AnyHashable:Any])->Void),failure:@escaping ((String)->Void)){
+        
+        self.getMsgIPManager.get(SERVER_Address, parameters: nil , progress: nil , success: { (task , responseObject ) in
+            
+            let json = JSON.init(responseObject ?? [:])
+            let dic = json.dictionaryObject ?? [:]
+            if dic.count > 0{
+                success(dic)
+            }else{
+                failure("连接消息服务器失败 code:-1")
+            }
+        }) { (task , error ) in
+            
+            failure(error.localizedDescription)
+        }
+    }
+    
     func loginWith(userName:String,password:String,success:@escaping ((MTTUserEntity)->Void),failure:@escaping ((String)->Void)){
-        httpServer.getMsgIp({ [weak self] (dic ) in
-            let json = JSON.init(dic ?? [:])
+        
+        self.getMsgIP(success: { (dic ) in
+            let json = JSON.init(dic)
             let code = json["code"].int ?? 1
             if code == 0 {
                 let ip = json["priorIP"].stringValue
                 let port = json["port"].intValue
-                self?.priorIP = ip
-                self?.priorport = port
+                self.priorIP = ip
+                self.priorport = port
+                self.msfsUrl = json["msfsPrior"].stringValue
                 
-                
-                self?.msfsUrl = json["msfsPrior"].stringValue
-                
-//                debugPrint(json["msfsPrior"].stringValue,"fffffff   ",self?.msfsUrl)
-                
-                self?.tcpServer.loginTcpServerIP(ip, port: port, success: {
-                    
+                self.tcpServer.loginTcpServerIP(ip, port: port, success: {
                     let api = LoginAPI.init(name: userName, password: password)
                     api.request(withParameters: [:], completion:  { (response , error ) in
-                        if let dic = response as? [AnyHashable:Any]{
+                        if let dic = response as? [String:Any]{
                             let json2 = JSON.init(dic)
                             
-                            debugPrint("\(ip)  \(port)  登入驗證  # ### \(dic)  \(json2["user"].object)")
-
-                            
-                            
-                            if let user:MTTUserEntity = dic["user"] as? MTTUserEntity {
-                                debugPrint("登入驗證成功 # ###  serverTime :\(json["serverTime"].doubleValue)")
-                                
-                                if json["serverTime"].doubleValue > 3600 {
-                                    self?.s_serverTime = json["serverTime"].doubleValue
-                                    self?.startCountServerTime()
+                            debugPrint("登入IP/端口\(ip)/\(port)  result:\(dic)")
+                            if let user:MTTUserEntity = dic[LoginAPI.kResultUser] as? MTTUserEntity {
+                                let time:TimeInterval = json2[LoginAPI.kResultServerTime].doubleValue
+                                debugPrint("登入驗證成功   serverTime :\(time)")
+                                if time > 3600.0 {
+                                    self.s_serverTime = time
                                 }
+                                self.startCountServerTime()
+                                self.s_loginState = .online
+                                self.s_currentUser = user
+                                self.currentUserName = userName
+                                self.currentPassword = password
+                                self.shouldAutoLogin = true
                                 
-                                self?.s_loginState = .online
-
-                                self?.s_currentUser = user
-                                self?.currentUserName = userName
-                                self?.currentPassword = password
-                                self?.shouldAutoLogin = true
+                                self.reloginning = true
                                 
-                                self?.reloginning = true
-
                                 MTTDatabaseUtil.instance().openCurrentUserDB()
                                 
-                                self?.loadAllUser {
+                                self.loadAllUser {
                                     if SpellLibrary.instance().isEmpty(){
-                                        dispatch_globle(after: 0, task: { 
+                                        dispatch_globle(after: 0, task: {
                                             for user in DDUserModule.shareInstance().getAllMaintanceUser() as? [MTTUserEntity] ?? []{
                                                 SpellLibrary.instance().addSpellFor(user)
                                                 SpellLibrary.instance().addDeparmentSpellFor(user )
@@ -271,27 +284,25 @@ class HMLoginManager: NSObject {
                                 
                                 success(user)
                             }else{
-                                var rstr = json["resultString"].stringValue
+                                var rstr = json[LoginAPI.kResultMessage].stringValue
                                 if rstr.length <= 0 {
-                                    rstr = "登入失敗：code = \(json2["resultCode"])"
+                                    rstr = "登入失敗：code = \(json2[LoginAPI.kResultCode])"
                                 }
                                 failure(rstr)
                             }
-                            
-                            
                         }else{
                             failure("登錄驗證失敗")
                         }
                     })
-                    
-                }, failure: { 
+                }, failure: {
                     failure("连接消息服务器失败")
                 })
             }else{
                 failure("连接消息服务器失败")
             }
+            
         }) { (error ) in
-            failure("连接消息服务器失败")
+            failure(error)
         }
     }
     
@@ -422,8 +433,6 @@ class HMLoginManager: NSObject {
             
             break;
         }
-        
-        self.startCountServerTime()
     }
     
     
@@ -440,7 +449,7 @@ class HMLoginManager: NSObject {
     @objc private func serverTimeCounter(){
         self.s_serverTime += 1
         
-        print("serverTime:\(Int(self.s_serverTime))  phoneTime:\(Int(Date().timeIntervalSince1970))")
+//        print("serverTime:\(Int(self.s_serverTime))  phoneTime:\(Int(Date().timeIntervalSince1970))")
     }
     
     private var sendHeartBeatTimer:Timer?

@@ -15,8 +15,7 @@ class ViewController: UIViewController {
         
         
     
-        self.view.addCommonTap(target: self , sel: #selector(self.tapAction))
-        
+         
 
     }
 
@@ -24,10 +23,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    func tapAction(){
-        debugPrint("testLogin error : ")
-    }
+ 
 
 }
 
