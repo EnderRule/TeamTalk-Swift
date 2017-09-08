@@ -9,6 +9,15 @@
 import UIKit
 
 class DDUserDetailInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var UserIDs:[UInt32] = []
+    public convenience init(userIDs:[UInt32])
+    {
+        self.init()
+        self.UserIDs = userIDs
+    }
+    
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -51,10 +60,10 @@ class DDUserDetailInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
     //打包數據,object 格式：[Int] 或 [UInt32]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            let users = object as? [UInt32] ?? []
+
             let builder = Im.Buddy.ImusersInfoReq.Builder()
             builder.setUserId(0)
-            builder.setUserIdList(users)
+            builder.setUserIdList(self.UserIDs)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

@@ -9,6 +9,13 @@
 import UIKit
 
 class ShakeAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var shakeToUserID:UInt32 = 0
+    public convenience init(toUserID:UInt32){
+        self.init()
+        self.shakeToUserID = toUserID
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -38,13 +45,10 @@ class ShakeAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            
-            let shakeTouid:Int = (((object as? Array<Any>)?[0] as? String ?? "0") as NSString).integerValue
-            
             let theContent = NSString.init(format: "{\"cmd_id\":%i,\"content\":\"%@\",\"service_id\":%i}",1<<16|1,"shakewindow",1)
  
             let builder = Im.SwitchService.Imp2PcmdMsg.Builder()
-            builder.setToUserId(UInt32(shakeTouid))
+            builder.setToUserId(self.shakeToUserID)
             builder.setFromUserId(0)
             builder.setCmdMsgData(theContent as String)
             

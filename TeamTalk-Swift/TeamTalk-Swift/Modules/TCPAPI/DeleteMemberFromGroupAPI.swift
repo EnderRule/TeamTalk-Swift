@@ -9,6 +9,16 @@
 import UIKit
 
 class DeleteMemberFromGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    var deleteByUserID:UInt32 = 0
+    var memberIDs:[UInt32] = []
+    var groupID:UInt32 = 0
+    public convenience  init(groupID:UInt32,memberIDs:[UInt32],deleteByUserID:UInt32) {
+        self.init()
+        self.deleteByUserID = deleteByUserID
+        self.groupID = groupID
+        self.memberIDs = memberIDs
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -58,18 +68,11 @@ class DeleteMemberFromGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            
-            let groupid = MTTGroupEntity.pbIDFrom(localID:  (object as? Array<Any>)?[0] as? String ?? "group_0")
-            let userid = MTTUserEntity.pbIDFrom(localID: (object as? Array<Any>)?[1] as? String ?? "user_0")
-            
-            
-            
             let builder = Im.Group.ImgroupChangeMemberReq.Builder()
-            builder.setUserId(MTTUserEntity.pbIDFrom(localID: currentUser().userId))
+            builder.setUserId(self.deleteByUserID)
             builder.setChangeType(.groupModifyTypeDel)
-            builder.setGroupId(groupid)
-            builder.setMemberIdList([userid])
-            
+            builder.setGroupId(self.groupID)
+            builder.setMemberIdList(self.memberIDs)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

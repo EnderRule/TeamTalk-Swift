@@ -10,6 +10,13 @@ import UIKit
 
 //用户在线状态
 class UserStatAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var userIDs:[UInt32] = []
+    public convenience init(userIDs:[UInt32]){
+        self.init()
+        self.userIDs = userIDs
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -34,11 +41,9 @@ class UserStatAPI: DDSuperAPI,DDAPIScheduleProtocol {
         let analysis:Analysis = { (data) in
             if let res = try? Im.Buddy.ImusersStatRsp.parseFrom(data: data ?? Data()) {
                 
-                var userstatList:[Any] = []
+                var userstatList:[UInt32:Int32] = [:]
                 for statinfo in res.userStatList {
-                    userstatList.append([statinfo.userId,statinfo.status.rawValue])
-//                    userstatList.append(statinfo.userId)
-//                    userstatList.append(statinfo.status.rawValue)
+                    userstatList.updateValue(statinfo.status.rawValue, forKey: statinfo.userId)
                 }
                 return userstatList
             }else {
@@ -52,11 +57,9 @@ class UserStatAPI: DDSuperAPI,DDAPIScheduleProtocol {
     // [userids] as [UInt32]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            let userIDs = object as! [UInt32]
-            
             let builder = Im.Buddy.ImusersStatReq.Builder()
             builder.setUserId(0)
-            builder.setUserIdList(userIDs )
+            builder.setUserIdList(self.userIDs)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

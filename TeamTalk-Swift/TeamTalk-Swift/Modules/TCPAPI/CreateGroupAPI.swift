@@ -12,6 +12,19 @@ import UIKit
  *  创建讨论组，object为数组，index1:groupName,index2:groupAvatar,index3:userlist
  */
 class CreateGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var groupName:String = ""
+    var groupAvatarUrl:String = ""
+    var groupMembers:[UInt32] = []
+    var groupType:Im.BaseDefine.GroupType = .groupTypeTmp
+    public convenience init(groupName:String ,avatarUrl:String,members:[UInt32],type:Im.BaseDefine.GroupType){
+        self.init()
+        self.groupName = groupName
+        self.groupAvatarUrl = avatarUrl
+        self.groupMembers = members
+    }
+    
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -63,23 +76,12 @@ class CreateGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            
-            let groupName = (object as? Array<Any>)?[0] as? String ?? ""
-            let groupAvatar = (object as? Array<Any>)?[1] as? String ?? ""
-            let groupUserList = (object as? Array<Any>)?[2] as? Array<String> ?? []
-            
-            var originalIDs:[UInt32] = []
-            for localid in groupUserList{
-                let intID:UInt32 = MTTUtil.changeID(toOriginal: localid)
-                originalIDs.append(intID)
-            }
-            
             let builder = Im.Group.ImgroupCreateReq.Builder()
             builder.setUserId(0)
-            builder.setGroupName(groupName)
-            builder.setGroupAvatar(groupAvatar)
-            builder.setGroupType(.groupTypeTmp)
-            builder.setMemberIdList(originalIDs)
+            builder.setGroupName(self.groupName)
+            builder.setGroupAvatar(self.groupAvatarUrl)
+            builder.setGroupType(self.groupType)
+            builder.setMemberIdList(self.groupMembers)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

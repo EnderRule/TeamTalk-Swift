@@ -9,6 +9,19 @@
 import UIKit
 
 class GetMsgByMsgIDsAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var sessionID:UInt32 = 0
+    var sessionType:Im.BaseDefine.SessionType = .sessionTypeSingle
+    var msgIDs:[UInt32] = []
+    public convenience init(sessionID:UInt32,sessionType:SessionType_Objc,msgIDs:[UInt32]){
+        self.init()
+        self.sessionID = sessionID
+        self.sessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
+        
+        self.msgIDs = msgIDs
+    }
+    
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -41,21 +54,13 @@ class GetMsgByMsgIDsAPI: DDSuperAPI,DDAPIScheduleProtocol {
         return analysis
     }
     
-    //打包數據,object 格式：[sessiontype,sessiongid,[msgIDs]] as [Any]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            
-            let typeint:Int32 = ( "\((object as! [Any])[0])" as NSString).intValue
-            let type = Im.BaseDefine.SessionType(rawValue: typeint) ?? .sessionTypeSingle
-            let sessionID:UInt32 = MTTBaseEntity.pbIDFrom(localID: "\((object as! [Any])[1])" )
-            
-            let msgIDs:[UInt32] = ((object as! [Any])[2]) as! [UInt32]
-            
             let builder = Im.Message.ImgetMsgByIdReq.Builder()
             builder.setUserId(0)
-            builder.setSessionId(sessionID)
-            builder.setSessionType(type)
-            builder.setMsgIdList(msgIDs)
+            builder.setSessionId(self.sessionID)
+            builder.setSessionType(self.sessionType)
+            builder.setMsgIdList(self.msgIDs)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

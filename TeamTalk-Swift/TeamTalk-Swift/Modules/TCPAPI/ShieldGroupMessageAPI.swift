@@ -9,6 +9,15 @@
 import UIKit
 
 class ShieldGroupMessageAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var groupID:UInt32 = 0
+    var shieldState:UInt32 = 0
+    public convenience init(groupID:UInt32,shieldState:UInt32){
+        self.init()
+        self.groupID = groupID
+        self.shieldState = shieldState
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -45,14 +54,10 @@ class ShieldGroupMessageAPI: DDSuperAPI,DDAPIScheduleProtocol {
     // [groupID,(isshield as 0 or 1)]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            
-            let groupID:UInt32 = MTTGroupEntity.pbIDFrom(localID: "\((object as! [Any])[0])" )
-            let isshield:UInt32 =  UInt32(("\((object as! [Any])[1])" as NSString).intValue)
-            
             let builder = Im.Group.ImgroupShieldReq.Builder()
             builder.setUserId(0)
-            builder.setGroupId(groupID)
-            builder.setShieldStatus(isshield)
+            builder.setGroupId(self.groupID)
+            builder.setShieldStatus(self.shieldState)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

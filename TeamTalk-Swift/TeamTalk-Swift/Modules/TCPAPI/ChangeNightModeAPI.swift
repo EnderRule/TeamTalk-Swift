@@ -9,6 +9,13 @@
 import UIKit
 
 class ChangeNightModeAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var isShield:Bool = false
+    public convenience init(isShield:Bool){
+        self.init()
+        self.isShield = isShield
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -44,11 +51,9 @@ class ChangeNightModeAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
            
-            let isshield:UInt32 =  UInt32(("\((object as! [Any])[0])" as NSString).intValue)
-
             let builder = Im.Login.ImpushShieldReq.Builder()
             builder.setUserId(0)
-            builder.setShieldStatus(isshield)
+            builder.setShieldStatus(self.isShield ? 1 : 0)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

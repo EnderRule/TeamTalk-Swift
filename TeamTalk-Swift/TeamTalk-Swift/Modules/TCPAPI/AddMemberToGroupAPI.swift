@@ -10,6 +10,14 @@ import UIKit
 
 class AddMemberToGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
 
+    var groupID:UInt32 = 0
+    var memberIDs:[UInt32] = []
+    public convenience init(groupID:UInt32,memberIDs:[UInt32]){
+        self.init()
+        self.groupID = groupID
+        self.memberIDs = memberIDs
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -55,20 +63,11 @@ class AddMemberToGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-            let groupID:String = (object as? Array<Any>)?[0] as? String ?? "gid_0"
-            let userList:[String] = (object as? Array<Any>)?[1] as? [String] ?? []
-            
-            var originalUsers:[UInt32] = []
-            
-            for userid in  userList {
-                let uid:UInt32 = MTTUtil.changeID(toOriginal: userid)
-                originalUsers.append(uid)
-            }
             
             let builder = Im.Group.ImgroupChangeMemberReq.Builder()
             builder.setUserId(0)
-            builder.setGroupId(MTTUtil.changeID(toOriginal: groupID))
-            builder.setMemberIdList(originalUsers)
+            builder.setGroupId(self.groupID)
+            builder.setMemberIdList(self.memberIDs)
             builder.setChangeType(.groupModifyTypeAdd)
             
             let dataOut = DDDataOutputStream.init()

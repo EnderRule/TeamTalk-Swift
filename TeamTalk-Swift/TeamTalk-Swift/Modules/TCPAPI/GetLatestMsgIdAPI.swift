@@ -9,6 +9,15 @@
 import UIKit
 
 class GetLatestMsgIdAPI: DDSuperAPI,DDAPIScheduleProtocol {
+    
+    var sessionID:UInt32 = 0
+    var sessionType:Im.BaseDefine.SessionType = .sessionTypeSingle
+    public convenience init(sessionID:UInt32,sessionType:SessionType_Objc){
+        self.init()
+        self.sessionID = sessionID
+        self.sessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
+    }
+    
     func requestTimeOutTimeInterval() -> Int32 {
         return TimeOutTimeInterval
     }
@@ -44,15 +53,10 @@ class GetLatestMsgIdAPI: DDSuperAPI,DDAPIScheduleProtocol {
     //打包數據,object 格式：[sessiontype,sessiongid] as [String]
     func packageRequestObject() -> Package! {
         let package:Package = {(object,seqno) in
-        
-            let typeint:Int32 = ( "\((object as! [Any])[0])" as NSString).intValue
-            let type = Im.BaseDefine.SessionType(rawValue: typeint) ?? .sessionTypeSingle
-            let sessionID:UInt32 = MTTBaseEntity.pbIDFrom(localID: "\((object as! [Any])[1])" )
-
             let builder = Im.Message.ImgetLatestMsgIdReq.Builder()
             builder.setUserId(0)
-            builder.setSessionId(sessionID)
-            builder.setSessionType(type)
+            builder.setSessionId(self.sessionID)
+            builder.setSessionType(self.sessionType)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)
