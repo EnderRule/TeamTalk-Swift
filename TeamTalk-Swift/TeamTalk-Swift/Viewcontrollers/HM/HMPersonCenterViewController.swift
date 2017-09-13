@@ -30,7 +30,6 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         self.tableView.headerBeginRefreshing()
     }
     
-    
     func setupTableview(){
         
         headerView.frame = .init(x: 0, y: 0, width: SCREEN_WIDTH(), height: 150)

@@ -41,7 +41,6 @@ class DDSuperAPI: NSObject {
         if  let package = (self as? DDAPIScheduleProtocol)?.packageRequestObject() {
             if   let requestData = package(object,self.seqNo) {
                 DDAPISchedule.instance().send(requestData)
-                DDTcpClientManager.instance().write(toSocket: requestData)
             }
         }
     }

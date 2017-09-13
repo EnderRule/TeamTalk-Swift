@@ -94,7 +94,11 @@
 	_sendBuffers = nil;
 	_lastSendBuffer = nil;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkDisconnect object:nil  userInfo:nil ];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tcpClientConnectFailure)]){
+        [self.delegate tcpClientConnectFailure];
+    }
+    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkDisconnect object:nil  userInfo:nil ];
 
 }
 
@@ -175,7 +179,11 @@
 //    DDLog(@"handleConntectOpenCompleted");
     if (aStream == _outStream) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkConnectComplete object:nil  userInfo:nil ];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(tcpClientConnectSuccess)]){
+            [self.delegate tcpClientConnectSuccess];
+        }
+        
+//        [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkConnectComplete object:nil  userInfo:nil ];
 
         [HMLoginManager shared].loginState = HMLoginStateOnline;
     }
@@ -320,7 +328,12 @@
                 if (payloadData.length >0) {
                     [[DDAPISchedule instance] receiveServerData:payloadData forDataType:dataType];
                 }
-                [[NSNotificationCenter defaultCenter]postNotificationName:DDNotificationServerHeartBeat object:nil ];
+                
+                if(self.delegate && [self.delegate respondsToSelector:@selector(tcpClientReceiveServerHeartBeat)]){
+                    [self.delegate tcpClientReceiveServerHeartBeat];
+                }
+                
+//                [[NSNotificationCenter defaultCenter]postNotificationName:DDNotificationServerHeartBeat object:nil ];
             }
             
             [_receiveLock unlock];

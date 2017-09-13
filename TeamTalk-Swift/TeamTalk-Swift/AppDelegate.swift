@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let notiSettings:UIUserNotificationSettings = UIUserNotificationSettings.init(types: [.alert,.badge,.sound], categories: nil)
         application.registerUserNotificationSettings(notiSettings)
         
+        
         let testString = "fsfef fs测试哈哈哈哈哈单独累吧😓④发数据考虑f睡覺覅是你"
         let encryptStr = testString.encrypt()
         let decryptStr = encryptStr.decrypt()

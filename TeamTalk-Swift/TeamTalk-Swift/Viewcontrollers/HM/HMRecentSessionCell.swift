@@ -12,7 +12,7 @@ class HMRecentSessionCell: HMBaseCell {
 
     var session:MTTSessionEntity?
     
-    var avatarView:MTTAvatarImageView = MTTAvatarImageView.init()
+    var avatarView:UIImageView = UIImageView.init()
     var nameLabel:UILabel = UILabel.init()
     
     var msgLabel:UILabel = UILabel.init()
@@ -130,8 +130,8 @@ class HMRecentSessionCell: HMBaseCell {
                                 }
                             })
                         }
-                        let groupAvatarUrls = (avatars as NSArray).componentsJoined(by: ";")
-                        self?.avatarView.setAvatar(groupAvatarUrls, group: true )
+//                        let groupAvatarUrls = (avatars as NSArray).componentsJoined(by: ";")
+                        self?.avatarView.setImage(str: avatars.first ?? "")//.setAvatar(groupAvatarUrls, group: true )
                     }
                 })
             }else {
@@ -142,8 +142,8 @@ class HMRecentSessionCell: HMBaseCell {
                             subview.removeFromSuperview()
                         }
                         self.avatarView.image = nil
-                        
-                        self.avatarView.setAvatar(user!.avatar, group: false)
+                        self.avatarView.setImage(str: user!.avatar)
+//                        self.avatarView.setAvatar(user!.avatar, group: false)
                     }
                 })
                 

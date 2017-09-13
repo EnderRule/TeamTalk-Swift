@@ -8,16 +8,18 @@
 
 #import "TouchDownGestureRecognizer.h"
 
-#define Response_Y                  -30
+int Response_Y = -30;
 
 @implementation TouchDownGestureRecognizer
 {
     BOOL _inside;
+//    int Response_Y;// -30;
 }
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 //    self.button.touchDown();
     _inside = YES;
+    
     if (self.touchDown)
     {
         self.touchDown();

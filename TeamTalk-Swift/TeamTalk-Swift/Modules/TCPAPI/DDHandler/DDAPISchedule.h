@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DDAPIScheduleProtocol.h"
-#import "DDAPIUnrequestScheduleProtocol.h"
+
+#import "DDSuperAPI.h"
+#import "DDUnrequestSuperAPI.h"
 
 typedef struct Response_Server_Data_Head {
     int serviceID;
@@ -24,6 +25,9 @@ NS_INLINE ServerDataType DDMakeServerDataType(int serviceID, int commendID,int s
     type.seqNo = seqNo;
     return type;
 }
+
+
+
 
 
 //TODO:应该有自己的专属线程

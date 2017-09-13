@@ -12,7 +12,7 @@
 
 #import "SCLAlertView.h"
 #import "MBProgressHUD.h"
-#import "MTTDDNotification.h"
+
 #import "TeamTalk_Swift-Swift.h"
 
 @interface MTTLoginViewController ()<UITextFieldDelegate>

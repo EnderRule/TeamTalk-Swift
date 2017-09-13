@@ -10,7 +10,6 @@
 		6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */; };
 		663F0FDD1F5657E10041E3C5 /* HMMediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */; };
 		66686A621F4522B5008B26BD /* MTTBubbleModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A611F4522B5008B26BD /* MTTBubbleModule.m */; };
-		66686A651F4522FD008B26BD /* MTTPhotosCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A641F4522FD008B26BD /* MTTPhotosCache.m */; };
 		66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */; };
 		66686A6C1F452C12008B26BD /* DDDepartmentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */; };
 		66686A6E1F453176008B26BD /* DDFixedGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */; };
@@ -51,9 +50,6 @@
 		66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
 		66686AF11F4678CC008B26BD /* DDSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF01F4678CC008B26BD /* DDSearch.m */; };
 		66686AF41F46796E008B26BD /* ContactsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF31F46796E008B26BD /* ContactsModule.m */; };
-		66686B4E1F469289008B26BD /* MTTAvatarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B471F469289008B26BD /* MTTAvatarManager.m */; };
-		66686B4F1F469289008B26BD /* MTTAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B491F469289008B26BD /* MTTAvatarImageView.m */; };
-		66686B501F469289008B26BD /* MTTLogoAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B4B1F469289008B26BD /* MTTLogoAnimateView.m */; };
 		66686B511F469289008B26BD /* TouchDownGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B4D1F469289008B26BD /* TouchDownGestureRecognizer.m */; };
 		66686B691F46967C008B26BD /* bgImage_HL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686B651F46967C008B26BD /* bgImage_HL@2x.png */; };
 		66686B6A1F46967C008B26BD /* cellLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686B661F46967C008B26BD /* cellLine@2x.png */; };
@@ -234,7 +230,6 @@
 		66E6D3D11F42929B008E9590 /* DDAPISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3CA1F42929B008E9590 /* DDAPISchedule.m */; };
 		66E6D3D21F42929B008E9590 /* DDSendBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3CE1F42929B008E9590 /* DDSendBuffer.m */; };
 		66E6D3D31F42929B008E9590 /* DDTcpProtocolHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3D01F42929B008E9590 /* DDTcpProtocolHeader.m */; };
-		66E6D3DC1F4292CC008E9590 /* DataOutputStream+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3D51F4292CC008E9590 /* DataOutputStream+Addition.m */; };
 		66E6D3DD1F4292CC008E9590 /* DDDataInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3D71F4292CC008E9590 /* DDDataInputStream.m */; };
 		66E6D3DE1F4292CC008E9590 /* DDDataOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3D91F4292CC008E9590 /* DDDataOutputStream.m */; };
 		66E6D3DF1F4292CC008E9590 /* NSStream+NSStreamAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3DB1F4292CC008E9590 /* NSStream+NSStreamAddition.m */; };
@@ -318,8 +313,6 @@
 		66F107F51F4333720035C888 /* MTTSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F41F4333720035C888 /* MTTSessionEntity.swift */; };
 		66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */; };
 		66F108031F43D9DB0035C888 /* DDReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108021F43D9DB0035C888 /* DDReachability.m */; };
-		66F108101F43E7180035C888 /* DDHttpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1080B1F43E7180035C888 /* DDHttpServer.m */; };
-		66F108121F43E7180035C888 /* DDTcpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1080F1F43E7180035C888 /* DDTcpServer.m */; };
 		66F108151F43E77D0035C888 /* MTTAFNetworkingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108141F43E77D0035C888 /* MTTAFNetworkingClient.m */; };
 		66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108171F43E7E40035C888 /* MTTSundriesCenter.m */; };
 		66F10A621F43F14B0035C888 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A581F43F14B0035C888 /* FMDatabase.m */; };
@@ -410,8 +403,6 @@
 		663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMMediaManager.swift; sourceTree = "<group>"; };
 		66686A601F4522B5008B26BD /* MTTBubbleModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTBubbleModule.h; sourceTree = "<group>"; };
 		66686A611F4522B5008B26BD /* MTTBubbleModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTBubbleModule.m; sourceTree = "<group>"; };
-		66686A631F4522FD008B26BD /* MTTPhotosCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTPhotosCache.h; sourceTree = "<group>"; };
-		66686A641F4522FD008B26BD /* MTTPhotosCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTPhotosCache.m; sourceTree = "<group>"; };
 		66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteMemberFromGroupAPI.swift; sourceTree = "<group>"; };
 		66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDDepartmentAPI.swift; sourceTree = "<group>"; };
 		66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDFixedGroupAPI.swift; sourceTree = "<group>"; };
@@ -724,14 +715,10 @@
 		66E6D3C51F429147008E9590 /* DDSuperAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DDSuperAPI.swift; path = ../DDSuperAPI.swift; sourceTree = "<group>"; };
 		66E6D3C91F42929B008E9590 /* DDAPISchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAPISchedule.h; sourceTree = "<group>"; };
 		66E6D3CA1F42929B008E9590 /* DDAPISchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAPISchedule.m; sourceTree = "<group>"; };
-		66E6D3CB1F42929B008E9590 /* DDAPIScheduleProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAPIScheduleProtocol.h; sourceTree = "<group>"; };
-		66E6D3CC1F42929B008E9590 /* DDAPIUnrequestScheduleProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAPIUnrequestScheduleProtocol.h; sourceTree = "<group>"; };
 		66E6D3CD1F42929B008E9590 /* DDSendBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSendBuffer.h; sourceTree = "<group>"; };
 		66E6D3CE1F42929B008E9590 /* DDSendBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDSendBuffer.m; sourceTree = "<group>"; };
 		66E6D3CF1F42929B008E9590 /* DDTcpProtocolHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTcpProtocolHeader.h; sourceTree = "<group>"; };
 		66E6D3D01F42929B008E9590 /* DDTcpProtocolHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTcpProtocolHeader.m; sourceTree = "<group>"; };
-		66E6D3D41F4292CC008E9590 /* DataOutputStream+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DataOutputStream+Addition.h"; sourceTree = "<group>"; };
-		66E6D3D51F4292CC008E9590 /* DataOutputStream+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DataOutputStream+Addition.m"; sourceTree = "<group>"; };
 		66E6D3D61F4292CC008E9590 /* DDDataInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDataInputStream.h; sourceTree = "<group>"; };
 		66E6D3D71F4292CC008E9590 /* DDDataInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDataInputStream.m; sourceTree = "<group>"; };
 		66E6D3D81F4292CC008E9590 /* DDDataOutputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDataOutputStream.h; sourceTree = "<group>"; };
@@ -886,10 +873,6 @@
 		66F108011F43D9DB0035C888 /* DDReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDReachability.h; sourceTree = "<group>"; };
 		66F108021F43D9DB0035C888 /* DDReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDReachability.m; sourceTree = "<group>"; };
 		66F108041F43DE4B0035C888 /* MTTConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTConstant.h; sourceTree = "<group>"; };
-		66F1080A1F43E7180035C888 /* DDHttpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHttpServer.h; sourceTree = "<group>"; };
-		66F1080B1F43E7180035C888 /* DDHttpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHttpServer.m; sourceTree = "<group>"; };
-		66F1080E1F43E7180035C888 /* DDTcpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTcpServer.h; sourceTree = "<group>"; };
-		66F1080F1F43E7180035C888 /* DDTcpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTcpServer.m; sourceTree = "<group>"; };
 		66F108131F43E77D0035C888 /* MTTAFNetworkingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTAFNetworkingClient.h; sourceTree = "<group>"; };
 		66F108141F43E77D0035C888 /* MTTAFNetworkingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTAFNetworkingClient.m; sourceTree = "<group>"; };
 		66F108161F43E7E40035C888 /* MTTSundriesCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTSundriesCenter.h; sourceTree = "<group>"; };
@@ -1691,12 +1674,6 @@
 				66E6D3C51F429147008E9590 /* DDSuperAPI.swift */,
 				66E6D3E01F4292E4008E9590 /* DDTcpClientManager.h */,
 				66E6D3E11F4292E4008E9590 /* DDTcpClientManager.m */,
-				66F1080A1F43E7180035C888 /* DDHttpServer.h */,
-				66F1080B1F43E7180035C888 /* DDHttpServer.m */,
-				66F1080E1F43E7180035C888 /* DDTcpServer.h */,
-				66F1080F1F43E7180035C888 /* DDTcpServer.m */,
-				66E6D3D41F4292CC008E9590 /* DataOutputStream+Addition.h */,
-				66E6D3D51F4292CC008E9590 /* DataOutputStream+Addition.m */,
 				66E6D3D61F4292CC008E9590 /* DDDataInputStream.h */,
 				66E6D3D71F4292CC008E9590 /* DDDataInputStream.m */,
 				66E6D3D81F4292CC008E9590 /* DDDataOutputStream.h */,
@@ -1705,8 +1682,6 @@
 				66E6D3DB1F4292CC008E9590 /* NSStream+NSStreamAddition.m */,
 				66E6D3C91F42929B008E9590 /* DDAPISchedule.h */,
 				66E6D3CA1F42929B008E9590 /* DDAPISchedule.m */,
-				66E6D3CB1F42929B008E9590 /* DDAPIScheduleProtocol.h */,
-				66E6D3CC1F42929B008E9590 /* DDAPIUnrequestScheduleProtocol.h */,
 				66E6D3CD1F42929B008E9590 /* DDSendBuffer.h */,
 				66E6D3CE1F42929B008E9590 /* DDSendBuffer.m */,
 				66E6D3CF1F42929B008E9590 /* DDTcpProtocolHeader.h */,
@@ -1944,8 +1919,6 @@
 				66F108021F43D9DB0035C888 /* DDReachability.m */,
 				66F10CC11F4436140035C888 /* MTTDDNotification.h */,
 				66F10CC21F4436140035C888 /* MTTDDNotification.m */,
-				66686A631F4522FD008B26BD /* MTTPhotosCache.h */,
-				66686A641F4522FD008B26BD /* MTTPhotosCache.m */,
 			);
 			path = GlobalData;
 			sourceTree = "<group>";
@@ -2354,7 +2327,6 @@
 				66F10A751F43F8DA0035C888 /* SpellLibrary.m in Sources */,
 				66F107F51F4333720035C888 /* MTTSessionEntity.swift in Sources */,
 				66E6D3551F428922008E9590 /* ZQViewController.swift in Sources */,
-				66686B501F469289008B26BD /* MTTLogoAnimateView.m in Sources */,
 				66686A7C1F454D32008B26BD /* MsgReadACKAPI.swift in Sources */,
 				66F10F571F4449570035C888 /* framing.c in Sources */,
 				66F10F601F4449570035C888 /* exc_8_128_table.c in Sources */,
@@ -2384,7 +2356,6 @@
 				66F10F721F4449570035C888 /* modes_wb.c in Sources */,
 				66686A721F45374C008B26BD /* DDUserDetailInfoAPI.swift in Sources */,
 				66F107C61F42D4810035C888 /* SDWebImageDecoder.m in Sources */,
-				66F108101F43E7180035C888 /* DDHttpServer.m in Sources */,
 				66BD028F1F4D1CB100131E2D /* NSBundle+TZImagePicker.m in Sources */,
 				66F10FB61F449F710035C888 /* base64.cpp in Sources */,
 				66BD02991F4D1CB100131E2D /* TZPhotoPreviewController.m in Sources */,
@@ -2424,7 +2395,6 @@
 				66E6D3861F4289D0008E9590 /* Google.Protobuf.Wrappers.proto.swift in Sources */,
 				66F10FB71F449F710035C888 /* md5.cpp in Sources */,
 				66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */,
-				66F108121F43E7180035C888 /* DDTcpServer.m in Sources */,
 				66E6D3761F4289D0008E9590 /* ExtendableMessage.swift in Sources */,
 				66F107151F42A36E0035C888 /* LoginAPI.swift in Sources */,
 				6672CC231F4E626200DA46E6 /* MJRefreshConst.m in Sources */,
@@ -2476,7 +2446,6 @@
 				66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */,
 				66F107C41F42D4810035C888 /* SDImageCache.m in Sources */,
 				66686AE51F45AACC008B26BD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
-				66686B4E1F469289008B26BD /* MTTAvatarManager.m in Sources */,
 				66E6D3851F4289D0008E9590 /* Google.Protobuf.Type.proto.swift in Sources */,
 				6682FE801F4AF28B0048FA23 /* HMChatVoiceCell.swift in Sources */,
 				66F10F5F1F4449570035C888 /* exc_5_64_table.c in Sources */,
@@ -2493,7 +2462,6 @@
 				66BD02A91F4D8D5600131E2D /* M80AttributedLabel.m in Sources */,
 				66E6D3B41F428C38008E9590 /* DynamicColor+Deriving.swift in Sources */,
 				66686D1B1F4A7642008B26BD /* HMBaseCell.swift in Sources */,
-				66686A651F4522FD008B26BD /* MTTPhotosCache.m in Sources */,
 				66F107F31F4308D60035C888 /* MTTGroupEntity.swift in Sources */,
 				66F10F561F4449570035C888 /* bitwise.c in Sources */,
 				66E6D3951F428A33008E9590 /* Im.Buddy.Imbuddy.proto.swift in Sources */,
@@ -2567,7 +2535,6 @@
 				66686D161F46D81E008B26BD /* UIImage+ImageEffects.m in Sources */,
 				66BD02AC1F4D8D5600131E2D /* NSMutableAttributedString+M80.m in Sources */,
 				66F107981F42D3A90035C888 /* UIButton+JSMessagesView.m in Sources */,
-				66E6D3DC1F4292CC008E9590 /* DataOutputStream+Addition.m in Sources */,
 				66BD029B1F4D1CB100131E2D /* TZVideoPlayerController.m in Sources */,
 				66F10F791F4449570035C888 /* smallft.c in Sources */,
 				66E6D3DD1F4292CC008E9590 /* DDDataInputStream.m in Sources */,
@@ -2630,7 +2597,6 @@
 				66686D111F46D81E008B26BD /* SCLAlertViewResponder.m in Sources */,
 				66BD02941F4D1CB100131E2D /* TZImageManager.m in Sources */,
 				66F107921F42D3A90035C888 /* NSDictionary+Safe.m in Sources */,
-				66686B4F1F469289008B26BD /* MTTAvatarImageView.m in Sources */,
 				66E6D34F1F428922008E9590 /* UITextView+Extention.swift in Sources */,
 				66686A701F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift in Sources */,
 				66F107171F42A9D90035C888 /* LoginStatusNotifyAPI.swift in Sources */,

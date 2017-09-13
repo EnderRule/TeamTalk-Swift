@@ -8,11 +8,40 @@
 
 #import <Foundation/Foundation.h>
 #import "DDDataInputStream.h"
-#import "DDAPIUnrequestScheduleProtocol.h"
+
 #import "DDTcpClientManager.h"
 #import "DDDataOutputStream.h"
-#import "DataOutputStream+Addition.h"
+
 #import "DDTcpProtocolHeader.h"
+
+typedef id(^UnrequestAPIAnalysis)(NSData* data);
+
+@protocol DDAPIUnrequestScheduleProtocol <NSObject>
+@required
+/**
+ *  数据包中的serviceID
+ *
+ *  @return serviceID
+ */
+- (int)responseServiceID;
+
+/**
+ *  数据包中的commandID
+ *
+ *  @return commandID
+ */
+- (int)responseCommandID;
+
+/**
+ *  解析数据包
+ *
+ *  @return 解析数据包的block
+ */
+- (UnrequestAPIAnalysis)unrequestAnalysis;
+@end
+
+
+
 typedef void(^ReceiveData)(id object,NSError* error);
 
 @interface DDUnrequestSuperAPI : NSObject

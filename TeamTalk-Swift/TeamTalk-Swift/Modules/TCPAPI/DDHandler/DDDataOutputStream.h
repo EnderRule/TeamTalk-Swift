@@ -36,4 +36,7 @@
 //将此转换为 byte 序列。
 - (NSMutableData *)toByteArray;
 
+
+-(void)writeTcpProtocolHeader:(int16_t)sId cId:(int16_t)cId seqNo:(uint16_t)seqNo;
+
 @end

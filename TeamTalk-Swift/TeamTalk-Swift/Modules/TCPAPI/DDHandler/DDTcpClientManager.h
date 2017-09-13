@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 @class DDSendBuffer;
+
+@protocol DDTcpClientManagerDelegate <NSObject>
+
+-(void)tcpClientConnectFailure;      //断开连接
+-(void)tcpClientConnectSuccess;      //连接成功
+-(void)tcpClientReceiveServerHeartBeat;//接收到服务端心跳
+
+@end
+
 @interface DDTcpClientManager : NSObject<NSStreamDelegate>
 {
 @private
@@ -25,9 +34,10 @@
 
 + (instancetype)instance;
 
+@property(nonatomic) id<DDTcpClientManagerDelegate> delegate;
+
 -(void)connect:(NSString *)ipAdr port:(NSInteger)port status:(NSInteger)status;
 -(void)disconnect;
 -(void)writeToSocket:(NSMutableData *)data;
-
 
 @end

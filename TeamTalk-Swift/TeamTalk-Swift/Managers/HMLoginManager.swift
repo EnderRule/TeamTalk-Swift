@@ -54,7 +54,7 @@ func currentUser()->MTTUserEntity{
     return HMLoginManager.shared.currentUser
 }
 
-class HMLoginManager: NSObject {
+class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
 
     static let shared:HMLoginManager = HMLoginManager()
     
@@ -149,14 +149,11 @@ class HMLoginManager: NSObject {
     }
     
     private var reachability:DDReachability = DDReachability.forInternetConnection()
-    
-    private var httpServer: DDHttpServer = DDHttpServer.init()
-    private var tcpServer:DDTcpServer = DDTcpServer.init()
     private var getMsgIPManager:AFHTTPSessionManager = AFHTTPSessionManager.init()
-    
     private var priorIP:String = ""
     private var priorport:Int = 0
     private var reloginning:Bool = false
+    
     
     private var delegates:[HMLoginManagerDelegate] = []
     
@@ -210,7 +207,7 @@ class HMLoginManager: NSObject {
     }
     
     
-    private func getMsgIP(success:@escaping (([AnyHashable:Any])->Void),failure:@escaping ((String)->Void)){
+    func getMsgIP(success:@escaping (([AnyHashable:Any])->Void),failure:@escaping ((String)->Void)){
         
         self.getMsgIPManager.get(SERVER_Address, parameters: nil , progress: nil , success: { (task , responseObject ) in
             
@@ -222,11 +219,68 @@ class HMLoginManager: NSObject {
                 failure("连接消息服务器失败 code:-1")
             }
         }) { (task , error ) in
-            
             failure(error.localizedDescription)
         }
     }
     
+    
+    private var  tcpConnectSuccess:(()->Void)?
+    private var  tcpConnectFailure:((String)->Void)?
+    private var  tcpIsConnecting:Bool = false
+    private var  tcpConnectTimes:Int = 0
+    private let tcpConnectTimeOutInterval:TimeInterval = 10
+    private func  connect(ip:String,port:Int,success:@escaping (()->Void),failure:@escaping ((String)->Void)){
+        
+        if !tcpIsConnecting{
+            tcpConnectTimes += 1
+            tcpIsConnecting = true
+            self.tcpConnectSuccess = success
+            self.tcpConnectFailure = failure
+ 
+            DDTcpClientManager.instance().disconnect()
+            DDTcpClientManager.instance().delegate = self
+            DDTcpClientManager.instance().connect(ip , port: port, status: 1)
+            
+            //超时处理
+            let nowTime = tcpConnectTimes
+            dispatch(after: tcpConnectTimeOutInterval, task: { 
+                if self.tcpIsConnecting && nowTime == self.tcpConnectTimes {
+                    self.tcpIsConnecting = false
+                   
+                    self.tcpConnectFailure?("連接超時")
+                    self.tcpConnectFailure = nil
+                    self.tcpConnectSuccess = nil
+                }
+            })
+        }
+    }
+    
+    func tcpClientConnectSuccess() {
+        if self.tcpIsConnecting{
+            self.tcpIsConnecting = false
+            
+            dispatch(after: 0, task: { 
+                 self.tcpConnectSuccess?()
+                self.tcpConnectSuccess = nil
+                self.tcpConnectFailure = nil
+            })
+        }
+    }
+    func tcpClientConnectFailure() {
+        if self.tcpIsConnecting{
+            self.tcpIsConnecting = false
+            
+            dispatch(after: 0, task: {
+                self.tcpConnectFailure?("連接消息服務器失敗")
+                self.tcpConnectFailure = nil
+                self.tcpConnectSuccess = nil
+            })
+        }
+    }
+    func tcpClientReceiveServerHeartBeat() {
+        self.n_receiveServerHeartBeat()
+    }
+
     func loginWith(userName:String,password:String,success:@escaping ((MTTUserEntity)->Void),failure:@escaping ((String)->Void)){
         
         self.getMsgIP(success: { (dic ) in
@@ -239,7 +293,8 @@ class HMLoginManager: NSObject {
                 self.priorport = port
                 self.msfsUrl = json["msfsPrior"].stringValue
                 
-                self.tcpServer.loginTcpServerIP(ip, port: port, success: {
+                self.connect(ip: ip, port: port, success: { 
+                    
                     let api = LoginAPI.init(name: userName, password: password)
                     api.request(withParameters: [:], completion:  { (response , error ) in
                         if let dic = response as? [String:Any]{
@@ -294,9 +349,68 @@ class HMLoginManager: NSObject {
                             failure("登錄驗證失敗")
                         }
                     })
-                }, failure: {
-                    failure("连接消息服务器失败")
+                }, failure: {(error)in
+                    failure(error)
                 })
+                
+//                self.tcpServer.loginTcpServerIP(ip, port: port, success: {
+//                    let api = LoginAPI.init(name: userName, password: password)
+//                    api.request(withParameters: [:], completion:  { (response , error ) in
+//                        if let dic = response as? [String:Any]{
+//                            let json2 = JSON.init(dic)
+//                            
+//                            debugPrint("登入IP/端口\(ip)/\(port)  result:\(dic)")
+//                            if let user:MTTUserEntity = dic[LoginAPI.kResultUser] as? MTTUserEntity {
+//                                let time:TimeInterval = json2[LoginAPI.kResultServerTime].doubleValue
+//                                debugPrint("登入驗證成功   serverTime :\(time)")
+//                                if time > 3600.0 {
+//                                    self.s_serverTime = time
+//                                }
+//                                self.startCountServerTime()
+//                                self.s_loginState = .online
+//                                self.s_currentUser = user
+//                                self.currentUserName = userName
+//                                self.currentPassword = password
+//                                self.shouldAutoLogin = true
+//                                
+//                                self.reloginning = true
+//                                
+//                                MTTDatabaseUtil.instance().openCurrentUserDB()
+//                                
+//                                self.loadAllUser {
+//                                    if SpellLibrary.instance().isEmpty(){
+//                                        dispatch_globle(after: 0, task: {
+//                                            for user in DDUserModule.shareInstance().getAllMaintanceUser() as? [MTTUserEntity] ?? []{
+//                                                SpellLibrary.instance().addSpellFor(user)
+//                                                SpellLibrary.instance().addDeparmentSpellFor(user )
+//                                            }
+//                                            for group in DDGroupModule.instance().getAllGroups() as? [MTTGroupEntity] ?? []{
+//                                                
+//                                                SpellLibrary.instance().addSpellFor(group)
+//                                            }
+//                                        })
+//                                    }
+//                                }
+//                                
+//                                SessionModule.instance().loadLocalSession({ (isok ) in })
+//                                
+//                                HMNotification.userLoginSuccess.postWith(obj: user , userInfo: nil )
+//                                
+//                                success(user)
+//                            }else{
+//                                var rstr = json[LoginAPI.kResultMessage].stringValue
+//                                if rstr.length <= 0 {
+//                                    rstr = "登入失敗：code = \(json2[LoginAPI.kResultCode])"
+//                                }
+//                                failure(rstr)
+//                            }
+//                        }else{
+//                            failure("登錄驗證失敗")
+//                        }
+//                    })
+//                }, failure: {
+//                    failure("连接消息服务器失败")
+//                })
             }else{
                 failure("连接消息服务器失败")
             }

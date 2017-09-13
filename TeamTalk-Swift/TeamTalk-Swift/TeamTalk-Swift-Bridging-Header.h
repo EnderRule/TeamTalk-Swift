@@ -12,8 +12,7 @@
 #import "DDAPISchedule.h"
 #import "DDDataInputStream.h"
 #import "DDDataOutputStream.h"
-#import "DDAPIScheduleProtocol.h"
-#import "DDAPIUnrequestScheduleProtocol.h"
+
 #import "DDTcpProtocolHeader.h"
 #import "DDUnrequestSuperAPI.h"
 
@@ -23,8 +22,7 @@
 //Categorys from TeamTalk-Objc
 #import "NSString+Additions.h"
 #import "NSDate+DDAddition.h"
-#import "MTTAvatarImageView.h"
-#import "MTTPhotosCache.h"
+
 #import "NSDictionary+JSON.h"
 #import "DDReachability.h"
 
@@ -47,10 +45,6 @@
 #import "RecorderManager.h"
 #import "PlayerManager.h"
 #import "SpellLibrary.h"
-
-//TCP or API
-#import "DDTcpServer.h"
-#import "DDHttpServer.h"
 
 //audio、videos
 #import "Encapsulator.h"
