@@ -31,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(notiSettings)
         
         
+        print("spell : \(SpellLibrary.instance().getSpellForWord("我的测试"))")
+        
         let testString = "fsfef fs测试哈哈哈哈哈单独累吧😓④发数据考虑f睡覺覅是你"
         let encryptStr = testString.encrypt()
         let decryptStr = encryptStr.decrypt()

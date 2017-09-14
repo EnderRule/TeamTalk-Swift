@@ -12,7 +12,6 @@
 #import "DDGroupModule.h"
 
 #import "DDUserModule.h"
-#import "SpellLibrary.h"
 
 #import "TeamTalk_Swift-Swift.h"
 

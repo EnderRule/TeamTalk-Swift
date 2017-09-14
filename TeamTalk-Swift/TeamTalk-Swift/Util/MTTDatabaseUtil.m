@@ -6,8 +6,6 @@
 //
 
 #import "MTTDatabaseUtil.h"
-//#import "DDUserModule.h"
-#import "NSString+DDPath.h"
 #import "NSDictionary+Safe.h"
 
 #import "TeamTalk_Swift-Swift.h"
@@ -147,9 +145,15 @@
 
 +(NSString *)dbFilePath
 {
-    NSString* directorPath = [NSString userExclusiveDirection];
+    NSString* myName = [HMLoginManager shared].currentUser.userId;
+    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).firstObject;
+    NSString* directorPath = [documentsDirectory stringByAppendingPathComponent:myName];
     
     NSFileManager* fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:directorPath])
+    {
+        [fileManager createDirectoryAtPath:directorPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     
     //改用户的db是否存在，若不存在则创建相应的DB目录
     BOOL isDirector = NO;

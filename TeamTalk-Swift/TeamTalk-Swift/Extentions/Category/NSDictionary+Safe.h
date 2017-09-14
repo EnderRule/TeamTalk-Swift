@@ -32,3 +32,9 @@
 - (id)objectForKey:(id)key;
 
 @end
+
+
+@interface NSDictionary (JSON)
+- (NSString*)jsonString;
++ (NSDictionary*)initWithJsonString:(NSString*)json;
+@end

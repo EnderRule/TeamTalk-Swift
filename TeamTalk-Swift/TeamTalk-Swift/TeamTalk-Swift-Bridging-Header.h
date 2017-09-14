@@ -17,18 +17,15 @@
 #import "DDUnrequestSuperAPI.h"
 
 
-#import "MTTUtil.h"
-
 //Categorys from TeamTalk-Objc
 #import "NSString+Additions.h"
 #import "NSDate+DDAddition.h"
 
-#import "NSDictionary+JSON.h"
+#import "NSDictionary+Safe.h"
 #import "DDReachability.h"
 
 //GlobalData
 #import "MTTDatabaseUtil.h"
-#import "MTTUtil.h"
 #import "security.h"
 
 //Module
