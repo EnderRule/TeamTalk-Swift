@@ -24,18 +24,6 @@
 
 +(UInt32)changeIDToOriginal:(NSString *)sessionID;
 
-
-#pragma mark - fiexed top
-
-// 设置置顶
-+(void)setFixedTop:(NSString *)sessionID;
-// 获取置顶
-+(NSArray *)getFixedTop;
-// 移除置顶
-+(void)removeFixedTop:(NSString *)sessionID;
-// 检查置顶
-+(BOOL)checkFixedTop:(NSString *)sessionID;
-
 #pragma mark - new function
 
 //是否使用签名功能
@@ -47,20 +35,12 @@
 #pragma mark - image trans
 +(CGSize)sizeTrans:(CGSize)size;
 
-#pragma mark - 气泡功能
-+(NSString *)getBubbleTypeLeft:(BOOL)left;
-+(void)setBubbleTypeLeft:(NSString *)bubbleType left:(BOOL)left;
 #pragma mark - 图片发送预览时间记载
 +(void)setLastPhotoTime:(NSDate *)date;
 +(NSDate *)getLastPhotoTime;
 #pragma mark - 抖动功能
 +(void)setLastShakeTime:(NSDate *)date;
 +(BOOL)ifCanShake;
-#pragma mark - dbversion
-+(void)setDBVersion:(NSInteger)version;
-+(NSInteger)getDBVersion;
-+(void)setLastDBVersion:(NSInteger)version;
-+(NSInteger)getLastDBVersion;
 
 @end
 

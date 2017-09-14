@@ -313,7 +313,6 @@
 		66F107F51F4333720035C888 /* MTTSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F41F4333720035C888 /* MTTSessionEntity.swift */; };
 		66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */; };
 		66F108031F43D9DB0035C888 /* DDReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108021F43D9DB0035C888 /* DDReachability.m */; };
-		66F108151F43E77D0035C888 /* MTTAFNetworkingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108141F43E77D0035C888 /* MTTAFNetworkingClient.m */; };
 		66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108171F43E7E40035C888 /* MTTSundriesCenter.m */; };
 		66F10A621F43F14B0035C888 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A581F43F14B0035C888 /* FMDatabase.m */; };
 		66F10A631F43F14B0035C888 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A5A1F43F14B0035C888 /* FMDatabaseAdditions.m */; };
@@ -465,12 +464,6 @@
 		66686AF01F4678CC008B26BD /* DDSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDSearch.m; sourceTree = "<group>"; };
 		66686AF21F46796E008B26BD /* ContactsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsModule.h; sourceTree = "<group>"; };
 		66686AF31F46796E008B26BD /* ContactsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsModule.m; sourceTree = "<group>"; };
-		66686B461F469289008B26BD /* MTTAvatarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTAvatarManager.h; sourceTree = "<group>"; };
-		66686B471F469289008B26BD /* MTTAvatarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTAvatarManager.m; sourceTree = "<group>"; };
-		66686B481F469289008B26BD /* MTTAvatarImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTAvatarImageView.h; sourceTree = "<group>"; };
-		66686B491F469289008B26BD /* MTTAvatarImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTAvatarImageView.m; sourceTree = "<group>"; };
-		66686B4A1F469289008B26BD /* MTTLogoAnimateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTLogoAnimateView.h; sourceTree = "<group>"; };
-		66686B4B1F469289008B26BD /* MTTLogoAnimateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTLogoAnimateView.m; sourceTree = "<group>"; };
 		66686B4C1F469289008B26BD /* TouchDownGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDownGestureRecognizer.h; sourceTree = "<group>"; };
 		66686B4D1F469289008B26BD /* TouchDownGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDownGestureRecognizer.m; sourceTree = "<group>"; };
 		66686B651F46967C008B26BD /* bgImage_HL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgImage_HL@2x.png"; sourceTree = "<group>"; };
@@ -873,8 +866,6 @@
 		66F108011F43D9DB0035C888 /* DDReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDReachability.h; sourceTree = "<group>"; };
 		66F108021F43D9DB0035C888 /* DDReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDReachability.m; sourceTree = "<group>"; };
 		66F108041F43DE4B0035C888 /* MTTConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTConstant.h; sourceTree = "<group>"; };
-		66F108131F43E77D0035C888 /* MTTAFNetworkingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTAFNetworkingClient.h; sourceTree = "<group>"; };
-		66F108141F43E77D0035C888 /* MTTAFNetworkingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTAFNetworkingClient.m; sourceTree = "<group>"; };
 		66F108161F43E7E40035C888 /* MTTSundriesCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTSundriesCenter.h; sourceTree = "<group>"; };
 		66F108171F43E7E40035C888 /* MTTSundriesCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTSundriesCenter.m; sourceTree = "<group>"; };
 		66F10A511F43F11C0035C888 /* MTTDatabaseUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTDatabaseUtil.h; sourceTree = "<group>"; };
@@ -1192,12 +1183,6 @@
 		66686B451F469280008B26BD /* Control */ = {
 			isa = PBXGroup;
 			children = (
-				66686B461F469289008B26BD /* MTTAvatarManager.h */,
-				66686B471F469289008B26BD /* MTTAvatarManager.m */,
-				66686B481F469289008B26BD /* MTTAvatarImageView.h */,
-				66686B491F469289008B26BD /* MTTAvatarImageView.m */,
-				66686B4A1F469289008B26BD /* MTTLogoAnimateView.h */,
-				66686B4B1F469289008B26BD /* MTTLogoAnimateView.m */,
 				66686B4C1F469289008B26BD /* TouchDownGestureRecognizer.h */,
 				66686B4D1F469289008B26BD /* TouchDownGestureRecognizer.m */,
 			);
@@ -1748,8 +1733,6 @@
 			children = (
 				66F107221F42C99E0035C888 /* MTTUtil.h */,
 				66F107231F42C99E0035C888 /* MTTUtil.m */,
-				66F108131F43E77D0035C888 /* MTTAFNetworkingClient.h */,
-				66F108141F43E77D0035C888 /* MTTAFNetworkingClient.m */,
 				66F108161F43E7E40035C888 /* MTTSundriesCenter.h */,
 				66F108171F43E7E40035C888 /* MTTSundriesCenter.m */,
 				66F10A511F43F11C0035C888 /* MTTDatabaseUtil.h */,
@@ -2548,7 +2531,6 @@
 				66F107971F42D3A90035C888 /* NSString+JSMessagesView.m in Sources */,
 				66F10F581F4449570035C888 /* bits.c in Sources */,
 				66E437A11F4C41BC009D527D /* UIView+NIM.m in Sources */,
-				66F108151F43E77D0035C888 /* MTTAFNetworkingClient.m in Sources */,
 				66686D151F46D81E008B26BD /* SCLTimerDisplay.m in Sources */,
 				66E6D3461F428922008E9590 /* NSObject+UpdateValues.swift in Sources */,
 				66F1079B1F42D3A90035C888 /* UIImage+JSMessagesView.m in Sources */,

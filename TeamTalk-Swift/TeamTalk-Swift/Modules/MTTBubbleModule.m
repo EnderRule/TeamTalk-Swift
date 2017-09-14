@@ -7,7 +7,7 @@
 //
 
 #import "MTTBubbleModule.h"
-#import "MTTUtil.h"
+
 
 @implementation MTTBubbleModule
 {
@@ -36,8 +36,8 @@
     self = [super init];
     if (self)
     {
-        NSString* leftBubbleType = [MTTUtil getBubbleTypeLeft:YES];
-        NSString* rightBubbleType = [MTTUtil getBubbleTypeLeft:NO];
+        NSString* leftBubbleType = [MTTBubbleModule getBubbleTypeLeft:YES];
+        NSString* rightBubbleType = [MTTBubbleModule getBubbleTypeLeft:NO];
         NSString* leftBubblePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/config.json", leftBubbleType];
         NSString* rightBubblePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/config.json", rightBubbleType];
         NSString* leftPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:leftBubblePath];
@@ -61,7 +61,7 @@
 
 - (void)selectBubbleTheme:(NSString *)bubbleType left:(BOOL)left
 {
-    [MTTUtil setBubbleTypeLeft:bubbleType left:left];
+    [MTTBubbleModule setBubbleTypeLeft:bubbleType left:left];
     NSString* path = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/config.json", bubbleType];
     NSString* realPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:path];
     if(left){
@@ -70,6 +70,34 @@
         _right_config = [[MTTBubbleConfig alloc] initWithConfig:realPath left:(BOOL)left];
     }
 }
+
++(void)setBubbleTypeLeft:(NSString *)bubbleType left:(BOOL)left
+{
+    if(left){
+        [[NSUserDefaults standardUserDefaults] setObject:bubbleType forKey:@"userLeftCustomerBubble"];
+    }else{
+        [[NSUserDefaults standardUserDefaults] setObject:bubbleType forKey:@"userRightCustomerBubble"];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSString *)getBubbleTypeLeft:(BOOL)left
+{
+    NSString *bubbleType;
+    if(left){
+        bubbleType = [[NSUserDefaults standardUserDefaults] objectForKey:@"userLeftCustomerBubble"];
+        if(!bubbleType){
+            bubbleType = @"default_white";
+        }
+    }else{
+        bubbleType = [[NSUserDefaults standardUserDefaults] objectForKey:@"userRightCustomerBubble"];
+        if(!bubbleType){
+            bubbleType = @"default_blue";
+        }
+    }
+    return bubbleType;
+}
+
 
 @end
 
@@ -125,7 +153,7 @@
         NSArray *linkColorTemp = [dic[@"linkColor"] componentsSeparatedByString:@","];
         self.linkColor = RGB([linkColorTemp[0] floatValue], [linkColorTemp[1] floatValue], [linkColorTemp[2] floatValue]);
         
-        NSString* bubbleType = [MTTUtil getBubbleTypeLeft:left];
+        NSString* bubbleType = [MTTBubbleModule getBubbleTypeLeft:left];
         if(left){
             textBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/textLeftBubble", bubbleType];
             picBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/picLeftBubble", bubbleType];

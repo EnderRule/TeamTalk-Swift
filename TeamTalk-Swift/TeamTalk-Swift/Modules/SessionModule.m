@@ -153,7 +153,7 @@
 {
     NSArray *sessions = [self.sessions allValues];
     [sessions enumerateObjectsUsingBlock:^(MTTSessionEntity *obj, NSUInteger idx, BOOL *stop) {
-        if([MTTUtil checkFixedTop:obj.sessionID]){
+        if([SessionModule checkFixedTop:obj.sessionID]){
             obj.isFixedTop = YES;
         }
     }];
@@ -280,6 +280,35 @@
         }
         
     }
+}
+
+
+
+#pragma mark - fiexed top
++(void)setFixedTop:(NSString *)sessionID{
+    NSArray *allUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"fixedTopUsers"];
+    NSMutableArray *allUserTmp =[NSMutableArray arrayWithArray:allUser];
+    [allUserTmp addObject:sessionID];
+    [[NSUserDefaults standardUserDefaults] setObject:allUserTmp forKey:@"fixedTopUsers"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSArray *)getFixedTop{
+    NSArray *allUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"fixedTopUsers"];
+    return allUser;
+}
+
++(void)removeFixedTop:(NSString *)sessionID{
+    NSArray *allUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"fixedTopUsers"];
+    NSMutableArray *allUserTmp =[NSMutableArray arrayWithArray:allUser];
+    [allUserTmp removeObject:sessionID];
+    [[NSUserDefaults standardUserDefaults] setObject:allUserTmp forKey:@"fixedTopUsers"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)checkFixedTop:(NSString *)sessionID{
+    NSArray *allUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"fixedTopUsers"];
+    return [allUser containsObject:sessionID];
 }
 
 @end

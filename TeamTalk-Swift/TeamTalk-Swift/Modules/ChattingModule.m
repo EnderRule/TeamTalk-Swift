@@ -19,10 +19,8 @@
 
 #import "SDWebImageManager.h"
 #import "SDImageCache.h"
-#import "MTTUtil.h"
 
 #import "TeamTalk_Swift-Swift.h"
-
 
 static NSUInteger const showPromptGap = 300;
 @interface ChattingModule(privateAPI)

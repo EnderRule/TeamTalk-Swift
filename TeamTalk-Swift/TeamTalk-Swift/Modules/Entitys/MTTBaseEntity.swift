@@ -33,7 +33,7 @@ extension MTTBaseEntity {
         if components.count >= 2{
              return UInt32((components[1] as NSString).intValue)
         }
-        return 0
+        return UInt32((localID as NSString).intValue)
     }
     class func localIDFrom(pbID:UInt32)->String {
         return "\(pbID)"

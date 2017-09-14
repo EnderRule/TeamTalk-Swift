@@ -40,6 +40,9 @@ typedef struct MTTBubbleStretchy MTTBubbleStretchy;
 
 - (void)selectBubbleTheme:(NSString*)bubbleType left:(BOOL)left;
 
++(void)setBubbleTypeLeft:(NSString *)bubbleType left:(BOOL)left;
++ (NSString *)getBubbleTypeLeft:(BOOL)left;
+
 @end
 
 @interface MTTBubbleConfig : NSObject

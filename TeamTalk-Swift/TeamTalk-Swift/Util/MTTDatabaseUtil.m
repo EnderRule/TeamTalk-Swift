@@ -10,7 +10,6 @@
 #import "NSString+DDPath.h"
 #import "NSDictionary+Safe.h"
 
-#import "MTTUtil.h"
 #import "TeamTalk_Swift-Swift.h"
 
 
@@ -67,6 +66,26 @@
     return self;
 }
 
+-(void)setDBVersion:(NSInteger)version
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:version forKey:@"dbVersion"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+-(NSInteger)getDBVersion
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"dbVersion"];
+}
+
+-(void)setLastDBVersion:(NSInteger)version
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:version forKey:@"lastDbVersion"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+-(NSInteger)getLastDBVersion
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"lastDbVersion"];
+}
+
 - (void)openCurrentUserDB
 {
     if (_database)
@@ -92,15 +111,15 @@
         }
         
         // 检查是否需要 重新获取数据
-        NSInteger dbVersion = [MTTUtil getDBVersion];
-        NSInteger lastDbVersion = [MTTUtil getLastDBVersion];
+        NSInteger dbVersion = [self getDBVersion];
+        NSInteger lastDbVersion = [self getLastDBVersion];
         if(dbVersion > lastDbVersion){
             // 删除联系人数据 重新获取.
             [self clearTable:TABLE_ALL_CONTACTS];
             [self clearTable:TABLE_DEPARTMENTS];
             [self clearTable:TABLE_GROUPS];
             [self clearTable:TABLE_RECENT_SESSION];
-            [MTTUtil setLastDBVersion:dbVersion];
+            [self setLastDBVersion:dbVersion];
         }
         
         //创建

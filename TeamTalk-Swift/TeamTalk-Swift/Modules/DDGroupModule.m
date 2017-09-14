@@ -28,7 +28,7 @@
                 if(group.objID)
                 {
                     [self addGroup:group];
-                    uint32_t groupid = [MTTUtil changeIDToOriginal:group.objID];
+                    uint32_t groupid = [MTTBaseEntity pbIDFromLocalID:group.objID];
                     uint32_t groupversion = (uint32_t)group.objectVersion;
                     GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] initWithGroupID:groupid groupVersion:groupversion];
                     [request requestWithParameters:nil  Completion: ^(id response, NSError *error) {
@@ -98,7 +98,7 @@
     if (group) {
         completion(group);
     }else{
-        uint32_t groupid = [MTTUtil changeIDToOriginal:group.objID];
+        uint32_t groupid = [MTTBaseEntity pbIDFromLocalID:group.objID];
         uint32_t groupversion = (uint32_t)group.objectVersion;
         GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] initWithGroupID:groupid groupVersion:groupversion];
         [request requestWithParameters:nil  Completion: ^(id response, NSError *error) {
