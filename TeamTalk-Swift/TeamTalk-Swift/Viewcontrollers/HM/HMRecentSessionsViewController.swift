@@ -155,6 +155,21 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true )
         
+//        let alert = SCLAlertView.init()
+//        let textview:SCLTextView = alert.addTextField("输入密码")
+//        alert.addButton("确定", validationBlock: { () -> Bool in
+//            if textview.text != nil && textview.text!.length >= 6 && textview.text!.length <= 16 {
+//                return true
+//            }else{
+//                print("验证不通过")
+//                return false
+//            }
+//        }) {
+//             print("验证通过")
+//        }
+//        alert.showNotice(self,title:"输入密码", subTitle: "密码长度6~16个字符", closeButtonTitle: "取消", duration: 0)
+//        return
+        
         if indexPath.row < self.sessions.count{
             let session = self.sessions[indexPath.row]
             debugPrint("select session:",session.sessionID)

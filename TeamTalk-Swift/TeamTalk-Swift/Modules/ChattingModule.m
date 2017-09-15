@@ -8,17 +8,11 @@
 
 #import "ChattingModule.h"
 #import "MTTDatabaseUtil.h"
-
-
 #import "NSDate+DDAddition.h"
 #import "DDUserModule.h"
-
 #import "DDMessageModule.h"
 
 #import <math.h>
-
-#import "SDWebImageManager.h"
-#import "SDImageCache.h"
 
 #import "TeamTalk_Swift-Swift.h"
 
@@ -249,7 +243,6 @@ static NSUInteger const showPromptGap = 300;
         block(user);
     }];
 }
-
 
 - (void)updateSessionUpdateTime:(NSUInteger)time
 {

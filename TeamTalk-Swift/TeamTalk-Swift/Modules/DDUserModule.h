@@ -17,12 +17,13 @@ typedef void(^DDLoadRecentUsersCompletion)();
 @property (nonatomic,strong)NSString* currentUserID;
 @property (nonatomic,strong)NSMutableDictionary* recentUsers;
 + (instancetype)shareInstance;
+
 - (void)addMaintanceUser:(MTTUserEntity*)user;
 - (void )getUserForUserID:(NSString*)userID Block:(void(^)(MTTUserEntity *user))block;
 - (void)addRecentUser:(MTTUserEntity*)user;
 - (void)loadAllRecentUsers:(DDLoadRecentUsersCompletion)completion;
 -(void)clearRecentUser;
 -(NSArray *)getAllMaintanceUser;
--(NSArray *)getAllUsersNick;
--(MTTUserEntity *)getUserByNick:(NSString*)nickName;
+
+
 @end

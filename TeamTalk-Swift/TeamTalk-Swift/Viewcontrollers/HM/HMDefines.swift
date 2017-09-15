@@ -11,9 +11,6 @@ import UIKit
 //用到的一些常量
 
 
-//let DD_MESSAGE_IMAGE_PREFIX:String             = "&$#@~^@[{:"
-//let DD_MESSAGE_IMAGE_SUFFIX:String             = ":}]&$~@#@"
-
 let SERVER_Address = "http://192.168.113.31:8080/msg_server" 
 
 
@@ -30,10 +27,6 @@ let fontTitle  = UIFont.systemFont(ofSize: 16)
 let fontNormal = UIFont.systemFont(ofSize: 14)
 let fontDetail = UIFont.systemFont(ofSize: 12)
 
-let LINK_SPLIT = "!@#$~link~#$@!"
-let NICK_SPLIT = "!@#$~nick~#$@!"
-let PHONE_SPLIT = "!@#$~phone~#$@!"
-let EMAIL_SPLIT = "!@#$~email~#$@!"
 
 enum HMNotification:Int {
     

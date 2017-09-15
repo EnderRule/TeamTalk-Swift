@@ -50,7 +50,6 @@
 		66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
 		66686AF11F4678CC008B26BD /* DDSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF01F4678CC008B26BD /* DDSearch.m */; };
 		66686AF41F46796E008B26BD /* ContactsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF31F46796E008B26BD /* ContactsModule.m */; };
-		66686B511F469289008B26BD /* TouchDownGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B4D1F469289008B26BD /* TouchDownGestureRecognizer.m */; };
 		66686B691F46967C008B26BD /* bgImage_HL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686B651F46967C008B26BD /* bgImage_HL@2x.png */; };
 		66686B6A1F46967C008B26BD /* cellLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686B661F46967C008B26BD /* cellLine@2x.png */; };
 		66686B6B1F46967C008B26BD /* LCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B681F46967C008B26BD /* LCActionSheet.m */; };
@@ -2415,7 +2414,6 @@
 				66F10F7B1F4449570035C888 /* speex.c in Sources */,
 				66F1074E1F42D1F50035C888 /* AFNetworkReachabilityManager.m in Sources */,
 				6682FE841F4AF2E80048FA23 /* HMChatEmotionCell.swift in Sources */,
-				66686B511F469289008B26BD /* TouchDownGestureRecognizer.m in Sources */,
 				66686D1D1F4A766D008B26BD /* HMRecentSessionCell.swift in Sources */,
 				66686D161F46D81E008B26BD /* UIImage+ImageEffects.m in Sources */,
 				66BD02AC1F4D8D5600131E2D /* NSMutableAttributedString+M80.m in Sources */,

@@ -167,7 +167,7 @@
 		case NSStreamEventEndEncountered:
 			[self p_handleEventEndEncounteredStream:aStream];
 			break;
-        case NSStreamEventHasBytesAvailable:
+        case NSStreamEventHasBytesAvailable:         //接收数据
             [self p_handleEventHasBytesAvailableStream:aStream];
             break;
     }
@@ -194,68 +194,43 @@
     [_sendLock lock];
     
     @try {
-        
         if (![_sendBuffers count]) {
-//            DDLog(@"WRITE - No data to send");
-          
             _noDataSent = YES;
-            
             return;
         }
-        
         DDSendBuffer *sendBuffer = [_sendBuffers objectAtIndex:0];
-        
         NSInteger sendBufferLength = [sendBuffer length];
-        
         if (!sendBufferLength) {
             if (sendBuffer == _lastSendBuffer) {
                 _lastSendBuffer = nil;
             }
-            
             [_sendBuffers removeObjectAtIndex:0];
-            
-//            DDLog(@"WRITE - No data to send");
-            
             _noDataSent = YES;
-            
             return;
         }
-        
         NSInteger len = ((sendBufferLength - [sendBuffer sendPos] >= 1024) ? 1024 : (sendBufferLength - [sendBuffer sendPos]));
         if (!len) {
             if (sendBuffer == _lastSendBuffer) {
                 _lastSendBuffer = nil;
             }
-            
             [_sendBuffers removeObjectAtIndex:0];
-            
-//            DDLog(@"WRITE - No data to send");
-            
             _noDataSent = YES;
-            
             return;
         }
         
-        //			DDLog(@"write %ld bytes", len);
         len = [_outStream write:((const uint8_t *)[sendBuffer mutableBytes] + [sendBuffer sendPos]) maxLength:len];
-//        DDLog(@"WRITE - Written directly to outStream len:%lid", (long)len);
         [sendBuffer consumeData:len];
-        
         if (![sendBuffer length]) {
             if (sendBuffer == _lastSendBuffer) {
                 _lastSendBuffer = nil;
             }
-            
             [_sendBuffers removeObjectAtIndex:0];
         }
-        
         _noDataSent = NO;
-        
-        
         return;
     }
     @catch (NSException *exception) {
-//        DDLog(@" ***** NSException in MGJMTalkCleint :%@  ******* ",exception);
+        DDLog(@" ***** NSException in MGJMTalkCleint :%@  ******* ",exception);
     }
     @finally {
         [_sendLock unlock];
@@ -266,13 +241,12 @@
 {
 //    DDLog(@"handle eventErrorOccurred");
     [self disconnect];
-    [HMLoginManager shared].loginState = HMLoginStateOnline;
+    [HMLoginManager shared].loginState = HMLoginStateOffLine;
 }
 
 - (void)p_handleEventEndEncounteredStream:(NSStream *)aStream
 {
 //    DDLog(@"handle eventEndEncountered");
-    
     cDataLen = 0;
 
 }
@@ -282,13 +256,7 @@
 //    DDLog(@"handle eventHasBytesAvailable");
     if (aStream) {
         uint8_t buf[1024];
-        NSInteger len = 0;
-        len = [(NSInputStream *)aStream read:buf maxLength:1024];
-//        if (len <= 0) {
-//            [self disconnect];
-//            return;
-//        }
-        
+        NSInteger len = [(NSInputStream *)aStream read:buf maxLength:1024];
         if (len > 0) {
             
             

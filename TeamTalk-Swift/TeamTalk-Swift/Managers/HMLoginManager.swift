@@ -147,7 +147,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             self.loginStateChangeHandler()
         }
     }
-    
+
     private var reachability:DDReachability = DDReachability.forInternetConnection()
     private var getMsgIPManager:AFHTTPSessionManager = AFHTTPSessionManager.init()
     private var priorIP:String = ""
@@ -271,7 +271,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             self.tcpIsConnecting = false
             
             dispatch(after: 0, task: {
-                self.tcpConnectFailure?("連接消息服務器失敗")
+                self.tcpConnectFailure?("連接消息服務器失敗-3")
                 self.tcpConnectFailure = nil
                 self.tcpConnectSuccess = nil
             })
@@ -411,10 +411,10 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
 //                }, failure: {
 //                    failure("连接消息服务器失败")
 //                })
+                
             }else{
-                failure("连接消息服务器失败")
+                failure("连接消息服务器失败 -2")
             }
-            
         }) { (error ) in
             failure(error)
         }

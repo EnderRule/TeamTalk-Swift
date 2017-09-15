@@ -78,10 +78,13 @@
     pwdLeftView.frame=CGRectMake(0, 0,18, 22.5);
     self.userNameTextField.leftView=usernameLeftView;
     self.userPassTextField.leftView=pwdLeftView;
-    [self.userNameTextField.layer setBorderColor:RGB(211, 211, 211).CGColor];
+    
+//    UIColor *borderColor = [UIColor colorWithRed:211.0/255.0 green:211.0/255.0 blue:211.0/255.0 alpha:1];
+    UIColor *borderColor = [[UIColor alloc]initWithIntr:211 g:211 b:211 a:1 ];
+    [self.userNameTextField.layer setBorderColor:borderColor.CGColor];
     [self.userNameTextField.layer setBorderWidth:0.5];
     [self.userNameTextField.layer setCornerRadius:4];
-    [self.userPassTextField.layer setBorderColor:RGB(211, 211, 211).CGColor];
+    [self.userPassTextField.layer setBorderColor:borderColor.CGColor];
     [self.userPassTextField.layer setBorderWidth:0.5];
     [self.userPassTextField.layer setCornerRadius:4];
     
@@ -116,7 +119,7 @@
 -(void)handleWillShowKeyboard
 {
     [UIView animateWithDuration:0.2 animations:^{
-        self.view.center=CGPointMake(self.view.center.x, self.defaultCenter.y-(IPHONE4?120:40));
+        self.view.center=CGPointMake(self.view.center.x, self.defaultCenter.y-120);
     }];
 }
 -(void)handleWillHideKeyboard

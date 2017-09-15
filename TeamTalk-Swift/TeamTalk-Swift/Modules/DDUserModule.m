@@ -16,12 +16,12 @@
 
 - (void)n_receiveUserLogoutNotification:(NSNotification*)notification;
 - (void)n_receiveUserLoginNotification:(NSNotification*)notification;
+
 @end
 
 @implementation DDUserModule
 {
     NSMutableDictionary* _allUsers;
-    NSMutableDictionary* _allUsersNick;
 }
 
 + (instancetype)shareInstance
@@ -50,7 +50,6 @@
     return self;
 }
 
-
 - (void)addMaintanceUser:(MTTUserEntity*)user
 {
     
@@ -62,31 +61,20 @@
     {
         _allUsers = [[NSMutableDictionary alloc] init];
     }
-    if(!_allUsersNick)
-    {
-        _allUsersNick = [[NSMutableDictionary alloc] init];
-    }
+    
     [_allUsers setValue:user forKey:user.objID];
-    [_allUsersNick setValue:user forKey:user.nickName];
+
     
 }
--(NSArray *)getAllUsersNick
-{
-    return [_allUsersNick allKeys];
-}
--(MTTUserEntity *)getUserByNick:(NSString *)nickName
-{
-//    NSInteger index = [[self getAllUsersNick] indexOfObject:nickName];
-    return [_allUsersNick objectForKey:nickName];
-}
+
 -(NSArray *)getAllMaintanceUser
 {
     return [_allUsers allValues];
 }
+
 - (void )getUserForUserID:(NSString*)userID Block:(void(^)(MTTUserEntity *user))block
 {
     return block(_allUsers[userID]);
-
 }
 
 - (void)addRecentUser:(MTTUserEntity*)user

@@ -90,6 +90,7 @@
 }
 
 - (NSString *)readUTF {
+    
     //short utfLength = [self readShort];
     int32_t utfLength = [self readInt];
     NSData *d = [data subdataWithRange:NSMakeRange(length,utfLength)];

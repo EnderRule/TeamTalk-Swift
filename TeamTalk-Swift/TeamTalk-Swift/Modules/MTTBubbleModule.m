@@ -149,9 +149,11 @@
         imgStretchyTemp.top = [dic[@"imgStretchy"][@"top"] floatValue];
         self.imgStretchy = imgStretchyTemp;
         NSArray *textColorTemp = [dic[@"textColor"] componentsSeparatedByString:@","];
-        self.textColor = RGB([textColorTemp[0] floatValue], [textColorTemp[1] floatValue], [textColorTemp[2] floatValue]);
+            
+            
+            self.textColor = [UIColor colorWithRed:[textColorTemp[0] floatValue] green:[textColorTemp[1] floatValue] blue:[textColorTemp[2] floatValue] alpha:1];
         NSArray *linkColorTemp = [dic[@"linkColor"] componentsSeparatedByString:@","];
-        self.linkColor = RGB([linkColorTemp[0] floatValue], [linkColorTemp[1] floatValue], [linkColorTemp[2] floatValue]);
+        self.linkColor =  [UIColor colorWithRed:[linkColorTemp[0] floatValue] green:[linkColorTemp[1] floatValue] blue:[linkColorTemp[2] floatValue] alpha:1]; 
         
         NSString* bubbleType = [MTTBubbleModule getBubbleTypeLeft:left];
         if(left){
