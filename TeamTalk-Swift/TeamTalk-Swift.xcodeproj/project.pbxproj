@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6613723A1F6BA8170058280D /* HMDBSQLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661372391F6BA8170058280D /* HMDBSQLManager.swift */; };
 		6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */; };
 		663F0FDD1F5657E10041E3C5 /* HMMediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */; };
 		66686A621F4522B5008B26BD /* MTTBubbleModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686A611F4522B5008B26BD /* MTTBubbleModule.m */; };
@@ -376,6 +377,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		661372391F6BA8170058280D /* HMDBSQLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMDBSQLManager.swift; sourceTree = "<group>"; };
 		6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMLoginManager.swift; sourceTree = "<group>"; };
 		663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMMediaManager.swift; sourceTree = "<group>"; };
 		66686A601F4522B5008B26BD /* MTTBubbleModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTBubbleModule.h; sourceTree = "<group>"; };
@@ -1257,6 +1259,7 @@
 				6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */,
 				663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */,
 				6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */,
+				661372391F6BA8170058280D /* HMDBSQLManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -2313,6 +2316,7 @@
 				66F1070C1F429CB80035C888 /* DDSuperAPI.m in Sources */,
 				66E6D3411F428922008E9590 /* LKNineImgvContainerView.swift in Sources */,
 				66F107D21F42DB520035C888 /* AddMemberToGroupAPI.swift in Sources */,
+				6613723A1F6BA8170058280D /* HMDBSQLManager.swift in Sources */,
 				66F107CA1F42D4810035C888 /* SDWebImagePrefetcher.m in Sources */,
 				6672CC241F4E626200DA46E6 /* MJRefreshFooterView.m in Sources */,
 				66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */,

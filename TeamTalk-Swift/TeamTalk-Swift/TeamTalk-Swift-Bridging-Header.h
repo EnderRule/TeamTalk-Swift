@@ -6,6 +6,8 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 
+#import <sqlite3.h>
+
 //DDHandler
 #import "DDTcpClientManager.h"
 #import "DDSuperAPI.h"

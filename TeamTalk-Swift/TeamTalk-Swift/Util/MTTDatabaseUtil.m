@@ -117,6 +117,7 @@
             [self clearTable:TABLE_DEPARTMENTS];
             [self clearTable:TABLE_GROUPS];
             [self clearTable:TABLE_RECENT_SESSION];
+            
             [self setLastDBVersion:dbVersion];
         }
         

@@ -59,10 +59,7 @@ typedef void(^DDGetLastestCommodityMessageCompletion)(MTTMessageEntity* message)
 - (void)getLasetCommodityTypeImageForSession:(NSString*)sessionID completion:(DDGetLastestCommodityMessageCompletion)completion;
 
 /**
- *  在|databaseMessageQueue|执行查询操作，获取DB中
- *
- *  @param sessionID  sessionID
- *  @param completion 完成获取最新的消息
+ *  获取最新的消息
  */
 - (void)getLastestMessageForSessionID:(NSString*)sessionID completion:(DDDBGetLastestMessageCompletion)completion;
 
@@ -113,41 +110,12 @@ typedef void(^InsertsRecentContactsCOmplection)(NSError* error);
 
 @interface MTTDatabaseUtil(Users)
 
-/**
- *  加载本地数据库的最近联系人列表
- *
- *  @param completion 完成加载
- */
 - (void)loadContactsCompletion:(LoadRecentContactsComplection)completion;
 
-/**
- *  更新本地数据库的最近联系人信息
- *
- *  @param completion 完成更新本地数据库
- */
 - (void)updateContacts:(NSArray*)users inDBCompletion:(UpdateRecentContactsComplection)completion;
 
-/**
- *  更新本地数据库某个用户的信息
- *
- *  @param user       某个用户
- *  @param completion 完成更新本地数据库
- */
-
-
-/**
- *  插入本地数据库的最近联系人信息
- *
- *  @param users      最近联系人数组
- *  @param completion 完成插入
- */
 - (void)insertUsers:(NSArray*)users completion:(InsertsRecentContactsCOmplection)completion;
-/**
- *  插入组织架构信息
- *
- *  @param departments 组织架构数组
- *  @param completion  完成插入
- */
+
 - (void)insertDepartments:(NSArray*)departments completion:(InsertsRecentContactsCOmplection)completion;
 
 - (void)getDepartmentFromID:(NSString*)departmentID completion:(void(^)(MTTDepartmentEntity *department))completion;

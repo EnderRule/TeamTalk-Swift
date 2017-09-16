@@ -19,6 +19,7 @@
 typedef void(^DDChatLoadMoreHistoryCompletion)(NSUInteger addcount, NSError* error);
 
 @interface ChattingModule : NSObject
+
 @property (strong,nonatomic)MTTSessionEntity *sessionEntity;
 @property(strong)NSMutableArray *ids ;
 @property (strong)NSMutableArray* showingMessages;
