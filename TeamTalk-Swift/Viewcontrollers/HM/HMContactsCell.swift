@@ -48,6 +48,4 @@ class HMContactsCell: HMBaseCell {
             nameLabel.text = group.name
         }
     }
-    
-
 }

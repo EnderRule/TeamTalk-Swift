@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3D9E9B6E48886D2BEA8E7736 /* Pods_TeamTalk_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B608C7C81C061E2B3F8FED /* Pods_TeamTalk_Swift.framework */; };
+		6633BA611F7F88DE00FE3B3C /* HMCDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633BA5F1F7F88DE00FE3B3C /* HMCDManager.swift */; };
+		6633BA621F7F88DE00FE3B3C /* NSManagedObject+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633BA601F7F88DE00FE3B3C /* NSManagedObject+CoreData.swift */; };
 		6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */; };
 		663D8B551F7F3DE500F7A60C /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3371F428922008E9590 /* UIView+Extention.swift */; };
 		663D8B5B1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 663D8B591F7F488A00F7A60C /* M80AttributedLabel+NIMKit.m */; };
@@ -56,7 +58,6 @@
 		6682FE721F4AC4490048FA23 /* HMDefines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE711F4AC4490048FA23 /* HMDefines.swift */; };
 		6682FE741F4AEB7E0048FA23 /* MTTPromtEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */; };
 		6682FE761F4AED8F0048FA23 /* HMChatPromptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */; };
-		6682FE781F4AF03D0048FA23 /* EntitysCellHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE771F4AF03D0048FA23 /* EntitysCellHeight.swift */; };
 		6682FE7A1F4AF2350048FA23 /* HMChatTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE791F4AF2350048FA23 /* HMChatTextCell.swift */; };
 		6682FE7C1F4AF2600048FA23 /* HMChatImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE7B1F4AF2600048FA23 /* HMChatImageCell.swift */; };
 		6682FE801F4AF28B0048FA23 /* HMChatVoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE7F1F4AF28B0048FA23 /* HMChatVoiceCell.swift */; };
@@ -252,6 +253,8 @@
 /* Begin PBXFileReference section */
 		5083D9EC8CF004C6706DB66A /* Pods-TeamTalk-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TeamTalk-Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TeamTalk-Swift/Pods-TeamTalk-Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		661372391F6BA8170058280D /* HMDBSQLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMDBSQLManager.swift; sourceTree = "<group>"; };
+		6633BA5F1F7F88DE00FE3B3C /* HMCDManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMCDManager.swift; sourceTree = "<group>"; };
+		6633BA601F7F88DE00FE3B3C /* NSManagedObject+CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+CoreData.swift"; sourceTree = "<group>"; };
 		6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMLoginManager.swift; sourceTree = "<group>"; };
 		663D8B591F7F488A00F7A60C /* M80AttributedLabel+NIMKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "M80AttributedLabel+NIMKit.m"; sourceTree = "<group>"; };
 		663D8B5A1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "M80AttributedLabel+NIMKit.h"; sourceTree = "<group>"; };
@@ -311,7 +314,6 @@
 		6682FE711F4AC4490048FA23 /* HMDefines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMDefines.swift; path = HM/HMDefines.swift; sourceTree = "<group>"; };
 		6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTPromtEntity.swift; sourceTree = "<group>"; };
 		6682FE751F4AED8F0048FA23 /* HMChatPromptCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatPromptCell.swift; path = HM/HMChatPromptCell.swift; sourceTree = "<group>"; };
-		6682FE771F4AF03D0048FA23 /* EntitysCellHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EntitysCellHeight.swift; path = HM/EntitysCellHeight.swift; sourceTree = "<group>"; };
 		6682FE791F4AF2350048FA23 /* HMChatTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatTextCell.swift; path = HM/HMChatTextCell.swift; sourceTree = "<group>"; };
 		6682FE7B1F4AF2600048FA23 /* HMChatImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatImageCell.swift; path = HM/HMChatImageCell.swift; sourceTree = "<group>"; };
 		6682FE7F1F4AF28B0048FA23 /* HMChatVoiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMChatVoiceCell.swift; path = HM/HMChatVoiceCell.swift; sourceTree = "<group>"; };
@@ -796,7 +798,6 @@
 		66686D201F4ABC9A008B26BD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				6682FE771F4AF03D0048FA23 /* EntitysCellHeight.swift */,
 				66686D1A1F4A7642008B26BD /* HMBaseCell.swift */,
 				66686D1C1F4A766D008B26BD /* HMRecentSessionCell.swift */,
 				6672CC2C1F4E849E00DA46E6 /* HMContactsCell.swift */,
@@ -1074,6 +1075,8 @@
 		66F107131F42A3270035C888 /* Exist */ = {
 			isa = PBXGroup;
 			children = (
+				6633BA5F1F7F88DE00FE3B3C /* HMCDManager.swift */,
+				6633BA601F7F88DE00FE3B3C /* NSManagedObject+CoreData.swift */,
 				66686B451F469280008B26BD /* Control */,
 				66F10EDB1F4449570035C888 /* Voice */,
 			);
@@ -1597,6 +1600,7 @@
 				66686A721F45374C008B26BD /* DDUserDetailInfoAPI.swift in Sources */,
 				66F10FB61F449F710035C888 /* base64.cpp in Sources */,
 				66E436A61F4BCD95009D527D /* HMChatBaseCell.swift in Sources */,
+				6633BA611F7F88DE00FE3B3C /* HMCDManager.swift in Sources */,
 				6682FE7C1F4AF2600048FA23 /* HMChatImageCell.swift in Sources */,
 				66686A921F457903008B26BD /* GetGroupInfoAPI.swift in Sources */,
 				66E8359D1F56B2AB00F14ED9 /* CAStreamBasicDescription.cpp in Sources */,
@@ -1614,6 +1618,7 @@
 				66F10F811F4449570035C888 /* window.c in Sources */,
 				66686A841F45697A008B26BD /* EditSignatureAPI.swift in Sources */,
 				6682FE7A1F4AF2350048FA23 /* HMChatTextCell.swift in Sources */,
+				6633BA621F7F88DE00FE3B3C /* NSManagedObject+CoreData.swift in Sources */,
 				66F10F6F1F4449570035C888 /* ltp.c in Sources */,
 				66F10F751F4449570035C888 /* quant_lsp.c in Sources */,
 				66E4379E1F4C41BC009D527D /* NIMPageView.m in Sources */,
@@ -1756,7 +1761,6 @@
 				66F107951F42D3A90035C888 /* NSString+Additions.m in Sources */,
 				66F10F5C1F4449570035C888 /* exc_10_32_table.c in Sources */,
 				66F10F661F4449570035C888 /* hexc_10_32_table.c in Sources */,
-				6682FE781F4AF03D0048FA23 /* EntitysCellHeight.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
