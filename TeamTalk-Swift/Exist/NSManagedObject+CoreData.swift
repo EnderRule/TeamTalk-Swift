@@ -12,10 +12,24 @@ import CoreData
 @available (iOS 8.0,*)
 extension  NSManagedObject {
 
-    @objc public convenience init(myvalues:[String:Any]?){
-        self.init()
-        
+//    @objc public convenience init(myvalues:[String:Any]?){
+//        self.init()
+//    }
+    
+    
+//    public convenience init(entityName:String) {
+//        let entityDes:NSEntityDescription   = NSEntityDescription.entity(forEntityName: "\(self.classForCoder)", in: HMCDManager.shared.context)!
+//        
+//        self.init(entity: entityDes, insertInto: HMCDManager.shared.context)
+//        
+//    }
+    
+    class var insertToContext:NSManagedObjectContext{
+        get {
+            return HMCDManager.shared.context
+        }
     }
+    
     
     class func newNotInertObj()->NSManagedObject{
         let obj = NSEntityDescription.insertNewObject(forEntityName: "\(self)", into: HMCDManager.shared.context)

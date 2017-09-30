@@ -323,7 +323,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                         dispatch_globle(after: 0, task: {
                                             for user in DDUserModule.shareInstance().getAllMaintanceUser() as? [MTTUserEntity] ?? []{
                                                 SpellLibrary.instance().addSpellFor(user)
-                                                SpellLibrary.instance().addDeparmentSpellFor(user )
+                                                //SpellLibrary.instance().addDeparmentSpellFor(user )
                                             }
                                             for group in DDGroupModule.instance().getAllGroups() as? [MTTGroupEntity] ?? []{
                                                 

@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         HMLoginManager.shared.setup()
         
-        
+        HMCDManager.shared.userDBName = "0"
+
         
         print("test  ",("-6user_34234" as NSString).intValue)
         

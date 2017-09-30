@@ -10,6 +10,7 @@
 		3D9E9B6E48886D2BEA8E7736 /* Pods_TeamTalk_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B608C7C81C061E2B3F8FED /* Pods_TeamTalk_Swift.framework */; };
 		6633BA611F7F88DE00FE3B3C /* HMCDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633BA5F1F7F88DE00FE3B3C /* HMCDManager.swift */; };
 		6633BA621F7F88DE00FE3B3C /* NSManagedObject+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633BA601F7F88DE00FE3B3C /* NSManagedObject+CoreData.swift */; };
+		6633BA661F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6633BA641F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld */; };
 		6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */; };
 		663D8B551F7F3DE500F7A60C /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3371F428922008E9590 /* UIView+Extention.swift */; };
 		663D8B5B1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 663D8B591F7F488A00F7A60C /* M80AttributedLabel+NIMKit.m */; };
@@ -43,7 +44,6 @@
 		66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AAB1F45A769008B26BD /* ChattingEditModule.m */; };
 		66686AEA1F45ABC3008B26BD /* SessionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AE91F45ABC3008B26BD /* SessionModule.m */; };
 		66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
-		66686AF11F4678CC008B26BD /* DDSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF01F4678CC008B26BD /* DDSearch.m */; };
 		66686AF41F46796E008B26BD /* ContactsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF31F46796E008B26BD /* ContactsModule.m */; };
 		66686BDA1F46C718008B26BD /* MTTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BD81F46C718008B26BD /* MTTLoginViewController.m */; };
 		66686BDB1F46C718008B26BD /* MTTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66686BD91F46C718008B26BD /* MTTLoginViewController.xib */; };
@@ -255,6 +255,7 @@
 		661372391F6BA8170058280D /* HMDBSQLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMDBSQLManager.swift; sourceTree = "<group>"; };
 		6633BA5F1F7F88DE00FE3B3C /* HMCDManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMCDManager.swift; sourceTree = "<group>"; };
 		6633BA601F7F88DE00FE3B3C /* NSManagedObject+CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+CoreData.swift"; sourceTree = "<group>"; };
+		6633BA651F7F93C400FE3B3C /* MTTCDModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MTTCDModels.xcdatamodel; sourceTree = "<group>"; };
 		6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMLoginManager.swift; sourceTree = "<group>"; };
 		663D8B591F7F488A00F7A60C /* M80AttributedLabel+NIMKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "M80AttributedLabel+NIMKit.m"; sourceTree = "<group>"; };
 		663D8B5A1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "M80AttributedLabel+NIMKit.h"; sourceTree = "<group>"; };
@@ -668,6 +669,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6633BA631F7F92EB00FE3B3C /* CoredataModel */ = {
+			isa = PBXGroup;
+			children = (
+				6633BA641F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld */,
+			);
+			name = CoredataModel;
+			sourceTree = "<group>";
+		};
 		66686A891F4572CD008B26BD /* group */ = {
 			isa = PBXGroup;
 			children = (
@@ -923,16 +932,16 @@
 		66E6D3101F428700008E9590 /* TeamTalk-Swift */ = {
 			isa = PBXGroup;
 			children = (
+				66E6D3231F428922008E9590 /* Extentions */,
+				66E6D3C11F4290FB008E9590 /* Modules */,
+				66E6D38A1F428A33008E9590 /* IMBaseDefine */,
+				66E6D3571F428990008E9590 /* ThridPartys */,
+				66686BDC1F46CE44008B26BD /* Resource */,
 				66F107211F42C97A0035C888 /* Util */,
 				66F107131F42A3270035C888 /* Exist */,
 				66F107F81F43D6250035C888 /* GlobalData */,
 				6672CC2E1F4ECCA900DA46E6 /* Managers */,
 				66686AAE1F45A84E008B26BD /* Viewcontrollers */,
-				66E6D3C11F4290FB008E9590 /* Modules */,
-				66686BDC1F46CE44008B26BD /* Resource */,
-				66E6D3571F428990008E9590 /* ThridPartys */,
-				66E6D38A1F428A33008E9590 /* IMBaseDefine */,
-				66E6D3231F428922008E9590 /* Extentions */,
 				66E6D3111F428700008E9590 /* AppDelegate.swift */,
 				66E6D3131F428700008E9590 /* ViewController.swift */,
 				66E6D3181F428700008E9590 /* Assets.xcassets */,
@@ -1143,6 +1152,7 @@
 		66F107D91F42EEF70035C888 /* Entitys */ = {
 			isa = PBXGroup;
 			children = (
+				6633BA631F7F92EB00FE3B3C /* CoredataModel */,
 				66F107EC1F42F0750035C888 /* MTTBaseEntity.swift */,
 				66F107EE1F42F1DA0035C888 /* MTTMessageEntity.swift */,
 				66F107F01F42FE490035C888 /* MTTUserEntity.swift */,
@@ -1660,12 +1670,12 @@
 				66F10F561F4449570035C888 /* bitwise.c in Sources */,
 				66E6D3951F428A33008E9590 /* Im.Buddy.Imbuddy.proto.swift in Sources */,
 				66F10F781F4449570035C888 /* scal.c in Sources */,
-				66686AF11F4678CC008B26BD /* DDSearch.m in Sources */,
 				66E437951F4C41BC009D527D /* NIMInputEmoticonContainerView.m in Sources */,
 				66E6D3DF1F4292CC008E9590 /* NSStream+NSStreamAddition.m in Sources */,
 				66E4379B1F4C41BC009D527D /* NIMInputToolBar.m in Sources */,
 				6682FE741F4AEB7E0048FA23 /* MTTPromtEntity.swift in Sources */,
 				66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */,
+				6633BA661F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld in Sources */,
 				66686A821F456717008B26BD /* ShieldGroupMessageAPI.swift in Sources */,
 				66E4379C1F4C41BC009D527D /* NIMInputView.m in Sources */,
 				66E6D34D1F428922008E9590 /* UIImageView+Extention.swift in Sources */,
@@ -1962,6 +1972,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6633BA641F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6633BA651F7F93C400FE3B3C /* MTTCDModels.xcdatamodel */,
+			);
+			currentVersion = 6633BA651F7F93C400FE3B3C /* MTTCDModels.xcdatamodel */;
+			path = MTTCDModels.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 66E6D3061F428700008E9590 /* Project object */;
 }

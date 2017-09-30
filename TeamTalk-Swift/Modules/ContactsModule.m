@@ -96,7 +96,7 @@
     NSArray *arr = [userDefaults objectForKey:@"favuser"];
     NSMutableArray *contacts = [NSMutableArray new];
     [arr enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [contacts addObject:[[MTTUserEntity alloc]initWithDicInfo:(NSDictionary *)obj]];
+//        [contacts addObject:[[MTTUserEntity alloc]initWithDicInfo:(NSDictionary *)obj]];
     }];
     return contacts;
 }

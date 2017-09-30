@@ -44,7 +44,7 @@ class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 
                 var userList:[MTTUserEntity] = []
                 for userinfo in res.userList {
-                    let userEntity = MTTUserEntity.init(userinfo: userinfo)
+                    let userEntity = MTTUserEntity.initWith(userinfo: userinfo)
                     userList.append(userEntity)
                 }
                 userAndVersion.updateValue(userList, forKey: "userlist")

@@ -49,28 +49,12 @@ typedef void(^DDGetLastestCommodityMessageCompletion)(MTTMessageEntity* message)
 - (void)loadMessageForSessionID:(NSString*)sessionID pageCount:(int)pagecount index:(NSInteger)index completion:(LoadMessageInSessionCompletion)completion;
 
 - (void)loadMessageForSessionID:(NSString*)sessionID afterMessage:(MTTMessageEntity*)message completion:(LoadMessageInSessionCompletion)completion;
-- (void)searchHistory:(NSString*)key completion:(LoadMessageInSessionCompletion)completion;
-- (void)searchHistoryBySessionId:(NSString*)key sessionId:(NSString *)sessionId completion:(LoadMessageInSessionCompletion)completion;
-/**
- *  获取对应的Session的最新的自己发送的商品气泡
- *
- *  @param sessionID  会话ID
- *  @param completion 完成获取
- */
-- (void)getLasetCommodityTypeImageForSession:(NSString*)sessionID completion:(DDGetLastestCommodityMessageCompletion)completion;
+
 
 /**
  *  获取最新的消息
  */
 - (void)getLastestMessageForSessionID:(NSString*)sessionID completion:(DDDBGetLastestMessageCompletion)completion;
-
-/**
- *  在|databaseMessageQueue|执行查询操作，分页获取聊天记录
- *
- *  @param sessionID  会话ID
- *  @param completion 完成block
- */
-- (void)getMessagesCountForSessionID:(NSString*)sessionID completion:(MessageCountCompletion)completion;
 
 /**
  *  批量插入message，需要用户必须在线，避免插入离线时阅读的消息
@@ -111,17 +95,9 @@ typedef void(^InsertsRecentContactsCOmplection)(NSError* error);
 
 @interface MTTDatabaseUtil(Users)
 
-- (void)loadContactsCompletion:(LoadRecentContactsComplection)completion;
 
-- (void)updateContacts:(NSArray*)users inDBCompletion:(UpdateRecentContactsComplection)completion;
 
-- (void)insertUsers:(NSArray*)users completion:(InsertsRecentContactsCOmplection)completion;
-
-- (void)insertDepartments:(NSArray*)departments completion:(InsertsRecentContactsCOmplection)completion;
-
-- (void)getDepartmentFromID:(NSString*)departmentID completion:(void(^)(MTTDepartmentEntity *department))completion;
-- (void)insertAllUser:(NSArray*)users completion:(InsertsRecentContactsCOmplection)completion;
-
+ 
 - (void)getAllUsers:(LoadAllContactsComplection )completion;
 
 - (void)getUserFromID:(NSString*)userID completion:(void(^)(MTTUserEntity *user))completion;

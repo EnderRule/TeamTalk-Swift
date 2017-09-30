@@ -21,7 +21,6 @@
 #define SQL_CREATE_MESSAGE_INDEX        [NSString stringWithFormat:@"CREATE INDEX msgid on %@(messageID)",TABLE_MESSAGE]
 
 
-#define SQL_CREATE_DEPARTMENTS      [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (ID text UNIQUE,parentID text,title text, description text,leader text, status integer,count integer)",TABLE_DEPARTMENTS]
 
 
 #define SQL_CREATE_ALL_CONTACTS      [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (ID text UNIQUE,Name text,Nick text,Avatar text, Department text,DepartID text, Email text,Postion text,Telphone text,Sex integer,updated real,pyname text,signature text)",TABLE_ALL_CONTACTS]
@@ -127,10 +126,7 @@
             {
                 [self createTable:SQL_CREATE_MESSAGE];
             }
-            if (![_database tableExists:TABLE_DEPARTMENTS])
-            {
-                [self createTable:SQL_CREATE_DEPARTMENTS];
-            }
+            
             if (![_database tableExists:TABLE_ALL_CONTACTS]) {
                 [self createTable:SQL_CREATE_ALL_CONTACTS];
             }
@@ -286,8 +282,9 @@
     [dic safeSetObject:[resultSet stringForColumn:@"pyname"] forKey:@"pyname"];
     [dic safeSetObject:[resultSet stringForColumn:@"signature"] forKey:@"signature"];
     
-    MTTUserEntity* user = [[MTTUserEntity alloc]initWithDicInfo:dic];
-    return user;
+    return nil;
+//    MTTUserEntity* user =  [[MTTUserEntity alloc]initWithDicInfo:dic];
+//    return user;
 }
 
 -(MTTGroupEntity *)groupFromResult:(FMResultSet *)resultSet
@@ -367,67 +364,9 @@
     }];
 }
 
-- (void)searchHistory:(NSString *)key completion:(LoadMessageInSessionCompletion)completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        NSMutableArray* array = [[NSMutableArray alloc] init];
-        if ([_database tableExists:TABLE_MESSAGE])
-        {
-            [_database setShouldCacheStatements:YES];
-            NSString* sqlString = [NSString stringWithFormat:@"select count(*),* from %@ where content like '%%%@%%' and content not like '%%&$#@~^@[{:%%' GROUP BY sessionId",TABLE_MESSAGE,key];
-            FMResultSet* result = [_database executeQuery:sqlString];
-            while ([result next])
-            {
-                NSArray* message = [self messageFromSearchResult:result];
-                [array addObject:message];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(array,nil);
-            });
-        }
-    }];
-}
+//NSString* sqlString = [NSString stringWithFormat:@"select count(*),* from %@ where content like '%%%@%%' and content not like '%%&$#@~^@[{:%%' GROUP BY sessionId",TABLE_MESSAGE,key];
+//NSString* sqlString = [NSString stringWithFormat:@"select * from %@ where content like '%%%@%%' and sessionId = '%@' and content not like '%%&$#@~^@[{:%%'",TABLE_MESSAGE,key,sessionId];
 
-- (void)searchHistoryBySessionId:(NSString *)key sessionId:(NSString *)sessionId completion:(LoadMessageInSessionCompletion)completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        NSMutableArray* array = [[NSMutableArray alloc] init];
-        if ([_database tableExists:TABLE_MESSAGE])
-        {
-            [_database setShouldCacheStatements:YES];
-            NSString* sqlString = [NSString stringWithFormat:@"select * from %@ where content like '%%%@%%' and sessionId = '%@' and content not like '%%&$#@~^@[{:%%'",TABLE_MESSAGE,key,sessionId];
-            FMResultSet* result = [_database executeQuery:sqlString];
-            while ([result next])
-            {
-                MTTMessageEntity* message = [self messageFromResult:result];
-                [array addObject:message];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(array,nil);
-            });
-        }
-    }];
-}
-
-- (void)getLasetCommodityTypeImageForSession:(NSString*)sessionID completion:(DDGetLastestCommodityMessageCompletion)completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        if ([_database tableExists:TABLE_MESSAGE])
-        {
-            [_database setShouldCacheStatements:YES];
-            NSString* sqlString = [NSString stringWithFormat:@"SELECT * from %@ where sessionId=? AND messageType = ? ORDER BY msgTime DESC,rowid DESC limit 0,1",TABLE_MESSAGE];
-            FMResultSet* result = [_database executeQuery:sqlString,sessionID,@(4)];
-            MTTMessageEntity* message = nil;
-            while ([result next])
-            {
-                message = [self messageFromResult:result];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(message);
-            });
-        }
-    }];
-}
 
 - (void)getLastestMessageForSessionID:(NSString*)sessionID completion:(DDDBGetLastestMessageCompletion)completion
 {
@@ -452,30 +391,6 @@
             if(message == nil){
                 completion(message,nil);
             }
-        }
-    }];
-}
-
-
-
-- (void)getMessagesCountForSessionID:(NSString*)sessionID completion:(MessageCountCompletion)completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        if ([_database tableExists:TABLE_MESSAGE])
-        {
-            [_database setShouldCacheStatements:YES];
-            
-            NSString* sqlString = [NSString stringWithFormat:@"SELECT COUNT(*) FROM %@ where sessionId=?",TABLE_MESSAGE];
-            
-            FMResultSet* result = [_database executeQuery:sqlString,sessionID];
-            int count = 0;
-            while ([result next])
-            {
-                count = [result intForColumnIndex:0];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(count);
-            });
         }
     }];
 }
@@ -565,249 +480,7 @@
 }
 
 #pragma mark - Users
-//- (void)loadContactsCompletion:(LoadRecentContactsComplection)completion
-//{
-//     [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-//        NSMutableArray* array = [[NSMutableArray alloc] init];
-//        if ([_database tableExists:TABLE_RECENT_CONTACTS])
-//        {
-//            [_database setShouldCacheStatements:YES];
-//
-//            NSString* sqlString = [NSString stringWithFormat:@"SELECT * FROM %@",TABLE_RECENT_CONTACTS];
-//            FMResultSet* result = [_database executeQuery:sqlString];
-//            while ([result next])
-//            {
-//                MTTUserEntity* user = [self userFromResult:result];
-//                [array addObject:user];
-//            }
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                completion(array,nil);
-//            });
-//        }
-//    }];
-//}
-//
-//- (void)updateContacts:(NSArray*)users inDBCompletion:(UpdateRecentContactsComplection)completion
-//{
-//     [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-//        NSString* sql = [NSString stringWithFormat:@"DELETE FROM %@",TABLE_RECENT_CONTACTS];
-//        BOOL result = [_database executeUpdate:sql];
-//        if (result)
-//        {
-//            //删除原先数据成功，添加新数据
-//            [_database beginTransaction];
-//            __block BOOL isRollBack = NO;
-//            @try {
-//                [users enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//                    MTTUserEntity* user = (MTTUserEntity*)obj;
-//                    NSString* sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO %@ VALUES(?,?,?,?,?,?,?)",TABLE_RECENT_CONTACTS];
-//                    //ID,Name,Nick,Avatar,Role,updated,reserve1,reserve2
-//                    BOOL result = [_database executeUpdate:sql,user.objID,user.name,user.nick,user.avatar,@(user.lastUpdateTime),@(0),@""];
-//                    if (!result)
-//                    {
-//                        isRollBack = YES;
-//                        *stop = YES;
-//                    }
-//                }];
-//            }
-//            @catch (NSException *exception) {
-//                [_database rollback];
-//            }
-//            @finally {
-//                if (isRollBack)
-//                {
-//                    [_database rollback];
-//                    DDLog(@"insert to database failure content");
-//                    NSError* error = [NSError errorWithDomain:@"插入最近联系人用户失败" code:0 userInfo:nil];
-//                    completion(error);
-//                }
-//                else
-//                {
-//                    [_database commit];
-//                    completion(nil);
-//                }
-//            }
-//        }
-//        else
-//        {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                NSError* error = [NSError errorWithDomain:@"清除数据失败" code:0 userInfo:nil];
-//                completion(error);
-//            });
-//        }
-//
-//    }];
-//}
-//
-//- (void)updateContact:(MTTUserEntity*)user inDBCompletion:(UpdateRecentContactsComplection)completion
-//{
-//     [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-//
-//        //#define SQL_CREATE_RECENT_CONTACTS      [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (ID text,Name text,Nick text,Avatar text, Role integer, updated real,reserve1 integer,reserve2 text)",TABLE_RECENT_CONTACTS]
-//
-//        NSString* sql = [NSString stringWithFormat:@"UPDATE %@ set Name = ? , Nick = ? , Avatar = ? ,  updated = ? , reserve1 = ? , reserve2 = ?where ID = ?",TABLE_RECENT_CONTACTS];
-//
-//        BOOL result = [_database executeUpdate:sql,user.name,user.nick,user.avatar,@(user.lastUpdateTime),@(1),@(1),user.objID];
-//        if (result)
-//        {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                completion(nil);
-//            });
-//        }
-//        else
-//        {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                NSError* error = [NSError errorWithDomain:@"更新数据失败" code:0 userInfo:nil];
-//                completion(error);
-//            });
-//        }
-//
-//    }];
-//}
-//
-//- (void)insertUsers:(NSArray*)users completion:(InsertsRecentContactsCOmplection)completion
-//{
-//    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-//        [_database beginTransaction];
-//        __block BOOL isRollBack = NO;
-//        @try {
-//            [users enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//                MTTUserEntity* user = (MTTUserEntity*)obj;
-//                NSString* sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO %@ VALUES(?,?,?,?,?,?,?)",TABLE_RECENT_CONTACTS];
-//                //ID,Name,Nick,Avatar,Role,updated,reserve1,reserve2
-//                BOOL result = [_database executeUpdate:sql,user.objID,user.name,user.nick,user.avatar,@(user.lastUpdateTime),@(0),@""];
-//                if (!result)
-//                {
-//                    isRollBack = YES;
-//                    *stop = YES;
-//                }
-//            }];
-//        }
-//        @catch (NSException *exception) {
-//            [_database rollback];
-//        }
-//        @finally {
-//            if (isRollBack)
-//            {
-//                [_database rollback];
-//                DDLog(@"insert to database failure content");
-//                NSError* error = [NSError errorWithDomain:@"插入最近联系人用户失败" code:0 userInfo:nil];
-//                completion(error);
-//            }
-//            else
-//            {
-//                [_database commit];
-//                completion(nil);
-//            }
-//        }
-//    }];
-//}
-- (void)insertDepartments:(NSArray*)departments completion:(InsertsRecentContactsCOmplection)completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        [_database beginTransaction];
-        __block BOOL isRollBack = NO;
-        @try {
-            [departments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                MTTDepartmentEntity * department = [[MTTDepartmentEntity alloc]initWithInfoDic:(NSDictionary*)obj];
-                NSString* sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO %@ VALUES(?,?,?,?,?,?,?)",TABLE_DEPARTMENTS];
-                //ID,Name,Nick,Avatar,Role,updated,reserve1,reserve2
-                BOOL result = [_database executeUpdate:sql,department.departID,department.parentID,department.title,department.description,department.leader,@(department.status),@(department.departCount)];
-                if (!result)
-                {
-                    isRollBack = YES;
-                    *stop = YES;
-                }
-            }];
-        }
-        @catch (NSException *exception) {
-            [_database rollback];
-        }
-        @finally {
-            if (isRollBack)
-            {
-                [_database rollback];
-                DDLog(@"insert to database failure content");
-                NSError* error = [NSError errorWithDomain:@"批量插入部门信息失败" code:0 userInfo:nil];
-                completion(error);
-            }
-            else
-            {
-                [_database commit];
-                completion(nil);
-            }
-        }
-    }];
-}
-- (void)getDepartmentFromID:(NSString*)departmentID completion:(void(^)(MTTDepartmentEntity *department))completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        if ([_database tableExists:TABLE_DEPARTMENTS])
-        {
-            [_database setShouldCacheStatements:YES];
-            
-            NSString* sqlString = [NSString stringWithFormat:@"SELECT * FROM %@ where ID=?",TABLE_DEPARTMENTS];
-            
-            FMResultSet* result = [_database executeQuery:sqlString,departmentID];
-            MTTDepartmentEntity* department = nil;
-            while ([result next])
-            {
-                department = [self departmentFromResult:result];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(department);
-            });
-        }
-    }];
-}
 
-- (void)insertAllUser:(NSArray*)users completion:(InsertsRecentContactsCOmplection)completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        [_database beginTransaction];
-        __block BOOL isRollBack = NO;
-        @try {
-            
-            [users enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                MTTUserEntity* user = (MTTUserEntity *)obj;
-                if (user.userStatus == 3) {
-                    user.telphone=@"";
-                    user.email = @"";
-                    user.name=@"";
-                }
-                NSString* sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO %@ VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",TABLE_ALL_CONTACTS];
-                //ID,Name,Nick,Avatar,Role,updated,reserve1,reserve2
-                BOOL result = [_database executeUpdate:sql,user.objID,user.name,user.nickName,user.avatar,user.department,user.departId,user.email,user.position,user.telphone,@(user.sex),user.lastUpdateTime,user.pyname,user.signature];
-                
-                if (!result)
-                {
-                    isRollBack = YES;
-                    *stop = YES;
-                }
-                
-                
-            }];
-            
-        }
-        @catch (NSException *exception) {
-            [_database rollback];
-        }
-        @finally {
-            if (isRollBack)
-            {
-                [_database rollback];
-                DDLog(@"insert to database failure content");
-                NSError* error = [NSError errorWithDomain:@"批量插入全部用户信息失败" code:0 userInfo:nil];
-                completion(error);
-            }
-            else
-            {
-                [_database commit];
-                completion(nil);
-            }
-        }
-    }];
-}
 
 - (void)getAllUsers:(LoadAllContactsComplection )completion
 {
@@ -822,7 +495,7 @@
             while ([result next])
             {
                 user = [self userFromResult:result];
-                if (user.userStatus != 3) {
+                if (user && user.userStatus != 3) {
                     [array addObject:user];
                 }
             }

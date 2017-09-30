@@ -44,7 +44,7 @@ class DDUserDetailInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 var userList :[MTTUserEntity] = []
                 
                 for userinfo in res.userInfoList {
-                    let user  = MTTUserEntity.init(userinfo: userinfo)
+                    let user  = MTTUserEntity.initWith(userinfo: userinfo)
                     userList.append(user)
                 }
                 return userList

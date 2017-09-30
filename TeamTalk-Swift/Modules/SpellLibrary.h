@@ -28,7 +28,7 @@
  *  @param sender user or group
  */
 - (void)addSpellForObject:(id)sender;
-- (void)addDeparmentSpellForObject:(id)sender;
+
 -(BOOL)isEmpty;
 /**
  *  根据给出拼音找出相关的用户名

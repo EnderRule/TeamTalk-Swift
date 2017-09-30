@@ -48,50 +48,6 @@
 {
     return ![[_spellLibrary allKeys] count];
 }
-- (void)addDeparmentSpellForObject:(id)sender
-{
-    NSString* word = nil;
-    if ([sender isKindOfClass:[MTTUserEntity class]])
-    {
-        word = [(MTTUserEntity*)sender department];
-    }
-    else
-    {
-        return;
-    }
-    if (!word)
-    {
-        return;
-    }
-    
-    NSMutableString* spell = _saucerManDic[word];
-    if (spell.length != 0)
-    {
-        spell = [NSMutableString stringWithString:word];
-        CFRange range = CFRangeMake(0, spell.length);
-        CFStringTransform((CFMutableStringRef)spell, &range, kCFStringTransformMandarinLatin, NO);
-        CFStringTransform((CFMutableStringRef)spell, &range, kCFStringTransformStripCombiningMarks, NO);
-    }
-    NSString* key = [spell lowercaseString];
-    if(key.length == 0){
-        key = @"0";
-    }
-    if (![[_spellLibrary_Deparment allKeys] containsObject:spell])
-    {
-        NSMutableArray* objects = [[NSMutableArray alloc] init];
-        
-        [objects addObject:sender];
-        [_spellLibrary_Deparment setObject:objects forKey:key];
-    }
-    else
-    {
-        NSMutableArray* objects = _spellLibrary_Deparment[key];
-        if (![objects containsObject:sender])
-        {
-            [objects addObject:sender];
-        }
-    }
-}
 -(void)clearSpellById:(NSString *)objctid
 {
     [_spellLibrary removeObjectForKey:objctid];

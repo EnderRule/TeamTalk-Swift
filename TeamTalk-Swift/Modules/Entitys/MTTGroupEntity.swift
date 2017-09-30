@@ -6,12 +6,24 @@
 //  Copyright © 2017年 HuangZhongQing. All rights reserved.
 //
 
+//ID text UNIQUE,
+//Avatar text,
+//GroupType integer,
+//Name text,
+//CreatID text,
+//Users Text,
+//LastMessage Text,
+//updated real,
+//isshield integer,
+//version integer)
+
 import UIKit
 
 
 @objc public enum GroupType_Objc:Int32 {
     case groupTypeNormal = 1
     case groupTypeTmp = 2
+    
     public func toString() -> String {
         switch self {
         case .groupTypeNormal: return "GROUP_TYPE_NORMAL"
@@ -44,13 +56,28 @@ import UIKit
 
 let GROUP_PRE:String = "group_"
 
+@objc(MTTGroupEntity)
 class MTTGroupEntity: MTTBaseEntity {
 
-    var groupCreatorId:String = ""
-    var groupType:GroupType_Objc = .groupTypeTmp
-    var name:String = ""
-    var avatar:String = ""
+    @NSManaged var lastUpdateTime:Int32
+    @NSManaged var objID:String
+    @NSManaged var objectVersion:Int32
+
+    @NSManaged var groupCreatorId:Int32
+    @NSManaged var name:String
+    @NSManaged var avatar:String
+    @NSManaged var lastMsg:String
+    @NSManaged var isShield:Bool
+    @NSManaged var type:Int32
     
+    @NSManaged var users:String
+    
+    var groupType:GroupType_Objc = .groupTypeTmp{
+        didSet{
+            type = groupType.rawValue
+        }
+    }
+
     private var s_groupUserIds:[String] = []
     var groupUserIds:[String] {
         get{
@@ -63,6 +90,9 @@ class MTTGroupEntity: MTTBaseEntity {
                 let obj2_tmp = obj2.replacingOccurrences(of: USER_PRE, with: "") as NSString
                 return  obj1_tmp.integerValue > obj2_tmp.integerValue ? false : true
             })
+            
+            users = (s_groupUserIds as NSArray).componentsJoined(by:",")
+            
             //fix
             fixGroupUserIds.removeAll()
             for obj in s_groupUserIds.enumerated(){
@@ -71,8 +101,6 @@ class MTTGroupEntity: MTTBaseEntity {
         }
     }
     var fixGroupUserIds:[String] = []  //固定的群用户列表IDS，用户生成群头像
-    var lastMsg:String = ""
-    var isShield:Bool = false
     
     func copyContent(otherGroup:MTTGroupEntity){
         self.groupType = otherGroup.groupType
@@ -82,10 +110,7 @@ class MTTGroupEntity: MTTBaseEntity {
         self.groupUserIds = otherGroup.groupUserIds
     }
     
-    public convenience init(dicInfo:[String:Any]){
-        self.init()
-        self.updateValues(info: dicInfo)
-    }
+     
     
     class func sessionID(groupID:String)->String{
         return groupID
@@ -99,14 +124,21 @@ class MTTGroupEntity: MTTBaseEntity {
 
 
 extension MTTGroupEntity {
+    
+    public convenience init(DicInfo:[String:Any]){
+        self.init()
+        
+        self.updateValues(info:DicInfo)
+    }
+    
     public convenience init(groupInfo:Im.BaseDefine.GroupInfo){
         self.init()
 
         self.objID = MTTGroupEntity.localIDFrom(pbID: groupInfo.groupId)
-        self.objectVersion = Int(groupInfo.version)
+        self.objectVersion = Int32(groupInfo.version)
         self.name = groupInfo.groupName
         self.avatar = groupInfo.groupAvatar
-        self.groupCreatorId = MTTUserEntity.localIDFrom(pbID: groupInfo.groupCreatorId)
+        self.groupCreatorId = Int32(groupInfo.groupCreatorId)
         self.groupType = GroupType_Objc.init(rawValue: groupInfo.groupType.rawValue) ?? .groupTypeNormal// groupInfo.groupType
         self.isShield = groupInfo.shieldStatus == 1   //1:shield  0: not shield
         

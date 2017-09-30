@@ -6,25 +6,52 @@
 //  Copyright © 2017年 HuangZhongQing. All rights reserved.
 //
 
+//ID text UNIQUE,
+//Name text,
+//Nick text,
+//Avatar text,
+//Department text,
+//DepartID text,
+//Email text,
+//Postion text,
+//Telphone text,
+//Sex integer,
+//updated real,
+//pyname text,
+//signature text
+
 import UIKit
+import CoreData
+
+
+
+
+
+
+
 
 let USER_PRE:String = "user_"
 
+@objc(MTTUserEntity)
 class MTTUserEntity: MTTBaseEntity {
     
-    
-    var name:String = ""
-    var nick:String = ""
-    var avatar:String = ""
-    var department:String = ""
-    var signature:String = ""
-    var position:String = ""
-    var sex:Int = 0
-    var departId:String = ""
-    var telphone:String = ""
-    var email:String = ""
-    var pyname:String = ""
-    var userStatus:Int = 0
+    @NSManaged var lastUpdateTime:Int32
+    @NSManaged var objID:String
+    @NSManaged var objectVersion:Int32
+
+    @NSManaged var name:String
+    @NSManaged var nick:String
+    @NSManaged var avatar:String
+    @NSManaged var department:String
+    @NSManaged var departId:String
+
+    @NSManaged var signature:String
+    @NSManaged var position:String
+    @NSManaged var sex:Int32
+    @NSManaged var telphone:String
+    @NSManaged var email:String
+    @NSManaged var pyname:String
+    @NSManaged var userStatus:Int32
     
     var nickName:String {
         set {
@@ -54,24 +81,14 @@ class MTTUserEntity: MTTBaseEntity {
         }
     }
     
-    public convenience  init(userID:String,name:String,nick:String,avatar:String,userRole:Int,userUpdated:Int ) {
-        
-        self.init()
-        self.objID = userID
-        self.name = name
-        self.nick = nick
-        self.avatar = avatar
-        
-        self.lastUpdateTime = Int32(userUpdated)
-        
-    }
     
-    public convenience init(dicInfo:[String:Any]){
-        self.init()
-        
-        self.updateValues(info: dicInfo)
-    }
     
+//    public convenience init(dicInfo:[String:Any]){
+//        self.init()
+//        
+//        self.updateValues(info: dicInfo)
+//    }
+//    
     func dicInfo()->[String:Any]{
         return self.dicValues()
     }
@@ -101,60 +118,48 @@ class MTTUserEntity: MTTBaseEntity {
         }
     }
     
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+        
+        self.objID = "\(USER_PRE)0"
+        self.name = ""
+        self.nickName = ""
+        self.avatar = "defaultAvatar"
+    }
+    
     var avatarUrl:String{
         get {
             return self.avatar
         }
     }
-    
-    override func isEqual(_ object: Any?) -> Bool {
-        if object == nil {
-            return  false
-        }else if (object! as? MTTUserEntity) == nil  {
-            return false
-        }
-        let other:MTTUserEntity = object! as! MTTUserEntity
-        if other.objID != self.objID{
-            return false
-        }
-        if other.name != self.name{
-            return false
-        }
-        if other.nick != self.nick {
-            return false
-        }
-        if other.pyname != self.pyname{
-            return false
-        }
-        return true
-    }
-    
-    override var hash: Int{
-        let idhash = self.objID.hash
-        let namehash = self.name.hash
-        let nickhash = self.nick.hash
-        let pynamehash = self.pyname.hash
-        
-        return idhash^namehash^nickhash^pynamehash
-    }
+
 }
 
 extension MTTUserEntity{
-    public convenience init(userinfo:Im.BaseDefine.UserInfo){
-        self.init()
+    class func  initWith(userinfo:Im.BaseDefine.UserInfo)->MTTUserEntity{
         
-        self.objID = MTTUserEntity.localIDFrom(pbID: userinfo.userId)
-        self.name  = userinfo.userRealName
-        self.nickName  = userinfo.userNickName
-        self.avatar = userinfo.avatarUrl
-        self.department = "\(userinfo.departmentId)"
-        self.departId = "\(userinfo.departmentId)"
-        self.telphone = userinfo.userTel
-        self.sex =  Int( userinfo.userGender)
-        self.email = userinfo.email
-        self.pyname = userinfo.userDomain
-        self.userStatus = Int(userinfo.status)
-        self.signature = userinfo.signInfo
+        if let newUser:MTTUserEntity = MTTUserEntity.newNotInertObj() as? MTTUserEntity{
+            print(" user entity ")
+            
+            newUser.objID = "\(USER_PRE)\(userinfo.userId!)"
+            newUser.name  = userinfo.userRealName
+            newUser.nickName  = userinfo.userNickName
+            newUser.avatar = userinfo.avatarUrl
+            newUser.department = "\(userinfo.departmentId)"
+            newUser.departId = "\(userinfo.departmentId)"
+            newUser.telphone = userinfo.userTel
+            newUser.sex =  Int32( userinfo.userGender)
+            newUser.email = userinfo.email
+            newUser.pyname = userinfo.userDomain
+            newUser.userStatus = Int32(userinfo.status)
+            newUser.signature = userinfo.signInfo
+            
+            return newUser
+        }else {
+            print("nil user entity ")
+
+            return MTTUserEntity.init()
+        }
     }
     
     override class func pbIDFrom(localID:String)->UInt32{

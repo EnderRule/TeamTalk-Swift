@@ -66,6 +66,7 @@ class HMCDManager: NSObject {
                 return self.s_objectModel!
             }else {
                 self.s_objectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main] )  //合并所有 model
+//                print("all entitys ", self.s_objectModel?.entitiesByName)
                 return self.s_objectModel!
             }
         }

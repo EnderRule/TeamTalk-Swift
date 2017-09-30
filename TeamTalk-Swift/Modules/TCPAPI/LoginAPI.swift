@@ -53,7 +53,7 @@ class LoginAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 result.updateValue(res.resultCode.rawValue, forKey: LoginAPI.kResultCode)
                 
                 if res.userInfo != nil {
-                    let user = MTTUserEntity.init(userinfo: res.userInfo)
+                    let user = MTTUserEntity.initWith(userinfo: res.userInfo)
                     if user.isValided {
                         result.updateValue(user, forKey: LoginAPI.kResultUser)
                     }

@@ -62,7 +62,7 @@
         _allUsers = [[NSMutableDictionary alloc] init];
     }
     
-    [_allUsers setValue:user forKey:user.objID];
+    [_allUsers setValue:user forKey:user.userId];
 
     
 }

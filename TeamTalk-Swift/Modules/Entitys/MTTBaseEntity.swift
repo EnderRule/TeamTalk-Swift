@@ -7,24 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 /*
  *基础类，不可直接使用
  */
-class MTTBaseEntity: NSObject {
-    var lastUpdateTime:Int32 = 0
-    var objID:String = ""
-    var objectVersion:Int = 0
+class MTTBaseEntity: NSManagedObject {
     
-    func getOriginalID()->Int{
-        let parts = self.objID.components(separatedBy: "_")
-        
-        if parts.count >= 2 {
-            return (parts[1] as NSString).integerValue
-        }else{
-            return 0
-        }
-    }
 }
 
 extension MTTBaseEntity {
