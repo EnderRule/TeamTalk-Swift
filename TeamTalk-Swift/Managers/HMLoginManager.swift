@@ -337,6 +337,8 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                 
                                 HMNotification.userLoginSuccess.postWith(obj: user , userInfo: nil )
                                 
+                                self.sendPushtoken(token: self.pushTtoken)
+                                
                                 success(user)
                             }else{
                                 var rstr = json[LoginAPI.kResultMessage].stringValue
@@ -352,66 +354,6 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                 }, failure: {(error)in
                     failure(error)
                 })
-                
-//                self.tcpServer.loginTcpServerIP(ip, port: port, success: {
-//                    let api = LoginAPI.init(name: userName, password: password)
-//                    api.request(withParameters: [:], completion:  { (response , error ) in
-//                        if let dic = response as? [String:Any]{
-//                            let json2 = JSON.init(dic)
-//                            
-//                            debugPrint("登入IP/端口\(ip)/\(port)  result:\(dic)")
-//                            if let user:MTTUserEntity = dic[LoginAPI.kResultUser] as? MTTUserEntity {
-//                                let time:TimeInterval = json2[LoginAPI.kResultServerTime].doubleValue
-//                                debugPrint("登入驗證成功   serverTime :\(time)")
-//                                if time > 3600.0 {
-//                                    self.s_serverTime = time
-//                                }
-//                                self.startCountServerTime()
-//                                self.s_loginState = .online
-//                                self.s_currentUser = user
-//                                self.currentUserName = userName
-//                                self.currentPassword = password
-//                                self.shouldAutoLogin = true
-//                                
-//                                self.reloginning = true
-//                                
-//                                MTTDatabaseUtil.instance().openCurrentUserDB()
-//                                
-//                                self.loadAllUser {
-//                                    if SpellLibrary.instance().isEmpty(){
-//                                        dispatch_globle(after: 0, task: {
-//                                            for user in DDUserModule.shareInstance().getAllMaintanceUser() as? [MTTUserEntity] ?? []{
-//                                                SpellLibrary.instance().addSpellFor(user)
-//                                                SpellLibrary.instance().addDeparmentSpellFor(user )
-//                                            }
-//                                            for group in DDGroupModule.instance().getAllGroups() as? [MTTGroupEntity] ?? []{
-//                                                
-//                                                SpellLibrary.instance().addSpellFor(group)
-//                                            }
-//                                        })
-//                                    }
-//                                }
-//                                
-//                                SessionModule.instance().loadLocalSession({ (isok ) in })
-//                                
-//                                HMNotification.userLoginSuccess.postWith(obj: user , userInfo: nil )
-//                                
-//                                success(user)
-//                            }else{
-//                                var rstr = json[LoginAPI.kResultMessage].stringValue
-//                                if rstr.length <= 0 {
-//                                    rstr = "登入失敗：code = \(json2[LoginAPI.kResultCode])"
-//                                }
-//                                failure(rstr)
-//                            }
-//                        }else{
-//                            failure("登錄驗證失敗")
-//                        }
-//                    })
-//                }, failure: {
-//                    failure("连接消息服务器失败")
-//                })
-                
             }else{
                 failure("连接消息服务器失败 -2")
             }
@@ -446,6 +388,13 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         DDTcpClientManager.instance().disconnect()
         
         self.s_loginState = .offLineInitiative
+    }
+    
+    func sendPushtoken(token:String){
+        debugPrint("call Send PushToken API ")
+        let api =  SendPushTokenAPI.init(pushToken: self.pushTtoken)
+        api.request(withParameters: [:], completion: { (obj , error ) in
+        })
     }
     
     

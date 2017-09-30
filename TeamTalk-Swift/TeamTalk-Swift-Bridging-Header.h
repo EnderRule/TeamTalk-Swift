@@ -55,6 +55,7 @@
 #import <AFNetWorking/AFHTTPSessionManager.h>
 
 #import <FMDB/FMDB.h>
+#import <Masonry/Masonry.h>
 
 //SDImage
 #import <SDWebImage/SDImageCache.h>
@@ -62,7 +63,7 @@
 #import <SDWebImage/UIImage+GIF.h>
 #import <SDWebImage/NSData+ImageContentType.h>
 #import <SDWebImage/SDWebImageManager.h>
-#import <Masonry/Masonry.h>
+
 
 //NIM input view
 #import "NIMInputView.h"
@@ -73,7 +74,21 @@
 #import <M80AttributedLabel/M80AttributedLabel.h>
 
 
+#import <MJRefresh/MJRefresh-umbrella.h>
+
 #import <MJRefresh/MJRefresh.h>
+#import <MJRefresh/UIScrollView+MJRefresh.h>
+#import <MJRefresh/UIScrollView+MJExtension.h>
+#import <MJRefresh/UIView+MJExtension.h>
+
+#import <MJRefresh/MJRefreshNormalHeader.h>
+#import <MJRefresh/MJRefreshGifHeader.h>
+
+#import <MJRefresh/MJRefreshBackNormalFooter.h>
+#import <MJRefresh/MJRefreshBackGifFooter.h>
+#import <MJRefresh/MJRefreshAutoNormalFooter.h>
+#import <MJRefresh/MJRefreshAutoGifFooter.h>
+
 
 #import <LCActionSheet/LCActionSheet.h>
 #import <SCLAlertView/SCLAlertView-Swift.h>

@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import MJRefresh
 
 
 class UIScrollViewExt: UIScrollView{
@@ -126,14 +127,54 @@ extension UIScrollView{
 //MJRefresh easy handling
 extension UIScrollView {
     
-    func addHeader(_ callback:(()->Void)){
-        
+    func mj_addHeader(_ callback:@escaping (()->Void)){
+        self.mj_addHeader(config: nil) {
+            callback()
+        }
     }
- 
-    func headerEndRefreshing(){
-
-        self.mj_header.endRefreshingCompletionBlock()
-        
+    func mj_addHeader(config:((MJRefreshNormalHeader)->Void)?,callback:@escaping (()->Void)){
+        let header:MJRefreshNormalHeader =  MJRefreshNormalHeader.init {
+            callback()
+        } 
+        self.mj_header = header
+        config?(header)
+    }
+    
+    func mj_headerBeginRefreshing(){
+        self.mj_header?.beginRefreshing()
+    }
+    func mj_headerEndRefreshing(){
+        self.mj_header?.endRefreshing()
+    }
+    
+    
+    func mj_addFooter(_ callback:@escaping (()->Void)){
+        self.mj_addFooter(config: nil) {
+            callback()
+        }
+    }
+    
+    func mj_addFooter(config:((MJRefreshAutoNormalFooter)->Void)?,callback:@escaping (()->Void)){
+        let footer:MJRefreshAutoNormalFooter = MJRefreshAutoNormalFooter.init { 
+            callback()
+        }
+        self.mj_footer = footer
+        config?(footer)
+    }
+    
+    func mj_footerBeginRefreshing(){
+        self.mj_footer?.beginRefreshing()
+    }
+    func mj_footerEndRefreshing(){
+        self.mj_footer?.endRefreshing()
+    }
+    
+    func mj_addGifHeader(config:((MJRefreshGifHeader)->Void), callback:@escaping (()->Void)){
+        let header :MJRefreshGifHeader = MJRefreshGifHeader.init { 
+            callback()
+        }
+        config(header)
+        self.mj_header = header
     }
     
 }

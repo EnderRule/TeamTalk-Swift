@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-
+import LCActionSheet
 
 class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
@@ -29,7 +28,7 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tableView.headerBeginRefreshing()
+        self.tableView.mj_headerBeginRefreshing()
     }
     
     func setupTableview(){
@@ -62,11 +61,11 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: UITableViewCell.cellIdentifier)
         self.view.addSubview(tableView)
         
-        tableView.addHeader {
+        tableView.mj_addHeader {
             
             DDUserModule.shareInstance().getUserForUserID(currentUser().userId, block: { (user ) in
                 
-                self.tableView.headerEndRefreshing()
+                self.tableView.mj_headerEndRefreshing()
                 
                 if user != nil {
                     self.avatarImgv.setImage(str: user!.avatar)
@@ -167,67 +166,32 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             
-//            LCActionSheet.show(withTitle: "確認退出嗎？", buttonTitles: ["再看看","退出"], redButtonIndex: 1, clickHandler: { (index) in
-//                if index == 1 {
-//
-//                    HMLoginManager.shared.logout()
-//
-//                    let loginvc = MTTLoginViewController.init()
-//                    loginvc.hidesBottomBarWhenPushed = true
-//                    (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.pushViewController(loginvc, animated: true )
-//
-//                    if let tabbarcontroller = self.navigationController?.tabBarController {
-//                        tabbarcontroller.removeFromParentViewController()
-//                    }
-//                }
-//            })
             
+            let sheet = LCActionSheet.init(title: "確認退出嗎？", cancelButtonTitle: "再看看", clicked: { (sheet , index ) in
+                if index == 1 {
+                    HMLoginManager.shared.logout()
+                    
+                    let loginvc = MTTLoginViewController.init()
+                    loginvc.hidesBottomBarWhenPushed = true
+                    (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.pushViewController(loginvc, animated: true )
+                    
+                    if let tabbarcontroller = self.navigationController?.tabBarController {
+                        tabbarcontroller.removeFromParentViewController()
+                    }
+                }
+            }, otherButtonTitleArray: ["退出"])
+
+            sheet.show()
         }else if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 2 {
             let browser = ZQFileBrowserVC.init()
             browser.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(browser, animated: true )
         }else  {
+            
 //            LCActionSheet .show(withTitle: "个人中心", buttonTitles: ["1","2","3","4"], redButtonIndex: 6, clickHandler: { (index) in
 //            })
             
         }
     }
     
-    
-    //MARK: pick image delegate 
-    func imagePickerController(_ picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [Any]!, isSelectOriginalPhoto: Bool, infos: [[AnyHashable : Any]]!) {
-        
-        guard  photos.count >  0 else { return }
-        let image = photos.first!
-        
-        let imagePath = ZQFileManager.shared.tempPathFor(image: image)
-        guard imagePath.length > 0 else {
-            return
-        }
-        print("ready to upload avatar Image:\(imagePath)")
-        
-        let progressView:UIProgressView = UIProgressView.init()
-        progressView.frame = .init(x: 0, y: 0, width: SCREEN_WIDTH()/2, height: 30)
-        progressView.setProgress(0, animated: true )
-        
-        SendPhotoMessageAPI.shared.uploadAvatar(imagePath: imagePath, progress: { (progress ) in
-            dispatch(after: 0, task: {
-                let floatPro = CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount)
-                self.view.showToast(progressView, point: self.view.center)
-                progressView.setProgress(Float(floatPro), animated: true )
-            })
-        }, success: { (imageurl ) in
-            dispatch(after: 0, task: {
-                progressView.removeFromSuperview()
-                self.avatarImgv.setImage(str: imageurl)
-                HMLoginManager.shared.currentUser.avatar = imageurl
-            })
-//            MTTDatabaseUtil.instance().updateContacts([HMLoginManager.shared.currentUser], inDBCompletion: { (error ) in  })
-        }) { (error ) in
-            dispatch(after: 0, task: {
-                progressView.removeFromSuperview()
-                self.view.makeToast(error)
-            })
-        }
-    }
 }

@@ -56,7 +56,7 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
             maker?.edges.mas_equalTo()(self.view)
         }
         
-        tableView.addHeader { 
+        tableView.mj_addHeader {
             self.refreshContacts()
         }
         
@@ -76,7 +76,7 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
                 self.groups.append(group )
             }
         }
-        self.tableView.headerEndRefreshing()
+        self.tableView.mj_headerEndRefreshing()
         self.tableView.reloadData()
     }
     

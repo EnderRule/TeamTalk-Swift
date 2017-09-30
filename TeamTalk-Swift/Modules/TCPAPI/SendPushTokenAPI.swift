@@ -38,6 +38,9 @@ class SendPushTokenAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
+//            if let str = String.init(data: data ?? Data(), encoding: .utf8){
+//                debugPrint("sendpushtokenapi return data:",str)
+//            }
             return nil
         }
         return analysis

@@ -9,6 +9,9 @@
 import UIKit
 import ObjectiveC
 
+import SDWebImage
+
+
 //        /var/mobile/Containers/Data/Application/0FBE1903-8658-4462-BAA0-C877918D0757/Documents/InPostingImages/new_1497867259_0.jpg
 //測試時發現、Application/之後的32位文件夾ID会動態改變，這裡要把它替換掉，才能正常加載圖片
 
@@ -27,34 +30,30 @@ extension UIImageView{
         
         let range:NSRange = (str as NSString).range(of: "/var/mobile/Containers/Data/Application/")
         if range.length > 0{
-            
             var newfilePath = str
             if !FileManager.default.fileExists(atPath: newfilePath){
                 let newPart:String  = (str as NSString).substring(from: range.location+range.length+36)
-                
                 newfilePath = NSHomeDirectory().appending(newPart)
             }
-            
             if FileManager.default.fileExists(atPath: newfilePath){
-                
                 if newfilePath.hasSuffix(".gif"){
                     do {
-                        let data = try NSData.init(contentsOfFile: newfilePath) as Data  // try Data.init(contentsOf: URL.init(string: newfilePath)!)
-                        let contentType = NSData.sd_contentType(forImageData: data)
+                        let data = try NSData.init(contentsOfFile: newfilePath) as Data
+                        let contentType = NSData.sd_imageFormat(forImageData: data)
                         
-                        if contentType == "image/gif"{
+                        if contentType == .GIF{
                             let image = UIImage.sd_animatedGIF(with: data)
                             self.image = image
                             return
                         }
                     }catch{
-//                        debugPrint("read gif data error:\(error.localizedDescription) \n\n\(newfilePath)")
+                        //debugPrint("read gif data error:\(error.localizedDescription) \n\n\(newfilePath)")
                     }
                 }
                 
                 let image = UIImage.init(contentsOfFile: newfilePath)
                 
-//                debugPrint("non gif \(newfilePath) imagescount \(image?.images?.count ?? 0)")
+                //debugPrint("non gif \(newfilePath) imagescount \(image?.images?.count ?? 0)")
                 
                 self.image = image
                 
@@ -63,8 +62,8 @@ extension UIImageView{
         }
         
         if str.lowercased().hasPrefix("http") {
-
-            self.sd_setImage(with: URL.init(string: str), placeholderImage: placeHolder,corner: cornerRadius ?? 0.0)
+            
+            self.sd_setImage(with: URL.init(string: str), placeholderImage: placeHolder)
         }else if str.lowercased().hasPrefix("file://") || str.lowercased().hasPrefix("/"){
             let image = UIImage.init(contentsOfFile: str)
             
@@ -77,26 +76,19 @@ extension UIImageView{
             if str.length > 0{
                 let image = UIImage.init(named: str)
                 if image == nil {
-                    if cornerRadius ?? 0.0 > 0 && placeHolder != nil{
-                        self.image = placeHolder?.cornerImage(radius: cornerRadius!, sizetoFit: self.frame.size)
-                    }else{
-                        self.image = placeHolder
-                    }
+                    self.image = placeHolder
                 }else{
-                    if cornerRadius ?? 0.0 > 0{
-                        self.image = image?.cornerImage(radius: cornerRadius!, sizetoFit: self.frame.size)
-                    }else{
-                        self.image = image
-                    }
+                    self.image = image
                 }
             }else{
-                if cornerRadius ?? 0.0 > 0 && placeHolder != nil {
-                    self.image = placeHolder?.cornerImage(radius: cornerRadius!, sizetoFit: self.frame.size)
-                }else{
-                    self.image = placeHolder
-                }
+                self.image = placeHolder
             }
         }
+        
+        if cornerRadius ?? 0 > 0 {
+            self.add(corners: .allCorners, radius: CGSize.init(width: cornerRadius!, height: cornerRadius!))
+        }
+        
     }
     
     //MARK:添加停權標誌
@@ -147,15 +139,6 @@ extension UIImageView{
     }
     open func removeGifTag() {
         self.viewWithTag(10111)?.isHidden = true
-    }
-    
-    //MARK:添加點擊事件
-    open func addTapAction(action:Selector,target:Any){
-        let tap = UITapGestureRecognizer.init(target: target , action: action)
-        tap.numberOfTapsRequired = 1
-        tap.numberOfTouchesRequired = 1
-        self.addGestureRecognizer(tap)
-        self.isUserInteractionEnabled = true
     }
     
 }

@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>TeamTalk-Swift</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -20,10 +22,23 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>media lib usage</string>
+	<key>NSCameraUsageDescription</key>
+	<string>camera usage </string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>microphone usage </string>
+	<key>NSMotionUsageDescription</key>
+	<string>motion usage</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo lib usage</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -41,22 +56,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSMotionUsageDescription</key>
-	<string>motion usage</string>
-	<key>NSCameraUsageDescription</key>
-	<string>camera usage </string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo lib usage</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>microphone usage </string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>media lib usage</string>
-	<key>CFBundleDisplayName</key>
-	<string>TeamTalk-Swift</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 </dict>
 </plist>

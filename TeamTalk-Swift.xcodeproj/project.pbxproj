@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3D9E9B6E48886D2BEA8E7736 /* Pods_TeamTalk_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B608C7C81C061E2B3F8FED /* Pods_TeamTalk_Swift.framework */; };
-		6613723A1F6BA8170058280D /* HMDBSQLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661372391F6BA8170058280D /* HMDBSQLManager.swift */; };
 		6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */; };
 		663D8B551F7F3DE500F7A60C /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3371F428922008E9590 /* UIView+Extention.swift */; };
 		663D8B5B1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 663D8B591F7F488A00F7A60C /* M80AttributedLabel+NIMKit.m */; };
@@ -44,9 +43,6 @@
 		66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
 		66686AF11F4678CC008B26BD /* DDSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF01F4678CC008B26BD /* DDSearch.m */; };
 		66686AF41F46796E008B26BD /* ContactsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF31F46796E008B26BD /* ContactsModule.m */; };
-		66686B691F46967C008B26BD /* bgImage_HL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686B651F46967C008B26BD /* bgImage_HL@2x.png */; };
-		66686B6A1F46967C008B26BD /* cellLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66686B661F46967C008B26BD /* cellLine@2x.png */; };
-		66686B6B1F46967C008B26BD /* LCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686B681F46967C008B26BD /* LCActionSheet.m */; };
 		66686BDA1F46C718008B26BD /* MTTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BD81F46C718008B26BD /* MTTLoginViewController.m */; };
 		66686BDB1F46C718008B26BD /* MTTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66686BD91F46C718008B26BD /* MTTLoginViewController.xib */; };
 		66686D181F46F7A9008B26BD /* HMRecentSessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */; };
@@ -301,10 +297,6 @@
 		66686AF31F46796E008B26BD /* ContactsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsModule.m; sourceTree = "<group>"; };
 		66686B4C1F469289008B26BD /* TouchDownGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDownGestureRecognizer.h; sourceTree = "<group>"; };
 		66686B4D1F469289008B26BD /* TouchDownGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDownGestureRecognizer.m; sourceTree = "<group>"; };
-		66686B651F46967C008B26BD /* bgImage_HL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgImage_HL@2x.png"; sourceTree = "<group>"; };
-		66686B661F46967C008B26BD /* cellLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cellLine@2x.png"; sourceTree = "<group>"; };
-		66686B671F46967C008B26BD /* LCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCActionSheet.h; sourceTree = "<group>"; };
-		66686B681F46967C008B26BD /* LCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCActionSheet.m; sourceTree = "<group>"; };
 		66686BD71F46C718008B26BD /* MTTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTLoginViewController.h; sourceTree = "<group>"; };
 		66686BD81F46C718008B26BD /* MTTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTLoginViewController.m; sourceTree = "<group>"; };
 		66686BD91F46C718008B26BD /* MTTLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MTTLoginViewController.xib; sourceTree = "<group>"; };
@@ -768,25 +760,6 @@
 			path = Control;
 			sourceTree = "<group>";
 		};
-		66686B631F46967C008B26BD /* LCActionSheet */ = {
-			isa = PBXGroup;
-			children = (
-				66686B641F46967C008B26BD /* Image */,
-				66686B671F46967C008B26BD /* LCActionSheet.h */,
-				66686B681F46967C008B26BD /* LCActionSheet.m */,
-			);
-			path = LCActionSheet;
-			sourceTree = "<group>";
-		};
-		66686B641F46967C008B26BD /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				66686B651F46967C008B26BD /* bgImage_HL@2x.png */,
-				66686B661F46967C008B26BD /* cellLine@2x.png */,
-			);
-			path = Image;
-			sourceTree = "<group>";
-		};
 		66686BD61F46C708008B26BD /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1101,7 +1074,6 @@
 		66F107131F42A3270035C888 /* Exist */ = {
 			isa = PBXGroup;
 			children = (
-				66686B631F46967C008B26BD /* LCActionSheet */,
 				66686B451F469280008B26BD /* Control */,
 				66F10EDB1F4449570035C888 /* Voice */,
 			);
@@ -1504,12 +1476,10 @@
 				66E6D31C1F428700008E9590 /* LaunchScreen.storyboard in Resources */,
 				66E6D3191F428700008E9590 /* Assets.xcassets in Resources */,
 				66E437901F4C41BC009D527D /* NIMKitEmotion.bundle in Resources */,
-				66686B6A1F46967C008B26BD /* cellLine@2x.png in Resources */,
 				66D7F01C1F55006B00977897 /* msg.caf in Resources */,
 				66E4378B1F4C41BC009D527D /* bk_media_shoot_pressed@3x.png in Resources */,
 				66686BDB1F46C718008B26BD /* MTTLoginViewController.xib in Resources */,
 				66D7F01A1F55006B00977897 /* bubble.bundle in Resources */,
-				66686B691F46967C008B26BD /* bgImage_HL@2x.png in Resources */,
 				66E4378D1F4C41BC009D527D /* btn_bk_media_video_chat_normal@3x.png in Resources */,
 				66E437881F4C41BC009D527D /* bk_media_shoot_normal@2x.png in Resources */,
 				66E437801F4C41BC009D527D /* bk_media_picture_normal@2x.png in Resources */,
@@ -1665,7 +1635,6 @@
 				66F10F671F4449570035C888 /* hexc_table.c in Sources */,
 				66F1070C1F429CB80035C888 /* DDSuperAPI.m in Sources */,
 				66F107D21F42DB520035C888 /* AddMemberToGroupAPI.swift in Sources */,
-				6613723A1F6BA8170058280D /* HMDBSQLManager.swift in Sources */,
 				66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */,
 				66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */,
 				66E6D3D21F42929B008E9590 /* DDSendBuffer.m in Sources */,
@@ -1680,7 +1649,6 @@
 				6682FE801F4AF28B0048FA23 /* HMChatVoiceCell.swift in Sources */,
 				66F10F5F1F4449570035C888 /* exc_5_64_table.c in Sources */,
 				6672CC301F4ECCD000DA46E6 /* HMMessageManager.swift in Sources */,
-				66686B6B1F46967C008B26BD /* LCActionSheet.m in Sources */,
 				66F107291F42CD660035C888 /* MsgReadNotifyAPI.swift in Sources */,
 				66686D1B1F4A7642008B26BD /* HMBaseCell.swift in Sources */,
 				66F107F31F4308D60035C888 /* MTTGroupEntity.swift in Sources */,

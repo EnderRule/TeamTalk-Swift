@@ -145,23 +145,21 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
         self.view.addSubview(tableView)
         
 
-        tableView.addHeader {
-            
-        }
-        tableView.addHeader {
+        tableView.mj_addHeader(config: { (header ) in
+            header.setTitle("下拉載入更多", for: .idle)
+            header.setTitle("鬆開后載入", for: .pulling)
+            header.setTitle("正在載入...", for: .refreshing)
+            header.setTitle("没有更多了", for: .noMoreData)
+         }) {
             if self.noMoreRecords {
-                self.tableView.headerEndRefreshing()
-//                self.view.makeToast("没有更多了", duration: 2.5, position: .center, title: nil , image: nil , style: ToastStyle.init(), completion: nil )
-                self.view.makeToast("没有更多了")
+
+                self.tableView.mj_headerEndRefreshing()
+                self.view.makeToast("没有更多了", duration: 2.5, position: .center, title: nil , image: nil , style: ToastStyle.init(), completion: nil )
+//                self.view.makeToast("没有更多了")
             }else{
                 self.loadMoreHistoryRecords()
             }
         }
-        //必须先addHeader 再设置各类Text ,才能起效
-        tableView.headerPullToRefreshText = "下拉載入更多"
-        tableView.headerReleaseToRefreshText = "鬆開后載入"
-        tableView.headerRefreshingText = "正在載入..."
-        
     }
     
     
@@ -173,13 +171,13 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
             
             if error != nil  && error!.localizedDescription.length > 0 {
                 self?.view.makeToast(error!.localizedDescription)
-                self?.tableView.headerEndRefreshing()
+                self?.tableView.mj_headerEndRefreshing()
                 return
             }
             
             if count > 0 {
                 self?.refreshMessagesData(scrollToBottom: false)
-                self?.tableView.headerEndRefreshing()
+                self?.tableView.mj_headerEndRefreshing()
                 
                 let contentSizeHeightNew:CGFloat = self?.tableView.contentSize.height ?? 0
                 let contentOffsetYNew:CGFloat = contentSizeHeightNew - contentSizeHeightOld + contentOffsetYOld
@@ -188,7 +186,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
                 debugPrint("load more history messages for session \(self?.chattingModule.sessionEntity.sessionID ?? "") ,but no more")
 
                 self?.noMoreRecords = true
-                self?.tableView.headerEndRefreshing()
+                self?.tableView.mj_headerEndRefreshing()
             }
         })
     }

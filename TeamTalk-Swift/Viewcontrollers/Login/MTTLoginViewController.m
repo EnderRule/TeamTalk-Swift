@@ -8,8 +8,6 @@
 
 #import "MTTLoginViewController.h"
 
-#import "SCLAlertView.h"
-
 #import "TeamTalk_Swift-Swift.h"
 
 
@@ -144,47 +142,21 @@
     
     
     [[HMLoginManager shared]loginWithUserName:userName password:password success:^(MTTUserEntity * _Nonnull user ) {
-        
-
-        
-        DDLog(@"login success:%@ %@ %@",user.userId,user.name ,user.avatar);
-        
+        NSLog(@"login success:\nid:%@ \nname:%@ \navatar:%@",user.userId,user.name ,user.avatar);
         [self.userLoginBtn setEnabled:YES];
- 
         [self loginSuccessHandler];
-        
-        if ([HMLoginManager shared].pushTtoken.length > 0) {
-            SendPushTokenAPI *pushToken = [[SendPushTokenAPI alloc] initWithPushToken:[HMLoginManager shared].pushTtoken];
-            [pushToken requestWithParameters:nil  Completion:^(id response, NSError *error) { }];
-        }
     } failure:^(NSString * _Nonnull error ) {
-
+        [self.userLoginBtn setEnabled:YES];
+        NSLog(@"login error %@",error);
+        UILabel *errorlabel = [[UILabel alloc]init];
+        errorlabel.text = error;
+        errorlabel.contentMode = UIViewContentModeCenter;
+        [errorlabel sizeToFit];
         
-        if([error isEqualToString:@"版本过低"])
-        {
-            DDLog(@"login version too low 强制更新");
+        [self.view showToast:errorlabel duration:3 point:self.view.center completion:^(BOOL ss) {
             
-            SCLAlertView *alert = [SCLAlertView new];
-            [alert addButton:@"确定" actionBlock:^{
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://tt.mogu.io"]];
-            }];
-            [alert showError:self title:@"升级提示" subTitle:@"版本过低，需要强制更新" closeButtonTitle:nil duration:0];
-            
-        }else{
-            [self.userLoginBtn setEnabled:YES];
-            DDLog(@"login error %@",error);
-            
-            UILabel *errorlabel = [[UILabel alloc]init];
-            errorlabel.text = error;
-            errorlabel.contentMode = UIViewContentModeCenter;
-            [errorlabel sizeToFit];
-            
-            [self.view showToast:errorlabel duration:3 point:self.view.center completion:^(BOOL ss) {
-                
-            }];
-        }
+        }];
     }];
-    
 }
 
 #pragma mark - UITextFieldDelegate

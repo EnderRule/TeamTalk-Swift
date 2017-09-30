@@ -26,7 +26,7 @@ public extension UIColor{
         var cString:NSString = hexString as NSString
         // String should be 6 or 8 characters
         if (cString.length < 6){
-            self.init(r:0, g:0, b:0, a:1)
+            self.init(Intr:0, g:0, b:0, a:1)
         }else{
             //如果是0x开头的，那么截取字符串，字符串从索引为2的位置开始，一直到末尾
             if cString.hasPrefix("0X") || cString.hasPrefix("0x"){
@@ -38,7 +38,7 @@ public extension UIColor{
             }
             
             if cString.length != 6{
-                self.init(r:0, g:0, b:0, a:1)
+                self.init(Intr:0, g:0, b:0, a:1)
             }else{
                 let rstring:NSString = cString.substring(to: 2) as NSString
                 let gstring:NSString = (cString.substring(from: 2) as NSString).substring(to: 2) as NSString
