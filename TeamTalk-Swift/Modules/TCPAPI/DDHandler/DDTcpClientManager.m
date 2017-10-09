@@ -43,7 +43,7 @@
 #pragma mark - PublicAPI
 -(void)connect:(NSString *)ipAdr port:(NSInteger)port status:(NSInteger)status
 {
-    DDLog(@"mogujie mtalk client :connect ipAdr:%@ port:%ld",ipAdr,(long)port);
+//    DDLog(@"mogujie mtalk client :connect ipAdr:%@ port:%ld",ipAdr,(long)port);
     cDataLen = 0;
     
     _receiveBuffer = [NSMutableData data];

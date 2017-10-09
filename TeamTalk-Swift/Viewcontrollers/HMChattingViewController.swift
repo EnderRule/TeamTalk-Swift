@@ -297,6 +297,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
             }else{
                 msgEntity.state = message.state
             }
+            msgEntity.db_update(completion: nil)
+            
             dispatch(after: 0.0, task: { 
                 self?.tableView.reloadData()
             })
@@ -339,7 +341,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
             scale = image.size.width/image.size.height
          }
 
-        let messageEntity = MTTMessageEntity.init(content: "[圖片]", module: self.chattingModule, msgContentType: DDMessageContentType.Image)
+        let messageEntity = MTTMessageEntity.initWith(content: "[圖片]", module: self.chattingModule, msgContentType: DDMessageContentType.Image)
         messageEntity.imageLocalPath = imagePath
         messageEntity.imageScale = scale
         
@@ -445,9 +447,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
         guard text.length > 0 else {
             return
         }
-        let messageEntity = MTTMessageEntity.init(content: text, module: self.chattingModule, msgContentType: .Text)
+        let messageEntity = MTTMessageEntity.initWith(content: text, module: self.chattingModule, msgContentType: .Text)
         
-        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: { }) { (error ) in }
+//        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: { }) { (error ) in }
        
         self.sendMessage(msgEntity: messageEntity)
     }
@@ -471,7 +473,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
         }
         debugPrint("select charlet \(msgcontent)   \(categoryId!)   \(chartletId!)")
         
-        let messageEntity = MTTMessageEntity.init(content: msgcontent, module: self.chattingModule, msgContentType: .Emotion)
+        let messageEntity = MTTMessageEntity.initWith(content: msgcontent, module: self.chattingModule, msgContentType: .Emotion)
 
         messageEntity.emojiText = msgcontent
         messageEntity.emojiCategory = categoryId
@@ -512,7 +514,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
             }
             
             let voicePath:String = filePath
-            let newmessage = MTTMessageEntity.init(content: voicePath, module: self.chattingModule, msgContentType: .Voice)
+            let newmessage = MTTMessageEntity.initWith(content: voicePath, module: self.chattingModule, msgContentType: .Voice)
             newmessage.msgType = .msgTypeSingleAudio
             newmessage.voiceLocalPath = voicePath
             newmessage.voiceLength = Int(interval)

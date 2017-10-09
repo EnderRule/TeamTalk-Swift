@@ -86,9 +86,7 @@ class MTTGroupEntity: MTTBaseEntity {
         set{
             s_groupUserIds.removeAll()
             s_groupUserIds = newValue.sorted(by: { (obj1, obj2) -> Bool in
-                let obj1_tmp = obj1.replacingOccurrences(of: USER_PRE, with: "") as NSString
-                let obj2_tmp = obj2.replacingOccurrences(of: USER_PRE, with: "") as NSString
-                return  obj1_tmp.integerValue > obj2_tmp.integerValue ? false : true
+                return obj1.compare(obj2) == .orderedAscending
             })
             
             users = (s_groupUserIds as NSArray).componentsJoined(by:",")

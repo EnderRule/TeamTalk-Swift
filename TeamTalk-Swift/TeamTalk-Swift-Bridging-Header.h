@@ -37,7 +37,6 @@
 #import "ChattingModule.h"
 #import "ChattingEditModule.h"
 #import "SessionModule.h"
-#import "ContactsModule.h"
 
 #import "RecorderManager.h"
 #import "PlayerManager.h"

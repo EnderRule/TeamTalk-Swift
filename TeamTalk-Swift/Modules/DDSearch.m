@@ -8,7 +8,7 @@
 
 #import "DDSearch.h"
 #import "MTTDatabaseUtil.h"
-#import "DDGroupModule.h"
+
 #import "SpellLibrary.h"
 #import "MTTSundriesCenter.h"
 
@@ -235,12 +235,12 @@
 {
     //导入所有的用户
    __block NSMutableArray* allSessions = [NSMutableArray new];
-    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-    [[MTTDatabaseUtil instance] getAllUsers:^(NSArray *contacts, NSError *error) {
-        [allSessions addObjectsFromArray:contacts];
-        dispatch_semaphore_signal(sema);
-    }];
-     dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+//    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+//    [[MTTDatabaseUtil instance] getAllUsers:^(NSArray *contacts, NSError *error) {
+//        [allSessions addObjectsFromArray:contacts];
+//        dispatch_semaphore_signal(sema);
+//    }];
+//     dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
     return allSessions;
 }
 

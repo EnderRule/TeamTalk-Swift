@@ -96,16 +96,10 @@ typedef void(^InsertsRecentContactsCOmplection)(NSError* error);
 @interface MTTDatabaseUtil(Users)
 
 
-
- 
-- (void)getAllUsers:(LoadAllContactsComplection )completion;
-
-- (void)getUserFromID:(NSString*)userID completion:(void(^)(MTTUserEntity *user))completion;
-
 - (void)updateRecentGroup:(MTTGroupEntity *)group completion:(InsertsRecentContactsCOmplection)completion;
 - (void)updateRecentSessions:(NSArray *)sessions completion:(InsertsRecentContactsCOmplection)completion;
 - (void)updateRecentSession:(MTTSessionEntity *)session completion:(InsertsRecentContactsCOmplection)completion;
-- (void)loadGroupsCompletion:(LoadRecentContactsComplection)completion;
+
 - (void)loadSessionsCompletion:(LoadAllSessionsComplection)completion;
 -(void)removeSession:(NSString *)sessionID;
 - (void)deleteMesages:(MTTMessageEntity * )message completion:(DeleteSessionCompletion)completion;

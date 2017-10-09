@@ -22,35 +22,35 @@
     self = [super init];
     if (self) {
         self.allGroups = [NSMutableDictionary new];
-        [[MTTDatabaseUtil instance] loadGroupsCompletion:^(NSArray *contacts, NSError *error) {
-            [contacts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                MTTGroupEntity *group = (MTTGroupEntity *)obj;
-                if(group.objID)
-                {
-                    [self addGroup:group];
-                    uint32_t groupid = [MTTBaseEntity pbIDFromLocalID:group.objID];
-                    uint32_t groupversion = (uint32_t)group.objectVersion;
-                    GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] initWithGroupID:groupid groupVersion:groupversion];
-                    [request requestWithParameters:nil  Completion: ^(id response, NSError *error) {
-                        if (!error)
-                        {
-                            if ([response count]) {
-                                MTTGroupEntity* group = (MTTGroupEntity*)response[0];
-                                if (group)
-                                {
-                                    [self addGroup:group];
-                                    [[MTTDatabaseUtil instance] updateRecentGroup:group completion:^(NSError *error) {
-                                        DDLog(@"insert group to database error.");
-                                    }];
-                                }
-                            }
-                            
-                        }
-                    }];
-
-                }
-            }];
-        }];
+//        [[MTTDatabaseUtil instance] loadGroupsCompletion:^(NSArray *contacts, NSError *error) {
+//            [contacts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//                MTTGroupEntity *group = (MTTGroupEntity *)obj;
+//                if(group.objID)
+//                {
+//                    [self addGroup:group];
+//                    uint32_t groupid = [MTTBaseEntity pbIDFromLocalID:group.objID];
+//                    uint32_t groupversion = (uint32_t)group.objectVersion;
+//                    GetGroupInfoAPI* request = [[GetGroupInfoAPI alloc] initWithGroupID:groupid groupVersion:groupversion];
+//                    [request requestWithParameters:nil  Completion: ^(id response, NSError *error) {
+//                        if (!error)
+//                        {
+//                            if ([response count]) {
+//                                MTTGroupEntity* group = (MTTGroupEntity*)response[0];
+//                                if (group)
+//                                {
+//                                    [self addGroup:group];
+//                                    [[MTTDatabaseUtil instance] updateRecentGroup:group completion:^(NSError *error) {
+//                                        DDLog(@"insert group to database error.");
+//                                    }];
+//                                }
+//                            }
+//                            
+//                        }
+//                    }];
+//
+//                }
+//            }];
+//        }];
         [self registerAPI];
     }
     return self;

@@ -10,6 +10,9 @@ import UIKit
 
 class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
+    static let kResultLastUpdateTime:String = "alllastupdatetime"
+    static let kResultUserList:String = "userlist"
+    
     var lastUpdateTime:Int = 0
     public convenience init(lastUpdateTime:Int) {
         self.init()
@@ -40,14 +43,14 @@ class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
         let analysis:Analysis = { (data) in
             if let res = try? Im.Buddy.ImallUserRsp.parseFrom(data: data ?? Data()) {
                 var userAndVersion:[String:Any] = [:]
-                userAndVersion.updateValue(res.latestUpdateTime, forKey: "alllastupdatetime")
+                userAndVersion.updateValue(res.latestUpdateTime, forKey: AllUserAPI.kResultLastUpdateTime)
                 
                 var userList:[MTTUserEntity] = []
                 for userinfo in res.userList {
                     let userEntity = MTTUserEntity.initWith(userinfo: userinfo)
                     userList.append(userEntity)
                 }
-                userAndVersion.updateValue(userList, forKey: "userlist")
+                userAndVersion.updateValue(userList, forKey: AllUserAPI.kResultUserList)
                 
                 return userAndVersion
             }else {

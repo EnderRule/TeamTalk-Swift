@@ -44,7 +44,6 @@
 		66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AAB1F45A769008B26BD /* ChattingEditModule.m */; };
 		66686AEA1F45ABC3008B26BD /* SessionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AE91F45ABC3008B26BD /* SessionModule.m */; };
 		66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
-		66686AF41F46796E008B26BD /* ContactsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AF31F46796E008B26BD /* ContactsModule.m */; };
 		66686BDA1F46C718008B26BD /* MTTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686BD81F46C718008B26BD /* MTTLoginViewController.m */; };
 		66686BDB1F46C718008B26BD /* MTTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66686BD91F46C718008B26BD /* MTTLoginViewController.xib */; };
 		66686D181F46F7A9008B26BD /* HMRecentSessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D171F46F7A9008B26BD /* HMRecentSessionsViewController.swift */; };
@@ -1731,7 +1730,6 @@
 				66E6D3DE1F4292CC008E9590 /* DDDataOutputStream.m in Sources */,
 				66F10F851F4449570035C888 /* PlayerManager.m in Sources */,
 				66F10F691F4449570035C888 /* jitter.c in Sources */,
-				66686AF41F46796E008B26BD /* ContactsModule.m in Sources */,
 				66F10F701F4449570035C888 /* mdf.c in Sources */,
 				66E437971F4C41BC009D527D /* NIMInputEmoticonParser.m in Sources */,
 				66E835931F56899A00F14ED9 /* ZQFileBrowserVC.swift in Sources */,

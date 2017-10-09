@@ -20,9 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         HMLoginManager.shared.setup()
         
         HMCDManager.shared.userDBName = "0"
-
+ 
         
-        print("test  ",("-6user_34234" as NSString).intValue)
         
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (issuccess , error ) in
@@ -67,6 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

@@ -139,7 +139,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     }
     
     private var s_serverTime:TimeInterval = Date().timeIntervalSince1970
-    private var s_currentUser:MTTUserEntity = MTTUserEntity.init()
+    private var s_currentUser:MTTUserEntity = MTTUserEntity.newObj() as! MTTUserEntity
     private var s_networkState:HMNetworkState = .disconnect
     private var s_loginState:HMLoginState = .offLine{
         didSet{
@@ -255,7 +255,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         }
     }
     
-    func tcpClientConnectSuccess() {
+    internal func tcpClientConnectSuccess() {
         if self.tcpIsConnecting{
             self.tcpIsConnecting = false
             
@@ -266,7 +266,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             })
         }
     }
-    func tcpClientConnectFailure() {
+    internal func tcpClientConnectFailure() {
         if self.tcpIsConnecting{
             self.tcpIsConnecting = false
             
@@ -277,11 +277,11 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             })
         }
     }
-    func tcpClientReceiveServerHeartBeat() {
+    internal func tcpClientReceiveServerHeartBeat() {
         self.n_receiveServerHeartBeat()
     }
 
-    func loginWith(userName:String,password:String,success:@escaping ((MTTUserEntity)->Void),failure:@escaping ((String)->Void)){
+    internal func loginWith(userName:String,password:String,success:@escaping ((MTTUserEntity)->Void),failure:@escaping ((String)->Void)){
         
         self.getMsgIP(success: { (dic ) in
             let json = JSON.init(dic)
@@ -377,16 +377,18 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     }
     
     func logout(){
-        
-        self.s_currentUser = MTTUserEntity.init()
+        self.s_loginState = .offLineInitiative
+
+        self.s_currentUser = MTTUserEntity.newObj() as! MTTUserEntity
         self.currentUserID = ""
         self.currentUserName = ""
         self.shouldAutoLogin = false
         
         DDMessageModule.shareInstance().removeAllUnreadMessages()
         SessionModule.instance().clearSession()
+        DDTcpClientManager.instance().delegate = nil
         DDTcpClientManager.instance().disconnect()
-        
+    
         self.s_loginState = .offLineInitiative
     }
     
@@ -406,62 +408,77 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     
     private func loadAllUser(completion:@escaping (()->Void)){
     
-        let key:String = "alllastupdatetime"
-        var version:Int = UserDefaults.standard.integer(forKey: key)
+        if DEBUGMode{
+            MTTUserEntity.db_query(predicate: nil , sortBy: "objID", sortAscending: true , offset: 0, limitCount: 0, success: { (users ) in
+                debugPrint("user query count \(users.count)")
+                for obj  in users {
+                    if let user:MTTUserEntity = obj as? MTTUserEntity{
+                        debugPrint("user id ",user.objID)
+                    }
+                }
+            }) { (error ) in
+                debugPrint("user query error \(error)")
+            }
+        }
         
-        MTTDatabaseUtil.instance().getAllUsers { (contacts , error ) in
-            if contacts != nil && contacts!.count > 0 {
-                for obj in  contacts!.enumerated(){
+        let kLastUpdate:String = AllUserAPI.kResultLastUpdateTime
+        var localUpdateTime:Int = UserDefaults.standard.integer(forKey: kLastUpdate)
+        
+        let lock = NSCondition.init()
+        lock.lock()
+
+        var dbfinish:Bool = false
+        MTTUserEntity.db_query(offset: 0, limitCount: 0, success: { (users ) in
+            debugPrint("db load all user count \(users.count)")
+           
+            if users.count > 0 {
+                for obj in  users.enumerated(){
                     if let user:MTTUserEntity = obj.element as? MTTUserEntity{
                         DDUserModule.shareInstance().addMaintanceUser(user)
                     }
                 }
                 completion()
-                
             }else{
-                version = 0
-                let api = AllUserAPI.init(lastUpdateTime: 0)
-                api.request(withParameters: [:], completion: { (response, error ) in
-                    if let dic = response as? [String:Any] {
-                        let rsversion:Int = dic[key] as? Int ?? 0
-                        UserDefaults.standard.set(rsversion, forKey: key)
-                        
-                        let users:[MTTUserEntity] = dic["userlist"] as? [MTTUserEntity] ?? []
-//                        MTTDatabaseUtil.instance().insertUsers(users, completion: { ( error ) in   })
-                        dispatch_globle(after: 0, task: {
-                            for obj in  users.enumerated(){
-                                DDUserModule.shareInstance().addMaintanceUser(obj.element)
-                            }
-                            
-                            dispatch(after: 0, task: { 
-                                completion()
-                            })
-                        })
-                    }
-                })
+                localUpdateTime = 0
             }
+            
+            dbfinish = true
+        }) { (error ) in
+            debugPrint("db load all user fail: ",error )
+            
+            localUpdateTime = 0
+            dbfinish = true
         }
-        
-        let api2 = AllUserAPI.init(lastUpdateTime: version)
+        while !dbfinish {
+//            debugPrint("lock wait() ")
+            lock.wait()
+        }
+
+        lock.unlock()
+//        debugPrint("lock final unlock  ")
+
+        let api2 = AllUserAPI.init(lastUpdateTime: localUpdateTime)
         api2.request(withParameters: [:]) { (response , error ) in
             if let dic = response as? [String:Any] {
-                let rsversion:Int = dic[key] as? Int ?? 0
-                UserDefaults.standard.set(rsversion, forKey: key)
+                let rsversion:Int = dic[kLastUpdate] as? Int ?? 0
+                UserDefaults.standard.set(rsversion, forKey: kLastUpdate)
                 
-                let users:[MTTUserEntity] = dic["userlist"] as? [MTTUserEntity] ?? []
+                let users:[MTTUserEntity] = dic[ AllUserAPI.kResultUserList] as? [MTTUserEntity] ?? []
                 if users.count > 0 {
-//                    MTTDatabaseUtil.instance().insertUsers(users, completion: { (error ) in   })
                     dispatch_globle(after: 0, task: {
                         for obj in  users.enumerated(){
                             DDUserModule.shareInstance().addMaintanceUser(obj.element)
                         }
                         
+                        dispatch(after: 0, task: { 
+                            completion()
+                        })
                     })
                 }
-                
             }
-            
         }
+       
+        
         
     }
     

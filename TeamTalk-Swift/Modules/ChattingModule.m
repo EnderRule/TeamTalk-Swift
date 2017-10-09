@@ -59,14 +59,15 @@ static NSUInteger const showPromptGap = 300;
             if (response) {
                 NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"msgTime" ascending:YES];
                 [response sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-                [[MTTDatabaseUtil instance] insertMessages:response success:^{
-                    
+                
+//                [[MTTDatabaseUtil instance] insertMessages:response success:^{
+                
                     MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] initWithSessionID:self.sessionEntity.sessionIntID msgID:(uint32_t)msgID sessionType:self.sessionEntity.sessionType];
                     [readACK requestWithParameters:nil Completion:nil];
 
-                } failure:^(NSString *errorDescripe) {
-                    
-                }];
+//                } failure:^(NSString *errorDescripe) {
+//                    
+//                }];
                 [response enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     [self addShowMessage:obj];
                 }];
@@ -90,18 +91,27 @@ static NSUInteger const showPromptGap = 300;
                 NSUInteger msgID = [[response valueForKeyPath:@"@max.msgID"] integerValue];
                 if ( msgID !=0) {
                     if (response) {
-                        [[MTTDatabaseUtil instance] insertMessages:response success:^{
-                            MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] initWithSessionID:self.sessionEntity.sessionIntID msgID:(uint32_t)msgID sessionType:self.sessionEntity.sessionType];
-                            [readACK requestWithParameters:nil Completion:nil];
+
+                        MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] initWithSessionID:self.sessionEntity.sessionIntID msgID:(uint32_t)msgID sessionType:self.sessionEntity.sessionType];
                         
-                        } failure:^(NSString *errorDescripe) {
+                        [readACK requestWithParameters:nil Completion:nil];
+                        
                             
-                        }];
                         NSUInteger count = [self p_getMessageCount];
-                        [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
+                        NSPredicate  *predicate = [NSPredicate predicateWithFormat:@"sessionId = %@",self.sessionEntity.sessionID];
+                        [MTTMessageEntity db_queryWithPredicate:predicate sortBy:@"msgTime" sortAscending:NO offset:count limitCount:DD_PAGE_ITEM_COUNT success:^(NSArray<NSManagedObject *> * _Nonnull messages) {
                             [self p_addHistoryMessages:messages Completion:completion];
                             completion([response count],error);
+
+                        } failure:^(NSString * _Nonnull error) {
+                            
                         }];
+                        
+                        
+//                        [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
+//                            [self p_addHistoryMessages:messages Completion:completion];
+//                            completion([response count],error);
+//                        }];
                         
                     }
                     
@@ -117,6 +127,51 @@ static NSUInteger const showPromptGap = 300;
         
     }
 }
+
+//- (void)loadMessageForSessionID:(NSString*)sessionID pageCount:(int)pagecount index:(NSInteger)index completion:(LoadMessageInSessionCompletion)completion
+//{
+//    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
+//        NSMutableArray* array = [[NSMutableArray alloc] init];
+//        if ([_database tableExists:TABLE_MESSAGE])
+//        {
+//            [_database setShouldCacheStatements:YES];
+//            
+//            NSString* sqlString = [NSString stringWithFormat:@"SELECT * FROM message where sessionId=? ORDER BY msgTime DESC limit ?,?"];
+//            FMResultSet* result = [_database executeQuery:sqlString,sessionID,[NSNumber numberWithInteger:index],[NSNumber numberWithInteger:pagecount]];
+//            while ([result next])
+//            {
+//                MTTMessageEntity* message = [self messageFromResult:result];
+//                [array addObject:message];
+//            }
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                
+//                completion(array,nil);
+//            });
+//        }
+//    }];
+//}
+//
+//- (void)loadMessageForSessionID:(NSString*)sessionID afterMessage:(MTTMessageEntity*)message completion:(LoadMessageInSessionCompletion)completion
+//{
+//    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
+//        NSMutableArray* array = [[NSMutableArray alloc] init];
+//        if ([_database tableExists:TABLE_MESSAGE])
+//        {
+//            [_database setShouldCacheStatements:YES];
+//            NSString* sqlString = [NSString stringWithFormat:@"select * from %@ where sessionId = '%@' AND messageID >= ? order by msgTime DESC,messageID DESC",TABLE_MESSAGE,sessionID];
+//            FMResultSet* result = [_database executeQuery:sqlString,@(message.msgID)];
+//            while ([result next])
+//            {
+//                MTTMessageEntity* message = [self messageFromResult:result];
+//                [array addObject:message];
+//            }
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                completion(array,nil);
+//            });
+//        }
+//    }];
+//}
+
 -(void)loadHostoryMessageFromServer:(NSUInteger)FromMsgID Completion:(DDChatLoadMoreHistoryCompletion)completion{
     [self loadHisToryMessageFromServer:FromMsgID loadCount:19 Completion:completion];
 }
@@ -124,11 +179,16 @@ static NSUInteger const showPromptGap = 300;
 - (void)loadMoreHistoryCompletion:(DDChatLoadMoreHistoryCompletion)completion
 {
     
-    NSUInteger count = [self p_getMessageCount];
+    NSUInteger offset = [self p_getMessageCount];
     
-    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
-        //after loading finish ,then add to messages
-        if ([HMLoginManager shared].networkState == HMNetworkStateDisconnect) {
+    
+    
+    NSPredicate  *predicate = [NSPredicate predicateWithFormat:@"sessionId = %@",self.sessionEntity.sessionID];
+    [MTTMessageEntity db_queryWithPredicate:nil sortBy:@"msgTime" sortAscending:NO offset:offset limitCount:DD_PAGE_ITEM_COUNT success:^(NSArray<NSManagedObject *> * _Nonnull messages) {
+        
+        NSLog(@"load more history offset:%zd  limitpagecount:%zd  resultCount:%zd  %@",offset,DD_PAGE_ITEM_COUNT,messages.count,messages);
+        
+        if ([HMLoginManager shared].networkState == HMNetworkStateDisconnect){
             [self p_addHistoryMessages:messages Completion:completion];
         }else{
             if ([messages count] !=0) {
@@ -162,17 +222,73 @@ static NSUInteger const showPromptGap = 300;
                     completion(addcount,error);
                 }];
             }
-            
-            
         }
+
         
+    } failure:^(NSString * _Nonnull error) {
+        completion(0,[NSError errorWithDomain:error code:2 userInfo:nil]);
     }];
+
+    
+//    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
+//        //after loading finish ,then add to messages
+//        if ([HMLoginManager shared].networkState == HMNetworkStateDisconnect) {
+//            [self p_addHistoryMessages:messages Completion:completion];
+//        }else{
+//            if ([messages count] !=0) {
+//                
+//                BOOL isHaveMissMsg = [self p_isHaveMissMsg:messages];
+//                if (isHaveMissMsg || ([self getMiniMsgId] - [self getMaxMsgId:messages] !=0)) {
+//                    
+//                    [self loadHostoryMessageFromServer:[self getMiniMsgId] Completion:^(NSUInteger addcount, NSError *error) {
+//                        if (addcount) {
+//                            completion(addcount,error);
+//                        }else{
+//                            [self p_addHistoryMessages:messages Completion:completion];
+//                        }
+//                    }];
+//                }else{
+//                    //检查消息是否连续
+//                    [self p_addHistoryMessages:messages Completion:completion];
+//                    //                [self checkMsgList:^(NSUInteger addcount, NSError *error) {
+//                    //                    completion(addcount,error);
+//                    //                    if (!addcount) {
+//                    //                               [self p_addHistoryMessages:messages Completion:completion];
+//                    //                    }
+//                    //                }];
+//                    
+//                }
+//                
+//            }else{
+//                //数据库中已获取不到消息
+//                //拿出当前最小的msgid去服务端取
+//                [self loadHostoryMessageFromServer:[self getMiniMsgId] Completion:^(NSUInteger addcount, NSError *error) {
+//                    completion(addcount,error);
+//                }];
+//            }
+//            
+//            
+//        }
+//        
+//    }];
 }
 - (void)loadAllHistoryCompletion:(MTTMessageEntity*)message Completion:(DDChatLoadMoreHistoryCompletion)completion
 {
-    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID afterMessage:message completion:^(NSArray *messages, NSError *error) {
+    
+    NSUInteger count = [self p_getMessageCount];
+    NSPredicate  *predicate = [NSPredicate predicateWithFormat:@"sessionId = %@ AND messageID >= %ld",self.sessionEntity.sessionID,message.msgID];//  sessionId = '%@' AND messageID >= ? order by msgTime DESC,messageID DESC",TABLE_MESSAGE,sessionID];
+
+    [MTTMessageEntity db_queryWithPredicate:predicate sortBy:@"msgTime" sortAscending:NO offset:count limitCount:DD_PAGE_ITEM_COUNT success:^(NSArray<NSManagedObject *> * _Nonnull messages) {
         [self p_addHistoryMessages:messages Completion:completion];
+        
+    } failure:^(NSString * _Nonnull error) {
+        completion(0,[NSError errorWithDomain:error code:2 userInfo:nil]);
     }];
+    
+    
+//    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID afterMessage:message completion:^(NSArray *messages, NSError *error) {
+//        [self p_addHistoryMessages:messages Completion:completion];
+//    }];
 }
 -(NSUInteger )getMiniMsgId
 {

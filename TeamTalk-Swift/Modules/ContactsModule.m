@@ -7,11 +7,9 @@
 //
 
 #import "ContactsModule.h"
-#import "NSDictionary+Safe.h"
-#import "MTTDatabaseUtil.h"
-#import "DDGroupModule.h"
 
 #import "DDUserModule.h"
+#import "NSDictionary+Safe.h"
 
 #import "TeamTalk_Swift-Swift.h"
 
@@ -26,7 +24,6 @@
     }
     return self;
 }
-
 
 /**
  *  按首字母展示

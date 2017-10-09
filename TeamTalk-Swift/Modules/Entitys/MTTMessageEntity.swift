@@ -63,65 +63,87 @@ import UIKit
     }
 }
 
-class MTTMessageEntity: NSObject,NSCopying {
-    
-    var msgID:UInt32 = 0
-    var msgType:MsgType_Objc = .msgTypeSingleText
-    var msgTime:UInt32 = 0
-    var sessionId:String = ""
-    var seqNo:Int = 0
-    var senderId:String = ""
-    var msgContent:String = ""
-    var toUserID:String = ""
-    var info:[String:Any] = [:]  //附加属性、包括语音时长
-    var msgContentType:DDMessageContentType = .Text
-    var attach:String = ""
-    var sessionType:Im.BaseDefine.SessionType = .sessionTypeSingle
-    var state:DDMessageState = .Sending
-    
-    func copy(with zone: NSZone? = nil) -> Any {
-        let copyEntity = MTTMessageEntity.init(msgID: self.msgID, msgType: self.msgType, msgTime: self.msgTime, sessionID: self.sessionId, senderID: self.senderId, msgContent: self.msgContent, toUserID: self.toUserID)
-        copyEntity.info = self.info
-        
-        return copyEntity
-    }
-    
-    static let tempShared:MTTMessageEntity = MTTMessageEntity() //用於過渡、解析數據
-    
-    public convenience init(msgID:UInt32,msgType:MsgType_Objc,msgTime:UInt32,sessionID:String,senderID:String,msgContent:String,toUserID:String){
-        self.init()
-        
-        self.msgID = msgID
-        self.msgType = msgType
-        self.msgTime = msgTime
-        self.sessionId = sessionID
-        self.senderId = senderID
-        self.toUserID = toUserID
-        self.msgContent = msgContent
-        
-    }
-    
-    public convenience init(content:String,module:ChattingModule,msgContentType:DDMessageContentType){
-        self.init()
-        
-        if module.sessionEntity.sessionType == .sessionTypeGroup{
-            self.msgType = .msgTypeGroupText
-        }else{
-            self.msgType = .msgTypeSingleText
-        }
-        self.msgContent = content
-        self.msgContentType = msgContentType
-        self.msgID = UInt32(DDMessageModule.getMessageID())
-        self.sessionId = module.sessionEntity.sessionID
-        self.toUserID = module.sessionEntity.sessionID
-        self.senderId = currentUser().userId
-        self.state = .Sending
-        self.msgTime = UInt32(Date().timeIntervalSince1970)
 
-        module.addShowMessage(self)
-        module.updateSessionUpdateTime(UInt(self.msgTime))
+//messageID integer,
+//sessionId text ,
+//fromUserId text,
+//toUserId text,
+//content text,
+//status integer,
+//msgTime real,
+//sessionType integer,
+//messageContentType integer,
+//messageType integer,
+//info text,
+//reserve1 integer,
+//reserve2 text,
+//primary key (messageID,sessionId)
+
+@objc(MTTMessageEntity)
+class MTTMessageEntity: MTTBaseEntity {
+    static let tempShared:MTTMessageEntity = MTTMessageEntity.newNotInertObj() as! MTTMessageEntity //用於過渡、解析數據
+    
+    @NSManaged var msgID:UInt32
+    @NSManaged var msgTime:UInt32
+    @NSManaged var seqNo:UInt32
+    @NSManaged var sessionId:String
+    @NSManaged var senderId:String
+    @NSManaged var toUserID:String
+    @NSManaged var msgContent:String
+    @NSManaged var attach:String
+    @NSManaged var extraInfo:String
+
+    @NSManaged var msgContentTypeInt:Int16
+    @NSManaged var sessionTypeInt:Int16
+    @NSManaged var msgTypeInt:Int16
+    @NSManaged var stateInt:Int16
+
+    var info:[String:Any]{
+        get{
+            return NSDictionary.initWithJsonString(self.extraInfo) as! [String:Any]
+        }
+        set{
+            self.extraInfo = (newValue as NSDictionary).jsonString()
+        }
+    }
+
+    var msgContentType:DDMessageContentType{
+        set{
+            self.msgContentTypeInt = Int16(newValue.rawValue)
+        }
+        get{
+            return DDMessageContentType.init(rawValue: Int(self.msgContentTypeInt))!
+        }
+        
     }
     
+    var sessionType:Im.BaseDefine.SessionType{
+        set{
+            self.sessionTypeInt = Int16(newValue.rawValue)
+        }
+        get{
+            return self.sessionTypeInt == 1 ? Im.BaseDefine.SessionType.sessionTypeSingle : Im.BaseDefine.SessionType.sessionTypeGroup
+        }
+    }
+    var msgType:MsgType_Objc{
+        set{
+            self.msgTypeInt = Int16(newValue.rawValue)
+        }
+        get{
+            return MsgType_Objc.init(rawValue: Int32(self.msgTypeInt))!
+        }
+        
+    }
+    var state:DDMessageState{
+        set{
+            self.msgContentTypeInt = Int16(newValue.rawValue)
+        }
+        get{
+            return DDMessageState.init(rawValue: Int(self.stateInt))!
+        }
+        
+    }
+ 
     var isGroupMessage:Bool {
         get{
             return ( self.msgType == .msgTypeGroupAudio || self.msgType == .msgTypeGroupText)
@@ -145,6 +167,25 @@ class MTTMessageEntity: NSObject,NSCopying {
     }
     var isEmotionMsg:Bool{
         return   self.msgContentType == .Emotion
+    }
+    
+    //初始值
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+        
+        self.msgID = 0
+        self.msgTime = 0
+        self.sessionId = ""
+        self.seqNo = 0
+        self.senderId = ""
+        self.msgContent = ""
+        self.toUserID = ""
+        self.attach  = ""
+        self.info = [:]
+        self.msgContentType = .Text
+        self.sessionType = .sessionTypeSingle
+        self.msgType = .msgTypeSingleText
+        self.state = .SendSuccess
     }
 }
 
@@ -243,6 +284,7 @@ extension MTTMessageEntity {
 //    文本 {"type":10,"data":"{\"text\":\"ghj\"}"}
 //    圖片 {"type":11,"data":"{\"url\":\"http:.......789000.jpg\"}"}
 //    表情 {"type":12,"data":"{\"sticker\":\"xxx\"}"}
+    
     public func decode(content:String){
         
         let realConent = content.decrypt()
@@ -309,92 +351,132 @@ extension MTTMessageEntity {
         return encryptContent
     }
     
-    
-    
-    public convenience init(msgInfo:Im.BaseDefine.MsgInfo,sessionType:Im.BaseDefine.SessionType){
-        self.init()
+    public class func  initWith(msgID:UInt32,msgType:MsgType_Objc,msgTime:UInt32,sessionID:String,senderID:String,msgContent:String,toUserID:String)->MTTMessageEntity{
         
-        self.msgID = msgInfo.msgId
-        self.msgTime =  msgInfo.createTime
-        self.msgType = MsgType_Objc.init(rawValue: msgInfo.msgType.rawValue) ?? .msgTypeSingleText
-        self.sessionType = sessionType
-        self.senderId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
-        if self.sessionType == .sessionTypeSingle{
-            self.sessionId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
-        }else {
-            self.sessionId = MTTGroupEntity.localIDFrom(pbID: msgInfo.fromSessionId)
-        }
-        if senderId == sessionId{
-            self.toUserID =  currentUser().userId
+        let newMsg:MTTMessageEntity = MTTMessageEntity.newObj() as! MTTMessageEntity
+        
+        newMsg.msgID = msgID
+        newMsg.msgType = msgType
+        newMsg.msgTime = msgTime
+        newMsg.sessionId = sessionID
+        newMsg.senderId = senderID
+        newMsg.toUserID = toUserID
+        newMsg.msgContent = msgContent
+        
+        return newMsg
+    }
+    
+    public class func initWith(content:String,module:ChattingModule,msgContentType:DDMessageContentType)->MTTMessageEntity{
+        let newMsg:MTTMessageEntity = MTTMessageEntity.newObj() as! MTTMessageEntity
+        
+        if module.sessionEntity.sessionType == .sessionTypeGroup{
+            newMsg.msgType = .msgTypeGroupText
         }else{
-            self.toUserID = sessionId
+            newMsg.msgType = .msgTypeSingleText
         }
-        if self.isVoiceMessage {
-            self.msgContentType = .Voice
+        newMsg.msgContent = content
+        newMsg.msgContentType = msgContentType
+        newMsg.msgID = UInt32(DDMessageModule.getMessageID())
+        newMsg.sessionId = module.sessionEntity.sessionID
+        newMsg.toUserID = module.sessionEntity.sessionID
+        newMsg.senderId = currentUser().userId
+        newMsg.state = .Sending
+        newMsg.msgTime = UInt32(Date().timeIntervalSince1970)
+        
+        module.addShowMessage(newMsg)
+        module.updateSessionUpdateTime(UInt(newMsg.msgTime))
+        return newMsg
+    }
+    
+    public class func initWith(msgInfo:Im.BaseDefine.MsgInfo,sessionType:Im.BaseDefine.SessionType)->MTTMessageEntity{
+
+        
+        let newMsg:MTTMessageEntity = MTTMessageEntity.newObj() as! MTTMessageEntity
+        
+        newMsg.msgID = msgInfo.msgId
+        newMsg.msgTime =  msgInfo.createTime
+        newMsg.msgType = MsgType_Objc.init(rawValue: msgInfo.msgType.rawValue) ?? .msgTypeSingleText
+        newMsg.sessionType = sessionType
+        newMsg.senderId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
+        if newMsg.sessionType == .sessionTypeSingle{
+            newMsg.sessionId = MTTUserEntity.localIDFrom(pbID: msgInfo.fromSessionId)
+        }else {
+            newMsg.sessionId = MTTGroupEntity.localIDFrom(pbID: msgInfo.fromSessionId)
+        }
+        if newMsg.senderId == newMsg.sessionId{
+            newMsg.toUserID =  currentUser().userId
+        }else{
+            newMsg.toUserID = newMsg.sessionId
+        }
+        if newMsg.isVoiceMessage {
+            newMsg.msgContentType = .Voice
             
             if (msgInfo.msgData as NSData).length > 4 {
                 self.saveDownloadVoice(data: msgInfo.msgData, compeletion: { (filepath , voiceLength) in
-                    self.msgContent = "[語音]"
+                    newMsg.msgContent = "[語音]"
                     
-                    self.voiceLength = Int(voiceLength)
-                    self.voiceHadPlayed = false
-                    self.voiceLocalPath = filepath
+                    newMsg.voiceLength = Int(voiceLength)
+                    newMsg.voiceHadPlayed = false
+                    newMsg.voiceLocalPath = filepath
                 })
             }else {
-                self.msgContent = "[語音存儲出錯]"
+                newMsg.msgContent = "[語音存儲出錯]"
             }
         }else{
             if let tempStr = String.init(data: msgInfo.msgData, encoding: .utf8){
-                self.decode(content: tempStr)
+                newMsg.decode(content: tempStr)
             }else{
                 debugPrint(self.classForCoder,"init with msgInfo、convert error")
             }
         }
+        
+        return newMsg
+        
     }
     
-    public convenience init(msgData:Im.Message.ImmsgData){
-        self.init()
-        
-        self.msgID = msgData.msgId
-        self.msgTime = msgData.createTime
-        self.msgType = MsgType_Objc.init(rawValue: msgData.msgType.rawValue) ?? .msgTypeSingleText
-        self.sessionType = self.isGroupMessage ? .sessionTypeGroup: .sessionTypeSingle
-        if self.sessionType == .sessionTypeSingle{
-            self.sessionId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
+    public class func initWith(msgData:Im.Message.ImmsgData)->MTTMessageEntity{
+        let newMsg:MTTMessageEntity = MTTUserEntity.newObj() as! MTTMessageEntity
+        newMsg.msgID = msgData.msgId
+        newMsg.msgTime = msgData.createTime
+        newMsg.msgType = MsgType_Objc.init(rawValue: msgData.msgType.rawValue) ?? .msgTypeSingleText
+        newMsg.sessionType = newMsg.isGroupMessage ? .sessionTypeGroup: .sessionTypeSingle
+        if newMsg.sessionType == .sessionTypeSingle{
+            newMsg.sessionId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
         }else {
-            self.sessionId = MTTGroupEntity.localIDFrom(pbID: msgData.toSessionId)
+            newMsg.sessionId = MTTGroupEntity.localIDFrom(pbID: msgData.toSessionId)
         }
-        self.senderId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
+        newMsg.senderId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
         
-        if senderId == sessionId{
-            self.toUserID = currentUser().userId
+        if newMsg.senderId == newMsg.sessionId{
+            newMsg.toUserID = currentUser().userId
         }else{
-            self.toUserID = sessionId
+            newMsg.toUserID = newMsg.sessionId
         }
-        if self.isVoiceMessage {
-            self.msgContentType = .Voice
+        if newMsg.isVoiceMessage {
+            newMsg.msgContentType = .Voice
             
             if (msgData.msgData as NSData).length > 4 {
                 self.saveDownloadVoice(data: msgData.msgData, compeletion: { (filepath , voiceLength) in
-                    self.msgContent = filepath
-                    self.voiceLocalPath = filepath
-                    self.voiceLength = Int(voiceLength)
-                    self.voiceHadPlayed = false
+                    newMsg.msgContent = filepath
+                    newMsg.voiceLocalPath = filepath
+                    newMsg.voiceLength = Int(voiceLength)
+                    newMsg.voiceHadPlayed = false
                 })
             }else {
-                self.msgContent = "[語音存儲出錯]"
+                newMsg.msgContent = "[語音存儲出錯]"
             }
         }else{
             
             if let tempStr = String.init(data: msgData.msgData, encoding: .utf8){
-                self.decode(content: tempStr)
+                newMsg.decode(content: tempStr)
             }else{
                 debugPrint(self.classForCoder,"init with msgData、convert error")
             }
         }
+        return newMsg
     }
     
-    private func saveDownloadVoice(data:Data, compeletion: @escaping ((_ voiceFilePath:String,_ voiceLength:Int32) ->Void)){
+    private class func saveDownloadVoice(data:Data, compeletion: @escaping ((_ voiceFilePath:String,_ voiceLength:Int32) ->Void)){
         var filePath = ZQFileManager.shared.docPath(folder: "voice",fileName: "voice_\(TIMESTAMP()).spx")
         let tempData:NSData = data as NSData
         let realVoiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData

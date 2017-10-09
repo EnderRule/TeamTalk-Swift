@@ -144,6 +144,9 @@
     [[HMLoginManager shared]loginWithUserName:userName password:password success:^(MTTUserEntity * _Nonnull user ) {
         NSLog(@"login success:\nid:%@ \nname:%@ \navatar:%@",user.userId,user.name ,user.avatar);
         [self.userLoginBtn setEnabled:YES];
+        
+        [HMCDManager shared].userDBName = user.userId;
+        
         [self loginSuccessHandler];
     } failure:^(NSString * _Nonnull error ) {
         [self.userLoginBtn setEnabled:YES];

@@ -61,6 +61,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
                 self.refreshData()
             })
         }
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -262,36 +263,43 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func preLoadMessageFor(session:MTTSessionEntity){
-        MTTDatabaseUtil.instance().getLastestMessage(forSessionID: session.sessionID) { (message , error ) in
-            if message != nil {
-                if message!.msgID != session.lastMsgID {
-                    
-                    DDMessageModule.shareInstance().getMessageFromServer(Int(session.lastMsgID), currentSession: session, count: 20, block: { (array , error ) in
-                        if array?.count ?? 0 > 0 {
-                            
-                            MTTDatabaseUtil.instance().insertMessages(array! as! [Any], success: { 
-                                
-                            }, failure: { (error ) in
-                                
-                            })
-                        }
-                    })
-                }
-            }else {
-                if session.lastMsgID != 0 {
-                    DDMessageModule.shareInstance().getMessageFromServer(Int(session.lastMsgID), currentSession: session, count: 20, block: { (array , error ) in
-                        if array?.count ?? 0 > 0 {
-                            MTTDatabaseUtil.instance().insertMessages(array! as! [Any], success: {
-                                
-                            }, failure: { (error ) in
-                                
-                            })
-                        }
-                    })
-                    
-                }
-            }
+        
+        MTTMessageEntity.db_query(predicate: nil , sortBy: nil , sortAscending: true , offset: 0, limitCount: 20, success: { (messages ) in
+            
+        }) { (error ) in
+            
         }
+        
+//        MTTDatabaseUtil.instance().getLastestMessage(forSessionID: session.sessionID) { (message , error ) in
+//            if message != nil {
+//                if message!.msgID != session.lastMsgID {
+//                    
+//                    DDMessageModule.shareInstance().getMessageFromServer(Int(session.lastMsgID), currentSession: session, count: 20, block: { (array , error ) in
+//                        if array?.count ?? 0 > 0 {
+//                            
+//                            MTTDatabaseUtil.instance().insertMessages(array! as! [Any], success: { 
+//                                
+//                            }, failure: { (error ) in
+//                                
+//                            })
+//                        }
+//                    })
+//                }
+//            }else {
+//                if session.lastMsgID != 0 {
+//                    DDMessageModule.shareInstance().getMessageFromServer(Int(session.lastMsgID), currentSession: session, count: 20, block: { (array , error ) in
+//                        if array?.count ?? 0 > 0 {
+//                            MTTDatabaseUtil.instance().insertMessages(array! as! [Any], success: {
+//                                
+//                            }, failure: { (error ) in
+//                                
+//                            })
+//                        }
+//                    })
+//                    
+//                }
+//            }
+//        }
         
         
     }

@@ -165,19 +165,16 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
-            
-            
             let sheet = LCActionSheet.init(title: "確認退出嗎？", cancelButtonTitle: "再看看", clicked: { (sheet , index ) in
                 if index == 1 {
                     HMLoginManager.shared.logout()
                     
                     let loginvc = MTTLoginViewController.init()
                     loginvc.hidesBottomBarWhenPushed = true
-                    (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.pushViewController(loginvc, animated: true )
-                    
-                    if let tabbarcontroller = self.navigationController?.tabBarController {
-                        tabbarcontroller.removeFromParentViewController()
-                    }
+                                        
+                    self.navigationController?.tabBarController?.navigationController?.pushViewController(loginvc, animated: true )
+
+                    self.navigationController?.tabBarController?.removeFromParentViewController()
                 }
             }, otherButtonTitleArray: ["退出"])
 

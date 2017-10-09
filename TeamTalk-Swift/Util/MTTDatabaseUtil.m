@@ -210,7 +210,9 @@
     NSUInteger messageState = [resultSet intForColumn:@"status"];
     NSUInteger count = [resultSet intForColumn:@"count(*)"];
     
-    MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)messageID
+
+    
+    MTTMessageEntity* messageEntity = [MTTMessageEntity initWithMsgID:(uint32_t)messageID
                                                                       msgType:messageType
                                                                       msgTime:msgTime
                                                                     sessionID:sessionID
@@ -244,7 +246,7 @@
     NSUInteger messageID = [resultSet intForColumn:@"messageID"];
     NSUInteger messageState = [resultSet intForColumn:@"status"];
     
-    MTTMessageEntity* messageEntity = [[MTTMessageEntity alloc] initWithMsgID:(uint32_t)messageID
+    MTTMessageEntity* messageEntity = [MTTMessageEntity   initWithMsgID:(uint32_t)messageID
                                                                       msgType:messageType
                                                                       msgTime:msgTime
                                                                     sessionID:sessionID
@@ -479,53 +481,7 @@
     }];
 }
 
-#pragma mark - Users
 
-
-- (void)getAllUsers:(LoadAllContactsComplection )completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        if ([_database tableExists:TABLE_ALL_CONTACTS])
-        {
-            [_database setShouldCacheStatements:YES];
-            NSMutableArray* array = [[NSMutableArray alloc] init];
-            NSString* sqlString = [NSString stringWithFormat:@"SELECT * FROM %@ ",TABLE_ALL_CONTACTS];
-            FMResultSet* result = [_database executeQuery:sqlString];
-            MTTUserEntity* user = nil;
-            while ([result next])
-            {
-                user = [self userFromResult:result];
-                if (user && user.userStatus != 3) {
-                    [array addObject:user];
-                }
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(array,nil);
-            });
-        }
-    }];
-}
-
-- (void)getUserFromID:(NSString*)userID completion:(void(^)(MTTUserEntity *user))completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        if ([_database tableExists:TABLE_ALL_CONTACTS])
-        {
-            [_database setShouldCacheStatements:YES];
-            
-            NSString* sqlString = [NSString stringWithFormat:@"SELECT * FROM %@ where ID= ?",TABLE_ALL_CONTACTS];
-            FMResultSet* result = [_database executeQuery:sqlString,userID];
-            MTTUserEntity* user = nil;
-            while ([result next])
-            {
-                user = [self userFromResult:result];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(user);
-            });
-        }
-    }];
-}
 - (void)loadGroupByIDCompletion:(NSString *)groupID Block:(LoadRecentContactsComplection)completion
 {
     [_dataBaseQueue inDatabase:^(FMDatabase *db) {
@@ -548,27 +504,7 @@
     }];
 }
 
-- (void)loadGroupsCompletion:(LoadRecentContactsComplection)completion
-{
-    [_dataBaseQueue inDatabase:^(FMDatabase *db) {
-        NSMutableArray* array = [[NSMutableArray alloc] init];
-        if ([_database tableExists:TABLE_GROUPS])
-        {
-            [_database setShouldCacheStatements:YES];
-            
-            NSString* sqlString = [NSString stringWithFormat:@"SELECT * FROM %@",TABLE_GROUPS];
-            FMResultSet* result = [_database executeQuery:sqlString];
-            while ([result next])
-            {
-                MTTGroupEntity* group = [self groupFromResult:result];
-                [array addObject:group];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(array,nil);
-            });
-        }
-    }];
-}
+ 
 
 - (void)updateRecentGroup:(MTTGroupEntity *)group completion:(InsertsRecentContactsCOmplection)completion
 {

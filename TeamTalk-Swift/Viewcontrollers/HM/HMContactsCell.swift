@@ -41,10 +41,10 @@ class HMContactsCell: HMBaseCell {
     
     override func configWith(object: Any) {
         if let user = object as? MTTUserEntity {
-            avatarImgv.setImage(str: user.avatar)
+            avatarImgv.setImage(str: user.avatar, placeHolder: #imageLiteral(resourceName: "defaultAvatar"))
             nameLabel.text = user.name
         }else if let group = object as? MTTGroupEntity {
-            avatarImgv.setImage(str: group.avatar)
+            avatarImgv.setImage(str: group.avatar, placeHolder: #imageLiteral(resourceName: "defaultAvatar"))
             nameLabel.text = group.name
         }
     }

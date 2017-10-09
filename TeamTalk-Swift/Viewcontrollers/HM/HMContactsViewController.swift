@@ -64,20 +64,32 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
     
     func refreshContacts(){
         self.users.removeAll()
-        for obj in  DDUserModule.shareInstance().getAllMaintanceUser(){
-            if let user = obj as? MTTUserEntity{
-                self.users.append(user)
+        MTTUserEntity.db_query(predicate: nil , sortBy: "objID", sortAscending: true , offset: 0, limitCount: 0, success:  { (users ) in
+            for obj in users{
+                if let user = obj as? MTTUserEntity{
+                    self.users.append(user)
+                    
+//                    debugPrint("db user id ",user.userId,user.name)
+                }
             }
+            self.tableView.mj_headerEndRefreshing()
+            self.tableView.reloadSections(IndexSet.init(integer: 1), with: .automatic)
+        }) { (error ) in
+            
         }
         
-        self.groups.removeAll()
-        for obj in DDGroupModule.instance().getAllGroups() {
-            if let group = obj as? MTTGroupEntity {
-                self.groups.append(group )
+        MTTGroupEntity.db_query(predicate: nil , sortBy: "objID", sortAscending: true , offset: 0, limitCount: 0, success:  { (groups ) in
+            for obj in groups{
+                if let group = obj as? MTTGroupEntity{
+                    self.groups.append(group)
+//                    debugPrint("db group id ",group.objID,group.name)
+                }
             }
+            self.tableView.mj_headerEndRefreshing()
+            self.tableView.reloadSections(IndexSet.init(integer: 0), with: .automatic)
+        }) { (error ) in
+            
         }
-        self.tableView.mj_headerEndRefreshing()
-        self.tableView.reloadData()
     }
     
     

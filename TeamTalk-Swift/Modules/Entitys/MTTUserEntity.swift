@@ -76,7 +76,7 @@ class MTTUserEntity: MTTBaseEntity {
     
     var isValided:Bool {
         get{
-            Timer.init().invalidate()
+
             return self.userId.length > 0
         }
     }
@@ -118,6 +118,15 @@ class MTTUserEntity: MTTBaseEntity {
         }
     }
     
+    override func awakeFromFetch() {
+        super.awakeFromFetch()
+        
+        self.objID = "\(USER_PRE)0"
+        self.name = ""
+        self.nickName = ""
+        self.avatar = "defaultAvatar"
+    }
+    
     override func awakeFromInsert() {
         super.awakeFromInsert()
         
@@ -126,40 +135,26 @@ class MTTUserEntity: MTTBaseEntity {
         self.nickName = ""
         self.avatar = "defaultAvatar"
     }
-    
-    var avatarUrl:String{
-        get {
-            return self.avatar
-        }
-    }
-
+      
 }
 
 extension MTTUserEntity{
     class func  initWith(userinfo:Im.BaseDefine.UserInfo)->MTTUserEntity{
+        let newUser:MTTUserEntity = MTTUserEntity.newObj() as! MTTUserEntity
+        newUser.objID = "\(USER_PRE)\(userinfo.userId!)"
+        newUser.name  = userinfo.userRealName
+        newUser.nickName  = userinfo.userNickName
+        newUser.avatar = userinfo.avatarUrl
+        newUser.department = "\(userinfo.departmentId)"
+        newUser.departId = "\(userinfo.departmentId)"
+        newUser.telphone = userinfo.userTel
+        newUser.sex =  Int32( userinfo.userGender)
+        newUser.email = userinfo.email
+        newUser.pyname = userinfo.userDomain
+        newUser.userStatus = Int32(userinfo.status)
+        newUser.signature = userinfo.signInfo
         
-        if let newUser:MTTUserEntity = MTTUserEntity.newNotInertObj() as? MTTUserEntity{
-            print(" user entity ")
-            
-            newUser.objID = "\(USER_PRE)\(userinfo.userId!)"
-            newUser.name  = userinfo.userRealName
-            newUser.nickName  = userinfo.userNickName
-            newUser.avatar = userinfo.avatarUrl
-            newUser.department = "\(userinfo.departmentId)"
-            newUser.departId = "\(userinfo.departmentId)"
-            newUser.telphone = userinfo.userTel
-            newUser.sex =  Int32( userinfo.userGender)
-            newUser.email = userinfo.email
-            newUser.pyname = userinfo.userDomain
-            newUser.userStatus = Int32(userinfo.status)
-            newUser.signature = userinfo.signInfo
-            
-            return newUser
-        }else {
-            print("nil user entity ")
-
-            return MTTUserEntity.init()
-        }
+        return newUser
     }
     
     override class func pbIDFrom(localID:String)->UInt32{

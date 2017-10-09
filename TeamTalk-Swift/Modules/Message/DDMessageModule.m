@@ -154,11 +154,11 @@
                     [self sendMsgRead:object];
                 }
             }
-            [[MTTDatabaseUtil instance] insertMessages:@[object] success:^{
-                
-            } failure:^(NSString *errorDescripe) {
-                
-            }];
+//            [[MTTDatabaseUtil instance] insertMessages:@[object] success:^{
+//                
+//            } failure:^(NSString *errorDescripe) {
+//                
+//            }];
             
             for (id<DDMessageModuleDelegate> obj in _delegates) {
                 if ([obj respondsToSelector:@selector(onReceiveMessage:)]){
