@@ -81,7 +81,6 @@ import UIKit
 
 @objc(MTTMessageEntity)
 class MTTMessageEntity: MTTBaseEntity {
-    static let tempShared:MTTMessageEntity = MTTMessageEntity.newNotInertObj() as! MTTMessageEntity //用於過渡、解析數據
     
     @NSManaged var msgID:UInt32
     @NSManaged var msgTime:UInt32
@@ -136,7 +135,7 @@ class MTTMessageEntity: MTTBaseEntity {
     }
     var state:DDMessageState{
         set{
-            self.msgContentTypeInt = Int16(newValue.rawValue)
+            self.stateInt = Int16(newValue.rawValue)
         }
         get{
             return DDMessageState.init(rawValue: Int(self.stateInt))!
@@ -335,6 +334,25 @@ extension MTTMessageEntity {
 //    文本 {"type":10,"data":"{\"text\":\"ghj\"}"}
 //    圖片 {"type":11,"data":"{\"url\":\"http:.......789000.jpg\"}"}
 //    表情 {"type":12,"data":"{\"sticker\":\"xxx\"}"}
+    
+    public class func pb_decode(content:String)->String{
+        var msgContent:String = ""
+
+        let realConent = content.decrypt()
+        let dic = NSDictionary.initWithJsonString(realConent) ?? [:]
+        let json = JSON.init(dic)
+        let type = json["type"].intValue
+        if type == 10 {
+            msgContent = json["data"]["text"].stringValue
+        }else if type == 11 {
+            msgContent = "[圖片]"
+        }else if type == 12{
+            msgContent = json["data"]["text"].stringValue
+        }else{
+            msgContent = "[未知消息]"
+        }
+        return msgContent
+    }
     
     public func decode(content:String){
         
@@ -583,9 +601,14 @@ extension MTTMessageEntity {
 
 extension MTTMessageEntity {
     func updateToDB(compeletion:((Bool)->Void)?){
-        MTTDatabaseUtil.instance().updateMessage(forMessage: self) { (result ) in
-            compeletion?(result)
+        
+        self.db_update { (error ) in
+            compeletion?(error != nil )
         }
+        
+//        MTTDatabaseUtil.instance().updateMessage(forMessage: self) { (result ) in
+//            compeletion?(result)
+//        }
     }
 }
 

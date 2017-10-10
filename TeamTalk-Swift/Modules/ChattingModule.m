@@ -184,36 +184,36 @@ static NSUInteger const showPromptGap = 300;
     
     
     NSPredicate  *predicate = [NSPredicate predicateWithFormat:@"sessionId = %@",self.sessionEntity.sessionID];
-    [MTTMessageEntity db_queryWithPredicate:nil sortBy:@"msgTime" sortAscending:NO offset:offset limitCount:DD_PAGE_ITEM_COUNT success:^(NSArray<NSManagedObject *> * _Nonnull messages) {
+    [MTTMessageEntity db_queryWithPredicate:predicate sortBy:@"msgTime" sortAscending:NO offset:offset limitCount:DD_PAGE_ITEM_COUNT success:^(NSArray<NSManagedObject *> * _Nonnull messages) {
         
-        NSLog(@"load more history offset:%zd  limitpagecount:%zd  resultCount:%zd  %@",offset,DD_PAGE_ITEM_COUNT,messages.count,messages);
+        NSMutableArray *tempMessages = [NSMutableArray arrayWithCapacity:messages.count];
+        for (NSObject *obj in messages){
+            if ([obj isKindOfClass:[MTTMessageEntity class]]){
+                [tempMessages addObject:(MTTMessageEntity *)obj];
+            }
+        }
+        
+        NSLog(@"load more history offset:%zd  limitpagecount:%zd  resultCount:%zd  ",offset,DD_PAGE_ITEM_COUNT,tempMessages.count);
         
         if ([HMLoginManager shared].networkState == HMNetworkStateDisconnect){
-            [self p_addHistoryMessages:messages Completion:completion];
+            [self p_addHistoryMessages:tempMessages Completion:completion];
         }else{
-            if ([messages count] !=0) {
+            if (tempMessages.count > 0) {
                 
-                BOOL isHaveMissMsg = [self p_isHaveMissMsg:messages];
-                if (isHaveMissMsg || ([self getMiniMsgId] - [self getMaxMsgId:messages] !=0)) {
-                    
-                    [self loadHostoryMessageFromServer:[self getMiniMsgId] Completion:^(NSUInteger addcount, NSError *error) {
-                        if (addcount) {
-                            completion(addcount,error);
-                        }else{
-                            [self p_addHistoryMessages:messages Completion:completion];
-                        }
-                    }];
-                }else{
-                    //检查消息是否连续
-                    [self p_addHistoryMessages:messages Completion:completion];
-                    //                [self checkMsgList:^(NSUInteger addcount, NSError *error) {
-                    //                    completion(addcount,error);
-                    //                    if (!addcount) {
-                    //                               [self p_addHistoryMessages:messages Completion:completion];
-                    //                    }
-                    //                }];
-                    
-                }
+//                //检查消息是否连续
+//                BOOL isHaveMissMsg = [self p_isHaveMissMsg:messages];
+//                if (isHaveMissMsg || ([self getMiniMsgId] - [self getMaxMsgId:messages] != 0)) {
+//                    
+//                    [self loadHostoryMessageFromServer:[self getMiniMsgId] Completion:^(NSUInteger addcount, NSError *error) {
+//                        if (addcount) {
+//                            completion(addcount,error);
+//                        }else{
+//                            [self p_addHistoryMessages:messages Completion:completion];
+//                        }
+//                    }];
+//                }else{
+                    [self p_addHistoryMessages:tempMessages Completion:completion];
+//                }
                 
             }else{
                 //数据库中已获取不到消息
@@ -379,7 +379,7 @@ static NSUInteger const showPromptGap = 300;
 
 - (void)p_addHistoryMessages:(NSArray*)messages Completion:(DDChatLoadMoreHistoryCompletion)completion
 {
-    
+    DDLog(@"p_add history messages :%zd  %zd  %zd",messages.count,[self getMiniMsgId],[self getMaxMsgId:messages]);
     __block NSUInteger tempEarliestDate = [[messages valueForKeyPath:@"@min.msgTime"] integerValue];
     __block NSUInteger tempLasteestDate = 0;
     NSUInteger itemCount = [self.showingMessages count];
@@ -447,7 +447,7 @@ static NSUInteger const showPromptGap = 300;
 {
     
     __block NSInteger maxMsgID =[self getMaxMsgId:messages];
-    __block NSInteger minMsgID =[self getMaxMsgId:messages];;
+    __block NSInteger minMsgID = [self getMiniMsgId];
     [messages enumerateObjectsUsingBlock:^(MTTMessageEntity * obj, NSUInteger idx, BOOL *stop) {
         if (obj.msgID > maxMsgID && obj.msgID<LOCAL_MSG_BEGIN_ID) {
             //maxMsgID =obj.msgID;

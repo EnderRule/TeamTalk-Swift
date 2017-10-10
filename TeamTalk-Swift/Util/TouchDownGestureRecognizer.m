@@ -30,7 +30,7 @@ int Response_Y = -30;
 {
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
-    DDLog(@"%f",point.y);
+
     if (point.y < Response_Y)
     {
         if (_inside)
@@ -47,7 +47,6 @@ int Response_Y = -30;
             self.moveInside();
         }
     }
-    DDLog(@"%@",NSStringFromCGPoint(point));
     
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event

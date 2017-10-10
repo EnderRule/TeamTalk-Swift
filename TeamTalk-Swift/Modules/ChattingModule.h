@@ -14,7 +14,6 @@
 #define DD_PAGE_ITEM_COUNT                  20
 
 
-@class DDCommodity;
 @class MTTMessageEntity;
 typedef void(^DDChatLoadMoreHistoryCompletion)(NSUInteger addcount, NSError* error);
 

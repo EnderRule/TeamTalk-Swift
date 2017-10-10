@@ -60,20 +60,12 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
             maker?.bottom.mas_equalTo()(self.chatInputView.mas_top)
         }
         
-//        MTTDatabaseUtil.instance().loadMessage(forSessionID: self.chattingModule.sessionEntity.sessionID, pageCount: 25, index: 0) {[weak self] (messages , error ) in
-//            self?.showingMessages = messages ?? []
-//            self?.tableView.reloadData()
-//            self?.tableView.checkScrollToBottom()
-//        }
-//        self.loadMoreHistoryRecords()
-        
-        
         MTTMessageEntity.db_query(offset: 0, limitCount: 0, success: { (messages ) in
             debugPrint("db load history count : \(messages.count)")
 
             for obj in messages {
                 if let msg:MTTMessageEntity = obj as? MTTMessageEntity {
-                    print(msg.msgID,msg.msgContent,msg.dicValues())
+                    print(msg.msgID,msg.msgContent,msg.msgContentType)
                 }
             }
         }) { (error ) in

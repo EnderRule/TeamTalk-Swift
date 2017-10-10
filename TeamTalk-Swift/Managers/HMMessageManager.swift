@@ -82,12 +82,9 @@ class HMMessageManager: NSObject {
                 if error != nil {
                     message.state = .SendFailure
                     
-//                    MTTDatabaseUtil.instance().insertMessages([message], success: {  }, failure: { (errorString ) in })
-                
                     let error = NSError.init(domain: "發送消息失敗", code: 0, userInfo: nil )
                     completion(message,error)
                 }else if let resultIDs = respone as? [UInt32] {
-//                    MTTDatabaseUtil.instance().deleteMesages(message, completion: { ( success ) in  })
                     
                     self.unAckQueueRemove(message: message)
                     
@@ -97,9 +94,7 @@ class HMMessageManager: NSObject {
                     session.lastMsgID = message.msgID
                     session.timeInterval = TimeInterval(message.msgTime)
                     
-//                    MTTDatabaseUtil.instance().insertMessages([message], success: {   }, failure: { (errorString ) in  })
                     Notification.Name.HMSendMessageSuccessfull.postWith(object: session)
-                    
                     completion(message,nil )
                 }
             })

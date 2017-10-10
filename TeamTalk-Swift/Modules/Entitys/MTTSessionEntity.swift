@@ -195,8 +195,7 @@ extension MTTSessionEntity {
         
         
         if let encryMsg = String.init(data: unreadInfo.latestMsgData, encoding: .utf8){
-            MTTMessageEntity.tempShared.decode(content: encryMsg)
-            self.lastMsg = MTTMessageEntity.tempShared.msgContent
+            self.lastMsg = MTTMessageEntity.pb_decode(content: encryMsg)
         }
     }
     public convenience init(sessionInfo:Im.BaseDefine.ContactSessionInfo){
@@ -214,8 +213,7 @@ extension MTTSessionEntity {
         self.timeInterval = TimeInterval(sessionInfo.updatedTime)
         
         if let encryMsg = String.init(data: sessionInfo.latestMsgData, encoding: .utf8){
-            MTTMessageEntity.tempShared.decode(content: encryMsg)
-            self.lastMsg = MTTMessageEntity.tempShared.msgContent
+            self.lastMsg = MTTMessageEntity.pb_decode(content: encryMsg)
         }
     }
     
