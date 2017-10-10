@@ -410,14 +410,14 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     
         if DEBUGMode{
             MTTUserEntity.db_query(predicate: nil , sortBy: "objID", sortAscending: true , offset: 0, limitCount: 0, success: { (users ) in
-                debugPrint("user query count \(users.count)")
+                debugPrint("test user query count \(users.count)")
                 for obj  in users {
                     if let user:MTTUserEntity = obj as? MTTUserEntity{
                         debugPrint("user id ",user.objID)
                     }
                 }
             }) { (error ) in
-                debugPrint("user query error \(error)")
+                debugPrint("test user query error \(error)")
             }
         }
         

@@ -64,7 +64,8 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
     
     func refreshContacts(){
         self.users.removeAll()
-        MTTUserEntity.db_query(predicate: nil , sortBy: "objID", sortAscending: true , offset: 0, limitCount: 0, success:  { (users ) in
+        
+        MTTUserEntity.db_query(predicate: nil , sortBy: "name", sortAscending: true , offset: 0, limitCount: 0, success:  { (users ) in
             for obj in users{
                 if let user = obj as? MTTUserEntity{
                     self.users.append(user)
@@ -78,7 +79,7 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
             
         }
         
-        MTTGroupEntity.db_query(predicate: nil , sortBy: "objID", sortAscending: true , offset: 0, limitCount: 0, success:  { (groups ) in
+        MTTGroupEntity.db_query(predicate: nil , sortBy: "name", sortAscending: true , offset: 0, limitCount: 0, success:  { (groups ) in
             for obj in groups{
                 if let group = obj as? MTTGroupEntity{
                     self.groups.append(group)

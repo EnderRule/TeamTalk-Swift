@@ -118,13 +118,27 @@ class MTTUserEntity: MTTBaseEntity {
         }
     }
     
+    
+    /// 设置默认值
     override func awakeFromFetch() {
         super.awakeFromFetch()
         
         self.objID = "\(USER_PRE)0"
         self.name = ""
-        self.nickName = ""
+        self.nick = ""
         self.avatar = "defaultAvatar"
+        
+        self.lastUpdateTime = 0
+        self.objectVersion = 0
+        self.department = ""
+        self.departId = ""
+        self.signature = ""
+        self.position = ""
+        self.sex = 0
+        self.telphone = ""
+        self.email = ""
+        self.pyname = ""
+        self.userStatus = 1
     }
     
     override func awakeFromInsert() {
@@ -132,10 +146,22 @@ class MTTUserEntity: MTTBaseEntity {
         
         self.objID = "\(USER_PRE)0"
         self.name = ""
-        self.nickName = ""
+        self.nick = ""
         self.avatar = "defaultAvatar"
+        
+        self.lastUpdateTime = 0
+        self.objectVersion = 0
+        self.department = ""
+        self.departId = ""
+        self.signature = ""
+        self.position = ""
+        self.sex = 0
+        self.telphone = ""
+        self.email = ""
+        self.pyname = ""
+        self.userStatus = 1
     }
-      
+    
 }
 
 extension MTTUserEntity{

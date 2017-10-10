@@ -15,7 +15,9 @@ class HMCDManager: NSObject {
     
     var userDBName:String = ""{
         didSet{
-            //dbName变化时，重置 相关项目
+            //dbName变化时，保存更改并重置 相关项目
+            
+            let _ = self.saveContext()
             self.s_objectModel = nil
             self.s_objectContext = nil
             self.s_storeCoordinator = nil
@@ -244,7 +246,7 @@ class HMCDManager: NSObject {
     ///
     /// - Parameters:
     ///   - myclass:   类名、表名、模型名
-    ///   - predicate: <#predicate description#>
+    ///   - predicate: 断言描述
     ///   - sortBy: 需要排序的字段
     ///   - sortAscending: 是否升序
     ///   - offset:偏移值
@@ -264,7 +266,8 @@ class HMCDManager: NSObject {
             fetchRequest.predicate = predicate
         }
         if sortBy?.characters.count ?? 0 > 0 {
-            let sortdes = NSSortDescriptor.init(key: sortBy!, ascending: sortAscending)
+            let sortdes:MySortor = MySortor.init(key: sortBy!, ascending: sortAscending)
+
             fetchRequest.sortDescriptors = [sortdes]
         }
         
@@ -278,3 +281,73 @@ class HMCDManager: NSObject {
     }
     
 }
+
+
+
+//"db user id " "user_1" "qing"
+//"db user id " "user_10" "0988666558"
+//"db user id " "user_11" "0988666559"
+//"db user id " "user_12" "0988666560"
+//"db user id " "user_13" "0998887777"
+//"db user id " "user_14" "0955666555"
+//"db user id " "user_15" "0987654321"
+//"db user id " "user_16" "0955888777"
+//"db user id " "user_17" "0987444555"
+//"db user id " "user_18" "0955888789"
+//"db user id " "user_2" "bbb"
+//"db user id " "user_3" "aaa"
+//"db user id " "user_4" "king"
+//"db user id " "user_5" "qing2"
+//"db user id " "user_6" "qing3"
+//"db user id " "user_7" "0988666555"
+//"db user id " "user_8" "0988666556"
+//"db user id " "user_9" "0988666557"
+
+/// 修复使用内置api排序导致的以上排序不合格的问题
+class MySortor: NSSortDescriptor{
+    
+    override func compare(_ object1: Any, to object2: Any) -> ComparisonResult {
+        
+        guard let sortKey = self.key else {
+            return super.compare(object1 , to: object2)
+        }
+        guard  let obj1 = object1 as? NSObject else{
+            return super.compare(object1, to: object2)
+        }
+        guard let obj2 = object2 as? NSObject else {
+            return super.compare(object1, to: object2)
+        }
+        guard let value1 = obj1.value(forKey: sortKey) else {
+            return super.compare(object1, to: object2)
+        }
+        guard let value2 = obj2.value(forKey: sortKey) else {
+            return super.compare(object1, to: object2)
+        }
+        let str1 = "\(value1)"
+        let str2 = "\(value2)"
+        
+        var result :ComparisonResult = self.ascending ? .orderedAscending:.orderedDescending
+        if str1.characters.count > str2.characters.count {
+            result = .orderedDescending
+        }else if str1.characters.count < str2.characters.count{
+            result = .orderedAscending
+        }else {
+            result = str1.compare(str2)
+            
+            
+        }
+        
+        
+        if !self.ascending && result == .orderedDescending{
+            result = .orderedAscending
+        }else if !self.ascending && result == .orderedAscending{
+            result = .orderedDescending
+        }
+
+        return result
+    }
+    
+}
+
+
+

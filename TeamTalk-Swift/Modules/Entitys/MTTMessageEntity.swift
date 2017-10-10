@@ -169,9 +169,27 @@ class MTTMessageEntity: MTTBaseEntity {
         return   self.msgContentType == .Emotion
     }
     
-    //初始值
+    ///初始值
     override func awakeFromInsert() {
         super.awakeFromInsert()
+        
+        self.msgID = 0
+        self.msgTime = 0
+        self.sessionId = ""
+        self.seqNo = 0
+        self.senderId = ""
+        self.msgContent = ""
+        self.toUserID = ""
+        self.attach  = ""
+        self.info = [:]
+        self.msgContentType = .Text
+        self.sessionType = .sessionTypeSingle
+        self.msgType = .msgTypeSingleText
+        self.state = .SendSuccess
+    }
+    
+    override func awakeFromFetch() {
+        super.awakeFromFetch()
         
         self.msgID = 0
         self.msgTime = 0

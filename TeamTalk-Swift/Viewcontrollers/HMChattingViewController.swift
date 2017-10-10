@@ -67,6 +67,19 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
 //        }
 //        self.loadMoreHistoryRecords()
         
+        
+        MTTMessageEntity.db_query(offset: 0, limitCount: 0, success: { (messages ) in
+            debugPrint("db load history count : \(messages.count)")
+
+            for obj in messages {
+                if let msg:MTTMessageEntity = obj as? MTTMessageEntity {
+                    print(msg.msgID,msg.msgContent,msg.dicValues())
+                }
+            }
+        }) { (error ) in
+            debugPrint("db load history error : \(error)")
+        }
+        
         chattingModule.loadMoreHistoryCompletion { (count , error ) in
             print("load more history  :\(count)",error?.localizedDescription ?? "nil error")
 
