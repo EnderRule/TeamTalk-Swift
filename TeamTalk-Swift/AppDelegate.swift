@@ -20,9 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         HMLoginManager.shared.setup()
         
         HMCDManager.shared.userDBName = "0"
- 
-        
-        
+  
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (issuccess , error ) in
                 debugPrint("application notification requestAuthorization \(issuccess) \(error?.localizedDescription ?? "nil error ")")
@@ -38,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let decryptStr = encryptStr.decrypt()
         print(self.classForCoder,"security test ","\n\(testString)\n\(encryptStr)\n\(decryptStr)")
         
-        let loginVC = MTTLoginViewController.init()
+        let loginVC = HMLoginViewController.init()
         loginVC.hidesBottomBarWhenPushed = true
         let navivc:UINavigationController = UINavigationController.init(rootViewController: loginVC)
         navivc.setNavigationBarHidden(true  , animated:true)

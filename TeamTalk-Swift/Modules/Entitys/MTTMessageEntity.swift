@@ -173,6 +173,22 @@ class MTTMessageEntity: MTTBaseEntity {
     override func awakeFromInsert() {
         super.awakeFromInsert()
         
+//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "msgID")
+//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "msgTime")
+//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "seqNo")
+//        
+//        self.setPrimitiveValue("", forKey: "sessionId")
+//        self.setPrimitiveValue("", forKey: "senderId")
+//        self.setPrimitiveValue("", forKey: "msgContent")
+//        self.setPrimitiveValue("", forKey: "toUserID")
+//        self.setPrimitiveValue("", forKey: "attach")
+//        self.setPrimitiveValue([:], forKey: "info")
+//        
+//        self.setPrimitiveValue(DDMessageContentType.Text, forKey: "msgContentType")
+//        self.setPrimitiveValue(Im.BaseDefine.SessionType.sessionTypeSingle, forKey: "sessionType")
+//        self.setPrimitiveValue(MsgType_Objc.msgTypeSingleText, forKey: "msgType")
+//        self.setPrimitiveValue(DDMessageState.SendSuccess, forKey: "state")
+        
         self.msgID = 0
         self.msgTime = 0
         self.sessionId = ""
@@ -186,11 +202,28 @@ class MTTMessageEntity: MTTBaseEntity {
         self.sessionType = .sessionTypeSingle
         self.msgType = .msgTypeSingleText
         self.state = .SendSuccess
+
     }
     
     override func awakeFromFetch() {
         super.awakeFromFetch()
         
+//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "msgID")
+//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "msgTime")
+//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "seqNo")
+//
+//        self.setPrimitiveValue("", forKey: "sessionId")
+//        self.setPrimitiveValue("", forKey: "senderId")
+//        self.setPrimitiveValue("", forKey: "msgContent")
+//        self.setPrimitiveValue("", forKey: "toUserID")
+//        self.setPrimitiveValue("", forKey: "attach")
+//        self.setPrimitiveValue([:], forKey: "info")
+//        
+//        self.setPrimitiveValue(DDMessageContentType.Text, forKey: "msgContentType")
+//        self.setPrimitiveValue(Im.BaseDefine.SessionType.sessionTypeSingle, forKey: "sessionType")
+//        self.setPrimitiveValue(MsgType_Objc.msgTypeSingleText, forKey: "msgType")
+//        self.setPrimitiveValue(DDMessageState.SendSuccess, forKey: "state")
+
         self.msgID = 0
         self.msgTime = 0
         self.sessionId = ""
