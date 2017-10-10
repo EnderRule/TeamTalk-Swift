@@ -187,7 +187,7 @@ extension MTTUserEntity{
         if localID.hasPrefix(USER_PRE){
            return  UInt32((localID.replacingOccurrences(of: USER_PRE, with: "") as NSString).intValue)
         }else {
-            return 0
+            return UInt32((localID as NSString).intValue)
         }
     }
     override class func localIDFrom(pbID:UInt32)->String {

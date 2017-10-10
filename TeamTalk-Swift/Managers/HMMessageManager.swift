@@ -75,7 +75,7 @@ class HMMessageManager: NSObject {
             
             Notification.Name.HMSendMessageSuccessfull.postWith(object: session)
            
-            let fromid = UInt32(currentUser().intUserID)
+            let fromid = UInt32(HMCurrentUser().intUserID)
             let toid = MTTBaseEntity.pbIDFrom(localID: session.sessionID)
             let sendAPI = SendMessageAPI.init(fromUID: fromid, toUID: toid, type: message.msgType, data: msgData)
             sendAPI.request(withParameters: [:], completion: { (respone , error ) in

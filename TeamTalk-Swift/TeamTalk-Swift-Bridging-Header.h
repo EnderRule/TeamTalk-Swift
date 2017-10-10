@@ -29,7 +29,7 @@
 #import "security.h"
 
 //Module
-#import "DDUserModule.h"
+
 #import "DDGroupModule.h"
 #import "MTTBubbleModule.h"
 
@@ -40,14 +40,9 @@
 
 #import "RecorderManager.h"
 #import "PlayerManager.h"
-#import "SpellLibrary.h"
 
 //audio、videos
 #import "Encapsulator.h"
-
-
-//ViewControllers
-#import "MTTLoginViewController.h"
 
 //第三方
 //AF network

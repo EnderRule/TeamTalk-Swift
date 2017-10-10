@@ -152,7 +152,7 @@ extension MTTGroupEntity {
         if localID.hasPrefix(GROUP_PRE){
             return  UInt32((localID.replacingOccurrences(of: GROUP_PRE, with: "") as NSString).intValue)
         }else {
-            return 0
+            return UInt32((localID as NSString).intValue)
         }
     }
     override class func localIDFrom(pbID:UInt32)->String {

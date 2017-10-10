@@ -51,7 +51,7 @@ class SendPushTokenAPI: DDSuperAPI,DDAPIScheduleProtocol {
         let package:Package = {(object,seqno) in
             
             let builder = Im.Login.ImdeviceTokenReq.Builder()
-            builder.setUserId(UInt32(currentUser().intUserID))
+            builder.setUserId(UInt32(HMCurrentUser().intUserID))
             builder.setDeviceToken(self.pushToken)
            
             let dataOut = DDDataOutputStream.init()

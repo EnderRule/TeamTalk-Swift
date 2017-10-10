@@ -10,11 +10,6 @@
 #import "MTTDatabaseUtil.h"
 
 
-
-
-
-#import "DDUserModule.h"
-
 #import "DDGroupModule.h"
 
 #import "MTTDDNotification.h"
@@ -154,11 +149,6 @@
                     [self sendMsgRead:object];
                 }
             }
-//            [[MTTDatabaseUtil instance] insertMessages:@[object] success:^{
-//                
-//            } failure:^(NSString *errorDescripe) {
-//                
-//            }];
             
             for (id<DDMessageModuleDelegate> obj in _delegates) {
                 if ([obj respondsToSelector:@selector(onReceiveMessage:)]){

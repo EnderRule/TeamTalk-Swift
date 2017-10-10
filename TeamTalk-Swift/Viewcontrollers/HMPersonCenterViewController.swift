@@ -63,15 +63,12 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         
         tableView.mj_addHeader {
             
-            DDUserModule.shareInstance().getUserForUserID(currentUser().userId, block: { (user ) in
-                
-                self.tableView.mj_headerEndRefreshing()
-                
-                if user != nil {
-                    self.avatarImgv.setImage(str: user!.avatar)
-                    self.nameLabel.text = user!.name
-                }
-            })
+            if let sender:MTTUserEntity = HMUsersManager.shared.userFor(ID: HMLoginManager.shared.currentUser.userId){
+                self.avatarImgv.setImage(str: sender.avatar)
+                self.nameLabel.text = sender.nickName
+            }
+            self.tableView.mj_headerEndRefreshing()
+
         }
         
         self.view.addSubview(tableView)
@@ -169,7 +166,7 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
                 if index == 1 {
                     HMLoginManager.shared.logout()
                     
-                    let loginvc = MTTLoginViewController.init()
+                    let loginvc = HMLoginViewController.init()
                     loginvc.hidesBottomBarWhenPushed = true
                                         
                     self.navigationController?.tabBarController?.navigationController?.pushViewController(loginvc, animated: true )

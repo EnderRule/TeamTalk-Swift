@@ -163,7 +163,7 @@ class MTTMessageEntity: MTTBaseEntity {
         return self.msgContentType == .Image
     }
     var isSendBySelf:Bool {
-       return  self.senderId == currentUser().userId
+       return  self.senderId == HMCurrentUser().userId
     }
     var isEmotionMsg:Bool{
         return   self.msgContentType == .Emotion
@@ -430,7 +430,7 @@ extension MTTMessageEntity {
         newMsg.msgID = UInt32(DDMessageModule.getMessageID())
         newMsg.sessionId = module.sessionEntity.sessionID
         newMsg.toUserID = module.sessionEntity.sessionID
-        newMsg.senderId = currentUser().userId
+        newMsg.senderId = HMCurrentUser().userId
         newMsg.state = .Sending
         newMsg.msgTime = UInt32(Date().timeIntervalSince1970)
         
@@ -455,7 +455,7 @@ extension MTTMessageEntity {
             newMsg.sessionId = MTTGroupEntity.localIDFrom(pbID: msgInfo.fromSessionId)
         }
         if newMsg.senderId == newMsg.sessionId{
-            newMsg.toUserID =  currentUser().userId
+            newMsg.toUserID =  HMCurrentUser().userId
         }else{
             newMsg.toUserID = newMsg.sessionId
         }
@@ -499,7 +499,7 @@ extension MTTMessageEntity {
         newMsg.senderId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
         
         if newMsg.senderId == newMsg.sessionId{
-            newMsg.toUserID = currentUser().userId
+            newMsg.toUserID = HMCurrentUser().userId
         }else{
             newMsg.toUserID = newMsg.sessionId
         }

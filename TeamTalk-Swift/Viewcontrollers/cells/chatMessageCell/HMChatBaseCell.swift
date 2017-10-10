@@ -107,7 +107,7 @@ class HMChatBaseCell: HMBaseCell {
         let bubbleHeight:CGFloat = self.bubbleTopEdge() + size.height + self.bubbleBottomEdge()
         
         //头像位置
-        if message.senderId == currentUser().userId  {
+        if message.senderId == HMLoginManager.shared.currentUser.userId  {
             self.bubbleLocation = .right
             
             self.avatarImgv.mas_remakeConstraints({ (maker ) in
@@ -128,11 +128,9 @@ class HMChatBaseCell: HMBaseCell {
         }
         
         //设置头像和昵称 
-        DDUserModule.shareInstance().getUserForUserID(message.senderId) { (user ) in
-            if user != nil {
-                self.avatarImgv.setImage(str: user!.avatar)
-                self.nameLabel.text = user!.nickName
-            }
+        if let sender:MTTUserEntity = HMUsersManager.shared.userFor(ID: message.senderId){
+            self.avatarImgv.setImage(str: sender.avatar)
+            self.nameLabel.text = sender.nickName
         }
         //是否隐藏昵称
         if self.bubbleLocation == .right || message.sessionType == .sessionTypeSingle{
@@ -201,7 +199,7 @@ class HMChatBaseCell: HMBaseCell {
     func cellHeightFor(message:MTTMessageEntity)->CGFloat{
         // 昵称高度 + 实际内容高度 + 气泡与cell的间隔 + 气泡与内容的间隔。 总高度必须 >= 头像高度 + 头像与cell的间隔
         var nameHeight:CGFloat = nameLabel.height
-        if message.sessionType == .sessionTypeSingle || message.senderId == currentUser().userId {
+        if message.sessionType == .sessionTypeSingle || message.senderId == HMLoginManager.shared.currentUser.userId {
             nameHeight = 0
         }
         

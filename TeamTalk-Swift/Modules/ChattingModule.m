@@ -9,7 +9,7 @@
 #import "ChattingModule.h"
 #import "MTTDatabaseUtil.h"
 #import "NSDate+DDAddition.h"
-#import "DDUserModule.h"
+
 #import "DDMessageModule.h"
 
 #import <math.h>
@@ -353,12 +353,8 @@ static NSUInteger const showPromptGap = 300;
     
     [[self mutableArrayValueForKeyPath:@"showingMessages"] addObjectsFromArray:messages];
 }
--(void)getCurrentUser:(void(^)(MTTUserEntity *))block
-{
-    [[DDUserModule shareInstance] getUserForUserID:self.sessionEntity.sessionID  Block:^(MTTUserEntity *user) {
-        block(user);
-    }];
-}
+
+
 
 - (void)updateSessionUpdateTime:(NSUInteger)time
 {

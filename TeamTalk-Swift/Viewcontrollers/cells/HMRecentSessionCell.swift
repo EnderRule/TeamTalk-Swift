@@ -124,11 +124,9 @@ class HMRecentSessionCell: HMBaseCell {
                             if  UIDs.index(of: uid) ?? 0 > 8 {
                                 break
                             }
-                            DDUserModule.shareInstance().getUserForUserID(uid , block: { (user ) in
-                                if user != nil {
-                                    avatars.append(user!.avatar)
-                                }
-                            })
+                            if let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: uid){
+                                avatars.append(user.avatar)
+                            }
                         }
 //                        let groupAvatarUrls = (avatars as NSArray).componentsJoined(by: ";")
                         self?.avatarView.setImage(str: avatars.first ?? "")//.setAvatar(groupAvatarUrls, group: true )
@@ -136,16 +134,13 @@ class HMRecentSessionCell: HMBaseCell {
                 })
             }else {
                 //configs for UserEntity
-                DDUserModule.shareInstance().getUserForUserID(session.sessionID, block: { (user) in
-                    if user != nil {
-                        for subview in self.avatarView.subviews{
-                            subview.removeFromSuperview()
-                        }
-                        self.avatarView.image = nil
-                        self.avatarView.setImage(str: user!.avatar)
-//                        self.avatarView.setAvatar(user!.avatar, group: false)
+                if let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: session.sessionID){
+                    for subview in self.avatarView.subviews{
+                        subview.removeFromSuperview()
                     }
-                })
+                    self.avatarView.image = nil
+                    self.avatarView.setImage(str: user.avatar)
+                }
                 
             }
         }

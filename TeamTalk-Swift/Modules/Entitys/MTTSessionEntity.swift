@@ -56,16 +56,13 @@ class MTTSessionEntity: NSObject {
         get{
             if s_name.length <= 0 {
                 if self.sessionType == .sessionTypeSingle {
-                    
-                    DDUserModule.shareInstance().getUserForUserID(self.sessionID, block: { (user ) in
-                        if user != nil {
-                            if user!.nickName.length > 0 {
-                                self.s_name = user!.nickName
-                            }else{
-                                self.s_name = user!.name
-                            }
+                    if let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: self.sessionID){
+                        if user.nickName.length > 0 {
+                            self.s_name = user.nickName
+                        }else{
+                            self.s_name = user.name
                         }
-                    })
+                    }
                 }else {
                     if let group = DDGroupModule.instance().getGroupByGId(self.sessionID){
                         self.s_name = group.name
@@ -90,11 +87,9 @@ class MTTSessionEntity: NSObject {
     var timeInterval:TimeInterval {
         get{
             if s_timeInterval == 0 && self.sessionType == .sessionTypeSingle{
-                DDUserModule.shareInstance().getUserForUserID(self.sessionID, block: { (user ) in
-                    if user != nil {
-                        self.s_timeInterval = TimeInterval( user!.lastUpdateTime)
-                    }
-                })
+                if let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: self.sessionID){
+                    self.s_timeInterval = TimeInterval( user.lastUpdateTime)
+                }
             }
             return s_timeInterval
         }
