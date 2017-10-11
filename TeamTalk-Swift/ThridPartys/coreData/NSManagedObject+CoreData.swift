@@ -8,32 +8,57 @@
 
 import UIKit
 import CoreData
+import ObjectiveC
+
+
 
 @available (iOS 8.0,*)
 extension  NSManagedObject {
-
-//    @objc public convenience init(myvalues:[String:Any]?){
-//        self.init()
-//    }
     
+    static let primaryKeyName:String = "HMCDPrimaryKeyName"
     
-//    public convenience init(entityName:String) {
-//        let entityDes:NSEntityDescription   = NSEntityDescription.entity(forEntityName: "\(self.classForCoder)", in: HMCDManager.shared.context)!
-//        
-//        self.init(entity: entityDes, insertInto: HMCDManager.shared.context)
-//        
-//    }
+    @objc public convenience init(myvalues:[String:Any]?){
+        self.init()
+        
+        
+    }
     
-    class var insertToContext:NSManagedObjectContext{
-        get {
-            return HMCDManager.shared.context
+//    var primaryKeyName:String = ""
+    
+    func getThePrimaryKeyName()->String{
+        
+        let primarykeyName = (objc_getAssociatedObject(self , NSManagedObject.primaryKeyName) as? String ?? "")
+        if primarykeyName.characters.count > 0 {
+            return primarykeyName
         }
+        
+        let count = UnsafeMutablePointer<UInt32>.allocate(capacity: 0)
+        let buff = class_copyPropertyList(self.classForCoder, count)
+        let countInt = Int(count[0])
+        for i in 0..<countInt{
+            let temp = buff![i]
+            let tempPro = property_getName(temp!)
+            let proper:String = String.init(utf8String: tempPro!)!
+            
+            if proper == "primaryKeyName"{
+                let keyname = self.value(forKey: proper) as? String ?? ""
+                
+                if keyname.characters.count > 0 {
+                    objc_setAssociatedObject(self , NSManagedObject.primaryKeyName, keyname, .OBJC_ASSOCIATION_RETAIN)
+                }
+                return keyname
+            }
+        }
+        free(count)
+        
+        return ""
     }
     
     
     class func newNotInertObj()->NSManagedObject{
         let obj = NSEntityDescription.insertNewObject(forEntityName: "\(self)", into: HMCDManager.shared.context)
-        HMCDManager.shared.context.delete(obj)
+        obj.db_delete(complettion: nil)
+        
         return obj
     }
     
@@ -42,15 +67,55 @@ extension  NSManagedObject {
         return obj
     }
     
+    
+    class func checkUnique(obj:NSManagedObject,values:[String:Any]?)->NSManagedObject?{
+        let primaryKey:String = obj.getThePrimaryKeyName()
+        if primaryKey.characters.count > 0 {
+            
+            var primaryValue:Any? = obj.value(forKey: primaryKey)
+            if primaryValue == nil && values != nil  && ((values! as NSDictionary).allKeys as NSArray).contains(primaryKey) {
+                primaryValue = values![primaryKey]
+            }
+            if primaryValue != nil {
+                let predicate:NSPredicate = NSPredicate.init(format: "\(primaryKey) = %@", argumentArray: [primaryValue!])
+                var targetObj:NSManagedObject?
+                DispatchQueue.global().sync {
+                    self.db_query(predicate: predicate, sortBy: nil , sortAscending: true , offset: 0, limitCount: 0, success: { (objs ) in
+                        targetObj = objs.first
+                    }, failure: nil )
+                }
+                return targetObj
+            }
+            
+        }
+        
+        return nil
+    }
+    
+    
     @objc func db_add(values:[String:Any],success:((NSManagedObject)->Void)?, failure:((String)->Void)?){
-        HMCDManager.shared.add(entity: self , values: values, success: { (obj ) in
-            success?(obj)
-        }) { (error ) in
-            failure?(error)
+        //如果主键已存在，插入后将旧的object删除
+        if let exist :NSManagedObject = self.classForCoder.checkUnique(obj: self , values: nil ){
+            debugPrint("HMCDLog: has exist obj with primarykey value :",exist.value(forKey: exist.getThePrimaryKeyName())!,"will be replace")
+            
+            HMCDManager.shared.add(entity: self , values: values, success: { (obj ) in
+                success?(obj)
+                exist.db_delete(complettion: nil)
+            }) { (error ) in
+                failure?(error)
+            }
+        }else{
+            HMCDManager.shared.add(entity: self , values: values, success: { (obj ) in
+                success?(obj)
+            }) { (error ) in
+                failure?(error)
+            }
         }
     }
     
+    
     @objc func db_update(completion:((String?)->Void)?){
+        
         HMCDManager.shared.update(entity: self , values: nil, success: { (obj ) in
             completion?(nil)
         }) { (error ) in
@@ -59,6 +124,7 @@ extension  NSManagedObject {
     }
     
     @objc func db_update(values:[String:Any],success:((NSManagedObject)->Void)?, failure:((String)->Void)?){
+        
         HMCDManager.shared.update(entity: self , values: values, success: { (obj ) in
             success?(obj)
         }) { (error ) in

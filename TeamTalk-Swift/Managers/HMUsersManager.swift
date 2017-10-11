@@ -12,7 +12,7 @@ class HMUsersManager: NSObject {
 
     static let shared:HMUsersManager = HMUsersManager()
     
-    var allUsers:[String:MTTUserEntity] = [:]
+    private var allUsers:[String:MTTUserEntity] = [:]
     
     func cleanData(){
         self.allUsers.removeAll()
@@ -40,21 +40,28 @@ class HMUsersManager: NSObject {
         }
     }
     
+    var users:[MTTUserEntity] {
+        get{
+            var temp:[MTTUserEntity] = []
+
+            if self.allUsers.count == 0 {
+                DispatchQueue.global().sync {
+                    self.loadAllUser(completion: { 
+                        for obj in self.allUsers.values{
+                            temp.append(obj)
+                        }
+                    })
+                }
+            }else{
+                for obj in allUsers.values{
+                    temp.append(obj)
+                }
+            }
+            return temp
+        }
+    }
     
     func loadAllUser(completion:(()->Void)?){
-
-        if DEBUGMode{
-            MTTUserEntity.db_query(predicate: nil , sortBy: "objID", sortAscending: true , offset: 0, limitCount: 0, success: { (users ) in
-                debugPrint("test user query count \(users.count)")
-                for obj  in users {
-                    if let user:MTTUserEntity = obj as? MTTUserEntity{
-                        debugPrint("user id ",user.objID)
-                    }
-                }
-            }) { (error ) in
-                debugPrint("test user query error \(error)")
-            }
-        }
         
         let kLastUpdate:String = AllUserAPI.kResultLastUpdateTime
         var localUpdateTime:Int = UserDefaults.standard.integer(forKey: kLastUpdate)
@@ -69,7 +76,11 @@ class HMUsersManager: NSObject {
             if users.count > 0 {
                 for obj in  users.enumerated(){
                     if let user:MTTUserEntity = obj.element as? MTTUserEntity{
-                        self.add(user: user)
+                        if user.isValided {
+                            self.add(user: user)
+                        }else{
+                            user.db_delete(complettion: nil)
+                        }
                     }
                 }
                 completion?()

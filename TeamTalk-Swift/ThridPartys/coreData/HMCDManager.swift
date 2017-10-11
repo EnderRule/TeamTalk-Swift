@@ -15,8 +15,7 @@ class HMCDManager: NSObject {
     
     var userDBName:String = ""{
         didSet{
-            //dbName变化时，保存更改并重置 相关项目
-            
+            //dbName变化时，保存当前修改 并重置相关项目
             let _ = self.saveContext()
             self.s_objectModel = nil
             self.s_objectContext = nil
@@ -68,7 +67,6 @@ class HMCDManager: NSObject {
                 return self.s_objectModel!
             }else {
                 self.s_objectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main] )  //合并所有 model
-//                print("all entitys ", self.s_objectModel?.entitiesByName)
                 return self.s_objectModel!
             }
         }
@@ -246,7 +244,7 @@ class HMCDManager: NSObject {
     ///
     /// - Parameters:
     ///   - myclass:   类名、表名、模型名
-    ///   - predicate: 断言描述
+    ///   - predicate: <#predicate description#>
     ///   - sortBy: 需要排序的字段
     ///   - sortAscending: 是否升序
     ///   - offset:偏移值
@@ -262,19 +260,13 @@ class HMCDManager: NSObject {
         if limitCount > 0{
             fetchRequest.fetchLimit = limitCount
         }
-        
         if predicate != nil  {
             fetchRequest.predicate = predicate
         }
         if sortBy?.characters.count ?? 0 > 0 {
             let sortdes:MySortor = MySortor.init(key: sortBy!, ascending: sortAscending)
-
-//            debugPrint("\(myclass) query sortby key \(sortBy!) \(sortAscending ? "asce":"desc")")
             fetchRequest.sortDescriptors = [sortdes]
-            
         }
-        
-        
         
         do {
             let fetchedResults = try context.fetch(fetchRequest) as? [NSManagedObject]
@@ -286,8 +278,6 @@ class HMCDManager: NSObject {
     }
     
 }
-
-
 
 //"db user id " "user_1" "qing"
 //"db user id " "user_10" "0988666558"
@@ -312,9 +302,6 @@ class HMCDManager: NSObject {
 class MySortor: NSSortDescriptor{
     
     override func compare(_ object1: Any, to object2: Any) -> ComparisonResult {
-        
-//        return super.compare(object1, to: object2)
-        
         
         guard let sortKey = self.key else {
             return super.compare(object1 , to: object2)
@@ -341,8 +328,6 @@ class MySortor: NSSortDescriptor{
             result = .orderedAscending
         }else {
             result = str1.compare(str2)
-            
-            
         }
         
         
@@ -351,11 +336,9 @@ class MySortor: NSSortDescriptor{
         }else if !self.ascending && result == .orderedAscending{
             result = .orderedDescending
         }
-
+        
         return result
     }
     
 }
-
-
 

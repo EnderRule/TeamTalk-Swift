@@ -76,12 +76,9 @@ class MTTUserEntity: MTTBaseEntity {
     
     var isValided:Bool {
         get{
-
-            return self.userId.length > 0
+            return self.userId.length > 0 && MTTUserEntity.pbIDFrom(localID: self.userId) > 0
         }
     }
-    
-    
     
 //    public convenience init(dicInfo:[String:Any]){
 //        self.init()

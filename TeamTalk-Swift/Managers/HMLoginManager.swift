@@ -312,8 +312,6 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                 
                                 MTTDatabaseUtil.instance().openCurrentUserDB()
                                 
-                                HMUsersManager.shared.loadAllUser(completion: nil)
-                                
                                 SessionModule.instance().loadLocalSession({ (isok ) in })
                                 
                                 HMNotification.userLoginSuccess.postWith(obj: user , userInfo: nil )
@@ -321,6 +319,8 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                 self.sendPushtoken(token: self.pushTtoken)
                                 
                                 success(user)
+                                
+                                HMUsersManager.shared.loadAllUser(completion: nil)
                             }else{
                                 var rstr = json[LoginAPI.kResultMessage].stringValue
                                 if rstr.length <= 0 {
