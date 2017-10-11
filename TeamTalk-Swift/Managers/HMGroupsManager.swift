@@ -6,7 +6,7 @@
 //  Copyright © 2017年 HuangZhongQing. All rights reserved.
 //
 
-import UIKit
+//import UIKit
 
 class HMGroupsManager: NSObject {
     static let shared:HMGroupsManager = HMGroupsManager()

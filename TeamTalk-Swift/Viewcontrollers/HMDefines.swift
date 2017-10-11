@@ -57,7 +57,7 @@ enum HMNotification:Int {
     
     case loadLocalGroupFinish
     
-    case receiveMessage
+    case receiveMessage                 //收到普通新消息
     case receiveP2PShakeMessage
     case receiveP2PInputingMessage
     case receiveP2PStopInputingMessage
@@ -151,4 +151,16 @@ enum HMNotification:Int {
         NotificationCenter.default.post(name: self.notificationName(), object: obj, userInfo: userInfo)
     }
 
+}
+
+enum HMErrorCode:Int {
+
+    case db_add = 8801
+    case db_insert = 8802
+    case db_update = 8803
+    case db_delete = 8804
+    case db_query = 8805
+    
+    
+    
 }

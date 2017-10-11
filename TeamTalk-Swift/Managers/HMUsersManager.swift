@@ -6,13 +6,15 @@
 //  Copyright © 2017年 HuangZhongQing. All rights reserved.
 //
 
-import UIKit
+//import UIKit
 
 class HMUsersManager: NSObject {
 
     static let shared:HMUsersManager = HMUsersManager()
     
     var allUsers:[String:MTTUserEntity] = [:]
+    
+    var allGroups:[String:MTTGroupEntity] = [:]
     
     /**
      *  登录成功后获取所有用户
@@ -21,7 +23,8 @@ class HMUsersManager: NSObject {
      */
     
     func cleanData(){
-        self.allUsers = [:]
+        self.allUsers.removeAll()
+        self.allGroups.removeAll()
     }
     
     func add(user:MTTUserEntity){
@@ -43,6 +46,19 @@ class HMUsersManager: NSObject {
             return user
         }else{
             return allUsers[ID]
+        }
+    }
+    
+    func add(group:MTTGroupEntity){
+        allGroups.updateValue(group , forKey: group.objID)
+    }
+    func groupFor(ID:String)->MTTGroupEntity?{
+        if let group = allGroups[ID] {
+            return group
+        }else{
+            //Fixme: should trying to load group from server
+            
+            return nil
         }
     }
     

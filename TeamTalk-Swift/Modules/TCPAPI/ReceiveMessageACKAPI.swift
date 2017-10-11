@@ -14,15 +14,12 @@ class ReceiveMessageACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
     var sessionID:UInt32 = 0
     var sessionType:Im.BaseDefine.SessionType = .sessionTypeSingle
     
-    public convenience init(msgID:UInt32,sessionID:UInt32,sessionType:SessionType_Objc){
+    public convenience init(msgID:UInt32,sessionID:UInt32,sessionType:Im.BaseDefine.SessionType){
         self.init()
         self.msgID = msgID
         self.sessionID = sessionID
-        if sessionType == .sessionTypeSingle{
-            self.sessionType = .sessionTypeSingle
-        }else {
-            self.sessionType = .sessionTypeGroup
-        }
+        self.sessionType = sessionType
+        
     }
     
     func requestTimeOutTimeInterval() -> Int32 {

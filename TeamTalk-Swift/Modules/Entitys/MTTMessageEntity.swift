@@ -445,7 +445,7 @@ extension MTTMessageEntity {
         }
         newMsg.msgContent = content
         newMsg.msgContentType = msgContentType
-        newMsg.msgID = UInt32(DDMessageModule.getMessageID())
+        newMsg.msgID = MTTMessageEntity.getNewLocalMsgID()
         newMsg.sessionId = module.sessionEntity.sessionID
         newMsg.toUserID = module.sessionEntity.sessionID
         newMsg.senderId = HMCurrentUser().userId
@@ -599,6 +599,8 @@ extension MTTMessageEntity {
     }
 }
 
+let HM_Local_message_beginID:UInt32 = 1000000
+
 extension MTTMessageEntity {
     func updateToDB(compeletion:((Bool)->Void)?){
         
@@ -609,6 +611,23 @@ extension MTTMessageEntity {
 //        MTTDatabaseUtil.instance().updateMessage(forMessage: self) { (result ) in
 //            compeletion?(result)
 //        }
+    }
+    
+    /// 生成本地新消息ID
+    ///
+    /// - Returns: 新ID
+    class func getNewLocalMsgID()->UInt32{
+        let key :String = "msg_id"
+        var newMsgID:UInt32 = UInt32(UserDefaults.standard.integer(forKey: key))
+        if newMsgID == 0 {
+            newMsgID = HM_Local_message_beginID
+        }else{
+            newMsgID += 1
+        }
+        UserDefaults.standard.setValue(newMsgID, forKey: key )
+        UserDefaults.standard.synchronize()
+        
+        return newMsgID
     }
 }
 

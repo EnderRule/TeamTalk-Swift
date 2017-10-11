@@ -264,6 +264,10 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     
     func preLoadMessageFor(session:MTTSessionEntity){
         
+        
+        NSString* sqlString = [NSString stringWithFormat:@"SELECT * FROM %@ where sessionId=? and status = 2 ORDER BY messageId DESC limit 0,1",TABLE_MESSAGE];
+
+        
         MTTMessageEntity.db_query(predicate: nil , sortBy: nil , sortAscending: true , offset: 0, limitCount: 20, success: { (messages ) in
             
         }) { (error ) in
@@ -304,4 +308,13 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         
     }
     
+}
+
+extension MTTMessageEntity{
+    class func getLastestMessage(sessionID:String)->MTTMessageEntity?{
+        
+        let predicate:NSPredicate = spre
+        MTTMessageEntity.db_query(predicate: <#T##NSPredicate?#>, sortBy: <#T##String?#>, sortAscending: <#T##Bool#>, offset: <#T##Int#>, limitCount: <#T##Int#>, success: <#T##(([NSManagedObject]) -> Void)##(([NSManagedObject]) -> Void)##([NSManagedObject]) -> Void#>, failure: <#T##((String) -> Void)?##((String) -> Void)?##(String) -> Void#>)
+        
+    }
 }

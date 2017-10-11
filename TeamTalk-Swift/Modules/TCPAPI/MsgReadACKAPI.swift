@@ -12,17 +12,14 @@ class MsgReadACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     private var sessionID:UInt32 = 0
     private var msgID:UInt32 = 0
-    private var type:Im.BaseDefine.SessionType = .sessionTypeSingle
+    private var sessionType:Im.BaseDefine.SessionType = .sessionTypeSingle
     
-    public convenience init(sessionID:UInt32,msgID:UInt32,sessionType:SessionType_Objc) {
+    public convenience init(sessionID:UInt32,msgID:UInt32,sessionType:Im.BaseDefine.SessionType) {
         self.init()
         self.sessionID = sessionID
         self.msgID = msgID
-        if sessionType == .sessionTypeSingle{
-            self.type = .sessionTypeSingle
-        }else{
-            self.type = .sessionTypeGroup
-        }
+        self.sessionType = sessionType
+        
     }
     
     func requestTimeOutTimeInterval() -> Int32 {
@@ -60,7 +57,7 @@ class MsgReadACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
             builder.setUserId(0)
             builder.setSessionId(self.sessionID)
             builder.setMsgId(self.msgID)
-            builder.setSessionType(self.type)
+            builder.setSessionType(self.sessionType)
             
             let dataOut = DDDataOutputStream.init()
             dataOut.write(0)

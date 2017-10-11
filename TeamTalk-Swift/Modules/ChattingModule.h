@@ -49,4 +49,5 @@ typedef void(^DDChatLoadMoreHistoryCompletion)(NSUInteger addcount, NSError* err
 @interface DDPromptEntity : NSObject
 @property(nonatomic,retain)NSString* message;
 
+-(instancetype)initWithTime:(NSTimeInterval)time;
 @end

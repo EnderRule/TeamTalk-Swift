@@ -84,19 +84,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-+ (NSUInteger )getMessageID
-{
-    NSInteger messageID = [[NSUserDefaults standardUserDefaults] integerForKey:@"msg_id"];
-    if(messageID == 0)
-    {
-        messageID=LOCAL_MSG_BEGIN_ID;
-    }else{
-        messageID ++;
-    }
-    [[NSUserDefaults standardUserDefaults] setInteger:messageID forKey:@"msg_id"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    return messageID;
-}
+ 
 
 
 -(void)sendMsgRead:(MTTMessageEntity *)message
@@ -173,9 +161,5 @@
     
 }
 
--(void)setApplicationUnreadMsgCount
-{
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[self getUnreadMessgeCount]];
-}
 
 @end

@@ -99,6 +99,7 @@ static NSUInteger const showPromptGap = 300;
                             
                         NSUInteger count = [self p_getMessageCount];
                         NSPredicate  *predicate = [NSPredicate predicateWithFormat:@"sessionId = %@",self.sessionEntity.sessionID];
+                        
                         [MTTMessageEntity db_queryWithPredicate:predicate sortBy:@"msgTime" sortAscending:NO offset:count limitCount:DD_PAGE_ITEM_COUNT success:^(NSArray<NSManagedObject *> * _Nonnull messages) {
                             [self p_addHistoryMessages:messages Completion:completion];
                             completion([response count],error);
@@ -497,5 +498,13 @@ static NSUInteger const showPromptGap = 300;
 @end
 
 @implementation DDPromptEntity
+-(instancetype)initWithTime:(NSTimeInterval)time{
+    self = [super init];
+    if (self){
+        
+    }
+    
+    return self ;
+}
 
 @end

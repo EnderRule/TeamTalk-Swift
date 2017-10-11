@@ -6,7 +6,7 @@
 //  Copyright © 2017年 HuangZhongQing. All rights reserved.
 //
 
-import UIKit
+//import UIKit
 import AFNetworking
 
 
@@ -366,7 +366,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         self.shouldAutoLogin = false
         
         HMUsersManager.shared.cleanData()
-        DDMessageModule.shareInstance().removeAllUnreadMessages()
+
         SessionModule.instance().clearSession()
         DDTcpClientManager.instance().delegate = nil
         DDTcpClientManager.instance().disconnect()

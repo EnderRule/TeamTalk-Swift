@@ -27,8 +27,7 @@
 -(void)addDelegate:(id<DDMessageModuleDelegate>) delegate;
 -(void)removeDelegate:(id<DDMessageModuleDelegate>)delegate;
 
-+ (NSUInteger )getMessageID;
-
+ 
 - (void)removeAllUnreadMessages;
 - (NSUInteger)getUnreadMessgeCount;
 
