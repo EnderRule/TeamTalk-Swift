@@ -9,7 +9,7 @@
 import UIKit
 
 
-class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,DDMessageModuleDelegate,SessionModuelDelegate {
+class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,SessionModuelDelegate {
 
     static let shared = HMRecentSessionsViewController()
     
@@ -18,12 +18,8 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     var tableview:UITableView = UITableView.init(frame: .zero, style: .grouped)
     var sessions:[MTTSessionEntity] = []
    
-    
-    
-    
     deinit {
         NotificationCenter.default.removeObserver(self )
-        DDMessageModule.shareInstance().remove(self)
     }
     
     override func viewDidLoad() {
@@ -53,15 +49,8 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         NotificationCenter.default.addObserver(self , selector: #selector(self.refreshData), name: HMNotification.reloadRecentContacts.notificationName(), object: nil )
         NotificationCenter.default.addObserver(self , selector: #selector(self.refreshData), name: HMNotification.recentContactsUpdate.notificationName(), object: nil )
         
-        DDMessageModule.shareInstance().add(self)
+        NotificationCenter.default.addObserver(self , selector: #selector(self.onReceiveMessage(notification:)), name: HMNotification.receiveMessage.notificationName(), object: nil )
         
-        //获取最新的会话列表
-        dispatch_globle(after: 0.0) {
-            SessionModule.instance().getRecentSession({ (count ) in
-                self.refreshData()
-            })
-        }
-       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,12 +60,17 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         
         self.title = self.holderTitle
         
-        self.refreshData()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    
+        
+        //获取最新的会话列表
+        dispatch_globle(after: 0.0) {
+            SessionModule.instance().getRecentSession({ (count ) in
+                self.refreshData()
+            })
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,9 +78,15 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK:DDmessagemodule delegate 
-    func onReceiveMessage(_ message: MTTMessageEntity!) {
-                for session in self.sessions {
+    
+    
+    //MARK: 收到新消息
+    @objc private func onReceiveMessage(notification:NSNotification) {
+        guard let message:MTTMessageEntity = notification.object as? MTTMessageEntity else {
+            return
+        }
+        
+        for session in self.sessions {
             if message.sessionId == session.sessionID {
                 
                 session.lastMsg = message.msgContent
@@ -137,6 +137,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         if indexPath.row < self.sessions.count{
             let session = self.sessions[indexPath.row]
             cell.configWith(object: session)
+            
             self.preLoadMessageFor(session: session)
         }
         return cell
@@ -156,21 +157,6 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true )
-        
-//        let alert = SCLAlertView.init()
-//        let textview:SCLTextView = alert.addTextField("输入密码")
-//        alert.addButton("确定", validationBlock: { () -> Bool in
-//            if textview.text != nil && textview.text!.length >= 6 && textview.text!.length <= 16 {
-//                return true
-//            }else{
-//                print("验证不通过")
-//                return false
-//            }
-//        }) {
-//             print("验证通过")
-//        }
-//        alert.showNotice(self,title:"输入密码", subTitle: "密码长度6~16个字符", closeButtonTitle: "取消", duration: 0)
-//        return
         
         if indexPath.row < self.sessions.count{
             let session = self.sessions[indexPath.row]
@@ -264,57 +250,37 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     
     func preLoadMessageFor(session:MTTSessionEntity){
         
-        
-        NSString* sqlString = [NSString stringWithFormat:@"SELECT * FROM %@ where sessionId=? and status = 2 ORDER BY messageId DESC limit 0,1",TABLE_MESSAGE];
-
-        
-        MTTMessageEntity.db_query(predicate: nil , sortBy: nil , sortAscending: true , offset: 0, limitCount: 20, success: { (messages ) in
+        if let message = MTTMessageEntity.getLastestMessage(session: session){
+            if message.msgID != session.lastMsgID {
+                HMMessageManager.shared.getMsgFromServer(beginMsgID: session.lastMsgID, forSession: session, count: 20, completion: { (messages , error ) in
+                })
+            }
             
-        }) { (error ) in
-            
+        }else{
+            if session.lastMsgID != 0 {
+                HMMessageManager.shared.getMsgFromServer(beginMsgID: session.lastMsgID, forSession: session, count: 20, completion: { (messages , error ) in
+                })
+            }
         }
-        
-//        MTTDatabaseUtil.instance().getLastestMessage(forSessionID: session.sessionID) { (message , error ) in
-//            if message != nil {
-//                if message!.msgID != session.lastMsgID {
-//                    
-//                    DDMessageModule.shareInstance().getMessageFromServer(Int(session.lastMsgID), currentSession: session, count: 20, block: { (array , error ) in
-//                        if array?.count ?? 0 > 0 {
-//                            
-//                            MTTDatabaseUtil.instance().insertMessages(array! as! [Any], success: { 
-//                                
-//                            }, failure: { (error ) in
-//                                
-//                            })
-//                        }
-//                    })
-//                }
-//            }else {
-//                if session.lastMsgID != 0 {
-//                    DDMessageModule.shareInstance().getMessageFromServer(Int(session.lastMsgID), currentSession: session, count: 20, block: { (array , error ) in
-//                        if array?.count ?? 0 > 0 {
-//                            MTTDatabaseUtil.instance().insertMessages(array! as! [Any], success: {
-//                                
-//                            }, failure: { (error ) in
-//                                
-//                            })
-//                        }
-//                    })
-//                    
-//                }
-//            }
-//        }
-        
-        
     }
     
 }
 
-extension MTTMessageEntity{
-    class func getLastestMessage(sessionID:String)->MTTMessageEntity?{
+extension MTTMessageEntity {
+    class func getLastestMessage(session:MTTSessionEntity)->MTTMessageEntity?{
         
-        let predicate:NSPredicate = spre
-        MTTMessageEntity.db_query(predicate: <#T##NSPredicate?#>, sortBy: <#T##String?#>, sortAscending: <#T##Bool#>, offset: <#T##Int#>, limitCount: <#T##Int#>, success: <#T##(([NSManagedObject]) -> Void)##(([NSManagedObject]) -> Void)##([NSManagedObject]) -> Void#>, failure: <#T##((String) -> Void)?##((String) -> Void)?##(String) -> Void#>)
-        
+        var message:MTTMessageEntity?
+        DispatchQueue.global().sync {
+        let sessionID:String =  session.sessionID
+            let predicate:NSPredicate = NSPredicate.init(format: "self.sessionId == %@ AND self.stateInt == %@", argumentArray: [sessionID,DDMessageState.SendSuccess.rawValue] )
+            MTTMessageEntity.db_query(predicate: predicate, sortBy: "msgTime", sortAscending: false , offset: 0, limitCount: 1, success: { (messages ) in
+                message = messages.first as? MTTMessageEntity
+                debugPrint("get lastest Message forSession:\(session.sessionID) \(message?.msgID ?? 0) \(predicate.predicateFormat)")
+
+            }) { (error ) in
+                debugPrint("get lastest Message error :",error )
+            }
+        }
+        return message
     }
 }

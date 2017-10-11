@@ -36,21 +36,24 @@ class HMGroupsManager: NSObject {
         allGroups.updateValue(group, forKey: group.objID)
     }
     
-    func groupFor(ID:String,completion:@escaping ((MTTGroupEntity?) ->Void)){
+    func groupFor(ID:String)->MTTGroupEntity?{
         if let group = allGroups[ID] {
-            completion(group)
+            return group
         }else{
-            let groupid = MTTGroupEntity.pbIDFrom(localID: ID)
-            let request = GetGroupInfoAPI.init(groupID: groupid, groupVersion: 0)
-            request.request(withParameters: [:], completion: { (response, error ) in
-                if let group = (response as? [MTTGroupEntity] ?? []).first{
-                    
-                    self.add(group: group)
-                    completion(group)
-                }else{
-                    completion(nil)
-                }
-            })
+            
+            var target:MTTGroupEntity?
+            DispatchQueue.global().sync {
+                
+                let groupid = MTTGroupEntity.pbIDFrom(localID: ID)
+                let request = GetGroupInfoAPI.init(groupID: groupid, groupVersion: 0)
+                request.request(withParameters: [:], completion: { (response, error ) in
+                    if let group = (response as? [MTTGroupEntity] ?? []).first{
+                        self.add(group: group)
+                        target = group
+                    }
+                })
+            }
+            return target
         }
     }
 }

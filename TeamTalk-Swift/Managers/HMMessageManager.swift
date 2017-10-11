@@ -222,7 +222,7 @@ class HMMessageManager: NSObject {
                 self.sendReceiveACK(message: message)
                 
                 if message.isGroupMessage { // 如果是群消息且用户已屏蔽该群，则可以直接发送已读回执
-                    if let  group = HMUsersManager.shared.groupFor(ID: message.sessionId){
+                    if let  group = HMGroupsManager.shared.groupFor(ID: message.sessionId){
                         if group.isShield{
                             self.sendReadACK(message: message)
                         }

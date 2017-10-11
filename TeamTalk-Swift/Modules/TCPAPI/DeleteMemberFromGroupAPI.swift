@@ -47,16 +47,18 @@ class DeleteMemberFromGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 if resultcode != 0 {
                     return nil
                 }else {
-                    let groupID = MTTGroupEntity.localIDFrom(pbID: res.groupId)
-                    let entity:MTTGroupEntity = DDGroupModule.instance().getGroupByGId(groupID)
-                    
-                    var groupuids:[String] = []
-                    for intUID in  res.curUserIdList {
-                        let uidStr = MTTUserEntity.localIDFrom(pbID: intUID)
-                        groupuids.append(uidStr)
-                     }
-                    entity.groupUserIds = groupuids
-                    return entity
+                    let groupLocalID = MTTGroupEntity.localIDFrom(pbID: res.groupId)
+                    if let entity:MTTGroupEntity = HMGroupsManager.shared.groupFor(ID: groupLocalID){
+                        var groupuids:[String] = []
+                        for intUID in  res.curUserIdList {
+                            let uidStr = MTTUserEntity.localIDFrom(pbID: intUID)
+                            groupuids.append(uidStr)
+                         }
+                        entity.groupUserIds = groupuids
+                        return entity
+                    }else{
+                        return nil
+                    }
                 }
             }else {
                 debugPrint("DeleteMemberFromGroupAPI analysisReturnData failure")

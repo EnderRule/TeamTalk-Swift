@@ -133,7 +133,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     }
     
     private var s_serverTime:TimeInterval = Date().timeIntervalSince1970
-    private var s_currentUser:MTTUserEntity = MTTUserEntity.newObj() as! MTTUserEntity
+    private var s_currentUser:MTTUserEntity = MTTUserEntity.newNotInertObj() as! MTTUserEntity
     private var s_networkState:HMNetworkState = .disconnect
     private var s_loginState:HMLoginState = .offLine{
         didSet{
@@ -360,7 +360,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     func logout(){
         self.s_loginState = .offLineInitiative
 
-        self.s_currentUser = MTTUserEntity.newObj() as! MTTUserEntity
+        self.s_currentUser = MTTUserEntity.newNotInertObj() as! MTTUserEntity
         self.currentUserID = ""
         self.currentUserName = ""
         self.shouldAutoLogin = false

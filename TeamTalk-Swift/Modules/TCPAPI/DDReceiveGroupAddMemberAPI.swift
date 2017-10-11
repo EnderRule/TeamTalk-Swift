@@ -28,7 +28,7 @@ class DDReceiveGroupAddMemberAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProt
                 }else  {
                     let groupid = bodydata.readUTF() ?? ""
                     
-                    if let entity = DDGroupModule.instance().getGroupByGId(groupid){
+                    if let entity = HMGroupsManager.shared.groupFor(ID: groupid){
                         let uidSets = NSMutableSet.init()
                         
                         let userCount = bodydata.readInt()

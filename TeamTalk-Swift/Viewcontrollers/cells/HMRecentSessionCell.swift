@@ -108,30 +108,29 @@ class HMRecentSessionCell: HMBaseCell {
             if session.isGroupSession {
                 //configs for GroupEntity
 
-                DDGroupModule.instance().getGroupInfogroupID(session.sessionID, completion: {[weak self ] (group ) in
-                    if group != nil {
-                        self?.nameLabel.text = group!.name
-
-                        if group!.isShield{
-                            self?.unreadMsgLabel.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
-                        }else{
-                            self?.unreadMsgLabel.backgroundColor = UIColor.red
-                        }
-                        
-                        var avatars:[String] = []
-                        let UIDs:[String] = group!.groupUserIds.reversed()
-                        for uid in UIDs{
-                            if  UIDs.index(of: uid) ?? 0 > 8 {
-                                break
-                            }
-                            if let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: uid){
-                                avatars.append(user.avatar)
-                            }
-                        }
-//                        let groupAvatarUrls = (avatars as NSArray).componentsJoined(by: ";")
-                        self?.avatarView.setImage(str: avatars.first ?? "")//.setAvatar(groupAvatarUrls, group: true )
+                if let group = HMGroupsManager.shared.groupFor(ID: session.sessionID){
+                    self.nameLabel.text = group.name
+                    
+                    if group.isShield{
+                        self.unreadMsgLabel.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+                    }else{
+                        self.unreadMsgLabel.backgroundColor = UIColor.red
                     }
-                })
+                    
+                    var avatars:[String] = []
+                    let UIDs:[String] = group.groupUserIds.reversed()
+                    for uid in UIDs{
+                        if  UIDs.index(of: uid) ?? 0 > 8 {
+                            break
+                        }
+                        if let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: uid){
+                            avatars.append(user.avatar)
+                        }
+                    }
+                    //                        let groupAvatarUrls = (avatars as NSArray).componentsJoined(by: ";")
+                    self.avatarView.setImage(str: avatars.first ?? "")//.setAvatar(groupAvatarUrls, group: true )
+                    
+                }
             }else {
                 //configs for UserEntity
                 if let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: session.sessionID){

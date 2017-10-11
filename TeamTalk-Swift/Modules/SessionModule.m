@@ -11,7 +11,7 @@
 #import "NSDictionary+Safe.h"
 #import "MTTDatabaseUtil.h"
 
-#import "DDGroupModule.h"
+
 #import "MTTDDNotification.h"
 
 #import "TeamTalk_Swift-Swift.h"
@@ -75,7 +75,7 @@
     [allSession enumerateObjectsUsingBlock:^(MTTSessionEntity *obj, NSUInteger idx, BOOL *stop) {
         NSInteger unReadMsgCount = obj.unReadMsgCount;
         if(obj.isGroupSession){
-            MTTGroupEntity *group = [[DDGroupModule instance] getGroupByGId:obj.sessionID];
+            MTTGroupEntity *group = [[HMGroupsManager shared] groupForID:obj.sessionID] ;// [[DDGroupModule instance] getGroupByGId:obj.sessionID];
             if (group) {
                 if(group.isShield){
                     if(obj.unReadMsgCount){

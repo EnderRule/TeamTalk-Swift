@@ -231,7 +231,7 @@ static NSUInteger const showPromptGap = 300;
     }];
 
     
-//    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:count completion:^(NSArray *messages, NSError *error) {
+//    [[MTTDatabaseUtil instance] loadMessageForSessionID:self.sessionEntity.sessionID pageCount:DD_PAGE_ITEM_COUNT index:offset completion:^(NSArray *messages, NSError *error) {
 //        //after loading finish ,then add to messages
 //        if ([HMLoginManager shared].networkState == HMNetworkStateDisconnect) {
 //            [self p_addHistoryMessages:messages Completion:completion];

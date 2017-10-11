@@ -64,15 +64,9 @@ class MTTSessionEntity: NSObject {
                         }
                     }
                 }else {
-                    if let group = DDGroupModule.instance().getGroupByGId(self.sessionID){
+                    if let group = HMGroupsManager.shared.groupFor(ID: self.sessionID){
                         self.s_name = group.name
                         
-                    }else{
-                        DDGroupModule.instance().getGroupInfogroupID(self.sessionID, completion: { (group ) in
-                            if group != nil {
-                                self.s_name = group!.name
-                            }
-                        })
                     }
                 }
             }
@@ -111,7 +105,7 @@ class MTTSessionEntity: NSObject {
     var sessionUsers:[String] {
         get{
             if self.sessionType == .sessionTypeGroup{
-                if let group = DDGroupModule.instance().getGroupByGId(self.sessionID){
+                if let group = HMGroupsManager.shared.groupFor(ID: self.sessionID){
                     return group.groupUserIds
                 }
                 return []

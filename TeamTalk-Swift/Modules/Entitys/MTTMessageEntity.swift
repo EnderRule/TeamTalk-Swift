@@ -435,7 +435,7 @@ extension MTTMessageEntity {
         return newMsg
     }
     
-    public class func initWith(content:String,module:ChattingModule,msgContentType:DDMessageContentType)->MTTMessageEntity{
+    public class func initWith(content:String,module:HMChattingModule,msgContentType:DDMessageContentType)->MTTMessageEntity{
         let newMsg:MTTMessageEntity = MTTMessageEntity.newObj() as! MTTMessageEntity
         
         if module.sessionEntity.sessionType == .sessionTypeGroup{
@@ -452,8 +452,8 @@ extension MTTMessageEntity {
         newMsg.state = .Sending
         newMsg.msgTime = UInt32(Date().timeIntervalSince1970)
         
-        module.addShowMessage(newMsg)
-        module.updateSessionUpdateTime(UInt(newMsg.msgTime))
+        module.addShow(message: newMsg)
+        module.updateSession(updateTime: TimeInterval(newMsg.msgTime))
         return newMsg
     }
     
@@ -504,7 +504,7 @@ extension MTTMessageEntity {
     }
     
     public class func initWith(msgData:Im.Message.ImmsgData)->MTTMessageEntity{
-        let newMsg:MTTMessageEntity = MTTUserEntity.newObj() as! MTTMessageEntity
+        let newMsg:MTTMessageEntity = MTTMessageEntity.newObj() as! MTTMessageEntity
         newMsg.msgID = msgData.msgId
         newMsg.msgTime = msgData.createTime
         newMsg.msgType = MsgType_Objc.init(rawValue: msgData.msgType.rawValue) ?? .msgTypeSingleText

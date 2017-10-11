@@ -41,12 +41,9 @@ class HMChatPromptCell: HMBaseCell {
         promptLabel.center = self.contentView.center
     }
     override func configWith(object: Any) {
-        if let  prompt = object as? DDPromptEntity {
-            promptLabel.text = prompt.message
-        }else if let  prompt = object as? HMPromptEntity{
+        if let  prompt = object as? HMPromptEntity {
             promptLabel.text = prompt.message
         }
-        
     }
 
 }

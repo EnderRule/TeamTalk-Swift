@@ -30,12 +30,9 @@
 
 //Module
 
-#import "DDGroupModule.h"
+
 #import "MTTBubbleModule.h"
 
-#import "DDMessageModule.h"
-#import "ChattingModule.h"
-#import "ChattingEditModule.h"
 #import "SessionModule.h"
 
 #import "RecorderManager.h"

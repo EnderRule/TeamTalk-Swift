@@ -14,17 +14,8 @@ class HMUsersManager: NSObject {
     
     var allUsers:[String:MTTUserEntity] = [:]
     
-    var allGroups:[String:MTTGroupEntity] = [:]
-    
-    /**
-     *  登录成功后获取所有用户
-     *
-     *  @param completion 异步执行的block
-     */
-    
     func cleanData(){
         self.allUsers.removeAll()
-        self.allGroups.removeAll()
     }
     
     func add(user:MTTUserEntity){
@@ -49,18 +40,6 @@ class HMUsersManager: NSObject {
         }
     }
     
-    func add(group:MTTGroupEntity){
-        allGroups.updateValue(group , forKey: group.objID)
-    }
-    func groupFor(ID:String)->MTTGroupEntity?{
-        if let group = allGroups[ID] {
-            return group
-        }else{
-            //Fixme: should trying to load group from server
-            
-            return nil
-        }
-    }
     
     func loadAllUser(completion:(()->Void)?){
 

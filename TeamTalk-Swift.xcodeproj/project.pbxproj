@@ -110,9 +110,6 @@
 		66686A991F458037008B26BD /* GetMessageQueueAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A981F458037008B26BD /* GetMessageQueueAPI.swift */; };
 		66686A9B1F458525008B26BD /* GetUnreadMessagesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */; };
 		66686A9D1F4591B0008B26BD /* SendMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */; };
-		66686AA51F459ADC008B26BD /* DDMessageModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA01F459ADC008B26BD /* DDMessageModule.m */; };
-		66686AAC1F45A769008B26BD /* ChattingModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AA91F45A769008B26BD /* ChattingModule.m */; };
-		66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AAB1F45A769008B26BD /* ChattingEditModule.m */; };
 		66686AEA1F45ABC3008B26BD /* SessionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AE91F45ABC3008B26BD /* SessionModule.m */; };
 		66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
 		66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */; };
@@ -225,7 +222,6 @@
 		66F10A6B1F43F2D70035C888 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10A691F43F2D70035C888 /* libsqlite3.tbd */; };
 		66F10A6E1F43F5BC0035C888 /* MTTDatabaseUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A521F43F11C0035C888 /* MTTDatabaseUtil.m */; };
 		66F10A751F43F8DA0035C888 /* SpellLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A741F43F8DA0035C888 /* SpellLibrary.m */; };
-		66F10A781F43F9CE0035C888 /* DDGroupModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A771F43F9CE0035C888 /* DDGroupModule.m */; };
 		66F10CBA1F44353C0035C888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CB91F44353C0035C888 /* Foundation.framework */; };
 		66F10CBC1F4435430035C888 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CBB1F4435430035C888 /* UIKit.framework */; };
 		66F10CBE1F44354C0035C888 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CBD1F44354C0035C888 /* AudioToolbox.framework */; };
@@ -433,8 +429,6 @@
 		66686AA01F459ADC008B26BD /* DDMessageModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMessageModule.m; sourceTree = "<group>"; };
 		66686AA81F45A769008B26BD /* ChattingModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingModule.h; sourceTree = "<group>"; };
 		66686AA91F45A769008B26BD /* ChattingModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingModule.m; sourceTree = "<group>"; };
-		66686AAA1F45A769008B26BD /* ChattingEditModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingEditModule.h; sourceTree = "<group>"; };
-		66686AAB1F45A769008B26BD /* ChattingEditModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingEditModule.m; sourceTree = "<group>"; };
 		66686AE81F45ABC3008B26BD /* SessionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionModule.h; sourceTree = "<group>"; };
 		66686AE91F45ABC3008B26BD /* SessionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionModule.m; sourceTree = "<group>"; };
 		66686AEB1F45AE71008B26BD /* NSDate+DDAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DDAddition.h"; sourceTree = "<group>"; };
@@ -1184,19 +1178,17 @@
 		66E6D3C11F4290FB008E9590 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				66686A601F4522B5008B26BD /* MTTBubbleModule.h */,
+				66686A611F4522B5008B26BD /* MTTBubbleModule.m */,
+				66686AE81F45ABC3008B26BD /* SessionModule.h */,
+				66686AE91F45ABC3008B26BD /* SessionModule.m */,
+				6682061A1F62404D0088BE65 /* HMChattingModule.swift */,
 				66686AEE1F4678AD008B26BD /* Search */,
 				66686A9E1F459AD2008B26BD /* Message */,
 				66F10A761F43F9CE0035C888 /* DDGroupModule.h */,
 				66F10A771F43F9CE0035C888 /* DDGroupModule.m */,
-				66686A601F4522B5008B26BD /* MTTBubbleModule.h */,
-				66686A611F4522B5008B26BD /* MTTBubbleModule.m */,
 				66686AA81F45A769008B26BD /* ChattingModule.h */,
 				66686AA91F45A769008B26BD /* ChattingModule.m */,
-				6682061A1F62404D0088BE65 /* HMChattingModule.swift */,
-				66686AAA1F45A769008B26BD /* ChattingEditModule.h */,
-				66686AAB1F45A769008B26BD /* ChattingEditModule.m */,
-				66686AE81F45ABC3008B26BD /* SessionModule.h */,
-				66686AE91F45ABC3008B26BD /* SessionModule.m */,
 				66F107D91F42EEF70035C888 /* Entitys */,
 				66E6D3C21F4290FB008E9590 /* TCPAPI */,
 			);
@@ -1584,7 +1576,6 @@
 				66686A7E1F4562B0008B26BD /* RemoveSessionAPI.swift in Sources */,
 				665615B01F8CB02B00689422 /* exc_5_256_table.c in Sources */,
 				665615C21F8CB02B00689422 /* mdf.c in Sources */,
-				66686AAC1F45A769008B26BD /* ChattingModule.m in Sources */,
 				665615DB1F8CB02B00689422 /* CADebugMacros.cpp in Sources */,
 				66DDD47C1F50227D0082A69C /* Toast.swift in Sources */,
 				66E437991F4C41BC009D527D /* NIMInputMoreContainerView.m in Sources */,
@@ -1620,7 +1611,6 @@
 				665615DC1F8CB02B00689422 /* CAStreamBasicDescription.cpp in Sources */,
 				66F107D21F42DB520035C888 /* AddMemberToGroupAPI.swift in Sources */,
 				66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */,
-				66686AAD1F45A769008B26BD /* ChattingEditModule.m in Sources */,
 				66E6D3D21F42929B008E9590 /* DDSendBuffer.m in Sources */,
 				66E6D3451F428922008E9590 /* NSObject+String.swift in Sources */,
 				66F1071B1F42C3090035C888 /* ReceiveKickOffAPI.swift in Sources */,
@@ -1676,7 +1666,6 @@
 				66F107F11F42FE490035C888 /* MTTUserEntity.swift in Sources */,
 				66F107D81F42EAC30035C888 /* CreateGroupAPI.swift in Sources */,
 				66E6D34C1F428922008E9590 /* UIImage+Extention.swift in Sources */,
-				66686AA51F459ADC008B26BD /* DDMessageModule.m in Sources */,
 				6656151E1F8CB01B00689422 /* HMCDManager.swift in Sources */,
 				665615D61F8CB02B00689422 /* Decapsulator.m in Sources */,
 				665615FC1F8CB18D00689422 /* HMDefines.swift in Sources */,
@@ -1724,7 +1713,6 @@
 				66F10FB81F449F710035C888 /* security.cpp in Sources */,
 				66E6D3961F428A33008E9590 /* Im.File.Imfile.proto.swift in Sources */,
 				665615BF1F8CB02B00689422 /* lsp.c in Sources */,
-				66F10A781F43F9CE0035C888 /* DDGroupModule.m in Sources */,
 				665615D21F8CB02B00689422 /* vq.c in Sources */,
 				665615C41F8CB02B00689422 /* modes_wb.c in Sources */,
 				66E6D3D31F42929B008E9590 /* DDTcpProtocolHeader.m in Sources */,

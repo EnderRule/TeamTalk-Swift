@@ -14,11 +14,11 @@ let ChatInputView_MinHeight:CGFloat = 44.0
 
 
 class HMChattingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,
-NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelegate,HMChatCellActionDelegate,RecordingDelegate,PlayingDelegate {
+NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDelegate,RecordingDelegate,PlayingDelegate {
 
     private var currentVoicePlayingCell:HMChatVoiceCell?
 
-    var chattingModule:ChattingModule!
+    var chattingModule:HMChattingModule!
 
     private var chatInputView:NIMInputView!
     private var tableView:UITableView = UITableView.init()
@@ -29,18 +29,15 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
     public convenience init(session:MTTSessionEntity){
         self.init()
         
-        self.chattingModule  = ChattingModule.init()
-        chattingModule.sessionEntity = session
-        
-        chattingModule.addObserver(self , forKeyPath: "showingMessages", options: .new, context: nil )
-    
+        self.chattingModule  = HMChattingModule.init(session: session)
+        chattingModule.showingMessageChangedHandledBlock = {
+            self.refreshMessagesData(scrollToBottom: false)
+        }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self )
-        chattingModule.removeObserver(self , forKeyPath: "showingMessages")
-
-        DDMessageModule.shareInstance().remove(self)
+        chattingModule.showingMessageChangedHandledBlock = nil
     }
     
     override func viewDidLoad() {
@@ -60,25 +57,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
             maker?.bottom.mas_equalTo()(self.chatInputView.mas_top)
         }
         
-        MTTMessageEntity.db_query(offset: 0, limitCount: 0, success: { (messages ) in
-            debugPrint("db load history count : \(messages.count)")
-
-            for obj in messages {
-                if let msg:MTTMessageEntity = obj as? MTTMessageEntity {
-                    print(msg.msgID,msg.msgContent,msg.msgContentType)
-                }
-            }
-        }) { (error ) in
-            debugPrint("db load history error : \(error)")
-        }
         
-        chattingModule.loadMoreHistoryCompletion { (count , error ) in
-            print("load more history  :\(count)",error?.localizedDescription ?? "nil error")
-
-            if count > 0{
-                self.refreshMessagesData(scrollToBottom: true )
-            }
-        }
+        NotificationCenter.default.addObserver(self , selector: #selector(self.onReceiveMessage(notification:) ), name: HMNotification.receiveMessage.notificationName(), object: nil )
     }
  
     
@@ -88,26 +68,30 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
         self.navigationItem.title = self.chattingModule.sessionEntity.name
         self.navigationController?.setNavigationBarHidden(false , animated: true )
         
-        DDMessageModule.shareInstance().add(self)
         self.noMoreRecords = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     
-        self.refreshMessagesData(scrollToBottom: true)
+        if chattingModule.showingMessages.count == 0 {
+            chattingModule.loadMoreHistory(completion: { (count , error ) in
+                
+                print("load more history  :\(count)",error?.localizedDescription ?? "nil error")
+
+                if count > 0{
+                    self.refreshMessagesData(scrollToBottom: true )
+                }
+            })
+        }
+        
+        self.refreshMessagesData(scrollToBottom: true )
 
         //清空未读 = 0
         self.chattingModule.sessionEntity.unReadMsgCount = 0
         MTTDatabaseUtil.instance().updateRecentSession(self.chattingModule.sessionEntity) { (error ) in
             
         }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        DDMessageModule.shareInstance().remove(self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -156,14 +140,14 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
             header.setTitle("正在載入...", for: .refreshing)
             header.setTitle("没有更多了", for: .noMoreData)
          }) {
-            if self.noMoreRecords {
-
-                self.tableView.mj_headerEndRefreshing()
-                self.view.makeToast("没有更多了", duration: 2.5, position: .center, title: nil , image: nil , style: ToastStyle.init(), completion: nil )
-//                self.view.makeToast("没有更多了")
-            }else{
+//            if self.noMoreRecords {
+//
+//                self.tableView.mj_headerEndRefreshing()
+//                self.view.makeToast("没有更多了", duration: 2.5, position: .center, title: nil , image: nil , style: ToastStyle.init(), completion: nil )
+//
+//            }else{
                 self.loadMoreHistoryRecords()
-            }
+//            }
         }
     }
     
@@ -172,8 +156,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
         let contentSizeHeightOld:CGFloat = self.tableView.contentSize.height
         let contentOffsetYOld:CGFloat = self.tableView.contentOffset.y
         
-        self.chattingModule.loadMoreHistoryCompletion({[weak self ] (count , error ) in
-            
+        self.chattingModule.loadMoreHistory { [weak self ] (count , error ) in
             if error != nil  && error!.localizedDescription.length > 0 {
                 self?.view.makeToast(error!.localizedDescription)
                 self?.tableView.mj_headerEndRefreshing()
@@ -193,14 +176,14 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
                 self?.noMoreRecords = true
                 self?.tableView.mj_headerEndRefreshing()
             }
-        })
+        }
     }
     
     
     func refreshMessagesData(scrollToBottom:Bool){
         
         
-        self.showingMessages = chattingModule.showingMessages as! [Any]
+        self.showingMessages = chattingModule.showingMessages
         
         self.tableView.reloadData()
         if scrollToBottom{
@@ -208,14 +191,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
         }
     }
  
-    override func observeValue(forKeyPath keyPath: String?,
-                               of object: Any?,
-                               change: [NSKeyValueChangeKey : Any]?,
-                               context: UnsafeMutableRawPointer?) {
-        if (object as? ChattingModule) == self.chattingModule  && keyPath == "showingMessages"{
-            self.refreshMessagesData(scrollToBottom: false)
-        }
-    }
+    
     
     //MARK: uitableView datasource/delegate 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -232,7 +208,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
             if let message = obj as? MTTMessageEntity {
                 let messageCell : HMChatBaseCell = HMChatBaseCell.init(style: .default, reuseIdentifier: HMChatBaseCell.cellIdentifier )
                 return messageCell.cellHeightFor(message: message)
-            }else if obj is DDPromptEntity {
+            }else if obj is HMPromptEntity {
                 return 30.0
             }
         }
@@ -269,7 +245,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
 
                 cell.setContent(message: message)
                 return cell
-            }else if let prompt = obj as? DDPromptEntity {
+            }else if let prompt = obj as? HMPromptEntity {
                 
                 let promptCell:HMChatPromptCell = tableView.dequeueReusableCell(withIdentifier: HMChatPromptCell.cellIdentifier, for: indexPath) as! HMChatPromptCell
                 promptCell.configWith(object: prompt)
@@ -383,33 +359,24 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
     }
     
     
-    //MARK: 消息管理代理 DDMessageModuleDelegate
-    func onReceiveMessage(_ message: MTTMessageEntity!) {
-        guard (self.navigationController?.topViewController == self ) else {
+    //MARK: 消息管理代理
+    @objc private func onReceiveMessage(notification:NSNotification) {
+        guard let message:MTTMessageEntity = notification.object as? MTTMessageEntity else {
             return
         }
-        
-        print("DDMessageModuleDelegate onReceiveMessage \n",(message.dicValues() as NSDictionary))
-        
-        if UIApplication.shared.applicationState == .background {
-            if message.sessionId == self.chattingModule.sessionEntity.sessionID {
-                self.chattingModule.addShowMessage(message)
-                self.chattingModule.updateSessionUpdateTime(UInt(message.msgTime))
-                
-                self.refreshMessagesData(scrollToBottom: true )
-            }
-            return
-        }
+        print("chattingVC onReceiveMessage \n",(message.dicValues() as NSDictionary))
         
         if message.sessionId == self.chattingModule.sessionEntity.sessionID {
-            self.chattingModule.addShowMessage(message)
-            
+            self.chattingModule.addShow(message: message)
+            self.chattingModule.updateSession(updateTime: TimeInterval(message.msgTime))
             self.chattingModule.sessionEntity.lastMsg = message.msgContent
-            self.chattingModule.updateSessionUpdateTime(UInt(message.msgTime))
 
             self.refreshMessagesData(scrollToBottom: true )
+        
             
-            DDMessageModule.shareInstance().sendMsgRead(message)
+            if UIApplication.shared.applicationState == .background {
+                HMMessageManager.shared.sendReadACK(message: message)
+            }
         }
     }
     
@@ -571,8 +538,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,DDMessageModuleDelega
                 if imageurl.length <= 0 && FileManager.default.fileExists(atPath: imageLocal){
                     MTTDatabaseUtil.instance().deleteMesages(message!, completion: { (success ) in
                         dispatch(after: 0, task: {
-                            self.chattingModule.deleteShowMessage(message!)
-                            self.showingMessages = self.chattingModule.showingMessages as! [Any]
+                            self.chattingModule.deleteShow(message: message!)
+                            
+                            self.showingMessages = self.chattingModule.showingMessages
                             self.tableView.reloadData()
                             self.tableView.checkScrollToBottom()
                         })

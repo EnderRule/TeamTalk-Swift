@@ -262,14 +262,19 @@ class HMCDManager: NSObject {
         if limitCount > 0{
             fetchRequest.fetchLimit = limitCount
         }
+        
         if predicate != nil  {
             fetchRequest.predicate = predicate
         }
         if sortBy?.characters.count ?? 0 > 0 {
             let sortdes:MySortor = MySortor.init(key: sortBy!, ascending: sortAscending)
 
+//            debugPrint("\(myclass) query sortby key \(sortBy!) \(sortAscending ? "asce":"desc")")
             fetchRequest.sortDescriptors = [sortdes]
+            
         }
+        
+        
         
         do {
             let fetchedResults = try context.fetch(fetchRequest) as? [NSManagedObject]
@@ -307,6 +312,9 @@ class HMCDManager: NSObject {
 class MySortor: NSSortDescriptor{
     
     override func compare(_ object1: Any, to object2: Any) -> ComparisonResult {
+        
+//        return super.compare(object1, to: object2)
+        
         
         guard let sortKey = self.key else {
             return super.compare(object1 , to: object2)
