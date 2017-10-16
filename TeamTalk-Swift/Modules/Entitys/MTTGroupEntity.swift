@@ -57,20 +57,29 @@ import UIKit
 let GROUP_PRE:String = "group_"
 
 @objc(MTTGroupEntity)
-class MTTGroupEntity: MTTBaseEntity {
+class MTTGroupEntity: MTTBaseEntity,HMDBModelDelegate {
 
-    @NSManaged var lastUpdateTime:Int32
-    @NSManaged var objID:String
-    @NSManaged var objectVersion:Int32
-
-    @NSManaged var groupCreatorId:Int32
-    @NSManaged var name:String
-    @NSManaged var avatar:String
-    @NSManaged var lastMsg:String
-    @NSManaged var isShield:Bool
-    @NSManaged var type:Int32
+    func dbFields() -> [String] {
+        return ["lastUpdateTime","objID","objectVersion","groupCreatorId",
+                "name","avatar","lastMsg","isShield","type","users"]
+    }
     
-    @NSManaged var users:String
+    func dbPrimaryKey() -> String? {
+        return "objID"
+    }
+    
+    var lastUpdateTime:Int32 = 0
+    var objID:String = ""
+    var objectVersion:Int32 = 0
+
+    var groupCreatorId:Int32 = 0
+    var name:String = ""
+    var avatar:String = ""
+    var lastMsg:String = ""
+    var isShield:Bool = false
+    var type:Int32 = 0
+    
+    var users:String = ""
     
     var groupType:GroupType_Objc = .groupTypeTmp{
         didSet{

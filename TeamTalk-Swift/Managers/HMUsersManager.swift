@@ -70,30 +70,34 @@ class HMUsersManager: NSObject {
         lock.lock()
         
         var dbfinish:Bool = false
-        MTTUserEntity.db_query(predicate: nil , sortBy: "objID", sortAscending: true , offset: 0, limitCount: 0, success: { (users ) in
-            debugPrint("db load all user count \(users.count)")
-            
-            if users.count > 0 {
-                for obj in  users.enumerated(){
-                    if let user:MTTUserEntity = obj.element as? MTTUserEntity{
-                        if user.isValided {
-                            self.add(user: user)
-                        }else{
-                            user.db_delete(complettion: nil)
+        
+        MTTUserEntity.dbQuery(whereStr: nil, orderFields: "objID asc ", offset: 0, limit: 0, args: []) { (users , error ) in
+            if error != nil {
+                debugPrint("db load all user error: ",error!.localizedDescription )
+                
+                localUpdateTime = 0
+                dbfinish = true
+                
+            }else{
+                debugPrint("db load all user count \(users.count)")
+
+                if users.count > 0 {
+                    for obj in  users.enumerated(){
+                        if let user:MTTUserEntity = obj.element as? MTTUserEntity{
+                            if user.isValided {
+                                self.add(user: user)
+                            }else{
+                                user.dbDelete(completion: nil)
+                            }
                         }
                     }
+                    completion?()
+                }else{
+                    localUpdateTime = 0
                 }
-                completion?()
-            }else{
-                localUpdateTime = 0
+                
+                dbfinish = true
             }
-            
-            dbfinish = true
-        }) { (error ) in
-            debugPrint("db load all user fail: ",error )
-            
-            localUpdateTime = 0
-            dbfinish = true
         }
         while !dbfinish {
             //            debugPrint("lock wait() ")
@@ -102,6 +106,9 @@ class HMUsersManager: NSObject {
         
         lock.unlock()
         //        debugPrint("lock final unlock  ")
+        
+        debugPrint("1 after load all loginuser is \(HMCurrentUser().isValided)")
+
         
         let api2 = AllUserAPI.init(lastUpdateTime: localUpdateTime)
         api2.request(withParameters: [:]) { (response , error ) in
@@ -113,6 +120,9 @@ class HMUsersManager: NSObject {
                 for obj in  users.enumerated(){
                     self.add(user: obj.element)
                 }
+                
+                debugPrint("2 after load all loginuser is \(HMCurrentUser().isValided)")
+
                 completion?()
             }
         }

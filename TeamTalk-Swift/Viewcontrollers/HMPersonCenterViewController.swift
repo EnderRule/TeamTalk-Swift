@@ -63,10 +63,13 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         
         tableView.mj_addHeader {
             
-            if let sender:MTTUserEntity = HMUsersManager.shared.userFor(ID: HMLoginManager.shared.currentUser.userId){
-                self.avatarImgv.setImage(str: sender.avatar)
-                self.nameLabel.text = sender.nickName
-            }
+            
+             let user:MTTUserEntity = HMLoginManager.shared.currentUser
+                debugPrint("curentuser : \(user.objID) \(user.name) \(user.avatar) \(user)")
+
+            self.avatarImgv.setImage(str: user.avatar)
+            self.nameLabel.text = user.nickName
+            
             self.tableView.mj_headerEndRefreshing()
 
         }

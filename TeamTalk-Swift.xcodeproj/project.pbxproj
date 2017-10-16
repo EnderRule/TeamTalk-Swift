@@ -8,14 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3D9E9B6E48886D2BEA8E7736 /* Pods_TeamTalk_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B608C7C81C061E2B3F8FED /* Pods_TeamTalk_Swift.framework */; };
-		6633BA661F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6633BA641F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld */; };
 		6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */; };
 		663D8B551F7F3DE500F7A60C /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3371F428922008E9590 /* UIView+Extention.swift */; };
 		663D8B5B1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 663D8B591F7F488A00F7A60C /* M80AttributedLabel+NIMKit.m */; };
 		663D8B5D1F7F4B0800F7A60C /* ZQMediaFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663D8B5C1F7F4B0800F7A60C /* ZQMediaFetch.swift */; };
 		663F0FDD1F5657E10041E3C5 /* HMMediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */; };
-		6656151E1F8CB01B00689422 /* HMCDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6656151C1F8CB01B00689422 /* HMCDManager.swift */; };
-		6656151F1F8CB01B00689422 /* NSManagedObject+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6656151D1F8CB01B00689422 /* NSManagedObject+CoreData.swift */; };
 		665615A81F8CB02B00689422 /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 665615241F8CB02B00689422 /* bitwise.c */; };
 		665615A91F8CB02B00689422 /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 665615251F8CB02B00689422 /* framing.c */; };
 		665615AA1F8CB02B00689422 /* bits.c in Sources */ = {isa = PBXBuildFile; fileRef = 6656152C1F8CB02B00689422 /* bits.c */; };
@@ -120,6 +117,8 @@
 		668BA1DB1F5F94B6001B786C /* SendPhotoMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668BA1DA1F5F94B6001B786C /* SendPhotoMessageAPI.swift */; };
 		66900F221F54050400B527D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66900F211F54050400B527D9 /* Images.xcassets */; };
 		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
+		66B2EC0E1F9489F4005033C1 /* HMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2EC0C1F9489F4005033C1 /* HMDBManager.swift */; };
+		66B2EC0F1F9489F4005033C1 /* NSObject+HMDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2EC0D1F9489F4005033C1 /* NSObject+HMDB.swift */; };
 		66BD029E1F4D290A00131E2D /* ZQFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BD029D1F4D290A00131E2D /* ZQFileManager.swift */; };
 		66D7F01A1F55006B00977897 /* bubble.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66D7F0171F55006B00977897 /* bubble.bundle */; };
 		66D7F01B1F55006B00977897 /* emotions.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66D7F0181F55006B00977897 /* emotions.bundle */; };
@@ -221,7 +220,6 @@
 		66F10A6A1F43F2D70035C888 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10A681F43F2D70035C888 /* libsqlite3.0.tbd */; };
 		66F10A6B1F43F2D70035C888 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10A691F43F2D70035C888 /* libsqlite3.tbd */; };
 		66F10A6E1F43F5BC0035C888 /* MTTDatabaseUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A521F43F11C0035C888 /* MTTDatabaseUtil.m */; };
-		66F10A751F43F8DA0035C888 /* SpellLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A741F43F8DA0035C888 /* SpellLibrary.m */; };
 		66F10CBA1F44353C0035C888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CB91F44353C0035C888 /* Foundation.framework */; };
 		66F10CBC1F4435430035C888 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CBB1F4435430035C888 /* UIKit.framework */; };
 		66F10CBE1F44354C0035C888 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CBD1F44354C0035C888 /* AudioToolbox.framework */; };
@@ -243,6 +241,7 @@
 		66F10FB61F449F710035C888 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB01F449F710035C888 /* base64.cpp */; };
 		66F10FB71F449F710035C888 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB21F449F710035C888 /* md5.cpp */; };
 		66F10FB81F449F710035C888 /* security.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB41F449F710035C888 /* security.cpp */; };
+		66FE74661F94C82500EBBB37 /* HMSessionModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE74651F94C82500EBBB37 /* HMSessionModule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -254,8 +253,6 @@
 		663D8B5A1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "M80AttributedLabel+NIMKit.h"; sourceTree = "<group>"; };
 		663D8B5C1F7F4B0800F7A60C /* ZQMediaFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZQMediaFetch.swift; sourceTree = "<group>"; };
 		663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMMediaManager.swift; sourceTree = "<group>"; };
-		6656151C1F8CB01B00689422 /* HMCDManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMCDManager.swift; sourceTree = "<group>"; };
-		6656151D1F8CB01B00689422 /* NSManagedObject+CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+CoreData.swift"; sourceTree = "<group>"; };
 		665615221F8CB02B00689422 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		665615241F8CB02B00689422 /* bitwise.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bitwise.c; sourceTree = "<group>"; };
 		665615251F8CB02B00689422 /* framing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = framing.c; sourceTree = "<group>"; };
@@ -425,10 +422,6 @@
 		66686A981F458037008B26BD /* GetMessageQueueAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMessageQueueAPI.swift; sourceTree = "<group>"; };
 		66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUnreadMessagesAPI.swift; sourceTree = "<group>"; };
 		66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMessageAPI.swift; sourceTree = "<group>"; };
-		66686A9F1F459ADC008B26BD /* DDMessageModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMessageModule.h; sourceTree = "<group>"; };
-		66686AA01F459ADC008B26BD /* DDMessageModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMessageModule.m; sourceTree = "<group>"; };
-		66686AA81F45A769008B26BD /* ChattingModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattingModule.h; sourceTree = "<group>"; };
-		66686AA91F45A769008B26BD /* ChattingModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattingModule.m; sourceTree = "<group>"; };
 		66686AE81F45ABC3008B26BD /* SessionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionModule.h; sourceTree = "<group>"; };
 		66686AE91F45ABC3008B26BD /* SessionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionModule.m; sourceTree = "<group>"; };
 		66686AEB1F45AE71008B26BD /* NSDate+DDAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DDAddition.h"; sourceTree = "<group>"; };
@@ -443,6 +436,8 @@
 		668BA1DA1F5F94B6001B786C /* SendPhotoMessageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPhotoMessageAPI.swift; sourceTree = "<group>"; };
 		66900F211F54050400B527D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
+		66B2EC0C1F9489F4005033C1 /* HMDBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMDBManager.swift; sourceTree = "<group>"; };
+		66B2EC0D1F9489F4005033C1 /* NSObject+HMDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+HMDB.swift"; sourceTree = "<group>"; };
 		66BD029D1F4D290A00131E2D /* ZQFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZQFileManager.swift; sourceTree = "<group>"; };
 		66D7F0171F55006B00977897 /* bubble.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = bubble.bundle; sourceTree = "<group>"; };
 		66D7F0181F55006B00977897 /* emotions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = emotions.bundle; sourceTree = "<group>"; };
@@ -594,8 +589,6 @@
 		66F10A691F43F2D70035C888 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		66F10A731F43F8DA0035C888 /* SpellLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellLibrary.h; sourceTree = "<group>"; };
 		66F10A741F43F8DA0035C888 /* SpellLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpellLibrary.m; sourceTree = "<group>"; };
-		66F10A761F43F9CE0035C888 /* DDGroupModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDGroupModule.h; sourceTree = "<group>"; };
-		66F10A771F43F9CE0035C888 /* DDGroupModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDGroupModule.m; sourceTree = "<group>"; };
 		66F10CB91F44353C0035C888 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		66F10CBB1F4435430035C888 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		66F10CBD1F44354C0035C888 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -623,6 +616,7 @@
 		66F10FB31F449F710035C888 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		66F10FB41F449F710035C888 /* security.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = security.cpp; sourceTree = "<group>"; };
 		66F10FB91F449FA60035C888 /* security.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; path = security.h; sourceTree = "<group>"; };
+		66FE74651F94C82500EBBB37 /* HMSessionModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMSessionModule.swift; sourceTree = "<group>"; };
 		D2B608C7C81C061E2B3F8FED /* Pods_TeamTalk_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TeamTalk_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF675A68FA0FBFC20F0FB730 /* Pods-TeamTalk-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TeamTalk-Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TeamTalk-Swift/Pods-TeamTalk-Swift.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -663,15 +657,6 @@
 				6633BA641F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld */,
 			);
 			name = CoredataModel;
-			sourceTree = "<group>";
-		};
-		6656151B1F8CB01B00689422 /* coreData */ = {
-			isa = PBXGroup;
-			children = (
-				6656151C1F8CB01B00689422 /* HMCDManager.swift */,
-				6656151D1F8CB01B00689422 /* NSManagedObject+CoreData.swift */,
-			);
-			path = coreData;
 			sourceTree = "<group>";
 		};
 		665615201F8CB02B00689422 /* Voice */ = {
@@ -953,25 +938,16 @@
 			name = loginOrout;
 			sourceTree = "<group>";
 		};
-		66686A9E1F459AD2008B26BD /* Message */ = {
-			isa = PBXGroup;
-			children = (
-				66686A9F1F459ADC008B26BD /* DDMessageModule.h */,
-				66686AA01F459ADC008B26BD /* DDMessageModule.m */,
-			);
-			path = Message;
-			sourceTree = "<group>";
-		};
 		66686AAE1F45A84E008B26BD /* Viewcontrollers */ = {
 			isa = PBXGroup;
 			children = (
 				665615E11F8CB15800689422 /* cells */,
 				665615F81F8CB18D00689422 /* HMDefines.swift */,
+				6689B7031F8C9D2E00EC2F61 /* HMLoginViewController.swift */,
+				665615FA1F8CB18D00689422 /* HMRecentSessionsViewController.swift */,
+				66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */,
 				665615F71F8CB18D00689422 /* HMContactsViewController.swift */,
 				665615F91F8CB18D00689422 /* HMPersonCenterViewController.swift */,
-				665615FA1F8CB18D00689422 /* HMRecentSessionsViewController.swift */,
-				6689B7031F8C9D2E00EC2F61 /* HMLoginViewController.swift */,
-				66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */,
 			);
 			path = Viewcontrollers;
 			sourceTree = "<group>";
@@ -1147,8 +1123,9 @@
 		66E6D3571F428990008E9590 /* ThridPartys */ = {
 			isa = PBXGroup;
 			children = (
+				66B2EC0C1F9489F4005033C1 /* HMDBManager.swift */,
+				66B2EC0D1F9489F4005033C1 /* NSObject+HMDB.swift */,
 				665615201F8CB02B00689422 /* Voice */,
-				6656151B1F8CB01B00689422 /* coreData */,
 				66E835921F56899A00F14ED9 /* ZQFileBrowserVC.swift */,
 				66E437481F4C41BC009D527D /* NIMInputView */,
 				66F10FAC1F449F700035C888 /* Security */,
@@ -1183,12 +1160,8 @@
 				66686AE81F45ABC3008B26BD /* SessionModule.h */,
 				66686AE91F45ABC3008B26BD /* SessionModule.m */,
 				6682061A1F62404D0088BE65 /* HMChattingModule.swift */,
+				66FE74651F94C82500EBBB37 /* HMSessionModule.swift */,
 				66686AEE1F4678AD008B26BD /* Search */,
-				66686A9E1F459AD2008B26BD /* Message */,
-				66F10A761F43F9CE0035C888 /* DDGroupModule.h */,
-				66F10A771F43F9CE0035C888 /* DDGroupModule.m */,
-				66686AA81F45A769008B26BD /* ChattingModule.h */,
-				66686AA91F45A769008B26BD /* ChattingModule.m */,
 				66F107D91F42EEF70035C888 /* Entitys */,
 				66E6D3C21F4290FB008E9590 /* TCPAPI */,
 			);
@@ -1543,7 +1516,6 @@
 				665615F01F8CB15800689422 /* HMChatPromptCell.swift in Sources */,
 				6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */,
 				665615BE1F8CB02B00689422 /* lpc.c in Sources */,
-				66F10A751F43F8DA0035C888 /* SpellLibrary.m in Sources */,
 				665615AC1F8CB02B00689422 /* cb_search.c in Sources */,
 				665615AA1F8CB02B00689422 /* bits.c in Sources */,
 				665615D11F8CB02B00689422 /* vbr.c in Sources */,
@@ -1573,6 +1545,7 @@
 				665615E01F8CB06200689422 /* TouchDownGestureRecognizer.m in Sources */,
 				665615B61F8CB02B00689422 /* gain_table.c in Sources */,
 				66686A921F457903008B26BD /* GetGroupInfoAPI.swift in Sources */,
+				66B2EC0E1F9489F4005033C1 /* HMDBManager.swift in Sources */,
 				66686A7E1F4562B0008B26BD /* RemoveSessionAPI.swift in Sources */,
 				665615B01F8CB02B00689422 /* exc_5_256_table.c in Sources */,
 				665615C21F8CB02B00689422 /* mdf.c in Sources */,
@@ -1596,7 +1569,6 @@
 				665615F11F8CB15800689422 /* HMChatTextCell.swift in Sources */,
 				665616021F8CBE5900689422 /* HMGroupsManager.swift in Sources */,
 				66F107151F42A36E0035C888 /* LoginAPI.swift in Sources */,
-				6656151F1F8CB01B00689422 /* NSManagedObject+CoreData.swift in Sources */,
 				66E6D3E21F4292E4008E9590 /* DDTcpClientManager.m in Sources */,
 				665615B31F8CB02B00689422 /* fftwrap.c in Sources */,
 				665615CF1F8CB02B00689422 /* speex_header.c in Sources */,
@@ -1608,6 +1580,7 @@
 				66F1070C1F429CB80035C888 /* DDSuperAPI.m in Sources */,
 				665615BB1F8CB02B00689422 /* jitter.c in Sources */,
 				665615D31F8CB02B00689422 /* window.c in Sources */,
+				66FE74661F94C82500EBBB37 /* HMSessionModule.swift in Sources */,
 				665615DC1F8CB02B00689422 /* CAStreamBasicDescription.cpp in Sources */,
 				66F107D21F42DB520035C888 /* AddMemberToGroupAPI.swift in Sources */,
 				66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */,
@@ -1622,6 +1595,7 @@
 				665615BD1F8CB02B00689422 /* kiss_fftr.c in Sources */,
 				66A64C341F42979F0089F491 /* DDNotification.swift in Sources */,
 				66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */,
+				66B2EC0F1F9489F4005033C1 /* NSObject+HMDB.swift in Sources */,
 				665615C91F8CB02B00689422 /* sb_celp.c in Sources */,
 				665615B21F8CB02B00689422 /* exc_8_128_table.c in Sources */,
 				6672CC301F4ECCD000DA46E6 /* HMMessageManager.swift in Sources */,
@@ -1639,7 +1613,6 @@
 				6682FE741F4AEB7E0048FA23 /* MTTPromtEntity.swift in Sources */,
 				665615ED1F8CB15800689422 /* HMChatBaseCell.swift in Sources */,
 				66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */,
-				6633BA661F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld in Sources */,
 				665615B81F8CB02B00689422 /* hexc_10_32_table.c in Sources */,
 				66686A821F456717008B26BD /* ShieldGroupMessageAPI.swift in Sources */,
 				66E4379C1F4C41BC009D527D /* NIMInputView.m in Sources */,
@@ -1666,7 +1639,6 @@
 				66F107F11F42FE490035C888 /* MTTUserEntity.swift in Sources */,
 				66F107D81F42EAC30035C888 /* CreateGroupAPI.swift in Sources */,
 				66E6D34C1F428922008E9590 /* UIImage+Extention.swift in Sources */,
-				6656151E1F8CB01B00689422 /* HMCDManager.swift in Sources */,
 				665615D61F8CB02B00689422 /* Decapsulator.m in Sources */,
 				665615FC1F8CB18D00689422 /* HMDefines.swift in Sources */,
 				66E6D3DD1F4292CC008E9590 /* DDDataInputStream.m in Sources */,

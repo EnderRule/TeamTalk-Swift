@@ -54,6 +54,11 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     
     var currentUser:MTTUserEntity{
         get{
+            if !s_currentUser.isValided{
+                if let user = HMUsersManager.shared.userFor(ID: self.currentUserID){
+                    s_currentUser = user
+                }
+            }
             return s_currentUser
         }
     }
@@ -133,7 +138,12 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     }
     
     private var s_serverTime:TimeInterval = Date().timeIntervalSince1970
-    private var s_currentUser:MTTUserEntity = MTTUserEntity.newNotInertObj() as! MTTUserEntity
+    private var s_currentUser:MTTUserEntity = MTTUserEntity.init() {
+        didSet{
+            debugPrint("did Change LoginUser :",s_currentUser.objID,s_currentUser.name,s_currentUser.avatar)
+        }
+    }
+    
     private var s_networkState:HMNetworkState = .disconnect
     private var s_loginState:HMLoginState = .offLine{
         didSet{
@@ -167,10 +177,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     deinit {
         NotificationCenter.default.removeObserver(self )
     }
-    
-    func setup(){
-    }
-    
+         
      private func registerAPI(){
         
         ////接收踢出
@@ -201,7 +208,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     }
     
     
-    func getMsgIP(success:@escaping (([AnyHashable:Any])->Void),failure:@escaping ((String)->Void)){
+    private func getMsgIP(success:@escaping (([AnyHashable:Any])->Void),failure:@escaping ((String)->Void)){
         
         self.getMsgIPManager.get(SERVER_Address, parameters: nil , progress: nil , success: { (task , responseObject ) in
             
@@ -213,6 +220,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                 failure("连接消息服务器失败 code:-1")
             }
         }) { (task , error ) in
+            debugPrint("get msgIP error:\(error.localizedDescription)")
             failure(error.localizedDescription)
         }
     }
@@ -297,17 +305,21 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                             debugPrint("登入IP/端口\(ip)/\(port)  result:\(dic)")
                             if let user:MTTUserEntity = dic[LoginAPI.kResultUser] as? MTTUserEntity {
                                 let time:TimeInterval = json2[LoginAPI.kResultServerTime].doubleValue
-                                debugPrint("登入驗證成功   serverTime :\(time)")
                                 if time > 3600.0 {
                                     self.s_serverTime = time
                                 }
-                                self.startCountServerTime()
-                                self.s_loginState = .online
+                                
                                 self.s_currentUser = user
+                                
+                                debugPrint("登入驗證成功   serverTime :\(time) \(self.s_currentUser.objID) \(self.s_currentUser.name) \(self.s_currentUser.avatar) \(self.s_currentUser.nickName) \(self.currentUser)")
+
                                 self.currentUserName = userName
                                 self.currentPassword = password
                                 self.shouldAutoLogin = true
-                                
+
+                                self.s_loginState = .online
+                                self.startCountServerTime()
+
                                 self.reloginning = true
                                 
                                 MTTDatabaseUtil.instance().openCurrentUserDB()
@@ -320,7 +332,11 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                 
                                 success(user)
                                 
-                                HMUsersManager.shared.loadAllUser(completion: nil)
+                                HMUsersManager.shared.loadAllUser(completion: { 
+                                    if let user = HMUsersManager.shared.userFor(ID: user.objID){
+                                        self.s_currentUser = user
+                                    }
+                                })
                             }else{
                                 var rstr = json[LoginAPI.kResultMessage].stringValue
                                 if rstr.length <= 0 {
@@ -333,6 +349,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                         }
                     })
                 }, failure: {(error)in
+                    debugPrint("登入IP/端口 \(ip)/\(port) error:\(error)")
                     failure(error)
                 })
             }else{
@@ -360,14 +377,16 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     func logout(){
         self.s_loginState = .offLineInitiative
 
-        self.s_currentUser = MTTUserEntity.newNotInertObj() as! MTTUserEntity
+        self.s_currentUser = MTTUserEntity.init()
         self.currentUserID = ""
         self.currentUserName = ""
         self.shouldAutoLogin = false
         
         HMUsersManager.shared.cleanData()
-
+        HMGroupsManager.shared.cleanData()
+        
         SessionModule.instance().clearSession()
+        
         DDTcpClientManager.instance().delegate = nil
         DDTcpClientManager.instance().disconnect()
     

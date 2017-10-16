@@ -271,15 +271,10 @@ extension MTTMessageEntity {
         
         var message:MTTMessageEntity?
         DispatchQueue.global().sync {
-        let sessionID:String =  session.sessionID
-            let predicate:NSPredicate = NSPredicate.init(format: "self.sessionId == %@ AND self.stateInt == %@", argumentArray: [sessionID,DDMessageState.SendSuccess.rawValue] )
-            MTTMessageEntity.db_query(predicate: predicate, sortBy: "msgTime", sortAscending: false , offset: 0, limitCount: 1, success: { (messages ) in
+            MTTMessageEntity.dbQuery(whereStr: "sessionId = ? AND stateInt = ?", orderFields: "msgTime", offset: 0, limit: 1, args: [session.sessionID,DDMessageState.SendSuccess.rawValue], completion: { (messages , error ) in
                 message = messages.first as? MTTMessageEntity
-                debugPrint("get lastest Message forSession:\(session.sessionID) \(message?.msgID ?? 0) \(predicate.predicateFormat)")
-
-            }) { (error ) in
-                debugPrint("get lastest Message error :",error )
-            }
+                debugPrint("get lastest Message forSession:\(session.sessionID) \(message?.msgID ?? 0) error:\(error?.localizedDescription ?? "")")
+            })
         }
         return message
     }

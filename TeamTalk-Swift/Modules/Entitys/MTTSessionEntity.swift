@@ -43,13 +43,45 @@ import UIKit
     }
 }
 
-class MTTSessionEntity: NSObject {
+
+
+//ID text UNIQUE,
+//avatar text,
+//type integer,
+//name text,
+//updated real,
+//isshield integer,
+//users Text ,
+//unreadCount integer,
+//lasMsg text ,
+//lastMsgId integer
+
+
+class MTTSessionEntity: NSObject,HMDBModelDelegate {
+    
+    func dbFields() -> [String] {
+        return ["sessionID","avatar","lastMsg","lastMsgID","sessionTypeInt","s_timeInterval","unReadMsgCount","isShield","isFixedTop"]
+    }
+    
+    func dbPrimaryKey() -> String? {
+        return "sessionID"
+    }
+    
     var sessionID:String = ""
     var sessionIntID:UInt32{
         return MTTBaseEntity.pbIDFrom(localID: self.sessionID)
     }
     
-    var sessionType:SessionType_Objc = .sessionTypeSingle
+    
+    var sessionTypeInt:Int32 = 0
+    var sessionType:SessionType_Objc{
+        get{
+            return SessionType_Objc.init(rawValue: sessionTypeInt) ?? SessionType_Objc.sessionTypeSingle
+        }
+        set{
+            sessionTypeInt = newValue.rawValue
+        }
+    }
     
     private var s_name:String = ""
     var name:String {
@@ -80,9 +112,12 @@ class MTTSessionEntity: NSObject {
     private var  s_timeInterval:TimeInterval = 0
     var timeInterval:TimeInterval {
         get{
-            if s_timeInterval == 0 && self.sessionType == .sessionTypeSingle{
-                if let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: self.sessionID){
+            if s_timeInterval == 0 {
+                if self.sessionType == .sessionTypeSingle, let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: self.sessionID){
                     self.s_timeInterval = TimeInterval( user.lastUpdateTime)
+                }
+                if self.sessionType == .sessionTypeGroup, let group:MTTGroupEntity = HMGroupsManager.shared.groupFor(ID: self.sessionID){
+                    self.s_timeInterval = TimeInterval( group.lastUpdateTime)
                 }
             }
             return s_timeInterval
@@ -92,7 +127,6 @@ class MTTSessionEntity: NSObject {
         }
     }
     
-    var originId:String = ""
     var isShield:Bool = false
     var isFixedTop:Bool = false
     

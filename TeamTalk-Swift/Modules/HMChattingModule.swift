@@ -47,81 +47,78 @@ class HMChattingModule: NSObject {
         self.msgIDs.removeAll()
         self.sessionEntity = nil
     }
-                                    // 424"
-//    "p_add history check msgID exist:425"
-//    "p_add history check msgID exist:426"
-//    "p_add history check msgID exist:427"
-//    "p_add history check msgID exist:428"
-//    "p_add history check msgID exist:429"
-//    "p_add history check msgID exist:430"
-//    "p_add history check msgID exist:431"
-//    "p_add history check msgID exist:432"
-//    "p_add history check msgID exist:433"
-//    "p_add history check msgID exist:434"
-//    "p_add history check msgID exist:435"
-//    "p_add history check msgID exist:436"
-//    "p_add history check msgID exist:437"
-//    "p_add history check msgID exist:438"
-//    "p_add history check msgID exist:439"
-//    "p_add history check msgID exist:440"
-//    "p_add history check msgID exist:441"
-//    "p_add history check msgID exist:442"
-//    "p_add history check msgID exist:443"
-//                                    438 图库"
-//    "p_add history check msgID exist:439 徐"
-//    "p_add history check msgID exist:440 我在"
-//    "p_add history check msgID exist:441 灵"
-//    "p_add history check msgID exist:442 瞭"
+    
     func loadMoreHistory(completion:@escaping HMLoadMoreHistoryMessageCompletion){
         let offset = self.p_getMessageCount()
-        let pageCount = 50// HM_Message_Page_Item_Count
-        let predicate:NSPredicate = NSPredicate.init(format: "sessionId = %@", argumentArray: [self.sessionEntity.sessionID])
-        MTTMessageEntity.db_query(predicate: predicate, sortBy: "msgTime", sortAscending: false , offset: offset, limitCount: pageCount, success: { (messages ) in
-            
-            var tempMessages:[MTTMessageEntity] = []
-            for obj in messages{
-                if let message = obj as? MTTMessageEntity{
-                    
-//                    debugPrint("load history in db:\(message.msgID) \(message.msgContent)")
-                    
-                    tempMessages.append(message)
-                }
-            }
-            
-            debugPrint("session \(self.sessionEntity.sessionID) load history: limit:\(offset)/\(pageCount) resultCount:\(tempMessages.count)")
-            
-            if HMLoginManager.shared.networkState == .disconnect{
-                self.p_addHistory(messages: tempMessages, completion: completion)
-            }else{
-                if tempMessages.count > 0 {
-                    self.p_addHistory(messages: messages, completion: completion)
-                }else{
-                    ////数据库中已获取不到消息
-                    //拿出当前最小的msgid去服务端取
-                    self.loadHistoryFromServerBegin(msgID: self.getMinMsgID(), completion: { (count , error ) in
-                        completion(count,error)
-                    })
-                }
-            }
-            
-        }) { (error ) in
-            completion(0,NSError.init(domain: error, code: HMErrorCode.db_query.rawValue, userInfo: nil ))
-        }
+        let pageCount = HM_Message_Page_Item_Count
         
+        MTTMessageEntity.dbQuery(whereStr: "sessionId = ?",
+                                 orderFields: "msgTime desc",
+                                 offset: offset,
+                                 limit: pageCount,
+                                 args: [self.sessionEntity.sessionID]) { (messages , error ) in
+            if error != nil {
+                completion(0,error! as NSError)
+            }else{
+                var tempMessages:[MTTMessageEntity] = []
+                for obj in messages{
+                    if let message = obj as? MTTMessageEntity{
+                        //判断有效性，将无效的从数据库移除
+
+                        if message.isValide {
+                            tempMessages.append(message)
+                        }else{
+                            message.dbDelete(completion:nil)
+                        }
+                    }
+                }
+                
+                disableHMLog ? () : debugPrint("session \(self.sessionEntity.sessionID) load history: limit:\(offset)/\(pageCount) resultCount:\(tempMessages.count)")
+                
+                if HMLoginManager.shared.networkState == .disconnect{
+                    self.p_addHistory(messages: tempMessages, completion: completion)
+                }else{
+                    if tempMessages.count > 0 {
+                        let ismissing = self.isHaveMissMsg(messages: messages)
+                        let minID:UInt32 = self.getMinMsgID()
+                        let maxID:UInt32 =  self.getMaxMsgID(messages: messages)
+                        let diff = minID - maxID
+                        if ismissing || diff != 0 {
+                            self.loadHistoryFromServerBegin(msgID: minID, loadCount: Int(diff) , completion: { (addcount , error ) in
+                                if addcount > 0 {
+                                    completion(addcount,error)
+                                }else{
+                                    self.p_addHistory(messages: messages, completion: completion)
+                                }
+                            })
+                        }else{
+                        
+                            self.p_addHistory(messages: messages, completion: completion)
+                        }
+                    }else{
+                        ////数据库中已获取不到消息
+                        //拿出当前最小的msgid去服务端取
+                        self.loadHistoryFromServerBegin(msgID: self.getMinMsgID(), completion: { (count , error ) in
+                            completion(count,error)
+                        })
+                    }
+                }
+                
+            }
+        }
     }
     
     func loadAllHistoryBegin(message:MTTMessageEntity,completion:@escaping HMLoadMoreHistoryMessageCompletion){
         
         let count:Int = self.p_getMessageCount()
-        let predicate:NSPredicate = NSPredicate.init(format: "sessionId == %@ AND messageID >= %@", argumentArray: [self.sessionEntity.sessionID,message.msgID] )
-        
-        MTTMessageEntity.db_query(predicate: predicate, sortBy: "msgTime", sortAscending: false , offset: count , limitCount: 0, success: { (messages ) in
-            self.p_addHistory(messages: messages, completion: completion)
-        }) { (error ) in
-            completion(0,NSError.init(domain: error, code: HMErrorCode.db_query.rawValue, userInfo: nil ))
+        MTTMessageEntity.dbQuery(whereStr: "sessionId == \(self.sessionEntity.sessionID) AND messageID >= \(message.msgID)", orderFields: "msgTime desc", offset: count, limit: 0, args: []) { (messages , error ) in
+            if error != nil {
+                completion(0,error! as NSError)
+            }else {
+                self.p_addHistory(messages: messages, completion: completion)
+            }
         }
     }
-    
     
     func getNewMsg(completion:@escaping HMLoadMoreHistoryMessageCompletion){
         HMMessageManager.shared.getMsgFromServer(beginMsgID: 0, forSession: self.sessionEntity, count: 20) { (messages , error ) in
@@ -219,7 +216,7 @@ class HMChattingModule: NSObject {
         for obj in messages.reversed().enumerated(){
             if let message = obj.element as? MTTMessageEntity {
                 if self.msgIDs.contains(message.msgID){
-                    debugPrint("p_add history check msgID exist:\(message.msgID) \(message.msgContent)")
+                    disableHMLog ? () : debugPrint("p_add history check msgID exist:\(message.msgID) \(message.msgContent)")
                 }else{
                     if message.msgTime - tempLastestDate > showPromtGap {
                         let promt = HMPromptEntity.init()
@@ -233,14 +230,14 @@ class HMChattingModule: NSObject {
                     
                     self.msgIDs.append(message.msgID)
                     tempMessages.append(message)
-//                    debugPrint("p_add history add msg ID:\(message.msgID) \(message.msgContent)")
+//                    disableHMLog ? () : debugPrint("p_add history add msg ID:\(message.msgID) \(message.msgContent)")
 
                 }
             }
         }
         
         
-        debugPrint("p_add history rawCount:\(messages.count) checkCount:\(tempMessages.count)")
+        disableHMLog ? () : debugPrint("p_add history rawCount:\(messages.count) checkCount:\(tempMessages.count)")
         
         if self.showingMessages.count == 0 {
             self.showingMessages.append(contentsOf: tempMessages)
@@ -307,12 +304,52 @@ class HMChattingModule: NSObject {
     
     //Fixme:检查是否有丢失的消息
     func isHaveMissMsg(messages:[Any])->Bool{
+        let maxMsgID:UInt32 = self.getMaxMsgID(messages: messages)
+        var minMsgID:UInt32 = self.getMinMsgID()
+        
+        for obj in messages{
+            if let msg = obj as? MTTMessageEntity{
+                if msg.msgID > maxMsgID && msg.msgID < HM_Local_message_beginID {
+                }else{
+                    minMsgID = msg.msgID
+                }
+            }
+        }
+        
+        let diff:UInt32 = maxMsgID - minMsgID
+        if diff != UInt32(HM_Message_Page_Item_Count - 1){
+            return true
+        }
         return false
     }
     
     //Fixme:检查是否连续并从服务端加载消息
-    func checkMsgList(completion:HMLoadMoreHistoryMessageCompletion){
-    
+    func checkMsgList(completion:@escaping HMLoadMoreHistoryMessageCompletion){
+        var temp:[Any] = NSArray.init(array: self.showingMessages) as! [Any]
+        
+        for obj in temp.enumerated(){
+            if obj.element is HMPromptEntity{
+                temp.remove(at: (temp as NSArray).index(of: obj.element))
+            }else if let msg = obj.element as? MTTMessageEntity{
+                if msg.msgID > HM_Local_message_beginID {
+                    temp.remove(at: (temp as NSArray).index(of: obj.element))
+                }
+            }
+        }
+        
+        (temp as NSArray).enumerateObjects({ (obj , index , stop) in
+            if index + 1 < temp.count {
+                if let msg2:MTTMessageEntity = temp[index + 1] as? MTTMessageEntity, let msg1 = obj as? MTTMessageEntity{
+                    let diff = msg1.msgID - msg2.msgID
+                    
+                    if diff != 1 {
+                        self.loadHistoryFromServerBegin(msgID: msg1.msgID, loadCount: Int(diff), completion: completion)
+                    }
+                }
+            }
+        })
+        
+        
     }
 }
 

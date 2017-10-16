@@ -143,6 +143,7 @@
 +(NSString *)dbFilePath
 {
     NSString* myName = [HMLoginManager shared].currentUser.userId;
+    
     NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).firstObject;
     NSString* directorPath = [documentsDirectory stringByAppendingPathComponent:myName];
     
@@ -227,7 +228,7 @@
         NSData* infoData = [infoString dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* info = [NSJSONSerialization JSONObjectWithData:infoData options:0 error:nil];
         NSMutableDictionary* mutalInfo = [NSMutableDictionary dictionaryWithDictionary:info];
-        messageEntity.info = mutalInfo;
+        messageEntity.extraInfo = mutalInfo;
         
     }
     return [NSArray arrayWithObjects:@(count),messageEntity, nil];
@@ -261,7 +262,7 @@
         NSData* infoData = [infoString dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* info = [NSJSONSerialization JSONObjectWithData:infoData options:0 error:nil];
         NSMutableDictionary* mutalInfo = [NSMutableDictionary dictionaryWithDictionary:info];
-        messageEntity.info = mutalInfo;
+        messageEntity.extraInfo = mutalInfo;
         
     }
     return messageEntity;
@@ -409,7 +410,7 @@
                 MTTMessageEntity* message = (MTTMessageEntity*)obj;
                 NSString* sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO %@ VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",TABLE_MESSAGE];
                 
-                NSData* infoJsonData = [NSJSONSerialization dataWithJSONObject:message.info options:NSJSONWritingPrettyPrinted error:nil];
+                NSData* infoJsonData = [NSJSONSerialization dataWithJSONObject:message.extraInfo options:NSJSONWritingPrettyPrinted error:nil];
                 NSString* json = [[NSString alloc] initWithData:infoJsonData encoding:NSUTF8StringEncoding];
                 
                 BOOL result = [_database executeUpdate:sql,@(message.msgID),message.sessionId,message.senderId,message.toUserID,message.msgContent,@(message.state),@(message.msgTime),@(1),@(message.msgContentType),@(message.msgType),json,@(0),@""];
@@ -471,7 +472,7 @@
     [_dataBaseQueue inDatabase:^(FMDatabase *db) {
         NSString* sql = [NSString stringWithFormat:@"UPDATE %@ set sessionId = ? , fromUserId = ? , toUserId = ? , content = ? , status = ? , msgTime = ? , sessionType = ? , messageType = ? ,messageContentType = ? , info = ? where messageID = ?",TABLE_MESSAGE];
         
-        NSData* infoJsonData = [NSJSONSerialization dataWithJSONObject:message.info options:NSJSONWritingPrettyPrinted error:nil];
+        NSData* infoJsonData = [NSJSONSerialization dataWithJSONObject:message.extraInfo options:NSJSONWritingPrettyPrinted error:nil];
         NSString* json = [[NSString alloc] initWithData:infoJsonData encoding:NSUTF8StringEncoding];
         BOOL result = [_database executeUpdate:sql,message.sessionId,message.senderId,message.toUserID,message.msgContent,@(message.state),@(message.msgTime),@(message.sessionType),@(message.msgType),@(message.msgContentType),json,@(message.msgID)];
         

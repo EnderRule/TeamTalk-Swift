@@ -71,7 +71,7 @@
 //将ogg格式数据转换为pcm数据
 - (void )convertOggToPCMWithData:(NSData *)oggData {
     const Byte *oggBytes = [oggData bytes];
-    int oggByteSize = [oggData length];
+    int oggByteSize = (int)[oggData length];
     int readedBytes = 0;
     NSUInteger decodedByteLength = 0;
     

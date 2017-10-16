@@ -278,7 +278,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             }else{
                 msgEntity.state = message.state
             }
-            msgEntity.db_update(completion: nil)
+            msgEntity.dbUpdate(completion: nil)
             
             dispatch(after: 0.0, task: { 
                 self?.tableView.reloadData()
@@ -415,14 +415,14 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     }
     
     func onSendText(_ text: String!, atUsers: [Any]!) {
-        print("input view : sendtext:\(text)")
         guard text.length > 0 else {
             return
         }
         let messageEntity = MTTMessageEntity.initWith(content: text, module: self.chattingModule, msgContentType: .Text)
         
 //        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: { }) { (error ) in }
-       
+        print("input view : sendtext:\(text) sender:\(messageEntity.senderId) \(HMCurrentUser().userId)")
+
         self.sendMessage(msgEntity: messageEntity)
     }
     

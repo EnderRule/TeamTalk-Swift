@@ -80,31 +80,34 @@ import UIKit
 //primary key (messageID,sessionId)
 
 @objc(MTTMessageEntity)
-class MTTMessageEntity: MTTBaseEntity {
+class MTTMessageEntity: MTTBaseEntity,HMDBModelDelegate {
     
-    @NSManaged var msgID:UInt32
-    @NSManaged var msgTime:UInt32
-    @NSManaged var seqNo:UInt32
-    @NSManaged var sessionId:String
-    @NSManaged var senderId:String
-    @NSManaged var toUserID:String
-    @NSManaged var msgContent:String
-    @NSManaged var attach:String
-    @NSManaged var extraInfo:String
-
-    @NSManaged var msgContentTypeInt:Int16
-    @NSManaged var sessionTypeInt:Int16
-    @NSManaged var msgTypeInt:Int16
-    @NSManaged var stateInt:Int16
-
-    var info:[String:Any]{
-        get{
-            return NSDictionary.initWithJsonString(self.extraInfo) as! [String:Any]
-        }
-        set{
-            self.extraInfo = (newValue as NSDictionary).jsonString()
-        }
+    func dbFields() -> [String] {
+        return ["msgID","msgTime","seqNo",
+                "sessionId","senderId","toUserID",
+                "msgContent","attach","extraInfo",
+                "msgContentTypeInt","sessionTypeInt","msgTypeInt","stateInt"]
     }
+    func dbPrimaryKey() -> String? {
+        return "msgID"
+    }
+    
+    let primaryKeyName:String = "msgID"
+
+    var msgID:UInt32 = 0
+    var msgTime:UInt32 = 0
+    var seqNo:UInt32 = 0
+    var sessionId:String = ""
+    var senderId:String = ""
+    var toUserID:String = ""
+    var msgContent:String = ""
+    var attach:String = ""
+    var extraInfo:[String:Any] = [:]
+
+    var msgContentTypeInt:Int16 = Int16(DDMessageContentType.Text.rawValue)
+    var sessionTypeInt:Int16 = Int16(SessionType_Objc.sessionTypeSingle.rawValue)
+    var msgTypeInt:Int16 = Int16(MsgType_Objc.msgTypeSingleText.rawValue)
+    var stateInt:Int16 = Int16(DDMessageState.SendSuccess.rawValue)
 
     var msgContentType:DDMessageContentType{
         set{
@@ -167,76 +170,46 @@ class MTTMessageEntity: MTTBaseEntity {
     var isEmotionMsg:Bool{
         return   self.msgContentType == .Emotion
     }
-    
+    var isValide:Bool {
+        return self.msgID > 0 && msgContent.characters.count > 0 && senderId.characters.count > 0 && sessionId.characters.count > 0
+    }
     ///初始值
-    override func awakeFromInsert() {
-        super.awakeFromInsert()
-        
-//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "msgID")
-//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "msgTime")
-//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "seqNo")
+//    override func awakeFromInsert() {
+//        super.awakeFromInsert()
 //        
-//        self.setPrimitiveValue("", forKey: "sessionId")
-//        self.setPrimitiveValue("", forKey: "senderId")
-//        self.setPrimitiveValue("", forKey: "msgContent")
-//        self.setPrimitiveValue("", forKey: "toUserID")
-//        self.setPrimitiveValue("", forKey: "attach")
-//        self.setPrimitiveValue([:], forKey: "info")
-//        
-//        self.setPrimitiveValue(DDMessageContentType.Text, forKey: "msgContentType")
-//        self.setPrimitiveValue(Im.BaseDefine.SessionType.sessionTypeSingle, forKey: "sessionType")
-//        self.setPrimitiveValue(MsgType_Objc.msgTypeSingleText, forKey: "msgType")
-//        self.setPrimitiveValue(DDMessageState.SendSuccess, forKey: "state")
-        
-        self.msgID = 0
-        self.msgTime = 0
-        self.sessionId = ""
-        self.seqNo = 0
-        self.senderId = ""
-        self.msgContent = ""
-        self.toUserID = ""
-        self.attach  = ""
-        self.info = [:]
-        self.msgContentType = .Text
-        self.sessionType = .sessionTypeSingle
-        self.msgType = .msgTypeSingleText
-        self.state = .SendSuccess
-
-    }
-    
-    override func awakeFromFetch() {
-        super.awakeFromFetch()
-        
-//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "msgID")
-//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "msgTime")
-//        self.setPrimitiveValue(NSNumber.init(value: 0), forKey: "seqNo")
+//        self.msgID = 0
+//        self.msgTime = 0
+//        self.sessionId = ""
+//        self.seqNo = 0
+//        self.senderId = ""
+//        self.msgContent = ""
+//        self.toUserID = ""
+//        self.attach  = ""
+//        self.extraInfo = [:]
+//        self.msgContentType = .Text
+//        self.sessionType = .sessionTypeSingle
+//        self.msgType = .msgTypeSingleText
+//        self.state = .SendSuccess
 //
-//        self.setPrimitiveValue("", forKey: "sessionId")
-//        self.setPrimitiveValue("", forKey: "senderId")
-//        self.setPrimitiveValue("", forKey: "msgContent")
-//        self.setPrimitiveValue("", forKey: "toUserID")
-//        self.setPrimitiveValue("", forKey: "attach")
-//        self.setPrimitiveValue([:], forKey: "info")
+//    }
+//    
+//    override func awakeFromFetch() {
+//        super.awakeFromFetch()
 //        
-//        self.setPrimitiveValue(DDMessageContentType.Text, forKey: "msgContentType")
-//        self.setPrimitiveValue(Im.BaseDefine.SessionType.sessionTypeSingle, forKey: "sessionType")
-//        self.setPrimitiveValue(MsgType_Objc.msgTypeSingleText, forKey: "msgType")
-//        self.setPrimitiveValue(DDMessageState.SendSuccess, forKey: "state")
-
-        self.msgID = 0
-        self.msgTime = 0
-        self.sessionId = ""
-        self.seqNo = 0
-        self.senderId = ""
-        self.msgContent = ""
-        self.toUserID = ""
-        self.attach  = ""
-        self.info = [:]
-        self.msgContentType = .Text
-        self.sessionType = .sessionTypeSingle
-        self.msgType = .msgTypeSingleText
-        self.state = .SendSuccess
-    }
+//        self.msgID = 0
+//        self.msgTime = 0
+//        self.sessionId = ""
+//        self.seqNo = 0
+//        self.senderId = ""
+//        self.msgContent = ""
+//        self.toUserID = ""
+//        self.attach  = ""
+//        self.extraInfo = [:]
+//        self.msgContentType = .Text
+//        self.sessionType = .sessionTypeSingle
+//        self.msgType = .msgTypeSingleText
+//        self.state = .SendSuccess
+//    }
 }
 
 extension MTTMessageEntity {
@@ -246,26 +219,26 @@ extension MTTMessageEntity {
     static let kVoiceLocalPath:String             = "voiceLocalPath"
     var voiceHadPlayed:Bool{
         get{
-            return self.info[MTTMessageEntity.kVoiceHadPlayed] as? Bool ?? false
+            return self.extraInfo[MTTMessageEntity.kVoiceHadPlayed] as? Bool ?? false
         }
         set{
-            self.info.updateValue(newValue, forKey: MTTMessageEntity.kVoiceHadPlayed)
+            self.extraInfo.updateValue(newValue, forKey: MTTMessageEntity.kVoiceHadPlayed)
         }
     }
     var voiceLocalPath:String{
         get{
-            return (self.info[MTTMessageEntity.kVoiceLocalPath] as? String ?? "").safeLocalPath()
+            return (self.extraInfo[MTTMessageEntity.kVoiceLocalPath] as? String ?? "").safeLocalPath()
         }
         set{
-            self.info.updateValue(newValue, forKey: MTTMessageEntity.kVoiceLocalPath)
+            self.extraInfo.updateValue(newValue, forKey: MTTMessageEntity.kVoiceLocalPath)
         }
     }
     var voiceLength:Int{
         get{
-            return self.info[MTTMessageEntity.kVoiceLength] as? Int ?? 0
+            return self.extraInfo[MTTMessageEntity.kVoiceLength] as? Int ?? 0
         }
         set{
-            self.info.updateValue(newValue, forKey: MTTMessageEntity.kVoiceLength)
+            self.extraInfo.updateValue(newValue, forKey: MTTMessageEntity.kVoiceLength)
         }
     }
     
@@ -275,26 +248,26 @@ extension MTTMessageEntity {
     static let kImageScale:String                 = "imageScale"
     var imageLocalPath:String{
         get{
-            return (self.info[MTTMessageEntity.kImageLocalPath] as? String ?? "").safeLocalPath()
+            return (self.extraInfo[MTTMessageEntity.kImageLocalPath] as? String ?? "").safeLocalPath()
         }
         set{
-            self.info.updateValue(newValue, forKey: MTTMessageEntity.kImageLocalPath)
+            self.extraInfo.updateValue(newValue, forKey: MTTMessageEntity.kImageLocalPath)
         }
     }
     var imageUrl:String{
         get{
-            return self.info[MTTMessageEntity.kImageUrl] as? String ?? ""
+            return self.extraInfo[MTTMessageEntity.kImageUrl] as? String ?? ""
         }
         set{
-            self.info.updateValue(newValue, forKey: MTTMessageEntity.kImageUrl)
+            self.extraInfo.updateValue(newValue, forKey: MTTMessageEntity.kImageUrl)
         }
     }
     var imageScale:CGFloat{
         get{
-            return self.info[MTTMessageEntity.kImageScale] as? CGFloat ?? 1.618
+            return self.extraInfo[MTTMessageEntity.kImageScale] as? CGFloat ?? 1.618
         }
         set{
-            self.info.updateValue(newValue, forKey: MTTMessageEntity.kImageScale)
+            self.extraInfo.updateValue(newValue, forKey: MTTMessageEntity.kImageScale)
         }
     }
 
@@ -304,26 +277,26 @@ extension MTTMessageEntity {
     static let kEmojiName:String                  = "emojiName"
     var emojiText:String{
         get{
-            return self.info[MTTMessageEntity.kEmojiText] as? String ?? ""
+            return self.extraInfo[MTTMessageEntity.kEmojiText] as? String ?? ""
         }
         set{
-            self.info.updateValue(newValue, forKey: MTTMessageEntity.kEmojiText)
+            self.extraInfo.updateValue(newValue, forKey: MTTMessageEntity.kEmojiText)
         }
     }
     var emojiCategory:String{
         get{
-            return self.info[MTTMessageEntity.kEmojiCategory] as? String ?? ""
+            return self.extraInfo[MTTMessageEntity.kEmojiCategory] as? String ?? ""
         }
         set{
-            self.info.updateValue(newValue, forKey: MTTMessageEntity.kEmojiCategory)
+            self.extraInfo.updateValue(newValue, forKey: MTTMessageEntity.kEmojiCategory)
         }
     }
     var emojiName:String{
         get{
-            return self.info[MTTMessageEntity.kEmojiName] as? String ?? ""
+            return self.extraInfo[MTTMessageEntity.kEmojiName] as? String ?? ""
         }
         set{
-            self.info.updateValue(newValue, forKey: MTTMessageEntity.kEmojiName)
+            self.extraInfo.updateValue(newValue, forKey: MTTMessageEntity.kEmojiName)
         }
     }
     
@@ -422,7 +395,7 @@ extension MTTMessageEntity {
     
     public class func  initWith(msgID:UInt32,msgType:MsgType_Objc,msgTime:UInt32,sessionID:String,senderID:String,msgContent:String,toUserID:String)->MTTMessageEntity{
         
-        let newMsg:MTTMessageEntity = MTTMessageEntity.newObj() as! MTTMessageEntity
+        let newMsg:MTTMessageEntity = MTTMessageEntity.init()
         
         newMsg.msgID = msgID
         newMsg.msgType = msgType
@@ -436,7 +409,7 @@ extension MTTMessageEntity {
     }
     
     public class func initWith(content:String,module:HMChattingModule,msgContentType:DDMessageContentType)->MTTMessageEntity{
-        let newMsg:MTTMessageEntity = MTTMessageEntity.newObj() as! MTTMessageEntity
+        let newMsg:MTTMessageEntity = MTTMessageEntity.init()
         
         if module.sessionEntity.sessionType == .sessionTypeGroup{
             newMsg.msgType = .msgTypeGroupText
@@ -454,13 +427,14 @@ extension MTTMessageEntity {
         
         module.addShow(message: newMsg)
         module.updateSession(updateTime: TimeInterval(newMsg.msgTime))
+        newMsg.updateToDB(compeletion: nil)
         return newMsg
     }
     
     public class func initWith(msgInfo:Im.BaseDefine.MsgInfo,sessionType:Im.BaseDefine.SessionType)->MTTMessageEntity{
 
         
-        let newMsg:MTTMessageEntity = MTTMessageEntity.newObj() as! MTTMessageEntity
+        let newMsg:MTTMessageEntity = MTTMessageEntity.init()
         
         newMsg.msgID = msgInfo.msgId
         newMsg.msgTime =  msgInfo.createTime
@@ -498,13 +472,16 @@ extension MTTMessageEntity {
                 debugPrint(self.classForCoder,"init with msgInfo、convert error")
             }
         }
-        
+        newMsg.updateToDB(compeletion: nil)
         return newMsg
         
     }
     
+
+    
     public class func initWith(msgData:Im.Message.ImmsgData)->MTTMessageEntity{
-        let newMsg:MTTMessageEntity = MTTMessageEntity.newObj() as! MTTMessageEntity
+        let newMsg:MTTMessageEntity = MTTMessageEntity.init()
+        
         newMsg.msgID = msgData.msgId
         newMsg.msgTime = msgData.createTime
         newMsg.msgType = MsgType_Objc.init(rawValue: msgData.msgType.rawValue) ?? .msgTypeSingleText
@@ -542,6 +519,7 @@ extension MTTMessageEntity {
                 debugPrint(self.classForCoder,"init with msgData、convert error")
             }
         }
+        newMsg.updateToDB(compeletion: nil)
         return newMsg
     }
     
@@ -603,14 +581,7 @@ let HM_Local_message_beginID:UInt32 = 1000000
 
 extension MTTMessageEntity {
     func updateToDB(compeletion:((Bool)->Void)?){
-        
-        self.db_update { (error ) in
-            compeletion?(error != nil )
-        }
-        
-//        MTTDatabaseUtil.instance().updateMessage(forMessage: self) { (result ) in
-//            compeletion?(result)
-//        }
+        self.dbUpdate(completion: nil)
     }
     
     /// 生成本地新消息ID

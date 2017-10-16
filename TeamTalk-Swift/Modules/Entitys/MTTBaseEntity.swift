@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import CoreData
+
 
 /*
  *基础类，不可直接使用
  */
-class MTTBaseEntity: NSManagedObject {
+class MTTBaseEntity:NSObject {
     
 }
 

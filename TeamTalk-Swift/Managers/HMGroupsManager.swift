@@ -13,10 +13,11 @@ class HMGroupsManager: NSObject {
     
     var allGroups:[String: MTTGroupEntity] = [:]
     
+    
     func loadAllGroup(completion:(()->Void)?){
     
-        MTTGroupEntity.db_query(predicate: nil , sortBy: "objID", sortAscending: true , offset: 0, limitCount: 0, success: { (groups ) in
-            debugPrint("db load all user count \(groups.count)")
+        MTTGroupEntity.dbQuery(whereStr: nil , orderFields: "objID asc", offset: 0, limit: 0, args: []) { (groups , error ) in
+            debugPrint("db load all groups count \(groups.count)")
             
             if groups.count > 0 {
                 for obj in  groups.enumerated(){
@@ -26,12 +27,12 @@ class HMGroupsManager: NSObject {
                 }
             }
             completion?()
-            
-        }) { (error ) in
-            completion?()
         }
     }
 
+    func cleanData(){
+        allGroups.removeAll()
+    }
     func add(group:MTTGroupEntity){
         allGroups.updateValue(group, forKey: group.objID)
     }
@@ -54,6 +55,29 @@ class HMGroupsManager: NSObject {
                 })
             }
             return target
+        }
+    }
+    
+    
+    var groups:[MTTGroupEntity] {
+        get{
+            var temp:[MTTGroupEntity] = []
+            
+            if self.allGroups.count == 0 {
+                DispatchQueue.global().sync {
+                    self.loadAllGroup(completion: { 
+                        for obj in self.allGroups.values{
+                            temp.append(obj)
+                        }
+                    })
+                    
+                }
+            }else{
+                for obj in allGroups.values{
+                    temp.append(obj)
+                }
+            }
+            return temp
         }
     }
 }

@@ -102,13 +102,24 @@ class HMMessageManager: NSObject {
                     
                     self.unAckQueueRemove(message: message)
                     
-                    message.msgID = resultIDs[0]
                     message.state = .SendSuccess
-                    
                     session.lastMsgID = message.msgID
                     session.timeInterval = TimeInterval(message.msgTime)
-
-                    completion(message,nil )
+                    message.dbDelete(completion: { (success ) in
+                        if success {
+                            message.msgID = resultIDs[0]
+                            message.dbAdd(completion: nil)
+                            
+                            completion(message,nil )
+                        }else{
+                            message.dbDelete(completion: { (success ) in
+                                message.msgID = resultIDs[0]
+                                message.dbAdd(completion: nil)
+                                
+                                completion(message,nil )
+                            })
+                        }
+                    })
                 }
             })
         }

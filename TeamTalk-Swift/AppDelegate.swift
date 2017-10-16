@@ -17,10 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        HMLoginManager.shared.setup()
         
-        HMCDManager.shared.userDBName = "0"
-  
+        HMDBManager.shared.modelClasses = [MTTUserEntity.classForCoder(),MTTGroupEntity.classForCoder(),MTTMessageEntity.classForCoder(),MTTSessionEntity.classForCoder()]
+        
+        HMDBManager.shared.dbUserID = "0"
+        
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (issuccess , error ) in
                 debugPrint("application notification requestAuthorization \(issuccess) \(error?.localizedDescription ?? "nil error ")")
@@ -69,8 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        
-        let _ = HMCDManager.shared.saveContext()
         
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }

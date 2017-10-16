@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class HMLoginViewController: UIViewController {
 
@@ -80,43 +81,47 @@ class HMLoginViewController: UIViewController {
     }
     
     func showError(message:String){
-        let label:UILabel = UILabel.init()
-        label.text = message
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.sizeToFit()
-        
-        self.view.showToast(label, duration: 3.0, point: self.loginBt.center, completion: nil)
+        self.view.makeToast(message, duration: 4.0, point: self.loginBt.center, title: nil , image: nil , style: ToastManager.shared.style , completion: nil )
     }
     func loginBtClick(_ sender :UIButton){
         
         
-        loginBt.isEnabled = false
         
         let userName:String = nameTf.text ?? ""
         let userPwd:String = pwdTf.text ?? ""
         
         if userName.length > 0 && userPwd.length > 0 {
-            self.view.makeToastActivity(loginBt.center)
+
+            
+            SVProgressHUD.show(withStatus: "正在登录...")
+            debugPrint("click login : \(userName) \(userPwd)")
             
             HMLoginManager.shared.loginWith(userName: userName, password: userPwd, success: {[weak self ] (user ) in
-                self?.view.hideToastActivity()
-                debugPrint("login success :",user.objID,user.name,user.avatar)
-                HMCDManager.shared.userDBName = user.userId
+                debugPrint("click login success : \(userName) ")
+                
+                SVProgressHUD.dismiss()
+                
+                HMDBManager.shared.dbUserID = user.userId
+                
                 self?.loginSuccessHandler()
             }, failure: { (error ) in
-                self.view.hideToastActivity()
+                debugPrint("click login failure : \(userName) \(error)")
+
+                SVProgressHUD.showError(withStatus: error)
                 
-                self.showError(message: error)
                 self.loginBt.isEnabled = true
             })
         }else{
-            loginBt.isEnabled = true
-            self.showError(message: "输入有误")
+            SVProgressHUD.showError(withStatus: "输入有误")
         }
-        
+
+        HMPrint(items: "fwewf",324234,["422",9942342])
     }
     
     func loginSuccessHandler(){
+        let user = HMLoginManager.shared.currentUser
+        debugPrint("login success :",user.objID,user.name,user.avatar)
+
         let mainTabbar = UITabBarController.init()
         let recentsNavi = UINavigationController.init(rootViewController: HMRecentSessionsViewController.init())
         let contactsNavi = UINavigationController.init(rootViewController: HMContactsViewController.init())

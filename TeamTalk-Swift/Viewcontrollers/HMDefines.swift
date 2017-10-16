@@ -10,8 +10,9 @@ import UIKit
 
 //用到的一些常量
 
+let disableHMLog:Bool = false
 
-let SERVER_Address = "http://192.168.113.31:8080/msg_server" 
+let SERVER_Address = "https://aitlg.linking.im/msg_server"  // "https://mapi.linking.im/" // "http://192.168.113.31:8080/msg_server"
 
 
 // url phone email 正则
@@ -161,6 +162,22 @@ enum HMErrorCode:Int {
     case db_delete = 8804
     case db_query = 8805
     
-    
-    
 }
+
+func defaultToastStyle()->ToastStyle{
+    var style = ToastStyle.init()
+    style.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    style.activitySize = .init(width: 50, height: 50)
+    style.cornerRadius = 8.0
+    style.fadeDuration = 3.0
+    style.imageSize = .init(width: 100, height: 100)
+    return style
+}
+
+func HMPrint(items: Any...,file: String = #file, line: Int = #line, function: String = #function) {
+    if !disableHMLog{
+        print("HMPrint:\((file as NSString).lastPathComponent)->\(line)->\(function)->\(Date().timeIntervalSince1970):\(items) \n")
+    }
+}
+//链接：http://www.jianshu.com/p/95460601cb6f
+
