@@ -256,9 +256,17 @@ class HMMessageManager: NSObject {
         let sessionID = MTTBaseEntity.pbIDFrom(localID: message.sessionId)
         let api:ReceiveMessageACKAPI = ReceiveMessageACKAPI.init(msgID: message.msgID, sessionID: sessionID, sessionType: message.sessionType)
         api.request(withParameters: [:]) { (obj , error ) in
-            
         }
     }
+    func sendReceiveACK(msgID:UInt32,sessionID:String,sessionType:SessionType_Objc){
+        let sessionID = MTTBaseEntity.pbIDFrom(localID: sessionID)
+        let type:Im.BaseDefine.SessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
+        let api:ReceiveMessageACKAPI = ReceiveMessageACKAPI.init(msgID: msgID, sessionID: sessionID, sessionType: type)
+        api.request(withParameters: [:]) { (obj , error ) in
+        }
+
+    }
+    
     
     /// 发送已读回执
     ///
@@ -267,7 +275,13 @@ class HMMessageManager: NSObject {
         let sessionID = MTTBaseEntity.pbIDFrom(localID: message.sessionId)
         let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionID, msgID: message.msgID, sessionType: message.sessionType)
         api.request(withParameters: [:]) { (obj , error ) in
-            
+        }
+    }
+    func sendReadACK(msgID:UInt32,sessionID:String,sessionType:SessionType_Objc){
+        let sessionID = MTTBaseEntity.pbIDFrom(localID: sessionID)
+        let type:Im.BaseDefine.SessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
+        let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionID, msgID: msgID, sessionType: type)
+        api.request(withParameters: [:]) { (obj , error ) in
         }
     }
     

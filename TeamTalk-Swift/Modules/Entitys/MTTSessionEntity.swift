@@ -60,7 +60,7 @@ import UIKit
 class MTTSessionEntity: NSObject,HMDBModelDelegate {
     
     func dbFields() -> [String] {
-        return ["sessionID","avatar","lastMsg","lastMsgID","sessionTypeInt","s_timeInterval","unReadMsgCount","isShield","isFixedTop"]
+        return ["sessionID","avatar","s_name","lastMsg","lastMsgID","sessionTypeInt","s_timeInterval","unReadMsgCount","isShield","isFixedTop"]
     }
     
     func dbPrimaryKey() -> String? {
@@ -172,29 +172,6 @@ class MTTSessionEntity: NSObject,HMDBModelDelegate {
         }
     }
     
-    override var hash: Int {
-        get{
-            let sessionIDhash = self.sessionID.hash
-            return sessionIDhash^Int(self.sessionType.rawValue)
-        }
-    }
-    
-    override func isEqual(_ object: Any?) -> Bool {
-        if object == nil {
-            return  false
-        }else if (object! as? MTTSessionEntity) == nil  {
-            return false
-        }
-        let other:MTTSessionEntity = object! as! MTTSessionEntity
-        if other.sessionID != self.sessionID{
-            return false
-        }
-        if other.sessionType != self.sessionType{
-            return false
-        }
-        return true
-    }
-    
 }
 
 
@@ -220,7 +197,7 @@ extension MTTSessionEntity {
         self.unReadMsgCount = Int(unreadInfo.unreadCnt)
         
         self.lastMsgID = UInt32(unreadInfo.latestMsgId)
-        
+        self.timeInterval = Date().timeIntervalSince1970
         
         if let encryMsg = String.init(data: unreadInfo.latestMsgData, encoding: .utf8){
             self.lastMsg = MTTMessageEntity.pb_decode(content: encryMsg)

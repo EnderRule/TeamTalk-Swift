@@ -46,23 +46,13 @@
                                                  selector:@selector(n_receiveMessageNotification:)
                                                      name:DDNotificationReceiveMessage
                                                    object:nil];
-        MsgReadNotifyAPI *msgReadNotify = [[MsgReadNotifyAPI alloc] init];
-        [msgReadNotify registerAPIInAPIScheduleReceiveData:^(NSDictionary *object, NSError *error) {
-            NSString *fromId= [object objectForKey:@"from_id"];
-            NSInteger msgID = [[object objectForKey:@"msgId"] integerValue];
-            SessionType_Objc type = [[object objectForKey:@"type"] intValue];
-            [self cleanMessageFromNotifi:msgID SessionID:fromId Session:type];
-        }];
+        
     }
     return self;
 }
 -(MTTSessionEntity *)getSessionById:(NSString *)sessionID
 {
     return [self.sessions safeObjectForKey:sessionID];
-}
--(void)removeSessionById:(NSString *)sessionID
-{
-    [self.sessions removeObjectForKey:sessionID];
 }
 -(void)addToSessionModel:(MTTSessionEntity *)session
 {
@@ -148,30 +138,6 @@
     }];
 }
 
--(NSArray *)getAllSessions
-{
-    NSArray *sessions = [self.sessions allValues];
-    [sessions enumerateObjectsUsingBlock:^(MTTSessionEntity *obj, NSUInteger idx, BOOL *stop) {
-        if([SessionModule checkFixedTop:obj.sessionID]){
-            obj.isFixedTop = YES;
-        }
-    }];
-    return [self.sessions allValues];
-}
--(void)removeSessionByServer:(MTTSessionEntity *)session
-{
-    [self.sessions removeObjectForKey:session.sessionID];
-    [[MTTDatabaseUtil instance] removeSession:session.sessionID];
-    uint32_t sessionid = [MTTBaseEntity pbIDFromLocalID:session.sessionID];
-    RemoveSessionAPI *removeSession = [[RemoveSessionAPI alloc]initWithID: sessionid type:session.sessionType];
-    [removeSession requestWithParameters:nil  Completion:^(id response, NSError *error) {
-    }];
-}
-
--(void)clearSession{
-    [self.sessions removeAllObjects];
-}
-
 -(void)getMessageReadACK:(NSNotification *)notification
 {
       MTTMessageEntity* message = [notification object];
@@ -227,72 +193,7 @@
     }
      [self updateToDatabase:session];
 }
--(void)loadLocalSession:(void(^)(bool isok))block
-{
-    [[MTTDatabaseUtil instance] loadSessionsCompletion:^(NSArray *session, NSError *error) {
-        
-        [self addSessionsToSessionModel:session];
-        
-        block(YES);
-        
-    }];
-
-}
--(void)cleanMessageFromNotifi:(NSUInteger)messageID  SessionID:(NSString *)sessionid Session:(SessionType_Objc)type
-{
-    if(![sessionid isEqualToString:[HMLoginManager shared].currentUser.userId]){
-        MTTSessionEntity *session = [self getSessionById:sessionid];
-        if (session) {
-            NSInteger readCount =messageID-session.lastMsgID;
-            if (readCount == 0) {
-                session.unReadMsgCount =0;
-                if (self.delegate && [self.delegate respondsToSelector:@selector(sessionUpdate:Action:)]) {
-                    [self.delegate sessionUpdate:session Action:ADD];
-                }
-                [self updateToDatabase:session];
-                
-            }else if(readCount > 0){
-                session.unReadMsgCount =readCount;
-                if (self.delegate && [self.delegate respondsToSelector:@selector(sessionUpdate:Action:)]) {
-                    [self.delegate sessionUpdate:session Action:ADD];
-                }
-                [self updateToDatabase:session];
-            }
-            MsgReadACKAPI* readACK = [[MsgReadACKAPI alloc] initWithSessionID:session.sessionIntID msgID:(uint32_t)messageID sessionType:session.sessionType];
-            [readACK requestWithParameters:nil Completion:nil];
-
-        }
-        
-    }
-}
 
 
-
-#pragma mark - fiexed top
-+(void)setFixedTop:(NSString *)sessionID{
-    NSArray *allUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"fixedTopUsers"];
-    NSMutableArray *allUserTmp =[NSMutableArray arrayWithArray:allUser];
-    [allUserTmp addObject:sessionID];
-    [[NSUserDefaults standardUserDefaults] setObject:allUserTmp forKey:@"fixedTopUsers"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+(NSArray *)getFixedTop{
-    NSArray *allUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"fixedTopUsers"];
-    return allUser;
-}
-
-+(void)removeFixedTop:(NSString *)sessionID{
-    NSArray *allUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"fixedTopUsers"];
-    NSMutableArray *allUserTmp =[NSMutableArray arrayWithArray:allUser];
-    [allUserTmp removeObject:sessionID];
-    [[NSUserDefaults standardUserDefaults] setObject:allUserTmp forKey:@"fixedTopUsers"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+(BOOL)checkFixedTop:(NSString *)sessionID{
-    NSArray *allUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"fixedTopUsers"];
-    return [allUser containsObject:sessionID];
-}
 
 @end

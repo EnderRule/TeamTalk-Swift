@@ -47,10 +47,5 @@ typedef enum
 
 -(NSUInteger)getAllUnreadMessageCount;
 
-#pragma mark - fiexed top
-+(void)setFixedTop:(NSString *)sessionID;
-+(NSArray *)getFixedTop;
-+(void)removeFixedTop:(NSString *)sessionID;
-+(BOOL)checkFixedTop:(NSString *)sessionID;
 
 @end

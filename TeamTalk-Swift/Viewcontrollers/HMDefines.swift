@@ -58,7 +58,10 @@ enum HMNotification:Int {
     
     case loadLocalGroupFinish
     
+    case sendMessageSucceed             //发送消息成功
+    case receiveMessageReadACK          //收到消息已读回执
     case receiveMessage                 //收到普通新消息
+    
     case receiveP2PShakeMessage
     case receiveP2PInputingMessage
     case receiveP2PStopInputingMessage
@@ -140,7 +143,11 @@ enum HMNotification:Int {
         case .sessionShieldAndFixed:
             nameStr = "Notification_SessionShieldAndFixed"
             break
-        
+        case .sendMessageSucceed:
+            nameStr = "Notification_sendMessageSucceed"
+        case .receiveMessageReadACK:
+            nameStr = "Notification_receiveMessageReadACK"
+            
         default:
             nameStr = "HMNotification_\(self)_\(self.rawValue)"
         }
