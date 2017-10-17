@@ -328,7 +328,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                 
                                 HMNotification.userLoginSuccess.postWith(obj: user , userInfo: nil )
                                 
-                                self.sendPushtoken(token: self.pushTtoken)
+                                self.sendPushtoken()
                                 
                                 success(user)
                                 
@@ -393,11 +393,13 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         self.s_loginState = .offLineInitiative
     }
     
-    func sendPushtoken(token:String){
-        debugPrint("call Send PushToken API ")
-        let api =  SendPushTokenAPI.init(pushToken: self.pushTtoken)
-        api.request(withParameters: [:], completion: { (obj , error ) in
-        })
+    func sendPushtoken(){
+        debugPrint(" Send PushToken :\(self.pushTtoken) ")
+        if self.pushTtoken.length > 0 {
+            let api =  SendPushTokenAPI.init(pushToken: self.pushTtoken)
+            api.request(withParameters: [:], completion: { (obj , error ) in
+            })
+        }
     }
     
     
@@ -496,13 +498,13 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     }
     
     @objc private func n_receiveServerHeartBeat(){
-        debugPrint(" ********** server 嘣 ***********")
+//        debugPrint(" ********** server 嘣 ***********")
 
         self.receivedServerHeart = true
     }
     
     @objc private func sendHeartBeat(timer:Timer){
-        debugPrint(" ********** send 嘣 ***********")
+//        debugPrint(" ********** send 嘣 ***********")
         HeartbeatAPI.init().request(withParameters: nil) { (object , error ) in }
     }
     @objc private func checkServerHeartBeat(timer:Timer){

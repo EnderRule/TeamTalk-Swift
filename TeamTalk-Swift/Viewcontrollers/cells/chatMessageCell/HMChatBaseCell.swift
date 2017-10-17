@@ -284,7 +284,7 @@ class HMChatBaseCell: HMBaseCell {
     }
     
     //发送状态
-    func updateSendState(state:DDMessageState){
+    private  func updateSendState(state:DDMessageState){
         self.resendButton.isHidden = true
         self.activityView.stopAnimating()
         self.msgStateLb.isHidden = true

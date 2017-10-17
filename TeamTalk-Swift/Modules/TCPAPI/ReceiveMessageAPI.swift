@@ -22,7 +22,7 @@ class ReceiveMessageAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
         let analysis:UnrequestAPIAnalysis = {(data) in
             if let res:Im.Message.ImmsgData = try? Im.Message.ImmsgData.parseFrom(data: data ?? Data()) {
                 let entity = MTTMessageEntity.initWith(msgData: res)
-                entity.state = .SendSuccess
+//                entity.state = .SendSuccess
                 return entity
             }else {
                 debugPrint("ReceiveMessageAPI analysisReturnData failure")

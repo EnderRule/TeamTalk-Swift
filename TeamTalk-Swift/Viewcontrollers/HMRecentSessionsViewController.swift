@@ -20,6 +20,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
    
     deinit {
         NotificationCenter.default.removeObserver(self )
+        HMSessionModule.shared.delegate = nil
     }
     
     override func viewDidLoad() {
@@ -45,6 +46,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         NotificationCenter.default.addObserver(self , selector: #selector(self.n_receiveLoginSuccessNotification(notification:)), name: HMNotification.userLoginSuccess.notificationName(), object: nil )
         NotificationCenter.default.addObserver(self , selector: #selector(self.n_receiveReLoginSuccessNotification(notification:)), name: HMNotification.userReloginSuccess.notificationName(), object: nil )
         
+        HMSessionModule.shared.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -223,7 +225,7 @@ extension MTTMessageEntity {
         DispatchQueue.global().sync {
             MTTMessageEntity.dbQuery(whereStr: "sessionId = ? AND stateInt = ?", orderFields: "msgTime", offset: 0, limit: 1, args: [session.sessionID,DDMessageState.SendSuccess.rawValue], completion: { (messages , error ) in
                 message = messages.first as? MTTMessageEntity
-                debugPrint("get lastest Message forSession:\(session.sessionID) \(message?.msgID ?? 0) error:\(error?.localizedDescription ?? "")")
+//                debugPrint("get lastest Message forSession:\(session.sessionID) \(message?.msgID ?? 0) error:\(error?.localizedDescription ?? "")")
             })
         }
         return message

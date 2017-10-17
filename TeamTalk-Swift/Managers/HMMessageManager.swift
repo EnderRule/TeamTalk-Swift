@@ -229,7 +229,7 @@ class HMMessageManager: NSObject {
     private func p_registerReceiveMessageAPI(){
         receiveMsgApi.registerAPI { (obj , error ) in
             if let message = obj as? MTTMessageEntity {
-                message.state = .SendSuccess
+//                message.state = .SendSuccess
                 
                 //发送收到消息的回执
                 self.sendReceiveACK(message: message)
@@ -301,6 +301,10 @@ class HMMessageManager: NSObject {
         let sessionID = MTTBaseEntity.pbIDFrom(localID: message.sessionId)
         let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionID, msgID: message.msgID, sessionType: message.sessionType)
         api.request(withParameters: [:]) { (obj , error ) in
+            
+            if obj as? Bool ?? false {
+                MTTMsgReadState.save(msgID: message.msgID, state: .Readed)
+            }
         }
     }
     func sendReadACK(msgID:UInt32,sessionID:String,sessionType:SessionType_Objc){
@@ -308,6 +312,9 @@ class HMMessageManager: NSObject {
         let type:Im.BaseDefine.SessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
         let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionID, msgID: msgID, sessionType: type)
         api.request(withParameters: [:]) { (obj , error ) in
+            if obj as? Bool ?? false {
+                MTTMsgReadState.save(msgID: msgID, state: .Readed)
+            }
         }
     }
     

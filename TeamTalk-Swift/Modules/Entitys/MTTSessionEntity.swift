@@ -60,7 +60,7 @@ import UIKit
 class MTTSessionEntity: NSObject,HMDBModelDelegate {
     
     func dbFields() -> [String] {
-        return ["sessionID","avatar","s_name","lastMsg","lastMsgID","sessionTypeInt","s_timeInterval","unReadMsgCount","isShield","isFixedTop"]
+        return ["sessionID","avatar","s_name","lastMsg","lastMsgID","sessionTypeInt","timeInterval","unReadMsgCount","isShield","isFixedTop"]
     }
     
     func dbPrimaryKey() -> String? {

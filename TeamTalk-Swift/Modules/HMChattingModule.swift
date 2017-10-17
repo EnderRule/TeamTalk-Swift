@@ -134,9 +134,9 @@ class HMChattingModule: NSObject {
                     let message:MTTMessageEntity = obj.element
                     self.addShow(message: message)
                     
-                    if message.msgID == maxmsgID {
-                        HMMessageManager.shared.sendReadACK(message: message)
-                    }
+//                    if message.msgID == maxmsgID {
+//                        HMMessageManager.shared.sendReadACK(message: message)
+//                    }
                 }
                 completion(sortedMessages.count,nil )
             }

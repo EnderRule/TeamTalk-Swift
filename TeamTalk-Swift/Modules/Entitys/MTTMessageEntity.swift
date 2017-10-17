@@ -622,3 +622,56 @@ extension String {
         return ""
     }
 }
+
+
+class MTTMsgReadState:NSObject,HMDBModelDelegate{
+    
+    func dbFields() -> [String] {
+        return ["msgID","stateInt"]
+    }
+    
+    func dbPrimaryKey() -> String? {
+        return "msgID"
+    }
+    
+    var sessionID:String = ""
+    var msgID:UInt32 = 0
+    var stateInt:Int = 2
+    
+    var state:DDMessageState{
+        set{
+            self.stateInt = Int(newValue.rawValue)
+        }
+        get{
+            return DDMessageState.init(rawValue: Int(self.stateInt)) ?? .SendSuccess
+        }
+        
+    }
+    
+    public convenience init(msgID:UInt32,state:DDMessageState){
+        self.init()
+        self.msgID = msgID
+        self.state = state
+    }
+    
+    class func save(msgID:UInt32,state:DDMessageState){
+//        debugPrint("save readed \(msgID) \(state.rawValue)")
+        let obj = MTTMsgReadState.init(msgID: msgID, state: state)
+        obj.dbSave(completion: nil)
+    }
+    
+    class func stateFor(msgID:UInt32)->DDMessageState{
+        
+        var state:DDMessageState = .SendSuccess
+        DispatchQueue.global().sync {
+            MTTMsgReadState.dbQuery(whereStr: "msgID = \(msgID)", orderFields: nil , offset: 0, limit: 1, args: []) { (obj , eror ) in
+                if let readstate  = (obj as?[MTTMsgReadState] ?? []).first{
+                    state = readstate.state
+                }
+            }
+        }
+        return state
+        
+    }
+    
+}

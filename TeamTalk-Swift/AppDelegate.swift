@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         
-        HMDBManager.shared.modelClasses = [MTTUserEntity.classForCoder(),MTTGroupEntity.classForCoder(),MTTMessageEntity.classForCoder(),MTTSessionEntity.classForCoder()]
+        HMDBManager.shared.modelClasses = [MTTUserEntity.classForCoder(),MTTGroupEntity.classForCoder(),MTTMessageEntity.classForCoder(),MTTSessionEntity.classForCoder(),MTTMsgReadState.classForCoder()]
         
         HMDBManager.shared.dbUserID = "0"
         

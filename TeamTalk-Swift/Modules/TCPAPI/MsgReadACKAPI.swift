@@ -44,7 +44,18 @@ class MsgReadACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
-            return nil
+            debugPrint("MsgReadACKAPI return data \(data) ")
+
+            if let res = try? Im.Message.ImmsgDataReadAck.parseFrom(data: data ?? Data() ){
+//                res.msgId
+//                res.sessionId
+//                res.sessionType
+//                res.userId
+                debugPrint(" analysis data :\(res.msgId) \(res.sessionId) \(res.userId) \(res.sessionType)")
+                return res.msgId > 0
+            }else{
+                return false
+            }
         }
         return analysis
     }

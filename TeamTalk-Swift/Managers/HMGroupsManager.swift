@@ -17,7 +17,7 @@ class HMGroupsManager: NSObject {
     func loadAllGroup(completion:(()->Void)?){
     
         MTTGroupEntity.dbQuery(whereStr: nil , orderFields: "objID asc", offset: 0, limit: 0, args: []) { (groups , error ) in
-            debugPrint("db load all groups count \(groups.count)")
+//            debugPrint("db load all groups count \(groups.count)")
             
             if groups.count > 0 {
                 for obj in  groups.enumerated(){

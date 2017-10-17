@@ -53,7 +53,7 @@ class GetMessageQueueAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 for msginfo in res.msgList{
                     let msgentity = MTTMessageEntity.initWith(msgInfo: msginfo, sessionType: sessionType)
                     msgentity.sessionId = sessionID
-                    msgentity.state = .SendSuccess
+//                    msgentity.state = .SendSuccess
                     
                     msgentity.dbSave(completion: nil)
                     msgArray.append(msgentity)

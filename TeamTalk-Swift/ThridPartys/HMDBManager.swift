@@ -14,7 +14,7 @@ import Foundation
 import FMDB
 
 
-let disableHMDBLog:Bool = false
+let disableHMDBLog:Bool = true
 
 extension NSObject{
     class func newObjFor(subCls:AnyClass) ->AnyObject{

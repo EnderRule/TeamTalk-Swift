@@ -49,7 +49,7 @@ class MTTUserEntity: MTTBaseEntity,HMDBModelDelegate {
 
     var name:String = ""
     var nick:String = ""
-    var avatar:String = ""
+    var avatar:String = "defaultAvatar"
     var department:String = ""
     var departId:String = ""
 

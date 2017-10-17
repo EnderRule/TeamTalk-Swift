@@ -219,13 +219,20 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             if let message = obj as? MTTMessageEntity {
                 
                 
-                if !message.isGroupMessage && message.senderId != HMLoginManager.shared.currentUser.userId && message.state == .SendSuccess{
-                    HMMessageManager.shared.sendReadACK(message: message)
+                if !message.isGroupMessage && message.senderId != HMLoginManager.shared.currentUser.userId {
                     
-                    message.state = .Readed
-                    message.dbSave(completion: { (success ) in
-                        debugPrint(" 发送已读回执：db save \(success) \(message.msgID) \(message.sessionId) \(message.msgContent)")
-                    })
+                    
+                    if MTTMsgReadState.stateFor(msgID: message.msgID) != .Readed{
+                     
+                        HMMessageManager.shared.sendReadACK(message: message)
+                     
+                        MTTMsgReadState.save(msgID: message.msgID, state: .Readed)
+                        
+                        message.state = .Readed
+                        message.dbSave(completion: { (success ) in
+                            debugPrint(" 发送已读回执：db save \(success) \(message.msgID) \(message.sessionId) \(message.msgContent)")
+                        })
+                    }
                 }
                 
                 if message.msgContentType == .Image {
@@ -380,11 +387,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             self.chattingModule.sessionEntity.lastMsg = message.msgContent
 
             self.refreshMessagesData(scrollToBottom: true )
-        
-            
-            if UIApplication.shared.applicationState == .background {
-                HMMessageManager.shared.sendReadACK(message: message)
-            }
+         
         }
     }
     
