@@ -140,7 +140,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     private var s_serverTime:TimeInterval = Date().timeIntervalSince1970
     private var s_currentUser:MTTUserEntity = MTTUserEntity.init() {
         didSet{
-            debugPrint("did Change LoginUser :",s_currentUser.objID,s_currentUser.name,s_currentUser.avatar)
+//            debugPrint("did Change LoginUser :",s_currentUser.objID,s_currentUser.name,s_currentUser.avatar)
         }
     }
     
@@ -322,9 +322,9 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
 
                                 self.reloginning = true
                                 
-                                MTTDatabaseUtil.instance().openCurrentUserDB()
-                                
-                                SessionModule.instance().loadLocalSession({ (isok ) in })
+                                HMDBManager.shared.dbUserID = user.objID
+                                                                
+                                HMSessionModule.shared.loadLocalSession(completion: nil)
                                 
                                 HMNotification.userLoginSuccess.postWith(obj: user , userInfo: nil )
                                 
@@ -385,7 +385,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         HMUsersManager.shared.cleanData()
         HMGroupsManager.shared.cleanData()
         
-        SessionModule.instance().clearSession()
+        HMSessionModule.shared.clearSessions()
         
         DDTcpClientManager.instance().delegate = nil
         DDTcpClientManager.instance().disconnect()
@@ -578,8 +578,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                 self.s_loginState = .offLine
             }else{
                 //网络变化时,重登计时器无效、且用户不处于 在线/踢出/主动下线 其中之一，才需要启动重登
-                let shouldRelogin:Bool = self.reloginTimer == nil
-                    && !self.reloginTimer!.isValid
+                let shouldRelogin:Bool =  !(self.reloginTimer?.isValid ?? false)
                     && self.s_loginState != .online
                     && self.s_loginState != .kickout
                     && self.s_loginState != .offLineInitiative

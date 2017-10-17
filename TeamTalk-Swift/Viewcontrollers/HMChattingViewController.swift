@@ -89,9 +89,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
 
         //清空未读 = 0
         self.chattingModule.sessionEntity.unReadMsgCount = 0
-        MTTDatabaseUtil.instance().updateRecentSession(self.chattingModule.sessionEntity) { (error ) in
-            
-        }
+        self.chattingModule.sessionEntity.dbUpdate(completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -220,6 +218,16 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             let obj = self.showingMessages[indexPath.row]
             if let message = obj as? MTTMessageEntity {
                 
+                
+                if !message.isGroupMessage && message.senderId != HMLoginManager.shared.currentUser.userId && message.state == .SendSuccess{
+                    HMMessageManager.shared.sendReadACK(message: message)
+                    
+                    message.state = .Readed
+                    message.dbSave(completion: { (success ) in
+                        debugPrint(" 发送已读回执：db save \(success) \(message.msgID) \(message.sessionId) \(message.msgContent)")
+                    })
+                }
+                
                 if message.msgContentType == .Image {
                     let cell:HMChatImageCell = tableView.dequeueReusableCell(withIdentifier: HMChatImageCell.cellIdentifier, for: indexPath) as! HMChatImageCell
                     
@@ -278,7 +286,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             }else{
                 msgEntity.state = message.state
             }
-            msgEntity.dbUpdate(completion: nil)
+            msgEntity.dbSave(completion: nil)
             
             dispatch(after: 0.0, task: { 
                 self?.tableView.reloadData()
@@ -322,11 +330,11 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             scale = image.size.width/image.size.height
          }
 
-        let messageEntity = MTTMessageEntity.initWith(content: "[圖片]", module: self.chattingModule, msgContentType: DDMessageContentType.Image)
-        messageEntity.imageLocalPath = imagePath
-        messageEntity.imageScale = scale
+        let newMessage:MTTMessageEntity = MTTMessageEntity.initWith(content: "[圖片]", module: self.chattingModule, msgContentType: DDMessageContentType.Image)
+        newMessage.imageLocalPath = imagePath
+        newMessage.imageScale = scale
         
-        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: { }) { (error ) in   }
+        newMessage.dbSave(completion: nil)
         
         //先上传图片、再发送含有图片URL 的消息。
         SendPhotoMessageAPI.shared.uploadPhoto(imagePath: imagePath, to: self.chattingModule.sessionEntity, progress: { (progress ) in
@@ -334,19 +342,19 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         }, success: {[weak self] (imageURL ) in
             debugPrint("upload success url: \(imageURL)")
             if imageURL.length > 0 {
-                messageEntity.state = .Sending
+                newMessage.state = .Sending
                 
-                messageEntity.imageUrl = imageURL
+                newMessage.imageUrl = imageURL
                 
-                self?.sendMessage(msgEntity: messageEntity)
-                messageEntity.updateToDB(compeletion: nil)
+                self?.sendMessage(msgEntity: newMessage)
+                newMessage.updateToDB(compeletion: nil)
             }
         }) {[weak self ] (errorString ) in
             
             debugPrint("upload error :\(errorString)")
             
-            messageEntity.state = .SendFailure
-            messageEntity.updateToDB(compeletion: { (success ) in
+            newMessage.state = .SendFailure
+            newMessage.updateToDB(compeletion: { (success ) in
                 if success {
                     dispatch(after: 0, task: {
                         self?.tableView.reloadData()
@@ -419,8 +427,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             return
         }
         let messageEntity = MTTMessageEntity.initWith(content: text, module: self.chattingModule, msgContentType: .Text)
-        
-//        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: { }) { (error ) in }
+        messageEntity.dbSave(completion: nil)
         print("input view : sendtext:\(text) sender:\(messageEntity.senderId) \(HMCurrentUser().userId)")
 
         self.sendMessage(msgEntity: messageEntity)
@@ -450,10 +457,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         messageEntity.emojiText = msgcontent
         messageEntity.emojiCategory = categoryId
         messageEntity.emojiName = chartletId
+        messageEntity.dbSave(completion: nil)
         
-        MTTDatabaseUtil.instance().insertMessages([messageEntity], success: {
-        }) { (error ) in
-        }
         self.sendMessage(msgEntity: messageEntity)
     }
     
@@ -490,9 +495,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             newmessage.msgType = .msgTypeSingleAudio
             newmessage.voiceLocalPath = voicePath
             newmessage.voiceLength = Int(interval)
-            
-            MTTDatabaseUtil.instance().insertMessages([newmessage], success: { }, failure: { (resultStr ) in  })
-            
+        
+            newmessage.dbSave(completion: nil)
+        
             self.sendMessage(msgEntity: newmessage)
         }
     }
@@ -528,15 +533,17 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         
         debugPrint("HMChatCellAction \(type),message \(message?.msgContent ?? "nil msgcontent")")
         
+        
+        
         if type == .sendAgain && message != nil{
-            
             
             if message!.isImageMessage{
                 let imageurl = message!.imageUrl
                 let imageLocal = message!.imageLocalPath.safeLocalPath()
 
                 if imageurl.length <= 0 && FileManager.default.fileExists(atPath: imageLocal){
-                    MTTDatabaseUtil.instance().deleteMesages(message!, completion: { (success ) in
+                    
+                    message?.dbDelete(completion: { (success ) in
                         dispatch(after: 0, task: {
                             self.chattingModule.deleteShow(message: message!)
                             

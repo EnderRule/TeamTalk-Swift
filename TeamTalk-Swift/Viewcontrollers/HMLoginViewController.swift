@@ -101,8 +101,6 @@ class HMLoginViewController: UIViewController {
                 
                 SVProgressHUD.dismiss()
                 
-                HMDBManager.shared.dbUserID = user.userId
-                
                 self?.loginSuccessHandler()
             }, failure: { (error ) in
                 debugPrint("click login failure : \(userName) \(error)")

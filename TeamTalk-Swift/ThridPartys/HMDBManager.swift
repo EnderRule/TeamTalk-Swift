@@ -31,8 +31,11 @@ class HMDBManager: NSObject {
     
     var modelClasses:[AnyClass] = []
     var dbUserID:String = ""{
-        didSet{
-            self.openDB()
+        willSet{
+            let oldValue = dbUserID
+            if newValue != oldValue{
+                self.openDB()
+            }
         }
     }
     

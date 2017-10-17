@@ -9,7 +9,7 @@
 import UIKit
 
 
-class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,SessionModuelDelegate {
+class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,HMSessionModuleDelegate {
 
     static let shared = HMRecentSessionsViewController()
     
@@ -45,12 +45,6 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         NotificationCenter.default.addObserver(self , selector: #selector(self.n_receiveLoginSuccessNotification(notification:)), name: HMNotification.userLoginSuccess.notificationName(), object: nil )
         NotificationCenter.default.addObserver(self , selector: #selector(self.n_receiveReLoginSuccessNotification(notification:)), name: HMNotification.userReloginSuccess.notificationName(), object: nil )
         
-        NotificationCenter.default.addObserver(self , selector: #selector(self.refreshData), name: HMNotification.sessionShieldAndFixed.notificationName(), object: nil )
-        NotificationCenter.default.addObserver(self , selector: #selector(self.refreshData), name: HMNotification.reloadRecentContacts.notificationName(), object: nil )
-        NotificationCenter.default.addObserver(self , selector: #selector(self.refreshData), name: HMNotification.recentContactsUpdate.notificationName(), object: nil )
-        
-        NotificationCenter.default.addObserver(self , selector: #selector(self.onReceiveMessage(notification:)), name: HMNotification.receiveMessage.notificationName(), object: nil )
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,9 +61,10 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         
         //获取最新的会话列表
         dispatch_globle(after: 0.0) {
-            SessionModule.instance().getRecentSession({ (count ) in
+
+            HMSessionModule.shared.getRecentSessionFromServer { (count ) in
                 self.refreshData()
-            })
+            }
         }
     }
     
@@ -80,53 +75,8 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     
     
     
-    //MARK: 收到新消息
-    @objc private func onReceiveMessage(notification:NSNotification) {
-        guard let message:MTTMessageEntity = notification.object as? MTTMessageEntity else {
-            return
-        }
-        
-        for session in self.sessions {
-            if message.sessionId == session.sessionID {
-                
-                session.lastMsg = message.msgContent
-                session.lastMsgID = message.msgID
-                session.timeInterval = TimeInterval(message.msgTime)
-                session.lastMessage = message
-                
-                if let chattingVC:HMChattingViewController = self.navigationController?.topViewController as? HMChattingViewController{
-                    if chattingVC.chattingModule.sessionEntity.sessionID != message.sessionId {
-                        session.unReadMsgCount += 1
-                    }
-                }else{
-                    session.unReadMsgCount += 1
-                }
-                MTTDatabaseUtil.instance().updateRecentSession(session, completion: { (error ) in })
-                
-                self.refreshData()
-                return
-            }
-        }
-        
-        let newsession = MTTSessionEntity.init(sessionID: message.sessionId, sessionName: nil , type: message.sessionType == .sessionTypeGroup ? SessionType_Objc.sessionTypeGroup : SessionType_Objc.sessionTypeSingle)
-
-        newsession.lastMsg = message.msgContent
-        newsession.lastMsgID = message.msgID
-        newsession.timeInterval = TimeInterval(message.msgTime)
-        newsession.lastMessage = message
-        newsession.unReadMsgCount = 1
-        SessionModule.instance().add(toSessionModel: newsession)
-        
-        
-        MTTDatabaseUtil.instance().updateRecentSession(newsession, completion: { (error ) in })
-       
-        self.refreshData()
-        
-    }
-    
-    
-    //MARK: SessionModuelDelegate
-    func sessionUpdate(_ session: MTTSessionEntity!, action: SessionAction) {
+    //MARK: HMSessionModuleDelegate
+    func sessionUpdate(session: MTTSessionEntity, action: HMSessionAction) {
         self.refreshData()
     }
 
@@ -180,12 +130,12 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
             if indexPath.row < self.sessions.count {
                 let session:MTTSessionEntity = self.sessions[indexPath.row]
                 
-                SessionModule.instance().removeSession(byServer: session)
+                HMSessionModule.shared.removeSessionFromServer(session: session)
                 
                 self.sessions.remove(at: indexPath.row)
                 tableview .deleteRows(at: [indexPath], with: .right)
                 
-                self.setTabbarBadge(count: Int(SessionModule.instance().getAllUnreadMessageCount()))
+                self.setTabbarBadge(count: Int(HMSessionModule.shared.getAllUnreadMsgCount()))
             }
             
         }
@@ -208,8 +158,8 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         self.title = holderTitle
         
         dispatch_globle(after: 0.0) {
-            SessionModule.instance().getRecentSession({ (count ) in
-                self.refreshData()
+            HMSessionModule.shared.getRecentSessionFromServer(completion: { (count ) in
+                 self.refreshData()
             })
         }
     }
@@ -228,8 +178,8 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func refreshData(){
-        let count:UInt = SessionModule.instance().getAllUnreadMessageCount()
-        self.setTabbarBadge(count: Int(count))
+        let count:Int = HMSessionModule.shared.getAllUnreadMsgCount()
+        self.setTabbarBadge(count: count)
         
         self.sortSessions()
     }
@@ -239,7 +189,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     private let sortDes2 = [NSSortDescriptor.init(key: "isFixedTop", ascending: false )]
     func sortSessions(){
         self.sessions.removeAll()
-        self.sessions = SessionModule.instance().getAllSessions() as? [MTTSessionEntity] ?? []
+        self.sessions = HMSessionModule.shared.getAllSessions()
         
         if self.sessions.count > 0 {
             self.sessions = (self.sessions as NSArray).sortedArray(using: sortDes1) as! [MTTSessionEntity]

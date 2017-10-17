@@ -124,8 +124,8 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
                     progressView.removeFromSuperview()
                     self.avatarImgv.setImage(str: imageurl)
                     HMLoginManager.shared.currentUser.avatar = imageurl
+                    HMLoginManager.shared.currentUser.dbSave(completion: nil )
                 })
-                //            MTTDatabaseUtil.instance().updateContacts([HMLoginManager.shared.currentUser], inDBCompletion: { (error ) in  })
             }) { (error ) in
                 dispatch(after: 0, task: {
                     progressView.removeFromSuperview()

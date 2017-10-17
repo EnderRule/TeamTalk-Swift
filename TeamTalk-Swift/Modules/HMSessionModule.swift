@@ -35,24 +35,11 @@ class HMSessionModule: NSObject {
         super.init()
         
         NotificationCenter.default.addObserver(self , selector: #selector(self.sendMessageSuccess(notification:)), name: HMNotification.sendMessageSucceed.notificationName() , object: nil)
-        NotificationCenter.default.addObserver(self , selector: #selector(self.receiveMessageReadACK(notification:)), name: HMNotification.receiveMessageReadACK.notificationName() , object: nil)
+        
+//        NotificationCenter.default.addObserver(self , selector: #selector(self.receiveMessageReadACK(notification:)), name: HMNotification.receiveMessageReadACK.notificationName() , object: nil)
         NotificationCenter.default.addObserver(self , selector: #selector(self.receiveMessage(notification:)), name: HMNotification.receiveMessage.notificationName() , object: nil)
 
-        let api = MsgReadNotifyAPI.init()
         
-        api.registerAPI { (obj , error ) in
-            let dic = obj as! [String:Any]
-            if dic.count > 0 {
-                let fromID = dic["from_id"] as? UInt32 ?? 0
-                let type = dic["type"] as? Int ?? 1
-                let msgID = dic["msgId"] as? UInt32 ?? 0
-                
-                let sessionType:SessionType_Objc = type == 1 ? .sessionTypeSingle:.sessionTypeGroup
-                let sessionID:String = sessionType == .sessionTypeSingle ? MTTUserEntity.localIDFrom(pbID: fromID) : MTTGroupEntity.localIDFrom(pbID: fromID)
-                
-                self.cleanMsgFromNotific(messageID: msgID, sessionID: sessionID, sessionType: sessionType)
-            }
-        }
         
     }
     
@@ -77,18 +64,24 @@ class HMSessionModule: NSObject {
     
     public func getRecentSessionFromServer(completion:((Int)->Void)?){
         let allsessions = self.getAllSessions()
-        let maxTime = (allsessions as NSArray).value(forKeyPath: "@max.s_timeInterval") as? TimeInterval ?? 0
+        let maxTime = self.getMaxTime(sessions: allsessions)
         
         let api = GetRecentSessionAPI.init(latestUpdateTime: UInt32(maxTime))
         api.request(withParameters: [:]) { (responde , error ) in
             let sessions:[MTTSessionEntity] = responde as? [MTTSessionEntity] ?? []
             for session in sessions{
+                
                 session.dbSave(completion: nil )
-                self.add(sessions: [session])
             }
+            self.add(sessions: sessions)
+            
+            self.getHadUnReadMsg(completion: nil )
+            
             completion?(sessions.count)
         }
     }
+    
+    
     
     public func removeSessionFromServer(session:MTTSessionEntity){
         session.dbDelete(completion: nil )
@@ -115,8 +108,23 @@ class HMSessionModule: NSObject {
     }
     
     public func getAllUnreadMsgCount()->Int{
+        let allsessions = self.getAllSessions()
+        var unreadCount:Int = 0
         
-        return 0
+        for obj in allsessions{
+            var tempUnread = obj.unReadMsgCount
+            DispatchQueue.global().sync {
+                if obj.isGroupSession{
+                    if let group = HMGroupsManager.shared.groupFor(ID: obj.sessionID){
+                        if group.isShield{
+                            tempUnread = 0
+                        }
+                    }
+                }
+            }
+            unreadCount += tempUnread
+        }
+        return unreadCount
     }
     
     public func getFixedTopSessions()->[MTTSessionEntity]{
@@ -130,26 +138,99 @@ class HMSessionModule: NSObject {
         return temp
     }
     
-    @objc private func sendMessageSuccess(notification:NSNotification){
-
-    }
-    
-    @objc private func receiveMessage(notification:NSNotification){
+    private func getMaxTime(sessions:[MTTSessionEntity])->TimeInterval{
+        var maxTime:TimeInterval = 0.0
         
+        for session in sessions{
+            if session.timeInterval > maxTime{
+                maxTime = session.timeInterval
+            }
+        }
+        return maxTime
     }
     
-    @objc private func receiveMessageReadACK(notification:NSNotification){
-        if let message = notification.object as? MTTMessageEntity {
+    @objc private func sendMessageSuccess(notification:NSNotification){
+        if let message = notification.object as? MTTMessageEntity{
+            var sessionType:SessionType_Objc = .sessionTypeSingle
+            if message.isGroupMessage{
+                sessionType = .sessionTypeGroup
+            }
+            
             if let session = self.sessionFor(sessionID: message.sessionId){
-                session.unReadMsgCount -= 1
-                session.dbSave(completion: nil )
+                session.lastMsgID = message.msgID
+                session.lastMsg = message.msgContent
+                session.timeInterval = TimeInterval(message.msgTime)
+                
+                session.dbUpdate(completion: nil)
                 
                 self.delegate?.sessionUpdate(session: session, action: .refresh)
+            }else{
+                let newsession = MTTSessionEntity.init(sessionID: message.sessionId, sessionName: nil , type: sessionType)
+                newsession.lastMsg = message.msgContent
+                newsession.lastMsgID = message.msgID
+                newsession.timeInterval = TimeInterval(message.msgTime)
+                newsession.dbSave(completion: nil )
+                self.add(sessions: [newsession])
+                
+                self.delegate?.sessionUpdate(session: newsession, action: .add)
             }
+            
         }
     }
     
-    private func cleanMsgFromNotific(messageID:UInt32,sessionID:String,sessionType:SessionType_Objc)
+    @objc private func receiveMessage(notification:NSNotification){
+        if let message = notification.object as? MTTMessageEntity{
+            var sessionType:SessionType_Objc = .sessionTypeSingle
+            if message.isGroupMessage{
+                sessionType = .sessionTypeGroup
+            }
+            
+            if let session = self.sessionFor(sessionID: message.sessionId){
+                session.lastMsgID = message.msgID
+                session.lastMsg = message.msgContent
+                session.timeInterval = TimeInterval(message.msgTime)
+                session.lastMessage = message
+                
+                if let chattingVC:HMChattingViewController = UIApplication.shared.keyWindow?.rootViewController?.topVC() as? HMChattingViewController{
+                    if chattingVC.chattingModule.sessionEntity.sessionID != message.sessionId {
+                        session.unReadMsgCount += 1
+                    }
+                }else{
+                    session.unReadMsgCount += 1
+                }
+                
+                session.dbUpdate(completion: nil)
+                
+                self.delegate?.sessionUpdate(session: session, action: .refresh)
+            }else{
+                let newsession = MTTSessionEntity.init(sessionID: message.sessionId, sessionName: nil , type: sessionType)
+                newsession.lastMsg = message.msgContent
+                newsession.lastMsgID = message.msgID
+                newsession.timeInterval = TimeInterval(message.msgTime)
+                newsession.lastMessage = message
+                newsession.unReadMsgCount = 1
+                
+                newsession.dbSave(completion: nil )
+                self.add(sessions: [newsession])
+                
+                self.delegate?.sessionUpdate(session: newsession, action: .add)
+            }
+        
+        }
+    }
+    
+//    @objc private func receiveMessageReadACK(notification:NSNotification){
+//        if let message = notification.object as? MTTMessageEntity {
+//            if let session = self.sessionFor(sessionID: message.sessionId){
+//                session.unReadMsgCount -= 1
+//                session.dbSave(completion: nil )
+//                
+//                self.delegate?.sessionUpdate(session: session, action: .refresh)
+//            }
+//        }
+//    }
+    
+    public func cleanMsgFromNotific(messageID:UInt32,sessionID:String,sessionType:SessionType_Objc)
     {
         if sessionID != HMLoginManager.shared.currentUser.userId {
             if let session = self.sessionFor(sessionID: sessionID){
@@ -185,6 +266,8 @@ class HMSessionModule: NSObject {
                     localsession.unReadMsgCount = session.unReadMsgCount
                     localsession.dbSave(completion: nil )
                     self.delegate?.sessionUpdate(session: localsession, action: .refresh)
+                    
+                    debugPrint("get Had UnRead Msg:\(session.sessionID) \(session.name) \(session.unReadMsgCount)")
                 }
             }
             completion?(totalUnread)

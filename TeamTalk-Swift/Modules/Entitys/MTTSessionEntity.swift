@@ -165,13 +165,7 @@ class MTTSessionEntity: NSObject,HMDBModelDelegate {
         self.lastMsg = ""
         self.lastMsgID = 0
         self.timeInterval = Date().timeIntervalSince1970
-    }
-    public func update(updateTime:TimeInterval){
-        self.timeInterval = updateTime
-        MTTDatabaseUtil.instance().updateRecentSession(self) { (error ) in
-        }
-    }
-    
+    } 
 }
 
 
@@ -197,7 +191,6 @@ extension MTTSessionEntity {
         self.unReadMsgCount = Int(unreadInfo.unreadCnt)
         
         self.lastMsgID = UInt32(unreadInfo.latestMsgId)
-        self.timeInterval = Date().timeIntervalSince1970
         
         if let encryMsg = String.init(data: unreadInfo.latestMsgData, encoding: .utf8){
             self.lastMsg = MTTMessageEntity.pb_decode(content: encryMsg)

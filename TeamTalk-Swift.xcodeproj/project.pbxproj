@@ -107,7 +107,6 @@
 		66686A991F458037008B26BD /* GetMessageQueueAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A981F458037008B26BD /* GetMessageQueueAPI.swift */; };
 		66686A9B1F458525008B26BD /* GetUnreadMessagesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */; };
 		66686A9D1F4591B0008B26BD /* SendMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */; };
-		66686AEA1F45ABC3008B26BD /* SessionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AE91F45ABC3008B26BD /* SessionModule.m */; };
 		66686AED1F45AE71008B26BD /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
 		66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */; };
 		6672CC301F4ECCD000DA46E6 /* HMMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */; };
@@ -219,7 +218,6 @@
 		66F108181F43E7E40035C888 /* MTTSundriesCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108171F43E7E40035C888 /* MTTSundriesCenter.m */; };
 		66F10A6A1F43F2D70035C888 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10A681F43F2D70035C888 /* libsqlite3.0.tbd */; };
 		66F10A6B1F43F2D70035C888 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10A691F43F2D70035C888 /* libsqlite3.tbd */; };
-		66F10A6E1F43F5BC0035C888 /* MTTDatabaseUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10A521F43F11C0035C888 /* MTTDatabaseUtil.m */; };
 		66F10CBA1F44353C0035C888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CB91F44353C0035C888 /* Foundation.framework */; };
 		66F10CBC1F4435430035C888 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CBB1F4435430035C888 /* UIKit.framework */; };
 		66F10CBE1F44354C0035C888 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CBD1F44354C0035C888 /* AudioToolbox.framework */; };
@@ -422,8 +420,6 @@
 		66686A981F458037008B26BD /* GetMessageQueueAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMessageQueueAPI.swift; sourceTree = "<group>"; };
 		66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUnreadMessagesAPI.swift; sourceTree = "<group>"; };
 		66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMessageAPI.swift; sourceTree = "<group>"; };
-		66686AE81F45ABC3008B26BD /* SessionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionModule.h; sourceTree = "<group>"; };
-		66686AE91F45ABC3008B26BD /* SessionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionModule.m; sourceTree = "<group>"; };
 		66686AEB1F45AE71008B26BD /* NSDate+DDAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DDAddition.h"; sourceTree = "<group>"; };
 		66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DDAddition.m"; sourceTree = "<group>"; };
 		66686AEF1F4678CC008B26BD /* DDSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSearch.h; sourceTree = "<group>"; };
@@ -583,8 +579,6 @@
 		66F108041F43DE4B0035C888 /* MTTConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTConstant.h; sourceTree = "<group>"; };
 		66F108161F43E7E40035C888 /* MTTSundriesCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTSundriesCenter.h; sourceTree = "<group>"; };
 		66F108171F43E7E40035C888 /* MTTSundriesCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTSundriesCenter.m; sourceTree = "<group>"; };
-		66F10A511F43F11C0035C888 /* MTTDatabaseUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTDatabaseUtil.h; sourceTree = "<group>"; };
-		66F10A521F43F11C0035C888 /* MTTDatabaseUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTDatabaseUtil.m; sourceTree = "<group>"; };
 		66F10A681F43F2D70035C888 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		66F10A691F43F2D70035C888 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		66F10A731F43F8DA0035C888 /* SpellLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellLibrary.h; sourceTree = "<group>"; };
@@ -1157,8 +1151,6 @@
 			children = (
 				66686A601F4522B5008B26BD /* MTTBubbleModule.h */,
 				66686A611F4522B5008B26BD /* MTTBubbleModule.m */,
-				66686AE81F45ABC3008B26BD /* SessionModule.h */,
-				66686AE91F45ABC3008B26BD /* SessionModule.m */,
 				6682061A1F62404D0088BE65 /* HMChattingModule.swift */,
 				66FE74651F94C82500EBBB37 /* HMSessionModule.swift */,
 				66686AEE1F4678AD008B26BD /* Search */,
@@ -1234,8 +1226,6 @@
 			children = (
 				66F108161F43E7E40035C888 /* MTTSundriesCenter.h */,
 				66F108171F43E7E40035C888 /* MTTSundriesCenter.m */,
-				66F10A511F43F11C0035C888 /* MTTDatabaseUtil.h */,
-				66F10A521F43F11C0035C888 /* MTTDatabaseUtil.m */,
 				665615DE1F8CB06200689422 /* TouchDownGestureRecognizer.h */,
 				665615DF1F8CB06200689422 /* TouchDownGestureRecognizer.m */,
 			);
@@ -1508,7 +1498,6 @@
 				665615C11F8CB02B00689422 /* ltp.c in Sources */,
 				668BA1DB1F5F94B6001B786C /* SendPhotoMessageAPI.swift in Sources */,
 				665615C61F8CB02B00689422 /* preprocess.c in Sources */,
-				66F10A6E1F43F5BC0035C888 /* MTTDatabaseUtil.m in Sources */,
 				66686A881F457123008B26BD /* ChangeNightModeAPI.swift in Sources */,
 				665615C71F8CB02B00689422 /* quant_lsp.c in Sources */,
 				66F107ED1F42F0750035C888 /* MTTBaseEntity.swift in Sources */,
@@ -1621,7 +1610,6 @@
 				665615C81F8CB02B00689422 /* resample.c in Sources */,
 				66686A781F4540E5008B26BD /* GetRecentSessionAPI.swift in Sources */,
 				66E6D3511F428922008E9590 /* UIViewController+Extention.swift in Sources */,
-				66686AEA1F45ABC3008B26BD /* SessionModule.m in Sources */,
 				665615B11F8CB02B00689422 /* exc_5_64_table.c in Sources */,
 				66E6D3981F428A33008E9590 /* Im.Login.Imlogin.proto.swift in Sources */,
 				66F1071E1F42C3F50035C888 /* ReceiveMessageACKAPI.swift in Sources */,

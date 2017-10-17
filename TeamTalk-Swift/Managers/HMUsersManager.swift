@@ -100,15 +100,9 @@ class HMUsersManager: NSObject {
             }
         }
         while !dbfinish {
-            //            debugPrint("lock wait() ")
             lock.wait()
         }
-        
         lock.unlock()
-        //        debugPrint("lock final unlock  ")
-        
-        debugPrint("1 after load all loginuser is \(HMCurrentUser().isValided)")
-
         
         let api2 = AllUserAPI.init(lastUpdateTime: localUpdateTime)
         api2.request(withParameters: [:]) { (response , error ) in
@@ -120,9 +114,6 @@ class HMUsersManager: NSObject {
                 for obj in  users.enumerated(){
                     self.add(user: obj.element)
                 }
-                
-                debugPrint("2 after load all loginuser is \(HMCurrentUser().isValided)")
-
                 completion?()
             }
         }

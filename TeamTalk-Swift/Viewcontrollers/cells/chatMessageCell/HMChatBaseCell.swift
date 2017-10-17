@@ -43,8 +43,10 @@ class HMChatBaseCell: HMBaseCell {
     var bubbleImgv:UIImageView = UIImageView.init()
     var resendButton:UIButton = UIButton.init(type: .system)
     var activityView:UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
+    var msgStateLb:UILabel = UILabel.init()
+    
     var bubbleLocation:HMBubbleLocation = .none
-    var session:MTTSessionEntity? // = MTTSessionEntity.init()
+    var session:MTTSessionEntity?
     var message:MTTMessageEntity?
     var delegate:HMChatCellActionDelegate?
     
@@ -82,11 +84,19 @@ class HMChatBaseCell: HMBaseCell {
         self.resendButton.addTarget(self , action: #selector(self.sendAgainAction), for: .touchUpInside)
         self.resendButton.sizeToFit()
         
+        msgStateLb.font = fontDetail
+        msgStateLb.textColor = UIColor.white
+        msgStateLb.layer.cornerRadius = 4.0
+        msgStateLb.backgroundColor = UIColor.gray.withAlphaComponent(0.6)
+        msgStateLb.isHidden = true
+        msgStateLb.frame.size = CGSize.init(width: 30, height: 18)
+        
         self.contentView.addSubview(avatarImgv)
         self.contentView.addSubview(nameLabel)
         self.contentView.addSubview(bubbleImgv)
         self.contentView.addSubview(activityView)
         self.contentView.addSubview(resendButton)
+        self.contentView.addSubview(msgStateLb)
         
         nameLabel.mas_makeConstraints { (maker ) in
             maker?.size.mas_equalTo()(CGSize.init(width: 200, height: 16))
@@ -178,7 +188,11 @@ class HMChatBaseCell: HMBaseCell {
                 maker?.right.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(-10)
                 maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)
             })
-            
+            self.msgStateLb.mas_remakeConstraints({ (maker ) in
+                maker?.right.mas_equalTo()(self.bubbleImgv.mas_left)?.offset()(-10)
+                maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)
+            })
+            self.msgStateLb.textAlignment = .right
         }else{
             self.activityView.mas_remakeConstraints({ (maker ) in
                 maker?.left.mas_equalTo()(self.bubbleImgv.mas_right)?.offset()(10)
@@ -188,6 +202,11 @@ class HMChatBaseCell: HMBaseCell {
                 maker?.left.mas_equalTo()(self.bubbleImgv.mas_right)?.offset()(10)
                 maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)
             })
+            self.msgStateLb.mas_remakeConstraints({ (maker ) in
+                maker?.left.mas_equalTo()(self.bubbleImgv.mas_right)?.offset()(10)
+                maker?.bottom.mas_equalTo()(self.bubbleImgv.mas_bottom)
+            })
+            self.msgStateLb.textAlignment = .left
         }
         
         self.updateSendState(state:message.state)
@@ -266,19 +285,30 @@ class HMChatBaseCell: HMBaseCell {
     
     //发送状态
     func updateSendState(state:DDMessageState){
+        self.resendButton.isHidden = true
+        self.activityView.stopAnimating()
+        self.msgStateLb.isHidden = true
+
         switch state {
         case .SendFailure:
-            self.activityView.stopAnimating()
             self.resendButton.isHidden = false
             break
         case .SendSuccess:
-            self.activityView.stopAnimating()
-            self.resendButton.isHidden = true
             break
         case .Sending:
             self.activityView.startAnimating()
-            self.resendButton.isHidden = true
             break
+        case .UnRead:
+            if self.bubbleLocation == .right{
+                self.msgStateLb.isHidden = false
+                self.msgStateLb.text = "未读"
+            }
+            break
+        case .Readed:
+            if self.bubbleLocation == .right{
+                self.msgStateLb.isHidden = false
+                self.msgStateLb.text = "已读"
+            }
         }
     }
  

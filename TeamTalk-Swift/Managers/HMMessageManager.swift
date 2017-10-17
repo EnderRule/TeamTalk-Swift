@@ -40,6 +40,8 @@ class HMMessageManager: NSObject {
         self.setupTimer()
         
         self.p_registerReceiveMessageAPI()
+        
+        self.p_registerReceiveReadACKAPI()
     }
     
     private func setupTimer(){
@@ -62,8 +64,6 @@ class HMMessageManager: NSObject {
     private var unAckQueueMessages:[HMMessageAndTime] = []
     private var unAckTimer:Timer?
     private let MessageTimeOutSecond:TimeInterval = 20.0
-    
-    
     
     public func sendNormal(message:MTTMessageEntity,session:MTTSessionEntity,completion:@escaping HMSendMessageCompletion){
         guard message.msgID > 0  else {
@@ -203,6 +203,7 @@ class HMMessageManager: NSObject {
     
     //MARK: 收消息相关
     private var receiveMsgApi:ReceiveMessageAPI = ReceiveMessageAPI.init()
+    private var receiveReadedMsgApi:MsgReadNotifyAPI = MsgReadNotifyAPI.init()
     private var unreadMessages:[MTTMessageEntity] = []
     
     var unreadMsgCount:Int{
@@ -220,10 +221,11 @@ class HMMessageManager: NSObject {
         
         let api:GetMessageQueueAPI = GetMessageQueueAPI.init(sessionID: sessionID, sessionType:forSession.sessionType, msgIDBegin: beginMsgID, count: count)
         api.request(withParameters: [:]) { (messages , error ) in
-            completion(messages as! [MTTMessageEntity],error)
+            completion(messages as? [MTTMessageEntity] ?? [],error)
         }
     }
     
+    /// 收到消息
     private func p_registerReceiveMessageAPI(){
         receiveMsgApi.registerAPI { (obj , error ) in
             if let message = obj as? MTTMessageEntity {
@@ -245,8 +247,32 @@ class HMMessageManager: NSObject {
         }
     }
     
-    
-    
+    ///  收到已读回执
+    private func p_registerReceiveReadACKAPI(){
+        receiveReadedMsgApi.registerAPI { (obj , error ) in
+            let dic = obj as! [String:Any]
+            if dic.count > 0 {
+                let fromID = dic["from_id"] as? UInt32 ?? 0
+                let type = dic["type"] as? Int ?? 1
+                let msgID = dic["msgId"] as? UInt32 ?? 0
+                let sessionType:SessionType_Objc = type == 1 ? .sessionTypeSingle:.sessionTypeGroup
+                let sessionID:String = sessionType == .sessionTypeSingle ? MTTUserEntity.localIDFrom(pbID: fromID) : MTTGroupEntity.localIDFrom(pbID: fromID)
+                
+                debugPrint("收到已读回执：\(msgID) \(sessionID)")
+                
+                MTTMessageEntity.dbQuery(whereStr: "msgID = \(msgID)", orderFields: nil, offset: 0, limit: 1, args: [], completion: { (messages , error ) in
+                    if let message = messages.first as? MTTMessageEntity{
+                        message.state = .Readed
+                        message.dbSave(completion: { (success )in
+                            debugPrint("db 更新已读回执：\(success) \(msgID) \(sessionID) \(message.msgContent)")
+                        })
+                    }
+                })
+
+                HMSessionModule.shared.cleanMsgFromNotific(messageID: msgID, sessionID: sessionID, sessionType: sessionType)
+            }
+        }
+    }
     
     //MARK: 消息回执相关
     /// 发送收到消息的回执

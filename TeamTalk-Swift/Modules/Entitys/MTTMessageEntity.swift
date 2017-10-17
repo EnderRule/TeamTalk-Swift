@@ -21,6 +21,8 @@ import UIKit
     case Sending = 0
     case SendFailure = 1
     case SendSuccess = 2
+    case UnRead = 3
+    case Readed = 4
 }
 
 @objc public enum MsgType_Objc:Int32 {
@@ -192,24 +194,7 @@ class MTTMessageEntity: MTTBaseEntity,HMDBModelDelegate {
 //        self.state = .SendSuccess
 //
 //    }
-//    
-//    override func awakeFromFetch() {
-//        super.awakeFromFetch()
-//        
-//        self.msgID = 0
-//        self.msgTime = 0
-//        self.sessionId = ""
-//        self.seqNo = 0
-//        self.senderId = ""
-//        self.msgContent = ""
-//        self.toUserID = ""
-//        self.attach  = ""
-//        self.extraInfo = [:]
-//        self.msgContentType = .Text
-//        self.sessionType = .sessionTypeSingle
-//        self.msgType = .msgTypeSingleText
-//        self.state = .SendSuccess
-//    }
+    
 }
 
 extension MTTMessageEntity {

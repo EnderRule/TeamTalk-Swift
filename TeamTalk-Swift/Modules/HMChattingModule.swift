@@ -187,7 +187,9 @@ class HMChattingModule: NSObject {
     }
     
     func updateSession(updateTime:TimeInterval ){
-        self.sessionEntity.update(updateTime: updateTime)
+        sessionEntity.timeInterval = updateTime
+        sessionEntity.dbSave(completion: nil)
+        
         lastestMsgDate = UInt32(updateTime)
     }
     
