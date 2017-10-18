@@ -41,8 +41,6 @@
     path = path ? path : [NSBundle pathForResource:doubleImage ofType:fileExt inDirectory:bundlePath]; //取二倍圖
     path = path ? path : [NSBundle pathForResource:imageName ofType:fileExt inDirectory:bundlePath]; //實在沒了就去取一倍圖
     
-    DDLog(@"nim_fetchChartlet  emoji %@/%@ path:%@",chartletId,imageName,path);
-    
     if ([fileExt isEqualToString:@"gif"]){
         NSData *data = [NSData dataWithContentsOfFile:path];
         return [UIImage sd_animatedGIFWithData:data];

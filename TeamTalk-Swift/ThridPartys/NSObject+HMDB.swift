@@ -1,5 +1,6 @@
 //
 //  NSObject+HMDB.swift
+//  HMCDManager
 //
 //  Created by HuangZhongQing on 2017/10/12.
 //  Copyright © 2017年 HuangZhongQing. All rights reserved.
@@ -7,16 +8,18 @@
 
 import UIKit
 
-@objc protocol HMDBModelDelegate:NSObjectProtocol {
+@objc public  protocol HMDBModelDelegate:NSObjectProtocol {
     func dbFields()->[String]
-    func dbPrimaryKey()->String?
+    func dbPrimaryKeys()->[String]  //返回多个时代表使用联合主键
+    
     
 //    @objc optional func valueHaveChangedForKeys()->[String]
 //    @objc optional func changedValueHaveSaved()
 }
 
 
-extension NSObject {
+
+public extension NSObject {
     
     static private var kdefaultPK =  "HMDBdefaultPK"
     static private var kisExistInDB =  "HMDBisExistInDB"
@@ -47,7 +50,7 @@ extension NSObject {
     public convenience init(primaryValue:Any,createIfNoneExist:Bool){
         self.init()
         let tableName:String = "\(self.classForCoder)"
-        let primaryKey:String = HMDBManager.shared.tablePrimaryKeyName[tableName] ?? "defaultPK"
+        let primaryKey:String =  "defaultPK"
         let pkvalue = NSObject.serialized(value: primaryValue)
 
         let sql = "select * from \"\(tableName)\" where \"\(primaryKey)\" = ?"
@@ -115,8 +118,8 @@ extension NSObject {
     private func dbSave(insert:Bool? ,completion:((Bool)->Void)?){
         
         let tableName:String = "\(self.classForCoder)"
-        let primaryKey = (self as! HMDBModelDelegate).dbPrimaryKey() ?? "defaultPK"
- 
+        let primaryKeys = (self as! HMDBModelDelegate).dbPrimaryKeys()
+        
         var dbvalues:[Any] = []
         
         var fields:[String] = ((HMDBManager.shared.tableFieldInfos[tableName] ?? [:]) as NSDictionary).allKeys as? [String] ?? []
@@ -124,8 +127,10 @@ extension NSObject {
             let dbvalue = self.encodeValueFor(key: field) // NSObject.serialized(value: self.value(forKey: field) ?? "")
             dbvalues.append(dbvalue)
         }
-        if !fields.contains(primaryKey){
-            fields.append(primaryKey)
+        
+        
+        if primaryKeys.count <= 0{
+            fields.append("defaultPK")
             
             if insert ?? false {
                 if self.isExistInDB{
@@ -157,26 +162,51 @@ extension NSObject {
         valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.characters.count - 1)
         let sql:String = "\(action) into \"\(tableName)\" (\"\(columns)\") values (\(valuesHolders))"
         
+//        disableHMDBLog ? () : debugPrint("HMDB save sql:\(sql) values:\(dbvalues)")
         
         let result = HMDBManager.shared.dataBase.executeUpdate(sql , withArgumentsIn: dbvalues)
         if result{
             self.isExistInDB = true
-        }else{
-            disableHMDBLog ? () : debugPrint("HMDB save error with sql:\(sql) values:\(dbvalues) ")
         }
-
         completion?(result)
         
     }
     
+    
+    
     @objc func dbDelete(completion:((Bool)->Void)?){
         let tableName:String = "\(self.classForCoder)"
-        let primaryKey = (self as! HMDBModelDelegate).dbPrimaryKey() ?? "defaultPK"
-        let primaryValue = primaryKey == "defaultPK" ? self.defaultPK : self.encodeValueFor(key: primaryKey)
-        let sql = "delete from \(tableName) where \(primaryKey) = \(primaryValue) "
-       
-        disableHMDBLog ? () : debugPrint("HMDB  delete sql:\(sql) ")
-        completion?( HMDBManager.shared.dataBase.executeStatements(sql))
+        
+        var primaryKeys = (self as! HMDBModelDelegate).dbPrimaryKeys()
+        for obj in primaryKeys{
+            if obj.characters.count <= 0 {
+                primaryKeys.remove(at: primaryKeys.index(of: obj)!)
+            }
+        }
+        if primaryKeys.count <= 0{
+            primaryKeys = ["defaultPK"]
+        }
+        
+        var sql:String = ""
+        var primaryValues:[Any] = []
+
+        if primaryKeys.count == 1 {
+            let primaryKey = primaryKeys.first!
+            let primaryValue = primaryKey == "defaultPK" ? self.defaultPK : self.encodeValueFor(key: primaryKey)
+            primaryValues.append(primaryValue)
+            sql = "delete from \(tableName) where \(primaryKey) = ? "
+        }else{
+            for pkobj in primaryKeys{
+                primaryValues.append(self.encodeValueFor(key: pkobj))
+            }
+            var valuesHolders = ("" as NSString).padding(toLength: primaryValues.count * 2, withPad: "?,", startingAt: 0)
+            valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.characters.count - 1)
+            
+            sql = "delete from \(tableName) where (\((primaryKeys as NSArray).componentsJoined(by: ","))) = (\(valuesHolders)) "
+        }
+        disableHMDBLog ? () : debugPrint("HMDB  delete sql:\(sql) values:\(primaryValues)")
+        let result =  HMDBManager.shared.dataBase.executeUpdate(sql , withArgumentsIn: primaryValues)
+        completion?(result)
     }
     
     /// query
@@ -197,12 +227,10 @@ extension NSObject {
         if orderFields?.characters.count ?? 0 > 0{
             sql.append(" order by \(orderFields!) ")
         }
-        
         if offset > 0 || limit > 0 {
             sql.append(" limit \(offset),\(limit) ")
         }
-        
-        disableHMDBLog ? () : debugPrint("db query sql:\(sql) values:\(args)")
+        disableHMDBLog ? () : debugPrint("db query sql:\(sql)")
         
         let rs =  HMDBManager.shared.dataBase.executeQuery(sql , withArgumentsIn: args)
         if rs != nil  {

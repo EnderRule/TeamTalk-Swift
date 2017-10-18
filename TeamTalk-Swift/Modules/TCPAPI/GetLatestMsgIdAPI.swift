@@ -43,7 +43,7 @@ class GetLatestMsgIdAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let res = try? Im.Message.ImgetLatestMsgIdRsp.parseFrom(data: data ?? Data()) {
                 return res.latestMsgId
             }else {
-                debugPrint("GetLatestMsgIdAPI analysisReturnData failure")
+                HMPrint("GetLatestMsgIdAPI analysisReturnData failure")
                 return 0
             }
         }
@@ -66,7 +66,7 @@ class GetLatestMsgIdAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("GetLatestMsgIdAPI package builded data failure")
+                HMPrint("GetLatestMsgIdAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

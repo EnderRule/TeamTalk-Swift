@@ -10,7 +10,6 @@ import UIKit
 
 class HMChatEmotionCell: HMChatImageCell {
     
-    
     override func setContent(message: MTTMessageEntity) {
         super.setContent(message: message)
         
@@ -19,7 +18,7 @@ class HMChatEmotionCell: HMChatImageCell {
             let image = UIImage.nim_loadChartlet(catagoryID, name: emojiID)
             self.mainImgv.image = image
             
-//            debugPrint("set emotion :",message.msgContent ,catagoryID,emojiID,image ?? "nil emoji image")
+//            HMPrint("set emotion :",message.msgContent ,catagoryID,emojiID,image ?? "nil emoji image")
         }
     }
     

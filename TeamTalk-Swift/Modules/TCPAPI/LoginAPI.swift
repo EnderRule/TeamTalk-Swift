@@ -85,7 +85,7 @@ class LoginAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("LoginAPI package builded data failure")
+                HMPrint("LoginAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

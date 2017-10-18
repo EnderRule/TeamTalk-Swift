@@ -13,9 +13,9 @@ let HM_Message_Page_Item_Count:Int = 20
 
 let showPromtGap:UInt32 = 300   //间隔多久需要显示时间提示标签
 
-typealias HMLoadMoreHistoryMessageCompletion = ((Int,NSError?)->Void)  // callback : addcount and error
+public typealias HMLoadMoreHistoryMessageCompletion = ((Int,NSError?)->Void)  // callback : addcount and error
 
-class HMChattingModule: NSObject {
+public class HMChattingModule: NSObject {
 
     var sessionEntity:MTTSessionEntity!{
         didSet{
@@ -26,18 +26,23 @@ class HMChattingModule: NSObject {
         }
     }
     
+    public var currentSession:MTTSessionEntity?{
+        get{
+            return sessionEntity
+        }
+    }
+    
     var msgIDs:[UInt32] = []
     
-    var showingMessages:[Any] = []
+    public var showingMessages:[Any] = []
     
-    var showingMessageChangedHandledBlock:(()->Void)?
+    public var showingMessageChangedHandledBlock:(()->Void)?
     
     private var lastestMsgDate:UInt32 = 0
     private var earliestMsgDate:UInt32 = 0
     
     public convenience init(session:MTTSessionEntity) {
         self.init()
-        
         self.sessionEntity = session
     }
 
@@ -48,7 +53,7 @@ class HMChattingModule: NSObject {
         self.sessionEntity = nil
     }
     
-    func loadMoreHistory(completion:@escaping HMLoadMoreHistoryMessageCompletion){
+    public func loadMoreHistory(completion:@escaping HMLoadMoreHistoryMessageCompletion){
         let offset = self.p_getMessageCount()
         let pageCount = HM_Message_Page_Item_Count
         
@@ -73,7 +78,7 @@ class HMChattingModule: NSObject {
                     }
                 }
                 
-                disableHMLog ? () : debugPrint("session \(self.sessionEntity.sessionID) load history: limit:\(offset)/\(pageCount) resultCount:\(tempMessages.count)")
+                disableHMLog ? () : HMPrint("session \(self.sessionEntity.sessionID) load history: limit:\(offset)/\(pageCount) resultCount:\(tempMessages.count)")
                 
                 if HMLoginManager.shared.networkState == .disconnect{
                     self.p_addHistory(messages: tempMessages, completion: completion)
@@ -108,7 +113,7 @@ class HMChattingModule: NSObject {
         }
     }
     
-    func loadAllHistoryBegin(message:MTTMessageEntity,completion:@escaping HMLoadMoreHistoryMessageCompletion){
+    public func loadAllHistoryBegin(message:MTTMessageEntity,completion:@escaping HMLoadMoreHistoryMessageCompletion){
         
         let count:Int = self.p_getMessageCount()
         MTTMessageEntity.dbQuery(whereStr: "sessionId == \(self.sessionEntity.sessionID) AND messageID >= \(message.msgID)", orderFields: "msgTime desc", offset: count, limit: 0, args: []) { (messages , error ) in
@@ -149,14 +154,14 @@ class HMChattingModule: NSObject {
         
     }
     
-    func addShow(prompt:String){
+    public func addShow(prompt:String){
         let prompt = HMPromptEntity.init(message: prompt)
         self.showingMessages.append(prompt)
         
         self.showingMessageChangedHandledBlock?()
      }
     
-    func addShow(message:MTTMessageEntity){
+    public func addShow(message:MTTMessageEntity){
         if !self.msgIDs.contains(message.msgID){
             if message.msgTime - lastestMsgDate > showPromtGap {
                 lastestMsgDate = message.msgTime
@@ -169,7 +174,7 @@ class HMChattingModule: NSObject {
         }
     }
     
-    func deleteShow(message:MTTMessageEntity){
+    public func deleteShow(message:MTTMessageEntity){
         if self.msgIDs.contains(message.msgID){
             self.msgIDs.remove(at: self.msgIDs.index(of: message.msgID)!)
             
@@ -186,7 +191,7 @@ class HMChattingModule: NSObject {
         }
     }
     
-    func updateSession(updateTime:TimeInterval ){
+    public func updateSession(updateTime:TimeInterval ){
         sessionEntity.timeInterval = updateTime
         sessionEntity.dbSave(completion: nil)
         
@@ -218,7 +223,7 @@ class HMChattingModule: NSObject {
         for obj in messages.reversed().enumerated(){
             if let message = obj.element as? MTTMessageEntity {
                 if self.msgIDs.contains(message.msgID){
-                    disableHMLog ? () : debugPrint("p_add history check msgID exist:\(message.msgID) \(message.msgContent)")
+                    disableHMLog ? () : HMPrint("p_add history check msgID exist:\(message.msgID) \(message.msgContent)")
                 }else{
                     if message.msgTime - tempLastestDate > showPromtGap {
                         let promt = HMPromptEntity.init()
@@ -232,14 +237,14 @@ class HMChattingModule: NSObject {
                     
                     self.msgIDs.append(message.msgID)
                     tempMessages.append(message)
-//                    disableHMLog ? () : debugPrint("p_add history add msg ID:\(message.msgID) \(message.msgContent)")
+//                    disableHMLog ? () : HMPrint("p_add history add msg ID:\(message.msgID) \(message.msgContent)")
 
                 }
             }
         }
         
         
-        disableHMLog ? () : debugPrint("p_add history rawCount:\(messages.count) checkCount:\(tempMessages.count)")
+        disableHMLog ? () : HMPrint("p_add history rawCount:\(messages.count) checkCount:\(tempMessages.count)")
         
         if self.showingMessages.count == 0 {
             self.showingMessages.append(contentsOf: tempMessages)
@@ -356,9 +361,9 @@ class HMChattingModule: NSObject {
 }
 
 
-class HMPromptEntity: NSObject {
-    var message:String = ""
-    var promptTime:TimeInterval = 0
+public class HMPromptEntity: NSObject {
+    public var message:String = ""
+    public var promptTime:TimeInterval = 0
     
     public convenience  init(time:TimeInterval) {
         self.init()

@@ -25,7 +25,8 @@ class SignNotifyAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
                 dic.updateValue(res.signInfo, forKey: "sign")
                 return dic
             }else {
-                debugPrint("SignNotifyAPI analysisReturnData failure")
+            
+                HMPrint("SignNotifyAPI analysisReturnData failure")
                 return  [:]
             }
         }

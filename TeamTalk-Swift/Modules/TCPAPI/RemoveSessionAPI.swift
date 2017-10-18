@@ -66,7 +66,7 @@ class RemoveSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("RemoveSessionAPI package builded data failure")
+                HMPrint("RemoveSessionAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

@@ -34,7 +34,7 @@ class EditUserInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let res = try? Im.Buddy.ImchangeSignInfoRsp.parseFrom(data: data ?? Data()) {
                 return res.resultCode
             }else {
-                debugPrint("EditUserInfoAPI analysisReturnData failure")
+                HMPrint("EditUserInfoAPI analysisReturnData failure")
                 return 0
             }
         }
@@ -74,7 +74,7 @@ class EditUserInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("EditUserInfoAPI package builded data failure")
+                HMPrint("EditUserInfoAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

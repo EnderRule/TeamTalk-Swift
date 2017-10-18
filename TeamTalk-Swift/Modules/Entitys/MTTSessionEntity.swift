@@ -57,24 +57,24 @@ import UIKit
 //lastMsgId integer
 
 
-class MTTSessionEntity: NSObject,HMDBModelDelegate {
+public class MTTSessionEntity: NSObject,HMDBModelDelegate {
     
-    func dbFields() -> [String] {
+    public func dbFields() -> [String] {
         return ["sessionID","avatar","s_name","lastMsg","lastMsgID","sessionTypeInt","timeInterval","unReadMsgCount","isShield","isFixedTop"]
     }
     
-    func dbPrimaryKey() -> String? {
-        return "sessionID"
+    public func dbPrimaryKeys() -> [String] {
+        return ["sessionID"]
     }
     
-    var sessionID:String = ""
-    var sessionIntID:UInt32{
+    public var sessionID:String = ""
+    public var sessionIntID:UInt32{
         return MTTBaseEntity.pbIDFrom(localID: self.sessionID)
     }
     
     
     var sessionTypeInt:Int32 = 0
-    var sessionType:SessionType_Objc{
+    public var sessionType:SessionType_Objc{
         get{
             return SessionType_Objc.init(rawValue: sessionTypeInt) ?? SessionType_Objc.sessionTypeSingle
         }
@@ -84,7 +84,7 @@ class MTTSessionEntity: NSObject,HMDBModelDelegate {
     }
     
     private var s_name:String = ""
-    var name:String {
+    public var name:String {
         get{
             if s_name.length <= 0 {
                 if self.sessionType == .sessionTypeSingle {
@@ -108,9 +108,9 @@ class MTTSessionEntity: NSObject,HMDBModelDelegate {
             s_name = newValue
         }
     }
-    var unReadMsgCount:Int = 0
+    public var unReadMsgCount:Int = 0
     private var  s_timeInterval:TimeInterval = 0
-    var timeInterval:TimeInterval {
+    public var timeInterval:TimeInterval {
         get{
             if s_timeInterval == 0 {
                 if self.sessionType == .sessionTypeSingle, let user:MTTUserEntity = HMUsersManager.shared.userFor(ID: self.sessionID){
@@ -127,16 +127,16 @@ class MTTSessionEntity: NSObject,HMDBModelDelegate {
         }
     }
     
-    var isShield:Bool = false
-    var isFixedTop:Bool = false
+    public var isShield:Bool = false
+    public var isFixedTop:Bool = false
     
-    var lastMsg:String = ""
-    var lastMsgID:UInt32 = 0
-    var avatar:String = ""
+    public var lastMsg:String = ""
+    public var lastMsgID:UInt32 = 0
+    public var avatar:String = ""
     
-    var lastMessage:MTTMessageEntity?
+    public var lastMessage:MTTMessageEntity?
     
-    var sessionUsers:[String] {
+    public var sessionUsers:[String] {
         get{
             if self.sessionType == .sessionTypeGroup{
                 if let group = HMGroupsManager.shared.groupFor(ID: self.sessionID){
@@ -149,7 +149,7 @@ class MTTSessionEntity: NSObject,HMDBModelDelegate {
         }
     }
     
-    var isGroupSession:Bool {
+    public var isGroupSession:Bool {
         get{
             return self.sessionType == .sessionTypeGroup
         }
@@ -169,7 +169,7 @@ class MTTSessionEntity: NSObject,HMDBModelDelegate {
 }
 
 
-extension MTTSessionEntity {
+public extension MTTSessionEntity {
     public convenience init(user:MTTUserEntity){
         self.init(sessionID: user.objID, sessionName: user.name, type: .sessionTypeSingle)
     }
@@ -216,14 +216,14 @@ extension MTTSessionEntity {
     }
     
     
-    class func sessionIDFrom(pbID:UInt32,sessionType:SessionType_Objc) -> String{
+    public class func sessionIDFrom(pbID:UInt32,sessionType:SessionType_Objc) -> String{
         if sessionType == .sessionTypeSingle{
             return MTTUserEntity.localIDFrom(pbID: pbID)
         }else{
             return MTTGroupEntity.localIDFrom(pbID: pbID)
         }
     } 
-    class func sessionIDFrom(pbID:UInt32,BaseSessionType:Im.BaseDefine.SessionType) -> String{
+    public class func sessionIDFrom(pbID:UInt32,BaseSessionType:Im.BaseDefine.SessionType) -> String{
         if BaseSessionType == .sessionTypeSingle{
             return MTTUserEntity.localIDFrom(pbID: pbID)
         }else{

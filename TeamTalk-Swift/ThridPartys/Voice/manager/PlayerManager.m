@@ -91,7 +91,7 @@ static PlayerManager *mPlayerManager = nil;
     }
     else if ([filename rangeOfString:@".mp3"].location != NSNotFound) {
         if ( ! [[NSFileManager defaultManager] fileExistsAtPath:filename]) {
-            DDLog(@"要播放的文件不存在:%@", filename);
+            NSLog(@"1 Voice PlayerManager 要播放的文件不存在:%@", filename);
             _playingFileName = nil;
             [self.delegate playingStoped];
             [newDelegate playingStoped];
@@ -133,7 +133,7 @@ static PlayerManager *mPlayerManager = nil;
     }
     else if ([filename rangeOfString:@".mp3"].location != NSNotFound) {
         if ( ! [[NSFileManager defaultManager] fileExistsAtPath:filename]) {
-            DDLog(@"要播放的文件不存在:%@", filename);
+            NSLog(@"2 Voice PlayerManager 要播放的文件不存在:%@", filename);
             _playingFileName = nil;
             [self.delegate playingStoped];
             [newDelegate playingStoped];
@@ -171,7 +171,7 @@ static PlayerManager *mPlayerManager = nil;
         NSBundle *bundle=[NSBundle bundleWithPath:bundlePath];
         NSString *soundPath=[bundle pathForResource:array[0] ofType:@"caf"inDirectory:nil];
         if (soundPath ==nil) {
-            DDLog(@"要播放的文件不存在:%@", filename);
+            NSLog(@"3 Voice PlayerManager 要播放的文件不存在:%@", filename);
             [self.delegate playingStoped];
             [newDelegate playingStoped];
             return;

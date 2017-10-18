@@ -67,7 +67,7 @@ class CreateGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 }
                 
             }else {
-                debugPrint("CreateGroupAPI analysisReturnData failure")
+                HMPrint("CreateGroupAPI analysisReturnData failure")
                 return nil
             }
         }
@@ -91,7 +91,7 @@ class CreateGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("CreateGroupAPI package builded data failure")
+                HMPrint("CreateGroupAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

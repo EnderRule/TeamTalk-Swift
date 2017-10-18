@@ -8,16 +8,16 @@
 
 //import UIKit
 
-class HMGroupsManager: NSObject {
-    static let shared:HMGroupsManager = HMGroupsManager()
+public class HMGroupsManager: NSObject {
+    public static let shared:HMGroupsManager = HMGroupsManager()
     
     var allGroups:[String: MTTGroupEntity] = [:]
     
     
-    func loadAllGroup(completion:(()->Void)?){
+    public func loadAllLocalGroup(completion:(()->Void)?){
     
         MTTGroupEntity.dbQuery(whereStr: nil , orderFields: "objID asc", offset: 0, limit: 0, args: []) { (groups , error ) in
-//            debugPrint("db load all groups count \(groups.count)")
+//            HMPrint("db load all groups count \(groups.count)")
             
             if groups.count > 0 {
                 for obj in  groups.enumerated(){
@@ -30,14 +30,14 @@ class HMGroupsManager: NSObject {
         }
     }
 
-    func cleanData(){
+    public func cleanData(){
         allGroups.removeAll()
     }
-    func add(group:MTTGroupEntity){
+    public func add(group:MTTGroupEntity){
         allGroups.updateValue(group, forKey: group.objID)
     }
     
-    func groupFor(ID:String)->MTTGroupEntity?{
+    public func groupFor(ID:String)->MTTGroupEntity?{
         if let group = allGroups[ID] {
             return group
         }else{
@@ -59,13 +59,13 @@ class HMGroupsManager: NSObject {
     }
     
     
-    var groups:[MTTGroupEntity] {
+    public var groups:[MTTGroupEntity] {
         get{
             var temp:[MTTGroupEntity] = []
             
             if self.allGroups.count == 0 {
                 DispatchQueue.global().sync {
-                    self.loadAllGroup(completion: { 
+                    self.loadAllLocalGroup(completion: {
                         for obj in self.allGroups.values{
                             temp.append(obj)
                         }

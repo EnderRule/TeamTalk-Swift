@@ -112,7 +112,7 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         
         if indexPath.row < self.sessions.count{
             let session = self.sessions[indexPath.row]
-            debugPrint("select session:",session.sessionID)
+            HMPrint("select session:",session.sessionID)
 
             let chattingVC:HMChattingViewController = HMChattingViewController.init(session: session)
             chattingVC.hidesBottomBarWhenPushed = true
@@ -225,7 +225,7 @@ extension MTTMessageEntity {
         DispatchQueue.global().sync {
             MTTMessageEntity.dbQuery(whereStr: "sessionId = ? AND stateInt = ?", orderFields: "msgTime", offset: 0, limit: 1, args: [session.sessionID,DDMessageState.SendSuccess.rawValue], completion: { (messages , error ) in
                 message = messages.first as? MTTMessageEntity
-//                debugPrint("get lastest Message forSession:\(session.sessionID) \(message?.msgID ?? 0) error:\(error?.localizedDescription ?? "")")
+//                HMPrint("get lastest Message forSession:\(session.sessionID) \(message?.msgID ?? 0) error:\(error?.localizedDescription ?? "")")
             })
         }
         return message

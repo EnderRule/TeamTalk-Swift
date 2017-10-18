@@ -8,6 +8,7 @@
 
 import UIKit
 import LCActionSheet
+import SVProgressHUD
 
 class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
@@ -21,14 +22,13 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         self.title = "我"
         
         self.setupTableview()
-        
-        // Do any additional setup after loading the view.
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tableView.mj_headerBeginRefreshing()
+        refreshUI()
     }
     
     func setupTableview(){
@@ -62,16 +62,8 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         self.view.addSubview(tableView)
         
         tableView.mj_addHeader {
-            
-            
-             let user:MTTUserEntity = HMLoginManager.shared.currentUser
-                debugPrint("curentuser : \(user.objID) \(user.name) \(user.avatar) \(user)")
-
-            self.avatarImgv.setImage(str: user.avatar)
-            self.nameLabel.text = user.nickName
-            
+            self.refreshUI()
             self.tableView.mj_headerEndRefreshing()
-
         }
         
         self.view.addSubview(tableView)
@@ -90,6 +82,13 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         // Dispose of any resources that can be recreated.
     }
     
+    func refreshUI(){
+        let user:MTTUserEntity = HMLoginManager.shared.currentUser
+        HMPrint("curentuser : \(user.objID) \(user.name) \(user.avatarUrl) \(user)")
+        
+        self.avatarImgv.setImage(str: user.avatar,placeHolder:#imageLiteral(resourceName: "defaultAvatar"))
+        self.nameLabel.text = user.nickName
+    }
     
     func changeAvatarAction(){
         
@@ -107,7 +106,7 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
             guard imagePath.length > 0 else {
                 return
             }
-            print("ready to upload avatar Image:\(imagePath)")
+            HMPrint("ready to upload avatar Image:\(imagePath)")
             
             let progressView:UIProgressView = UIProgressView.init()
             progressView.frame = .init(x: 0, y: 0, width: SCREEN_WIDTH()/2, height: 30)
@@ -115,9 +114,8 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
             
             SendPhotoMessageAPI.shared.uploadAvatar(imagePath: imagePath, progress: { (progress ) in
                 dispatch(after: 0, task: {
-                    let floatPro = CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount)
-                    self.view.showToast(progressView, point: self.view.center)
-                    progressView.setProgress(Float(floatPro), animated: true )
+                    let floatPro = Float(progress.completedUnitCount)/Float(progress.totalUnitCount)
+                    SVProgressHUD.showProgress(floatPro, status: "上传中...")
                 })
             }, success: { (imageurl ) in
                 dispatch(after: 0, task: {
@@ -129,7 +127,7 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
             }) { (error ) in
                 dispatch(after: 0, task: {
                     progressView.removeFromSuperview()
-                    self.view.makeToast(error)
+                    SVProgressHUD.showError(withStatus: error)
                 })
             }
         }) {
@@ -184,10 +182,8 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
             browser.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(browser, animated: true )
         }else  {
-            
 //            LCActionSheet .show(withTitle: "个人中心", buttonTitles: ["1","2","3","4"], redButtonIndex: 6, clickHandler: { (index) in
 //            })
-            
         }
     }
     

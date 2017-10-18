@@ -110,13 +110,11 @@ class HMContactsViewController: UIViewController ,UITableViewDataSource,UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if indexPath.row < self.groups.count {
-                let group = self.groups[indexPath.row]
-                print("selected group :",group.objID,group.name)
+//                let group = self.groups[indexPath.row]
             }
         }else  {
             if indexPath.row < self.users.count {
                 let user = self.users[indexPath.row]
-                print("selected user :",user.userId,user.name)
 
                 let session = MTTSessionEntity.init(user: user)
                 let chatvc = HMChattingViewController.init(session: session)

@@ -10,7 +10,6 @@ import UIKit
 
 //用到的一些常量
 
-let disableHMLog:Bool = false
 
 let SERVER_Address = "https://aitlg.linking.im/msg_server"  // "https://mapi.linking.im/" // "http://192.168.113.31:8080/msg_server"
 
@@ -29,7 +28,7 @@ let fontNormal = UIFont.systemFont(ofSize: 14)
 let fontDetail = UIFont.systemFont(ofSize: 12)
 
 
-enum HMNotification:Int {
+@objc public enum HMNotification:Int {
     
     case tcpLinkConnectComplete = 1
     case tcpLinkConnectFailure
@@ -161,7 +160,7 @@ enum HMNotification:Int {
 
 }
 
-enum HMErrorCode:Int {
+@objc public enum HMErrorCode:Int {
 
     case db_add = 8801
     case db_insert = 8802
@@ -171,20 +170,24 @@ enum HMErrorCode:Int {
     
 }
 
-func defaultToastStyle()->ToastStyle{
-    var style = ToastStyle.init()
-    style.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-    style.activitySize = .init(width: 50, height: 50)
-    style.cornerRadius = 8.0
-    style.fadeDuration = 3.0
-    style.imageSize = .init(width: 100, height: 100)
-    return style
+let defaultDateFormater:DateFormatter = DateFormatter.init()
+func stringFor(date:Date)->String{
+    defaultDateFormater.dateFormat = "yyyy:MM:dd-HH:mm:ss"
+    return defaultDateFormater.string(from: date)
+}
+func dateFor(str:String)->Date?{
+    defaultDateFormater.dateFormat = "yyyy:MM:dd-HH:mm:ss"
+    return defaultDateFormater.date(from: str)
 }
 
-func HMPrint(items: Any...,file: String = #file, line: Int = #line, function: String = #function) {
+let disableHMLog:Bool = false
+func HMPrint(_ items: Any...,file: String = #file, line: Int = #line , function: String = #function) {
     if !disableHMLog{
-        print("HMPrint:\((file as NSString).lastPathComponent)->\(line)->\(function)->\(Date().timeIntervalSince1970):\(items) \n")
+        let time = stringFor(date: Date())
+        let filename = (file as NSString).lastPathComponent
+        
+        print("HMPrint \(time)--\(filename)--\(line):",items,"\n")
     }
 }
-//链接：http://www.jianshu.com/p/95460601cb6f
+
 

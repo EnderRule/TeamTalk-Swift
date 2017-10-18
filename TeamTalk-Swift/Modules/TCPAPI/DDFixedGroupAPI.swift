@@ -42,7 +42,7 @@ class DDFixedGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 return array
                 
             }else {
-                debugPrint("DDFixedGroupAPI analysisReturnData failure")
+                HMPrint("DDFixedGroupAPI analysisReturnData failure")
                 return []
             }
         }
@@ -63,7 +63,7 @@ class DDFixedGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("DDFixedGroupAPI package builded data failure")
+                HMPrint("DDFixedGroupAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

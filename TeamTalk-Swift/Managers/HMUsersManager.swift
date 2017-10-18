@@ -8,23 +8,23 @@
 
 //import UIKit
 
-class HMUsersManager: NSObject {
+public class HMUsersManager: NSObject {
 
-    static let shared:HMUsersManager = HMUsersManager()
+    public static let shared:HMUsersManager = HMUsersManager()
     
     private var allUsers:[String:MTTUserEntity] = [:]
     
-    func cleanData(){
+    public func cleanData(){
         self.allUsers.removeAll()
     }
     
-    func add(user:MTTUserEntity){
+    public func add(user:MTTUserEntity){
         if user.isValided{
             allUsers.updateValue(user , forKey: user.objID)
         }
     }
     
-    func userFor(ID:String)->MTTUserEntity?{
+    public func userFor(ID:String)->MTTUserEntity?{
         
         if allUsers.count <= 0 {
             var  user:MTTUserEntity?
@@ -40,7 +40,7 @@ class HMUsersManager: NSObject {
         }
     }
     
-    var users:[MTTUserEntity] {
+   public  var users:[MTTUserEntity] {
         get{
             var temp:[MTTUserEntity] = []
 
@@ -61,7 +61,7 @@ class HMUsersManager: NSObject {
         }
     }
     
-    func loadAllUser(completion:(()->Void)?){
+    public func loadAllUser(completion:(()->Void)?){
         
         let kLastUpdate:String = AllUserAPI.kResultLastUpdateTime
         var localUpdateTime:Int = UserDefaults.standard.integer(forKey: kLastUpdate)
@@ -73,13 +73,13 @@ class HMUsersManager: NSObject {
         
         MTTUserEntity.dbQuery(whereStr: nil, orderFields: "objID asc ", offset: 0, limit: 0, args: []) { (users , error ) in
             if error != nil {
-                debugPrint("db load all user error: ",error!.localizedDescription )
+                HMPrint("db load all user error: ",error!.localizedDescription )
                 
                 localUpdateTime = 0
                 dbfinish = true
                 
             }else{
-                debugPrint("db load all user count \(users.count)")
+                HMPrint("db load all user count \(users.count)")
 
                 if users.count > 0 {
                     for obj in  users.enumerated(){

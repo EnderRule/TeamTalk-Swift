@@ -48,7 +48,7 @@ class GetGroupInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 }
                 return array
             }else {
-                debugPrint("GetGroupInfoAPI analysisReturnData failure")
+                HMPrint("GetGroupInfoAPI analysisReturnData failure")
                 return []
             }
         }
@@ -75,7 +75,7 @@ class GetGroupInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? listBuilder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("GetGroupInfoAPI package builded data failure")
+                HMPrint("GetGroupInfoAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

@@ -41,8 +41,6 @@ class MTTEmotionManager: NSObject {
         super.init()
         
         self.loadEmotionDics()
-        
-        print("loadEmotionDics  ",nimDefaultEmojiDic)
     }
     
     func loadEmotionDics(){

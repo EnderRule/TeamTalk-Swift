@@ -49,7 +49,7 @@ class HeartbeatAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? heartbeatBuilder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("HeartbeatAPI package builded data failure")
+                HMPrint("HeartbeatAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

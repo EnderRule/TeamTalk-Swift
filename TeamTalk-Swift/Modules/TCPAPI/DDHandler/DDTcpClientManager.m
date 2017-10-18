@@ -15,9 +15,6 @@
 #import "DDDataOutputStream.h"
 #import "DDAPISchedule.h"
 
-
-#import "MTTDDNotification.h"
-
 #import "TeamTalk_Swift-Swift.h"
 
 @interface DDTcpClientManager(PrivateAPI)
@@ -43,7 +40,7 @@
 #pragma mark - PublicAPI
 -(void)connect:(NSString *)ipAdr port:(NSInteger)port status:(NSInteger)status
 {
-//    DDLog(@"mogujie mtalk client :connect ipAdr:%@ port:%ld",ipAdr,(long)port);
+
     cDataLen = 0;
     
     _receiveBuffer = [NSMutableData data];
@@ -97,9 +94,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(tcpClientConnectFailure)]){
         [self.delegate tcpClientConnectFailure];
     }
-    
-//    [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkDisconnect object:nil  userInfo:nil ];
-
 }
 
 -(void)writeToSocket:(NSMutableData *)data{
@@ -111,9 +105,9 @@
             NSInteger len;
             len = [_outStream write:[data mutableBytes] maxLength:[data length]];
             _noDataSent = NO;
-//            DDLog(@"WRITE - Written directly to outStream len:%li", (long)len);
+
             if (len < [data length]) {
-//                DDLog(@"WRITE - Creating a new buffer for remaining data len:%lu", [data length] - len);
+//                NSLog(@"WRITE - Creating a new buffer for remaining data len:%lu", [data length] - len);
                 _lastSendBuffer = [DDSendBuffer dataWithNSData:[data subdataWithRange:NSMakeRange([data length]-len, [data length])]];
                 [_sendBuffers addObject:_lastSendBuffer];
                 
@@ -128,20 +122,20 @@
             newDataLength = [data length];
             
             if (lastSendBufferLength < 1024 ) {
-//                DDLog(@"WRITE - Have a buffer with enough space, appending data to it");
+//                NSLog(@"WRITE - Have a buffer with enough space, appending data to it");
                 if ([data length] > 0 ){ //Fixme:here, add a new condition by HZQ
                     [_lastSendBuffer appendData:data];
                 }
                 return;
             }
         }
-//        DDLog(@"WRITE - Creating a new buffer");
+//        NSLog(@"WRITE - Creating a new buffer");
         _lastSendBuffer = [DDSendBuffer dataWithNSData:data];
         [_sendBuffers addObject:_lastSendBuffer];
         
     }
     @catch (NSException *exception) {
-        DDLog(@" ***** NSException:%@ in writeToSocket of MGJMTalkClient *****",exception);
+        NSLog(@"DDTcpClientManager writeToSocket NSException:%@  *****",exception);
     }
     @finally {
         [_sendLock unlock];
@@ -153,7 +147,6 @@
 {
     switch(eventCode) {
         case NSStreamEventNone:
-//			DDLog(@"Event type: EventNone");
 			break;
         case NSStreamEventOpenCompleted:
 			[self p_handleConntectOpenCompletedStream:aStream];
@@ -176,15 +169,12 @@
 #pragma mark - PrivateAPI
 - (void)p_handleConntectOpenCompletedStream:(NSStream *)aStream
 {
-//    DDLog(@"handleConntectOpenCompleted");
     if (aStream == _outStream) {
         
         if(self.delegate && [self.delegate respondsToSelector:@selector(tcpClientConnectSuccess)]){
             [self.delegate tcpClientConnectSuccess];
         }
         
-//        [[NSNotificationCenter defaultCenter] postNotificationName:DDNotificationTcpLinkConnectComplete object:nil  userInfo:nil ];
-
         [HMLoginManager shared].loginState = HMLoginStateOnline;
     }
 }
@@ -230,7 +220,7 @@
         return;
     }
     @catch (NSException *exception) {
-        DDLog(@" ***** NSException in MGJMTalkCleint :%@  ******* ",exception);
+        NSLog(@"DDTcpClientManager handleEventHasSpaceAvailableStream NSException :%@  ******* ",exception);
     }
     @finally {
         [_sendLock unlock];
@@ -239,21 +229,18 @@
 
 - (void)p_handleEventErrorOccurredStream:(NSStream *)aStream
 {
-//    DDLog(@"handle eventErrorOccurred");
     [self disconnect];
     [HMLoginManager shared].loginState = HMLoginStateOffLine;
 }
 
 - (void)p_handleEventEndEncounteredStream:(NSStream *)aStream
 {
-//    DDLog(@"handle eventEndEncountered");
     cDataLen = 0;
 
 }
 
 - (void)p_handleEventHasBytesAvailableStream:(NSStream *)aStream
 {
-//    DDLog(@"handle eventHasBytesAvailable");
     if (aStream) {
         uint8_t buf[1024];
         NSInteger len = [(NSInputStream *)aStream read:buf maxLength:1024];
@@ -273,7 +260,6 @@
                 
                 uint32_t pduLen = [inputData readInt];
                 if (pduLen > (uint32_t)[_receiveBuffer length]) {
-//                    DDLog(@"not enough data received");
                     break;
                 }
                 
@@ -292,7 +278,7 @@
                 NSData *remainData = [_receiveBuffer subdataWithRange:range];
                 [_receiveBuffer setData:remainData];
                 ServerDataType dataType = DDMakeServerDataType(tcpHeader.serviceId, tcpHeader.commandId, tcpHeader.reserved);
-//                NSLog(@"***********收到服务端sid:%i cid:%i",tcpHeader.serviceId,tcpHeader.commandId);
+                NSLog(@"***********收到服务端sid:%i cid:%i",tcpHeader.serviceId,tcpHeader.commandId);
                 if (payloadData.length >0) {
                     [[DDAPISchedule instance] receiveServerData:payloadData forDataType:dataType];
                 }
@@ -301,15 +287,10 @@
                     [self.delegate tcpClientReceiveServerHeartBeat];
                 }
                 
-//                [[NSNotificationCenter defaultCenter]postNotificationName:DDNotificationServerHeartBeat object:nil ];
             }
             
             [_receiveLock unlock];
         }
-        else {
-//            DDLog(@"No buffer!");
-        }
-
     }
    
 }

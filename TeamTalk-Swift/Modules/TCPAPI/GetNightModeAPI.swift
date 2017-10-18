@@ -34,7 +34,7 @@ class GetNightModeAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let res = try? Im.Login.ImqueryPushShieldRsp.parseFrom(data: data ?? Data()) {
                 return [res.shieldStatus]
             }else {
-                debugPrint("GetNightModeAPI analysisReturnData failure")
+                HMPrint("GetNightModeAPI analysisReturnData failure")
                 return []
             }
         }
@@ -54,7 +54,7 @@ class GetNightModeAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("GetNightModeAPI package builded data failure")
+                HMPrint("GetNightModeAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

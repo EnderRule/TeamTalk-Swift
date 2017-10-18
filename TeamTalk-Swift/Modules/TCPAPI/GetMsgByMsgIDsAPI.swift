@@ -47,7 +47,7 @@ class GetMsgByMsgIDsAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let res = try? Im.Message.ImgetMsgByIdRsp.parseFrom(data: data ?? Data()) {
                 return res.msgList
             }else {
-                debugPrint("GetMsgByMsgIDsAPI analysisReturnData failure")
+                HMPrint("GetMsgByMsgIDsAPI analysisReturnData failure")
                 return []
             }
         }
@@ -70,7 +70,7 @@ class GetMsgByMsgIDsAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("GetMsgByMsgIDsAPI package builded data failure")
+                HMPrint("GetMsgByMsgIDsAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

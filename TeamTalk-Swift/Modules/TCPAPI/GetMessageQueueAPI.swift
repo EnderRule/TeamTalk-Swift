@@ -60,7 +60,7 @@ class GetMessageQueueAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 }
                 return msgArray
             }else {
-                debugPrint("GetMessageQueueAPI analysisReturnData failure")
+                HMPrint("GetMessageQueueAPI analysisReturnData failure")
                 return []
             }
         }
@@ -84,7 +84,7 @@ class GetMessageQueueAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("GetMessageQueueAPI package builded data failure")
+                HMPrint("GetMessageQueueAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

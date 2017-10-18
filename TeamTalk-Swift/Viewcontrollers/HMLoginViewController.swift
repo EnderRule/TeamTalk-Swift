@@ -80,9 +80,7 @@ class HMLoginViewController: UIViewController {
         self.view.becomeFirstResponder()
     }
     
-    func showError(message:String){
-        self.view.makeToast(message, duration: 4.0, point: self.loginBt.center, title: nil , image: nil , style: ToastManager.shared.style , completion: nil )
-    }
+    
     func loginBtClick(_ sender :UIButton){
         
         
@@ -94,16 +92,16 @@ class HMLoginViewController: UIViewController {
 
             
             SVProgressHUD.show(withStatus: "正在登录...")
-            debugPrint("click login : \(userName) \(userPwd)")
+            HMPrint("click login : \(userName) \(userPwd)")
             
             HMLoginManager.shared.loginWith(userName: userName, password: userPwd, success: {[weak self ] (user ) in
-                debugPrint("click login success : \(userName) ")
+                HMPrint("click login success : \(userName) ")
                 
                 SVProgressHUD.dismiss()
                 
                 self?.loginSuccessHandler()
             }, failure: { (error ) in
-                debugPrint("click login failure : \(userName) \(error)")
+                HMPrint("click login failure : \(userName) \(error)")
 
                 SVProgressHUD.showError(withStatus: error)
                 
@@ -112,13 +110,11 @@ class HMLoginViewController: UIViewController {
         }else{
             SVProgressHUD.showError(withStatus: "输入有误")
         }
-
-        HMPrint(items: "fwewf",324234,["422",9942342])
     }
     
     func loginSuccessHandler(){
         let user = HMLoginManager.shared.currentUser
-        debugPrint("login success :",user.objID,user.name,user.avatar)
+        HMPrint("login success :",user.objID,user.name,user.avatar)
 
         let mainTabbar = UITabBarController.init()
         let recentsNavi = UINavigationController.init(rootViewController: HMRecentSessionsViewController.init())

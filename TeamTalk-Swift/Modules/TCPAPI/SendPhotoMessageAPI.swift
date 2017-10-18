@@ -64,8 +64,6 @@ class SendPhotoMessageAPI: NSObject {
         
         let auth:String = authString.encrypt()
         
-        print("upload photo paras \(authDic as NSDictionary)    ,authEncrypt:\(auth)")
-        
         self.uploadPhoto(imagePath: imagePath, auth: auth, progress: { (pro ) in
             progress(pro)
         }, success: { (imageURL) in
@@ -95,8 +93,6 @@ class SendPhotoMessageAPI: NSObject {
                 let paras:[AnyHashable:Any] = ["type":"im_image","auth":auth]
                 let image:UIImage = UIImage.init(data: imageData as Data) ?? UIImage()
                 let imageName:String = "image_\(image.size.width)x\(image.size.height).png"
-
-                debugPrint("upload image to url:\(urlString)")
                 
                 self.manager.post(urlString, parameters: paras, constructingBodyWith: { (formData) in
                     formData.appendPart(withFileData: imageData as Data, name: "image", fileName: imageName, mimeType: "image/jpeg")

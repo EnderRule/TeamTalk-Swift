@@ -16,17 +16,17 @@ extension Notification.Name {
     }
 }
 
-typealias HMSendMessageCompletion = ((MTTMessageEntity,NSError?)->Void)
+public typealias HMSendMessageCompletion = ((MTTMessageEntity,NSError?)->Void)
 
 
-@objc protocol HMMessageDelegate:NSObjectProtocol {
+@objc public  protocol HMMessageDelegate:NSObjectProtocol {
     
     func onReceive(message:MTTMessageEntity)
     
 }
 
-class HMMessageManager: NSObject {
-    static let  shared = HMMessageManager()
+public class HMMessageManager: NSObject {
+    public  static let  shared = HMMessageManager()
     
     
     
@@ -182,7 +182,7 @@ class HMMessageManager: NSObject {
     }
     
     @objc private func p_checkMessageTimeout(){
-//        debugPrint("\(self.classForCoder) checkMessageTimeout messagesCount\(self.unAckQueueMessages.count)")
+//        HMPrint("\(self.classForCoder) checkMessageTimeout messagesCount\(self.unAckQueueMessages.count)")
        
         if unAckQueueMessages.count == 0{
             self.unAckTimer?.invalidate()
@@ -216,7 +216,7 @@ class HMMessageManager: NSObject {
     }
     
     
-    func getMsgFromServer(beginMsgID:UInt32,forSession:MTTSessionEntity,count:Int,completion:@escaping (([MTTMessageEntity],Error?)->Void)){
+    public  func getMsgFromServer(beginMsgID:UInt32,forSession:MTTSessionEntity,count:Int,completion:@escaping (([MTTMessageEntity],Error?)->Void)){
         let sessionID = MTTBaseEntity.pbIDFrom(localID: forSession.sessionID)
         
         let api:GetMessageQueueAPI = GetMessageQueueAPI.init(sessionID: sessionID, sessionType:forSession.sessionType, msgIDBegin: beginMsgID, count: count)
@@ -258,16 +258,18 @@ class HMMessageManager: NSObject {
                 let sessionType:SessionType_Objc = type == 1 ? .sessionTypeSingle:.sessionTypeGroup
                 let sessionID:String = sessionType == .sessionTypeSingle ? MTTUserEntity.localIDFrom(pbID: fromID) : MTTGroupEntity.localIDFrom(pbID: fromID)
                 
-                debugPrint("收到已读回执：\(msgID) \(sessionID)")
+                HMPrint("收到已读回执：\(msgID) \(sessionID)")
                 
-                MTTMessageEntity.dbQuery(whereStr: "msgID = \(msgID)", orderFields: nil, offset: 0, limit: 1, args: [], completion: { (messages , error ) in
-                    if let message = messages.first as? MTTMessageEntity{
-                        message.state = .Readed
-                        message.dbSave(completion: { (success )in
-                            debugPrint("db 更新已读回执：\(success) \(msgID) \(sessionID) \(message.msgContent)")
-                        })
-                    }
-                })
+                MTTMsgReadState.save(msgID: msgID, sessionID: sessionID, state: .Readed)
+                
+//                MTTMessageEntity.dbQuery(whereStr: "msgID = \(msgID)", orderFields: nil, offset: 0, limit: 1, args: [], completion: { (messages , error ) in
+//                    if let message = messages.first as? MTTMessageEntity{
+//                        message.state = .Readed
+//                        message.dbSave(completion: { (success )in
+//                            HMPrint("db 更新已读回执：\(success) \(msgID) \(sessionID) \(message.msgContent)")
+//                        })
+//                    }
+//                })
 
                 HMSessionModule.shared.cleanMsgFromNotific(messageID: msgID, sessionID: sessionID, sessionType: sessionType)
             }
@@ -278,13 +280,13 @@ class HMMessageManager: NSObject {
     /// 发送收到消息的回执
     ///
     /// - Parameter message: 消息实体
-    func sendReceiveACK(message:MTTMessageEntity){
+    public func sendReceiveACK(message:MTTMessageEntity){
         let sessionID = MTTBaseEntity.pbIDFrom(localID: message.sessionId)
         let api:ReceiveMessageACKAPI = ReceiveMessageACKAPI.init(msgID: message.msgID, sessionID: sessionID, sessionType: message.sessionType)
         api.request(withParameters: [:]) { (obj , error ) in
         }
     }
-    func sendReceiveACK(msgID:UInt32,sessionID:String,sessionType:SessionType_Objc){
+    public func sendReceiveACK(msgID:UInt32,sessionID:String,sessionType:SessionType_Objc){
         let sessionID = MTTBaseEntity.pbIDFrom(localID: sessionID)
         let type:Im.BaseDefine.SessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
         let api:ReceiveMessageACKAPI = ReceiveMessageACKAPI.init(msgID: msgID, sessionID: sessionID, sessionType: type)
@@ -297,28 +299,28 @@ class HMMessageManager: NSObject {
     /// 发送已读回执
     ///
     /// - Parameter message: 消息实体
-    func sendReadACK(message:MTTMessageEntity){
+    public func sendReadACK(message:MTTMessageEntity){
         let sessionID = MTTBaseEntity.pbIDFrom(localID: message.sessionId)
         let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionID, msgID: message.msgID, sessionType: message.sessionType)
         api.request(withParameters: [:]) { (obj , error ) in
             
             if obj as? Bool ?? false {
-                MTTMsgReadState.save(msgID: message.msgID, state: .Readed)
+                MTTMsgReadState.save(message:message, state: .Readed)
             }
         }
     }
-    func sendReadACK(msgID:UInt32,sessionID:String,sessionType:SessionType_Objc){
-        let sessionID = MTTBaseEntity.pbIDFrom(localID: sessionID)
+    public func sendReadACK(msgID:UInt32,sessionID:String,sessionType:SessionType_Objc){
+        let sessionIDInt = MTTBaseEntity.pbIDFrom(localID: sessionID)
         let type:Im.BaseDefine.SessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
-        let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionID, msgID: msgID, sessionType: type)
+        let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionIDInt, msgID: msgID, sessionType: type)
         api.request(withParameters: [:]) { (obj , error ) in
             if obj as? Bool ?? false {
-                MTTMsgReadState.save(msgID: msgID, state: .Readed)
+                MTTMsgReadState.save(msgID: msgID, sessionID: sessionID, state: .Readed)
             }
         }
     }
-    
 }
+
 
 
 class HMMessageAndTime : NSObject {

@@ -8,6 +8,8 @@
 
 #import "DDDataOutputStream.h"
 
+#define IM_PDU_VERSION      13
+
 @implementation DDDataOutputStream
 - (id)init{
     self = [super init];

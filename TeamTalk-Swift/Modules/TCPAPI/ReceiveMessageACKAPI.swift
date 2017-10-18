@@ -65,7 +65,7 @@ class ReceiveMessageACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("ReceiveMessageACKAPI package builded data failure")
+                HMPrint("ReceiveMessageACKAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

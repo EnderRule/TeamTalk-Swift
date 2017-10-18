@@ -8,24 +8,24 @@
 
 import UIKit
 
-@objc enum HMSessionAction:Int {
+@objc public  enum HMSessionAction:Int {
     case add = 0
     case refresh = 1
     case delete = 2
 }
 
-@objc protocol HMSessionModuleDelegate:NSObjectProtocol{
+@objc public protocol HMSessionModuleDelegate:NSObjectProtocol{
     @objc func  sessionUpdate(session:MTTSessionEntity,action:HMSessionAction)
 }
 
 
-class HMSessionModule: NSObject {
-    static let shared:HMSessionModule = HMSessionModule()
+public class HMSessionModule: NSObject {
+    public static let shared:HMSessionModule = HMSessionModule()
     
     
     private var currentSessions:[String:MTTSessionEntity] = [:]
     
-    var delegate:HMSessionModuleDelegate?
+    public var delegate:HMSessionModuleDelegate?
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -35,12 +35,8 @@ class HMSessionModule: NSObject {
         super.init()
         
         NotificationCenter.default.addObserver(self , selector: #selector(self.sendMessageSuccess(notification:)), name: HMNotification.sendMessageSucceed.notificationName() , object: nil)
-        
-//        NotificationCenter.default.addObserver(self , selector: #selector(self.receiveMessageReadACK(notification:)), name: HMNotification.receiveMessageReadACK.notificationName() , object: nil)
         NotificationCenter.default.addObserver(self , selector: #selector(self.receiveMessage(notification:)), name: HMNotification.receiveMessage.notificationName() , object: nil)
-
-        
-        
+  
     }
     
     
@@ -267,7 +263,7 @@ class HMSessionModule: NSObject {
                     localsession.dbSave(completion: nil )
                     self.delegate?.sessionUpdate(session: localsession, action: .refresh)
                     
-                    debugPrint("get Had UnRead Msg:\(session.sessionID) \(session.name) \(session.unReadMsgCount)")
+                    HMPrint("get Had UnRead Msg:\(session.sessionID) \(session.name) \(session.unReadMsgCount)")
                 }
             }
             completion?(totalUnread)

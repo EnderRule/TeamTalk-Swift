@@ -8,11 +8,11 @@
 
 import UIKit
 
-class HMContactsCell: HMBaseCell {
+public class HMContactsCell: HMBaseCell {
 
-    var avatarImgv:UIImageView = UIImageView.init()
-    var nameLabel:UILabel = UILabel.init()
-    override func setupCustom() {
+    public var avatarImgv:UIImageView = UIImageView.init()
+    public var nameLabel:UILabel = UILabel.init()
+    override public func setupCustom() {
         
         avatarImgv.contentMode = .scaleAspectFit
         avatarImgv.backgroundColor = UIColor.clear
@@ -39,7 +39,7 @@ class HMContactsCell: HMBaseCell {
         }
     }
     
-    override func configWith(object: Any) {
+    override public func configWith(object: Any) {
         if let user = object as? MTTUserEntity {
             avatarImgv.setImage(str: user.avatar, placeHolder: #imageLiteral(resourceName: "defaultAvatar"))
             nameLabel.text = user.name

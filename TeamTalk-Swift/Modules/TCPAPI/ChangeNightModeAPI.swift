@@ -41,7 +41,8 @@ class ChangeNightModeAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let res = try? Im.Login.ImpushShieldRsp.parseFrom(data: data ?? Data()) {
                 return [res.shieldStatus]
             }else {
-                debugPrint("ChangeNightModeAPI analysisReturnData failure")
+
+                HMPrint("ChangeNightModeAPI analysisReturnData failure")
                 return []
             }
         }
@@ -63,7 +64,7 @@ class ChangeNightModeAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("ChangeNightModeAPI package builded data failure")
+                HMPrint("ChangeNightModeAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

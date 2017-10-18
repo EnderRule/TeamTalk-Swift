@@ -17,16 +17,16 @@ PODS:
   - FMDB (2.7.2):
     - FMDB/standard (= 2.7.2)
   - FMDB/standard (2.7.2)
-  - LCActionSheet (3.3.0):
+  - LCActionSheet (3.3.1):
     - Masonry (~> 1.1.0)
   - M80AttributedLabel (1.6.3)
   - Masonry (1.1.0)
-  - MJRefresh (3.1.13)
-  - ProtocolBuffers-Swift (3.0.23)
+  - MJRefresh (3.1.14)
+  - ProtocolBuffers-Swift (3.0.24)
   - SCLAlertView (0.7.0)
-  - SDWebImage (4.1.0):
-    - SDWebImage/Core (= 4.1.0)
-  - SDWebImage/Core (4.1.0)
+  - SDWebImage (4.1.2):
+    - SDWebImage/Core (= 4.1.2)
+  - SDWebImage/Core (4.1.2)
   - SVProgressHUD (2.2.1)
   - TZImagePickerController (1.9.3)
 
@@ -46,16 +46,16 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
-  LCActionSheet: 7f64f361adbe2240c27becb9a6e1be69bbc09b68
+  LCActionSheet: c3b4c9029aef65b33e4d89ef371da95787a1fd3b
   M80AttributedLabel: d06543195d3e451d2ea62ad76d04aa9cea7661d4
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MJRefresh: 56a28aa628c9895e97a518dabaecf70b18f92f32
-  ProtocolBuffers-Swift: e0b959c0fbb5dcadb3846f9b42c2cbfae6918422
+  MJRefresh: 6642e35b3227a5447b9fd5e17c552c90196c9859
+  ProtocolBuffers-Swift: 42ad3864cb1d09dd544589742d585d553dcdff2c
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
-  SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
+  SDWebImage: cb6f9f266a9977741efcbc21e618e8be3734c774
   SVProgressHUD: db27c54e6e18bc903341661fc9feb55e04905cc4
   TZImagePickerController: 079ab986018c22793462e531045a75e366b18252
 
-PODFILE CHECKSUM: f11dacb2ac6ec24a294a9dafc75e94ebc502d2f3
+PODFILE CHECKSUM: 6c7200eb16ef474a5e93fde3831b7390c3207b21
 
 COCOAPODS: 1.2.1

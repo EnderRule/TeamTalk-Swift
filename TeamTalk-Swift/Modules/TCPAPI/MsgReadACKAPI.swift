@@ -44,14 +44,14 @@ class MsgReadACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
-            debugPrint("MsgReadACKAPI return data \(data) ")
+            HMPrint("MsgReadACKAPI return data \(String(describing: data)) ")
 
             if let res = try? Im.Message.ImmsgDataReadAck.parseFrom(data: data ?? Data() ){
 //                res.msgId
 //                res.sessionId
 //                res.sessionType
 //                res.userId
-                debugPrint(" analysis data :\(res.msgId) \(res.sessionId) \(res.userId) \(res.sessionType)")
+                HMPrint(" analysis data :\(res.msgId) \(res.sessionId) \(res.userId) \(res.sessionType)")
                 return res.msgId > 0
             }else{
                 return false
@@ -78,7 +78,7 @@ class MsgReadACKAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("MsgReadACKAPI package builded data failure")
+                HMPrint("MsgReadACKAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

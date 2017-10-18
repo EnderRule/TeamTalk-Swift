@@ -11,8 +11,8 @@ import AudioToolbox
 
 typealias HMAudioPlayFinish = ((String?)->Void)
 
-class HMMediaManager: NSObject,AVAudioPlayerDelegate {
-    static let shared:HMMediaManager = HMMediaManager()
+public class HMMediaManager: NSObject,AVAudioPlayerDelegate {
+    public static let shared:HMMediaManager = HMMediaManager()
     
     private var audioPlayer:AVAudioPlayer?
     private var audioPlayedFinish:HMAudioPlayFinish?
@@ -22,8 +22,7 @@ class HMMediaManager: NSObject,AVAudioPlayerDelegate {
     private var recordVoicePath:String = ""
     private var recordTimeInterval:TimeInterval = 0
 
-    func durationFor(filePath:String,completion:@escaping ((TimeInterval)->Void) ){
-        
+    public func durationFor(filePath:String,completion:@escaping ((TimeInterval)->Void) ){
         
         guard let url = URL.init(string: filePath) else {
             completion(0.0)
@@ -34,7 +33,7 @@ class HMMediaManager: NSObject,AVAudioPlayerDelegate {
         asset.loadValuesAsynchronously(forKeys: [AVURLAssetPreferPreciseDurationAndTimingKey]) {
             let valuestate =  asset.statusOfValue(forKey: AVURLAssetPreferPreciseDurationAndTimingKey, error: nil)
             let duration =  CMTimeGetSeconds(asset.duration)
-            debugPrint("asset \(asset)  \(asset.duration)  \(valuestate)",duration)
+            HMPrint("asset \(asset)  \(asset.duration)  \(valuestate)",duration)
             completion(duration)
         }
         

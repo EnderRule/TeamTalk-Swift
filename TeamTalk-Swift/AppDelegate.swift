@@ -20,8 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         HMDBManager.shared.modelClasses = [MTTUserEntity.classForCoder(),MTTGroupEntity.classForCoder(),MTTMessageEntity.classForCoder(),MTTSessionEntity.classForCoder(),MTTMsgReadState.classForCoder()]
         
-        HMDBManager.shared.dbUserID = "0"
-        
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (issuccess , error ) in
                 debugPrint("application notification requestAuthorization \(issuccess) \(error?.localizedDescription ?? "nil error ")")
@@ -30,12 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         let notiSettings:UIUserNotificationSettings = UIUserNotificationSettings.init(types: [.alert,.badge,.sound], categories: nil)
         application.registerUserNotificationSettings(notiSettings)
-        
-        
-        let testString = "fsfef fs测试哈哈哈哈哈单独累吧😓④发数据考虑f睡覺覅是你"
-        let encryptStr = testString.encrypt()
-        let decryptStr = encryptStr.decrypt()
-        print(self.classForCoder,"security test ","\n\(testString)\n\(encryptStr)\n\(decryptStr)")
         
         let loginVC = HMLoginViewController.init()
         loginVC.hidesBottomBarWhenPushed = true

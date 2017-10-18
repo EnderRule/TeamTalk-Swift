@@ -53,7 +53,7 @@ class AddMemberToGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                     return array
                 }
             }else {
-                debugPrint("AddMemberToGroupAPI analysisReturnData failure")
+                HMPrint("AddMemberToGroupAPI analysisReturnData failure")
                 return []
             }
             
@@ -77,7 +77,7 @@ class AddMemberToGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("AddMemberToGroupAPI package builded data failure")
+                HMPrint("AddMemberToGroupAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

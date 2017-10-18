@@ -46,7 +46,7 @@ class GetRecentSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 }
                 return array
             }else {
-                debugPrint("GetRecentSessionAPI analysisReturnData failure")
+                HMPrint("GetRecentSessionAPI analysisReturnData failure")
                 return []
             }
         }
@@ -70,7 +70,7 @@ class GetRecentSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("GetRecentSessionAPI package builded data failure")
+                HMPrint("GetRecentSessionAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

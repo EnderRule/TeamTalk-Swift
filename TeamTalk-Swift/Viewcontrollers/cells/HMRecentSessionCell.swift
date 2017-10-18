@@ -8,21 +8,21 @@
 
 import UIKit
 
-class HMRecentSessionCell: HMBaseCell {
+public class HMRecentSessionCell: HMBaseCell {
 
-    var session:MTTSessionEntity?
+    public var session:MTTSessionEntity?
     
-    var avatarView:UIImageView = UIImageView.init()
-    var nameLabel:UILabel = UILabel.init()
+    public var avatarView:UIImageView = UIImageView.init()
+    public var nameLabel:UILabel = UILabel.init()
     
-    var msgLabel:UILabel = UILabel.init()
-    var dateLabel:UILabel = UILabel.init()
-    var unreadMsgLabel:UILabel = UILabel.init()
+    public var msgLabel:UILabel = UILabel.init()
+    public var dateLabel:UILabel = UILabel.init()
+    public var unreadMsgLabel:UILabel = UILabel.init()
     
     
-    static let cellHeight:CGFloat = 64.0
+    public  static let cellHeight:CGFloat = 64.0
     
-    override func setupCustom(){
+    override public func setupCustom(){
         avatarView.contentMode = .scaleAspectFit
         
         nameLabel.font = UIFont.systemFont(ofSize: 16)
@@ -76,7 +76,7 @@ class HMRecentSessionCell: HMBaseCell {
 //        }
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         if !unreadMsgLabel.isHidden{
@@ -90,7 +90,7 @@ class HMRecentSessionCell: HMBaseCell {
     }
     
     
-    override func configWith(object: Any) {
+    override public func configWith(object: Any) {
         
         if let session = object as? MTTSessionEntity {
             self.session = session

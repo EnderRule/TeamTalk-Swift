@@ -133,7 +133,7 @@ extension NSObject{
                             self.setValue(date , forKey: kv.key)
                         }else {
                             var dateString = jsonObj[kv.key].stringValue
-                            if dateString.length >= 19 {
+                            if dateString.characters.count >= 19 {
                                 dateString = (dateString as NSString).substring(to: 19)
                                 
                                 let formater = DateFormatter.init()

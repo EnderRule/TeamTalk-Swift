@@ -8,18 +8,24 @@
 
 #import "NSDate+DDAddition.h"
 
-static int localAndServerGap = 0;
-
 @implementation NSDate (DDAddition)
+
+-(NSCalendar *)greCalendar{
+    return [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+}
+-(NSDateComponents *)dateComponentsFromDate:(NSDate *)date
+{
+    //  通过已定义的日历对象，获取某个时间点的NSDateComponents表示，并设置需要表示哪些信息（NSYearCalendarUnit, NSMonthCalendarUnit, NSDayCalendarUnit等）
+    return [[self greCalendar]components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekdayOrdinal | NSCalendarUnitWeekday | NSCalendarUnitWeekOfMonth | NSCalendarUnitWeekOfYear fromDate:date];
+}
+
 - (NSString*)transformToFuzzyDate
 {
     NSDate* nowDate = [NSDate date];
     
-    NSCalendar *greCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    //  通过已定义的日历对象，获取某个时间点的NSDateComponents表示，并设置需要表示哪些信息（NSYearCalendarUnit, NSMonthCalendarUnit, NSDayCalendarUnit等）
-    NSDateComponents *nowDateComponents = [greCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit | NSWeekOfMonthCalendarUnit | NSWeekOfYearCalendarUnit fromDate:nowDate];
+    NSDateComponents *nowDateComponents = [self dateComponentsFromDate:nowDate];
     
-    NSDateComponents *selfDateComponents = [greCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit | NSWeekOfMonthCalendarUnit | NSWeekOfYearCalendarUnit fromDate:self];
+    NSDateComponents *selfDateComponents = [self dateComponentsFromDate:self];
     
     
     NSDateComponents *weeDateComponents = [[NSDateComponents alloc] init];
@@ -53,7 +59,7 @@ static int localAndServerGap = 0;
     {
         return @"昨天";
     }
-    else if (nowDateComponents.week == selfDateComponents.week)
+    else if (nowDateComponents.weekOfMonth == selfDateComponents.weekOfMonth || nowDateComponents.weekOfYear == selfDateComponents.weekOfYear)
     {
         NSArray* weekdays = @[@"temp",@"星期日",@"星期一",@"星期二",@"星期三",@"星期四",@"星期五",@"星期六"];
         NSString* dateString = weekdays[selfDateComponents.weekday];
@@ -72,15 +78,15 @@ static int localAndServerGap = 0;
     }
 }
 
+
+
 - (NSString*)promptDateString
 {
     NSDate* nowDate = [NSDate date];
     
-    NSCalendar *greCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    //  通过已定义的日历对象，获取某个时间点的NSDateComponents表示，并设置需要表示哪些信息（NSYearCalendarUnit, NSMonthCalendarUnit, NSDayCalendarUnit等）
-    NSDateComponents *nowDateComponents = [greCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit | NSWeekOfMonthCalendarUnit | NSWeekOfYearCalendarUnit fromDate:nowDate];
+    NSDateComponents *nowDateComponents = [self dateComponentsFromDate:nowDate];
     
-    NSDateComponents *selfDateComponents = [greCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit | NSWeekOfMonthCalendarUnit | NSWeekOfYearCalendarUnit fromDate:self];
+    NSDateComponents *selfDateComponents = [self dateComponentsFromDate:self];
     
     NSDateComponents *weeDateComponents = [[NSDateComponents alloc] init];
     [weeDateComponents setCalendar:[NSCalendar currentCalendar]];
@@ -122,7 +128,6 @@ static int localAndServerGap = 0;
             }else{
                 dateString = [NSString stringWithFormat:@"晚上 %@",lastComponents];
             }
-//            dateString = lastComponents;
         }
         else
         {
@@ -130,7 +135,7 @@ static int localAndServerGap = 0;
             dateString = [NSString stringWithFormat:@"昨天 %@",lastComponents];
         }
     }
-    else if (nowDateComponents.week == selfDateComponents.week)
+    else if (nowDateComponents.weekOfMonth == selfDateComponents.weekOfMonth || nowDateComponents.weekOfYear == selfDateComponents.weekOfYear)
     {
         //在同一个周中
         NSArray* weekdays = @[@"temp",@"星期日",@"星期一",@"星期二",@"星期三",@"星期四",@"星期五",@"星期六"];
@@ -146,15 +151,4 @@ static int localAndServerGap = 0;
     return dateString;
 }
 
-+ (void)setServerTime:(int)serverTime
-{
-    int localTime = [[NSDate date] timeIntervalSince1970];
-    localAndServerGap = serverTime - localTime;
-}
-
-+ (NSUInteger)messageDate
-{
-    int localDate = [[NSDate date] timeIntervalSince1970];
-    return localDate + localAndServerGap;
-}
 @end

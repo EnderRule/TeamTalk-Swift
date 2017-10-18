@@ -11,7 +11,11 @@
 ================================================================*/
 #ifndef __BASE64_H__
 #define __BASE64_H__
-#include<iostream>
+
+//#include <iostream>
+
+#include <stdio.h>
+
 using namespace std;
 
 string base64_decode(const string &ascdata);

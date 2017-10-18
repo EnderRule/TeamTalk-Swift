@@ -19,19 +19,18 @@ class MsgReadNotifyAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
     
     func unrequestAnalysis() -> UnrequestAPIAnalysis! {
         let analysis:UnrequestAPIAnalysis = {(data) in
-            if  let builder:Im.Message.ImmsgDataReadNotify.Builder = try? Im.Message.ImmsgDataReadNotify.Builder.fromJSONToBuilder(data: data!){
-                if let res:Im.Message.ImmsgDataReadNotify = try? builder.build() {
-                    var dic:[String :Any] = [:]
-                    dic .updateValue(res.sessionType.rawValue, forKey: "type")
-                    dic.updateValue(res.msgId, forKey: "msgId")
-                    dic.updateValue(res.sessionId, forKey: "from_id")
-                    return dic
-                }else {
-                    debugPrint("SignNotifyAPI analysisReturnData failure")
-                    return  [:]
-                }
+
+            if  let res:Im.Message.ImmsgDataReadNotify = try? Im.Message.ImmsgDataReadNotify.parseFrom(data: data ?? Data()){
+                var dic:[String :Any] = [:]
+            
+                dic .updateValue(res.sessionType.rawValue, forKey: "type")
+                dic.updateValue(res.msgId, forKey: "msgId")
+                dic.updateValue(res.sessionId, forKey: "from_id")
+                
+                HMPrint("SignNotifyAPI analysisReturnData ",dic )
+                return dic
             }else {
-                debugPrint("SignNotifyAPI fromJSONToBuilder failure")
+                HMPrint("SignNotifyAPI parse failure")
                 return  [:]
             }
         }

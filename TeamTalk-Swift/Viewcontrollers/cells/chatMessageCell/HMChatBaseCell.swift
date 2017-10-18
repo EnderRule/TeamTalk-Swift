@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum HMBubbleLocation:Int {
+@objc public enum HMBubbleLocation:Int {
     case none = 0
     case left = 1
     case right = 2
@@ -18,9 +18,7 @@ let HMAvatarGap:CGFloat       = 8   // //头像到边缘的距离
 let HMBubbleUpDownGap:CGFloat = 8  // 气泡到上下边缘的距离
 let HMBubbleAvatarGap:CGFloat = 5  // 头像和气泡之间的距离
 
-
-
-enum HMChatCellActionType:Int{
+@objc public  enum HMChatCellActionType:Int{
     case none       = 0
     case sendAgain  = 1
     case showMenu   = 2
@@ -30,25 +28,25 @@ enum HMChatCellActionType:Int{
     case delete     = 32
 }
 
-protocol HMChatCellActionDelegate {
+@objc public protocol HMChatCellActionDelegate {
     func HMChatCellAction(type:HMChatCellActionType,message:MTTMessageEntity?,sourceView:UIView?) -> Void
 }
 
 //不可直接使用，需由子类继承再使用
-class HMChatBaseCell: HMBaseCell {
+public class HMChatBaseCell: HMBaseCell {
 
-    var avatarImgv:UIImageView = UIImageView.init()
-    var nameLabel:UILabel = UILabel.init()
+    public var avatarImgv:UIImageView = UIImageView.init()
+    public var nameLabel:UILabel = UILabel.init()
     
-    var bubbleImgv:UIImageView = UIImageView.init()
-    var resendButton:UIButton = UIButton.init(type: .system)
-    var activityView:UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
-    var msgStateLb:UILabel = UILabel.init()
+    public var bubbleImgv:UIImageView = UIImageView.init()
+    public var resendButton:UIButton = UIButton.init(type: .system)
+    public var activityView:UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
+    public var msgStateLb:UILabel = UILabel.init()
     
-    var bubbleLocation:HMBubbleLocation = .none
-    var session:MTTSessionEntity?
-    var message:MTTMessageEntity?
-    var delegate:HMChatCellActionDelegate?
+    public var bubbleLocation:HMBubbleLocation = .none
+    public var session:MTTSessionEntity?
+    public var message:MTTMessageEntity?
+    public var delegate:HMChatCellActionDelegate?
     
     deinit {
         self.session = nil
@@ -56,14 +54,14 @@ class HMChatBaseCell: HMBaseCell {
         self.delegate = nil
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    override public func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(false , animated: false )
     }
-    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+    override public func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(false , animated: false )
     }
     
-    override func setupCustom() {
+    override public  func setupCustom() {
         self.backgroundColor = UIColor.clear
         self.contentView.backgroundColor = UIColor.clear
         
@@ -106,11 +104,9 @@ class HMChatBaseCell: HMBaseCell {
     }
     
     
-    func setContent(message: MTTMessageEntity) {
+    public func setContent(message: MTTMessageEntity) {
         self.message = message
         
-        let leftConfig:MTTBubbleConfig = MTTBubbleModule.shareInstance().getBubbleConfigLeft(true)
-        let rightConfig:MTTBubbleConfig = MTTBubbleModule.shareInstance().getBubbleConfigLeft(false)
         
         let size = self .contentSizeFor(message: message)
         let bubbleWidth:CGFloat = self.bubbleLeftEdge() + size.width + self.bubbleRightEdge()
@@ -139,7 +135,7 @@ class HMChatBaseCell: HMBaseCell {
         
         //设置头像和昵称 
         if let sender:MTTUserEntity = HMUsersManager.shared.userFor(ID: message.senderId){
-            self.avatarImgv.setImage(str: sender.avatar)
+            self.avatarImgv.setImage(str: sender.avatar, placeHolder:#imageLiteral(resourceName: "defaultAvatar"))
             self.nameLabel.text = sender.nickName
         }
         //是否隐藏昵称
@@ -161,6 +157,7 @@ class HMChatBaseCell: HMBaseCell {
                 maker?.top.mas_equalTo()(self.nameLabel.mas_bottom)?.offset()(HMBubbleUpDownGap)
                 maker?.size.mas_equalTo()(CGSize.init(width: bubbleWidth, height: bubbleHeight))
             })
+            let rightConfig:MTTBubbleConfig = MTTBubbleModule.shareInstance().getBubbleConfigLeft(false)
             if var bubbleImage:UIImage = UIImage.init(named: rightConfig.textBgImage){
                 bubbleImage = bubbleImage.stretchableImage(withLeftCapWidth: Int(rightConfig.stretchy.left), topCapHeight: Int(rightConfig.stretchy.top))
                 self.bubbleImgv.image = bubbleImage
@@ -171,6 +168,7 @@ class HMChatBaseCell: HMBaseCell {
                 maker?.top.mas_equalTo()(self.nameLabel.mas_bottom)?.offset()(HMBubbleUpDownGap)
                 maker?.size.mas_equalTo()(CGSize.init(width: bubbleWidth, height: bubbleHeight))
             })
+            let leftConfig:MTTBubbleConfig = MTTBubbleModule.shareInstance().getBubbleConfigLeft(true)
             if var bubbleImage:UIImage = UIImage.init(named: leftConfig.textBgImage){
                 bubbleImage = bubbleImage.stretchableImage(withLeftCapWidth: Int(leftConfig.stretchy.left), topCapHeight: Int(leftConfig.stretchy.top))
                 self.bubbleImgv.image = bubbleImage
@@ -215,7 +213,7 @@ class HMChatBaseCell: HMBaseCell {
         self.layoutContentView(message: message)
     }
     
-    func cellHeightFor(message:MTTMessageEntity)->CGFloat{
+    public func cellHeightFor(message:MTTMessageEntity)->CGFloat{
         // 昵称高度 + 实际内容高度 + 气泡与cell的间隔 + 气泡与内容的间隔。 总高度必须 >= 头像高度 + 头像与cell的间隔
         var nameHeight:CGFloat = nameLabel.height
         if message.sessionType == .sessionTypeSingle || message.senderId == HMLoginManager.shared.currentUser.userId {
@@ -245,29 +243,29 @@ class HMChatBaseCell: HMBaseCell {
     
     
     ///子类继承实现
-    func layoutContentView(message:MTTMessageEntity){
+    public func layoutContentView(message:MTTMessageEntity){
         
     }
     
-    func contentSizeFor(message:MTTMessageEntity)->CGSize{
+    public func contentSizeFor(message:MTTMessageEntity)->CGSize{
         return CGSize.init(width: 180, height: 44.0)
     }
     
-    func bubbleTopEdge()->CGFloat {
+    public func bubbleTopEdge()->CGFloat {
         return 6
     }
     
-    func bubbleLeftEdge()->CGFloat {
+    public func bubbleLeftEdge()->CGFloat {
         if self.bubbleLocation == .right{
             return 5
         }else {
             return 10
         }
     }
-    func bubbleBottomEdge()->CGFloat{
+    public func bubbleBottomEdge()->CGFloat{
         return 5
     }
-    func bubbleRightEdge()->CGFloat{
+    public func bubbleRightEdge()->CGFloat{
         if self.bubbleLocation == .right{
             return 10
         }else {
@@ -276,7 +274,7 @@ class HMChatBaseCell: HMBaseCell {
     }
     
     
-    func sendAgainAction(){
+    public func sendAgainAction(){
         if self.message != nil {
             self.updateSendState(state: .Sending)
             self.delegate?.HMChatCellAction(type: .sendAgain, message: self.message, sourceView: self )

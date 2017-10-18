@@ -56,7 +56,7 @@ class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 
                 return userAndVersion
             }else {
-                debugPrint("AllUserAPI analysisReturnData failure")
+                HMPrint("AllUserAPI analysisReturnData failure")
                 return [:]
             }
         }
@@ -79,7 +79,7 @@ class AllUserAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("AllUserAPI package builded data failure")
+                HMPrint("AllUserAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

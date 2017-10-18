@@ -25,7 +25,7 @@ class ReceiveMessageAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
 //                entity.state = .SendSuccess
                 return entity
             }else {
-                debugPrint("ReceiveMessageAPI analysisReturnData failure")
+                HMPrint("ReceiveMessageAPI analysisReturnData failure")
                 return  nil
             }
         }

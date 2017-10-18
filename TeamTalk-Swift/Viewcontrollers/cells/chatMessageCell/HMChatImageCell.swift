@@ -33,7 +33,7 @@ class HMChatImageCell: HMChatBaseCell {
         if message.isImageMessage{
             let imageURL:String = self.imageURLFrom(message: message)
             self.mainImgv.setImage(str: imageURL)
-//            debugPrint("set content message imageURL:\(imageURL)")
+//            HMPrint("set content message imageURL:\(imageURL)")
         }
     }
 
@@ -92,9 +92,6 @@ class HMChatImageCell: HMChatBaseCell {
 
     
     private func imageURLFrom(message:MTTMessageEntity)->String{
-        
-//        print("imageURLFrom(message ",message.info as NSDictionary)
-        
         var imageURL:String = message.imageLocalPath
         imageURL = imageURL.safeLocalPath()
         if FileManager.default.fileExists(atPath: imageURL){

@@ -98,7 +98,6 @@
     return bubbleType;
 }
 
-
 @end
 
 @implementation MTTBubbleConfig
@@ -108,66 +107,63 @@
     self = [super init];
     if (self)
     {
-        NSString* textBgImagePath;
-        NSString* picBgImagePath;
-        
         NSData* data = [NSData dataWithContentsOfFile:string];
         
         if (data){
+            NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         
-        
-        NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        
-        MTTBubbleContentInset insetTemp;
-        insetTemp.top = [dic[@"contentInset"][@"top"] floatValue];
-        insetTemp.bottom = [dic[@"contentInset"][@"bottom"] floatValue];
-        if(left){
-            insetTemp.left = [dic[@"contentInset"][@"left"] floatValue];
-            insetTemp.right = [dic[@"contentInset"][@"right"] floatValue];
-        }else{
-            insetTemp.left = [dic[@"contentInset"][@"right"] floatValue];
-            insetTemp.right = [dic[@"contentInset"][@"left"] floatValue];
-        }
-        self.inset = insetTemp;
-        MTTBubbleVoiceInset voiceInsetTemp;
-        voiceInsetTemp.top = [dic[@"voiceInset"][@"top"] floatValue];
-        voiceInsetTemp.bottom = [dic[@"voiceInset"][@"bottom"] floatValue];
-        if(left){
-            voiceInsetTemp.left = [dic[@"voiceInset"][@"left"] floatValue];
-            voiceInsetTemp.right = [dic[@"voiceInset"][@"right"] floatValue];
-        }else{
-            voiceInsetTemp.left = [dic[@"voiceInset"][@"right"] floatValue];
-            voiceInsetTemp.right = [dic[@"voiceInset"][@"left"] floatValue];
-        }
-        self.voiceInset = voiceInsetTemp;
-        MTTBubbleStretchy stretchyTemp;
-        stretchyTemp.left = [dic[@"stretchy"][@"left"] floatValue];
-        stretchyTemp.top = [dic[@"stretchy"][@"top"] floatValue];
-        self.stretchy = stretchyTemp;
-        MTTBubbleStretchy imgStretchyTemp;
-        imgStretchyTemp.left = [dic[@"imgStretchy"][@"left"] floatValue];
-        imgStretchyTemp.top = [dic[@"imgStretchy"][@"top"] floatValue];
-        self.imgStretchy = imgStretchyTemp;
-        NSArray *textColorTemp = [dic[@"textColor"] componentsSeparatedByString:@","];
+            MTTBubbleContentInset insetTemp;
+            insetTemp.top = [dic[@"contentInset"][@"top"] floatValue];
+            insetTemp.bottom = [dic[@"contentInset"][@"bottom"] floatValue];
+            if(left){
+                insetTemp.left = [dic[@"contentInset"][@"left"] floatValue];
+                insetTemp.right = [dic[@"contentInset"][@"right"] floatValue];
+            }else{
+                insetTemp.left = [dic[@"contentInset"][@"right"] floatValue];
+                insetTemp.right = [dic[@"contentInset"][@"left"] floatValue];
+            }
+            self.inset = insetTemp;
+            MTTBubbleVoiceInset voiceInsetTemp;
+            voiceInsetTemp.top = [dic[@"voiceInset"][@"top"] floatValue];
+            voiceInsetTemp.bottom = [dic[@"voiceInset"][@"bottom"] floatValue];
+            if(left){
+                voiceInsetTemp.left = [dic[@"voiceInset"][@"left"] floatValue];
+                voiceInsetTemp.right = [dic[@"voiceInset"][@"right"] floatValue];
+            }else{
+                voiceInsetTemp.left = [dic[@"voiceInset"][@"right"] floatValue];
+                voiceInsetTemp.right = [dic[@"voiceInset"][@"left"] floatValue];
+            }
+            self.voiceInset = voiceInsetTemp;
+            MTTBubbleStretchy stretchyTemp;
+            stretchyTemp.left = [dic[@"stretchy"][@"left"] floatValue];
+            stretchyTemp.top = [dic[@"stretchy"][@"top"] floatValue];
+            self.stretchy = stretchyTemp;
+            MTTBubbleStretchy imgStretchyTemp;
+            imgStretchyTemp.left = [dic[@"imgStretchy"][@"left"] floatValue];
+            imgStretchyTemp.top = [dic[@"imgStretchy"][@"top"] floatValue];
+            self.imgStretchy = imgStretchyTemp;
+            NSArray *textColorTemp = [dic[@"textColor"] componentsSeparatedByString:@","];
+                
+                
+                self.textColor = [UIColor colorWithRed:[textColorTemp[0] floatValue] green:[textColorTemp[1] floatValue] blue:[textColorTemp[2] floatValue] alpha:1];
+            NSArray *linkColorTemp = [dic[@"linkColor"] componentsSeparatedByString:@","];
+            self.linkColor =  [UIColor colorWithRed:[linkColorTemp[0] floatValue] green:[linkColorTemp[1] floatValue] blue:[linkColorTemp[2] floatValue] alpha:1]; 
             
+            NSString* textBgImagePath;
+            NSString* picBgImagePath;
+            NSString* bubbleType = [MTTBubbleModule getBubbleTypeLeft:left];
+            if(left){
+                textBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/textLeftBubble", bubbleType];
+                picBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/picLeftBubble", bubbleType];
+            }else{
+                textBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/textBubble", bubbleType];
+                picBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/picBubble", bubbleType];
+            }
             
-            self.textColor = [UIColor colorWithRed:[textColorTemp[0] floatValue] green:[textColorTemp[1] floatValue] blue:[textColorTemp[2] floatValue] alpha:1];
-        NSArray *linkColorTemp = [dic[@"linkColor"] componentsSeparatedByString:@","];
-        self.linkColor =  [UIColor colorWithRed:[linkColorTemp[0] floatValue] green:[linkColorTemp[1] floatValue] blue:[linkColorTemp[2] floatValue] alpha:1]; 
-        
-        NSString* bubbleType = [MTTBubbleModule getBubbleTypeLeft:left];
-        if(left){
-            textBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/textLeftBubble", bubbleType];
-            picBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/picLeftBubble", bubbleType];
-        }else{
-            textBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/textBubble", bubbleType];
-            picBgImagePath = [[NSString alloc]initWithFormat:@"bubble.bundle/%@/picBubble", bubbleType];
-        }
-        
-//        self.textBgImage = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:textBgImagePath];
-        self.textBgImage = textBgImagePath;
-//        self.picBgImage = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:picBgImagePath];
-        self.picBgImage = picBgImagePath;
+    //        self.textBgImage = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:textBgImagePath];
+            self.textBgImage = textBgImagePath;
+    //        self.picBgImage = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:picBgImagePath];
+            self.picBgImage = picBgImagePath;
         }
     }
     return self;

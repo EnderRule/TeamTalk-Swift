@@ -61,7 +61,7 @@ class DeleteMemberFromGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
                     }
                 }
             }else {
-                debugPrint("DeleteMemberFromGroupAPI analysisReturnData failure")
+                HMPrint("DeleteMemberFromGroupAPI analysisReturnData failure")
                 return nil
             }
         }
@@ -84,7 +84,7 @@ class DeleteMemberFromGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("DeleteMemberFromGroupAPI package builded data failure")
+                HMPrint("DeleteMemberFromGroupAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

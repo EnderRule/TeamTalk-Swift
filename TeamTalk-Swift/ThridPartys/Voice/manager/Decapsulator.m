@@ -176,7 +176,7 @@
     }
     self.player.isDataInputOver = YES;
     
-    DDLog(@"decode ogg to pcm: %lu -> %lu", (unsigned long)[oggData length], (unsigned long)decodedByteLength);
+//    NSLog(@"decode ogg to pcm: %lu -> %lu", (unsigned long)[oggData length], (unsigned long)decodedByteLength);
 }
 
 - (BOOL)readOggHeaderToStreamState:(ogg_stream_state *)os fromOggPage:(ogg_page *)op {
@@ -191,7 +191,7 @@
 }
 
 - (void)error:(NSString *)errorDesription {
-    DDLog(@"Decapsulator error:%@", errorDesription);
+//    NSLog(@"Decapsulator error:%@", errorDesription);
 }
 
 - (void)dealloc {

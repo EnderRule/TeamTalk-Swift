@@ -141,7 +141,7 @@ In me the tiger sniffs the rose.
     actionSheet.autoHideWhenDeviceRotated = YES;
 
     // V 3.2.4+
-    actionSheet.titleLinesNumber = 2;
+    actionSheet.numberOfTitleLines = 2;
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         // [actionSheet appendButtonWithTitle:@"WoW" atIndex:7];
@@ -297,6 +297,10 @@ In me the tiger sniffs the rose.
 
 ## 版本 ChangeLog
 
+
+### [V 3.3.1](https://github.com/iTofu/LCActionSheet/releases/tag/3.3.1) (2017.10.10)
+
+* 适配 iPhone X。
 
 ### [V 3.3.0](https://github.com/iTofu/LCActionSheet/releases/tag/3.3.0) (2017.09.25)
 

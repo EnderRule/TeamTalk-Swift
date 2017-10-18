@@ -50,7 +50,7 @@ class SendMessageAPI: DDSuperAPI {
             if let res = try? Im.Message.ImmsgDataAck.parseFrom(data: data ?? Data()) {
                 return [res.msgId,res.sessionId]
             }else {
-                debugPrint("SendMessageAPI analysisReturnData failure")
+                HMPrint("SendMessageAPI analysisReturnData failure")
                 return []
             }
         }
@@ -78,7 +78,7 @@ class SendMessageAPI: DDSuperAPI {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("SendMessageAPI package builded data failure")
+                HMPrint("SendMessageAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

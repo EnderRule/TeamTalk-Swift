@@ -9,7 +9,6 @@
 //import UIKit
 import AFNetworking
 
-
 @objc enum HMLoginState:Int {
     case online = 0
     case kickout            //被挤下线
@@ -48,11 +47,11 @@ func HMCurrentUser()->MTTUserEntity{
     return HMLoginManager.shared.currentUser
 }
 
-class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
+public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
 
-    static let shared:HMLoginManager = HMLoginManager()
+    public static let shared:HMLoginManager = HMLoginManager()
     
-    var currentUser:MTTUserEntity{
+    public var currentUser:MTTUserEntity{
         get{
             if !s_currentUser.isValided{
                 if let user = HMUsersManager.shared.userFor(ID: self.currentUserID){
@@ -76,7 +75,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             return s_networkState
         }
     }
-    var pushTtoken:String{
+    public var pushTtoken:String{
         set{
             UserDefaults.standard.setValue(newValue, forKey: "im.HMCurrentPushToken")
             UserDefaults.standard.synchronize()
@@ -85,7 +84,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             return  UserDefaults.standard.object(forKey: "im.HMCurrentPushToken") as? String ?? ""
         }
     }
-    var currentUserID  :String{
+    public var currentUserID  :String{
         set{
             UserDefaults.standard.setValue(newValue, forKey: "im.HMCurrentUserID")
             UserDefaults.standard.synchronize()
@@ -94,7 +93,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             return  UserDefaults.standard.object(forKey: "im.HMCurrentUserID") as? String ?? ""
         }
     }
-    var currentUserName:String{
+     var currentUserName:String{
         set{
             UserDefaults.standard.setValue(newValue, forKey: "im.HMCurrentUserName")
             UserDefaults.standard.synchronize()
@@ -103,7 +102,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             return  UserDefaults.standard.object(forKey: "im.HMCurrentUserName") as? String ?? ""
         }
     }
-    var currentPassword:String{
+     var currentPassword:String{
         set{
             UserDefaults.standard.setValue(newValue, forKey: "im.HMCurrentUserPassword")
             UserDefaults.standard.synchronize()
@@ -112,7 +111,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             return  UserDefaults.standard.object(forKey: "im.HMCurrentUserPassword") as? String ?? ""
         }
     }
-    var shouldAutoLogin:Bool{
+    public var shouldAutoLogin:Bool{
         set{
             UserDefaults.standard.setValue(newValue, forKey: "im.HMShouldAutoLogin")
             UserDefaults.standard.synchronize()
@@ -131,23 +130,18 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         }
     }
     
-    var serverTime:TimeInterval {
+    public var serverTime:TimeInterval {
         get{
             return s_serverTime
         }
     }
     
     private var s_serverTime:TimeInterval = Date().timeIntervalSince1970
-    private var s_currentUser:MTTUserEntity = MTTUserEntity.init() {
-        didSet{
-//            debugPrint("did Change LoginUser :",s_currentUser.objID,s_currentUser.name,s_currentUser.avatar)
-        }
-    }
+    private var s_currentUser:MTTUserEntity = MTTUserEntity.init()
     
     private var s_networkState:HMNetworkState = .disconnect
     private var s_loginState:HMLoginState = .offLine{
         didSet{
-//            debugPrint("HMLoginManager login state didSet \(self.s_loginState) ")
             self.loginStateChangeHandler()
         }
     }
@@ -201,13 +195,6 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             HMNotification.pcLoginStatusChanged.postWith(obj: object, userInfo: nil )
         }
     }
-    
-    func checkUpdateVersion(){
-    
-        
-    }
-    
-    
     private func getMsgIP(success:@escaping (([AnyHashable:Any])->Void),failure:@escaping ((String)->Void)){
         
         self.getMsgIPManager.get(SERVER_Address, parameters: nil , progress: nil , success: { (task , responseObject ) in
@@ -220,7 +207,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                 failure("连接消息服务器失败 code:-1")
             }
         }) { (task , error ) in
-            debugPrint("get msgIP error:\(error.localizedDescription)")
+            HMPrint("get msgIP error:\(error.localizedDescription)")
             failure(error.localizedDescription)
         }
     }
@@ -257,7 +244,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         }
     }
     
-    internal func tcpClientConnectSuccess() {
+    public func tcpClientConnectSuccess() {
         if self.tcpIsConnecting{
             self.tcpIsConnecting = false
             
@@ -268,7 +255,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             })
         }
     }
-    internal func tcpClientConnectFailure() {
+    public func tcpClientConnectFailure() {
         if self.tcpIsConnecting{
             self.tcpIsConnecting = false
             
@@ -279,11 +266,11 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             })
         }
     }
-    internal func tcpClientReceiveServerHeartBeat() {
+    public  func tcpClientReceiveServerHeartBeat() {
         self.n_receiveServerHeartBeat()
     }
 
-    internal func loginWith(userName:String,password:String,success:@escaping ((MTTUserEntity)->Void),failure:@escaping ((String)->Void)){
+    public  func loginWith(userName:String,password:String,success:@escaping ((MTTUserEntity)->Void),failure:@escaping ((String)->Void)){
         
         self.getMsgIP(success: { (dic ) in
             let json = JSON.init(dic)
@@ -302,7 +289,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                         if let dic = response as? [String:Any]{
                             let json2 = JSON.init(dic)
                             
-                            debugPrint("登入IP/端口\(ip)/\(port)  result:\(dic)")
+                            HMPrint("登入IP/端口\(ip)/\(port)  result:\(dic)")
                             if let user:MTTUserEntity = dic[LoginAPI.kResultUser] as? MTTUserEntity {
                                 let time:TimeInterval = json2[LoginAPI.kResultServerTime].doubleValue
                                 if time > 3600.0 {
@@ -311,7 +298,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                 
                                 self.s_currentUser = user
                                 
-                                debugPrint("登入驗證成功   serverTime :\(time) \(self.s_currentUser.objID) \(self.s_currentUser.name) \(self.s_currentUser.avatar) \(self.s_currentUser.nickName) \(self.currentUser)")
+                                HMPrint("登入驗證成功   serverTime :\(time) \(self.s_currentUser.objID) \(self.s_currentUser.name) \(self.s_currentUser.avatar) \(self.s_currentUser.nickName) \(self.currentUser)")
 
                                 self.currentUserName = userName
                                 self.currentPassword = password
@@ -322,7 +309,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
 
                                 self.reloginning = true
                                 
-                                HMDBManager.shared.dbUserID = user.objID
+                                HMDBManager.shared.openDB(userID: user.userId)
                                                                 
                                 HMSessionModule.shared.loadLocalSession(completion: nil)
                                 
@@ -349,7 +336,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                         }
                     })
                 }, failure: {(error)in
-                    debugPrint("登入IP/端口 \(ip)/\(port) error:\(error)")
+                    HMPrint("登入IP/端口 \(ip)/\(port) error:\(error)")
                     failure(error)
                 })
             }else{
@@ -374,7 +361,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         }
     }
     
-    func logout(){
+    public  func logout(){
         self.s_loginState = .offLineInitiative
 
         self.s_currentUser = MTTUserEntity.init()
@@ -393,8 +380,8 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         self.s_loginState = .offLineInitiative
     }
     
-    func sendPushtoken(){
-        debugPrint(" Send PushToken :\(self.pushTtoken) ")
+    public  func sendPushtoken(){
+        HMPrint(" Send PushToken :\(self.pushTtoken) ")
         if self.pushTtoken.length > 0 {
             let api =  SendPushTokenAPI.init(pushToken: self.pushTtoken)
             api.request(withParameters: [:], completion: { (obj , error ) in
@@ -407,7 +394,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     
     private func loginStateChangeHandler(){
         
-        debugPrint("loginState ChangeHandler  \(self.s_loginState.rawValue)")
+        HMPrint("loginState ChangeHandler  \(self.s_loginState.rawValue)")
         switch (self.s_loginState)
         {
         case .kickout:
@@ -452,7 +439,6 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     @objc private func serverTimeCounter(){
         self.s_serverTime += 1
         
-//        print("serverTime:\(Int(self.s_serverTime))  phoneTime:\(Int(Date().timeIntervalSince1970))")
     }
     
     private var sendHeartBeatTimer:Timer?
@@ -498,13 +484,13 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     }
     
     @objc private func n_receiveServerHeartBeat(){
-//        debugPrint(" ********** server 嘣 ***********")
+//        HMPrint(" ********** server 嘣 ***********")
 
         self.receivedServerHeart = true
     }
     
     @objc private func sendHeartBeat(timer:Timer){
-//        debugPrint(" ********** send 嘣 ***********")
+//        HMPrint(" ********** send 嘣 ***********")
         HeartbeatAPI.init().request(withParameters: nil) { (object , error ) in }
     }
     @objc private func checkServerHeartBeat(timer:Timer){
@@ -514,7 +500,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             
             self.p_stopRelogin()
         }else{
-            debugPrint("太久没收到服务器端 心跳")
+            HMPrint("太久没收到服务器端 心跳")
             
             self.p_stopCheckServerHeartBeat()
             self.p_stopHeartBeat()
@@ -527,7 +513,7 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     @objc private func relogin(timer:Timer){
         reloginTimeN += 1
         
-        debugPrint("HMloginmanager relogin")
+        HMPrint("HMloginmanager relogin")
         
         if reloginTimeN >= self.reloginInterval {
             
@@ -540,7 +526,6 @@ class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                 self.powN = 0
                 
                 self.s_loginState = .online
-                HMNotification.userReloginSuccess.postWith(obj: user , userInfo: nil )
                 
             }, failure: { (error ) in
                 if error == "未登录"{

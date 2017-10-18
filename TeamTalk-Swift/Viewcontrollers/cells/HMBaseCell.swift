@@ -9,14 +9,14 @@
 import UIKit
 
 
-class HMBaseCell: UITableViewCell {
+public class HMBaseCell: UITableViewCell {
 
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    override public func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         self.setHighlighted(false , animated: false)
@@ -31,21 +31,21 @@ class HMBaseCell: UITableViewCell {
         self.setupCustom()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCustom(){
+    public func setupCustom(){
         //子类实现
     }
     
-    func configWith(object: Any) {
+    public  func configWith(object: Any) {
     
     }
     
 }
 
-extension HMBaseCell{
+public extension UITableViewCell{
     
     func cellReloadAsTableview(){
         let tableview = self.superViewAs(aclass: UITableView.classForCoder())

@@ -47,7 +47,7 @@ class UserStatAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 }
                 return userstatList
             }else {
-                debugPrint("UserStatAPI analysisReturnData failure")
+                HMPrint("UserStatAPI analysisReturnData failure")
                 return []
             }
         }
@@ -70,7 +70,7 @@ class UserStatAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("UserStatAPI package builded data failure")
+                HMPrint("UserStatAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

@@ -35,7 +35,7 @@ class KickPCClientAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let res = try? Im.Login.ImkickPcclientRsp.parseFrom(data: data ?? Data()) {
                 return [res.resultCode]
             }else {
-                debugPrint("KickPCClientAPI analysisReturnData failure")
+                HMPrint("KickPCClientAPI analysisReturnData failure")
                 return []
             }
         }
@@ -56,7 +56,7 @@ class KickPCClientAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("KickPCClientAPI package builded data failure")
+                HMPrint("KickPCClientAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

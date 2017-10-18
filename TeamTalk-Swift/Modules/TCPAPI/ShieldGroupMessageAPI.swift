@@ -44,7 +44,7 @@ class ShieldGroupMessageAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 return res.resultCode
                 
             }else {
-                debugPrint("ShieldGroupMessageAPI analysisReturnData failure")
+                HMPrint("ShieldGroupMessageAPI analysisReturnData failure")
                 return 0
             }
         }
@@ -67,7 +67,7 @@ class ShieldGroupMessageAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("ShieldGroupMessageAPI package builded data failure")
+                HMPrint("ShieldGroupMessageAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

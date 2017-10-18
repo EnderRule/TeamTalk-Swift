@@ -39,7 +39,7 @@ class SendPushTokenAPI: DDSuperAPI,DDAPIScheduleProtocol {
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
 //            if let str = String.init(data: data ?? Data(), encoding: .utf8){
-//                debugPrint("sendpushtokenapi return data:",str)
+//                HMPrint("sendpushtokenapi return data:",str)
 //            }
             return nil
         }
@@ -62,7 +62,7 @@ class SendPushTokenAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("SendPushTokenAPI package builded data failure")
+                HMPrint("SendPushTokenAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

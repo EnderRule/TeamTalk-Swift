@@ -23,7 +23,7 @@ class ReceiveKickOffAPI: DDUnrequestSuperAPI,DDAPIUnrequestScheduleProtocol {
             if let res:Im.Login.ImkickUser = try? Im.Login.ImkickUser.parseFrom(data: data ?? Data()) {
                 return res.kickReason
             }else {
-                debugPrint("ReceiveKickOffAPI analysisReturnData failure")
+                HMPrint("ReceiveKickOffAPI analysisReturnData failure")
                 return  0
             }
         }

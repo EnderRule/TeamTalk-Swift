@@ -9,6 +9,7 @@
 import UIKit
 
 import AudioToolbox
+import SVProgressHUD
 
 let ChatInputView_MinHeight:CGFloat = 44.0
 
@@ -77,8 +78,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         if chattingModule.showingMessages.count == 0 {
             chattingModule.loadMoreHistory(completion: { (count , error ) in
                 
-                print("load more history  :\(count)",error?.localizedDescription ?? "nil error")
-
                 if count > 0{
                     self.refreshMessagesData(scrollToBottom: true )
                 }
@@ -138,14 +137,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             header.setTitle("正在載入...", for: .refreshing)
             header.setTitle("没有更多了", for: .noMoreData)
          }) {
-//            if self.noMoreRecords {
-//
-//                self.tableView.mj_headerEndRefreshing()
-//                self.view.makeToast("没有更多了", duration: 2.5, position: .center, title: nil , image: nil , style: ToastStyle.init(), completion: nil )
-//
-//            }else{
-                self.loadMoreHistoryRecords()
-//            }
+            self.loadMoreHistoryRecords()
         }
     }
     
@@ -156,7 +148,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         
         self.chattingModule.loadMoreHistory { [weak self ] (count , error ) in
             if error != nil  && error!.localizedDescription.length > 0 {
-                self?.view.makeToast(error!.localizedDescription)
+                SVProgressHUD.showError(withStatus: error?.localizedDescription)
+                
                 self?.tableView.mj_headerEndRefreshing()
                 return
             }
@@ -169,7 +162,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
                 let contentOffsetYNew:CGFloat = contentSizeHeightNew - contentSizeHeightOld + contentOffsetYOld
                 self?.tableView.setContentOffset(CGPoint.init(x: 0, y: contentOffsetYNew), animated: false )
             }else {
-                debugPrint("load more history messages for session \(self?.chattingModule.sessionEntity.sessionID ?? "") ,but no more")
+                HMPrint("load more history messages for session \(self?.chattingModule.sessionEntity.sessionID ?? "") ,but no more")
 
                 self?.noMoreRecords = true
                 self?.tableView.mj_headerEndRefreshing()
@@ -197,7 +190,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count  = self.showingMessages.count
-//        print("numberOfRowsInSection showingmessages ",self.showingMessages.count)
         return count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -222,15 +214,15 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
                 if !message.isGroupMessage && message.senderId != HMLoginManager.shared.currentUser.userId {
                     
                     
-                    if MTTMsgReadState.stateFor(msgID: message.msgID) != .Readed{
+                    if MTTMsgReadState.stateFor(message:message) != .Readed{
                      
                         HMMessageManager.shared.sendReadACK(message: message)
                      
-                        MTTMsgReadState.save(msgID: message.msgID, state: .Readed)
+                        MTTMsgReadState.save(message:message, state: .Readed)
                         
                         message.state = .Readed
                         message.dbSave(completion: { (success ) in
-                            debugPrint(" 发送已读回执：db save \(success) \(message.msgID) \(message.sessionId) \(message.msgContent)")
+                            HMPrint(" 发送已读回执：db save \(success) \(message.msgID) \(message.sessionId) \(message.msgContent)")
                         })
                     }
                 }
@@ -288,7 +280,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         HMMessageManager.shared.sendNormal(message: msgEntity, session: self.chattingModule.sessionEntity) {[weak self] (message , error ) in
             if error != nil {
                 
-                debugPrint("HMChatting send message \(message.msgContent) \n error: \(error!.localizedDescription)")
+                HMPrint("HMChatting send message \(message.msgContent) \n error: \(error!.localizedDescription)")
                 msgEntity.state = .SendFailure
             }else{
                 msgEntity.state = message.state
@@ -325,12 +317,12 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         
     }
     func onTapMediaItemShoot(){
-        print("相机拍照片")
+        HMPrint("相机拍照片")
     }
     
     private func sendLocalImage(imagePath:String){
         
-        print("ready to upload messageImage:\(imagePath)")
+        HMPrint("ready to upload messageImage:\(imagePath)")
         
         var scale:CGFloat = 1.618
         if let image:UIImage = UIImage.init(contentsOfFile: imagePath){
@@ -345,9 +337,9 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         
         //先上传图片、再发送含有图片URL 的消息。
         SendPhotoMessageAPI.shared.uploadPhoto(imagePath: imagePath, to: self.chattingModule.sessionEntity, progress: { (progress ) in
-            debugPrint("upload progress \(progress.completedUnitCount)/\(progress.totalUnitCount)  \(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))")
+            HMPrint("upload progress \(progress.completedUnitCount)/\(progress.totalUnitCount)  \(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))")
         }, success: {[weak self] (imageURL ) in
-            debugPrint("upload success url: \(imageURL)")
+            HMPrint("upload success url: \(imageURL)")
             if imageURL.length > 0 {
                 newMessage.state = .Sending
                 
@@ -358,7 +350,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             }
         }) {[weak self ] (errorString ) in
             
-            debugPrint("upload error :\(errorString)")
+            HMPrint("upload error :\(errorString)")
             
             newMessage.state = .SendFailure
             newMessage.updateToDB(compeletion: { (success ) in
@@ -379,7 +371,6 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         guard let message:MTTMessageEntity = notification.object as? MTTMessageEntity else {
             return
         }
-        print("chattingVC onReceiveMessage \n",(message.dicValues() as NSDictionary))
         
         if message.sessionId == self.chattingModule.sessionEntity.sessionID {
             self.chattingModule.addShow(message: message)
@@ -415,14 +406,13 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     }
     
     func onTap(_ item: NIMMediaItem!){
-        print("tap on meida item:",item.title,NSStringFromSelector(item.selector))
         if self.responds(to: item.selector){
             self.perform(item.selector)
         }
     }
     
     func onTextChanged(_ sender: Any!) {
-        print("input view text change \(sender) ")
+
     }
     
     func onSendText(_ text: String!, atUsers: [Any]!) {
@@ -431,13 +421,12 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         }
         let messageEntity = MTTMessageEntity.initWith(content: text, module: self.chattingModule, msgContentType: .Text)
         messageEntity.dbSave(completion: nil)
-        print("input view : sendtext:\(text) sender:\(messageEntity.senderId) \(HMCurrentUser().userId)")
 
+        
         self.sendMessage(msgEntity: messageEntity)
     }
     
     func onSelectChartlet(_ chartletId: String!, catalog categoryId: String!) {
-        print("input ivew select chartlet : \(chartletId) \(categoryId)")
         
         var msgcontent:String = ""
         if categoryId == "mgj" && chartletId.length > 0{
@@ -453,7 +442,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         }else{
             msgcontent = "[貼圖]"
         }
-        debugPrint("select charlet \(msgcontent)   \(categoryId!)   \(chartletId!)")
+        HMPrint("select charlet \(msgcontent)   \(categoryId!)   \(chartletId!)")
         
         let messageEntity = MTTMessageEntity.initWith(content: msgcontent, module: self.chattingModule, msgContentType: .Emotion)
 
@@ -486,10 +475,10 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     
     //MARK:voice recording delegate  //錄音代理中更新UI 需切換到主線程中來
     func recordingFinished(withFileName filePath: String!, time interval: TimeInterval) {
-        debugPrint("chatting recording Finished  \(interval)"  )
+        HMPrint("chatting recording Finished  \(interval)"  )
        dispatch(after: 0) {
             guard  interval > 2 else {
-                self.view.makeToast("錄音時間太短啦")
+                SVProgressHUD.showError(withStatus: "錄音時間太短啦")
                 return
             }
             
@@ -507,7 +496,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     
     func recordingFailed(_ failureInfoString: String!) {
         dispatch(after: 0) { 
-            self.view.makeToast("錄音失敗：\(failureInfoString)")
+            SVProgressHUD.showError(withStatus: "錄音失敗：\(failureInfoString)")
         }
     }
     func recordingStopped() {
@@ -516,7 +505,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         }
     }
     func recordAudioProgress(_ currentTime: TimeInterval) {
-        debugPrint("chatting  update RecordTime \(currentTime)")
+        HMPrint("chatting  update RecordTime \(currentTime)")
 
         dispatch(after: 0) { 
             self.chatInputView.updateAudioRecordTime(currentTime)
@@ -534,7 +523,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     //MARK: HMChat cell action delegate
     func HMChatCellAction(type: HMChatCellActionType, message: MTTMessageEntity?, sourceView: UIView?) {
         
-        debugPrint("HMChatCellAction \(type),message \(message?.msgContent ?? "nil msgcontent")")
+        HMPrint("HMChatCellAction \(type),message \(message?.msgContent ?? "nil msgcontent")")
         
         
         
@@ -563,7 +552,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
                     message?.updateToDB(compeletion: nil )
                     self.sendMessage(msgEntity: message!)
                 } else{
-                    sourceView?.makeToast("圖片不存在")
+                    SVProgressHUD.showError(withStatus: "圖片不存在")
                 }
             }else{
                 message!.msgTime = UInt32(Date().timeIntervalSince1970)
@@ -588,23 +577,11 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
                     PlayerManager.shared().playAudio(withFileName: localPath, playerType: .DDSpeaker, delegate: self)
                     
                 }else{
-                    self.view.makeToast("音頻文件不存在")
+                    SVProgressHUD.showError(withStatus: "音頻文件不存在")
                 }
             }
         }
         
-//        else if type == .voicePlay{
-//            let localPath = message?.msgContent.safeLocalPath() ?? ""
-//            if FileManager.default.fileExists(atPath: localPath){
-//                PlayerManager.shared().stopPlaying()  //必須 停止之前的播放  ，否則無法更新上個播放對應的cell的UI
-//                
-//                self.currentVoicePlayingCell  = sourceView as? HMChatVoiceCell
-//                PlayerManager.shared().playAudio(withFileName: localPath, playerType: .DDSpeaker, delegate: self)
-//                
-//            }else{
-//                self.view.makeToast("音頻文件不存在")
-//            }
-//        }
     }
     
 }

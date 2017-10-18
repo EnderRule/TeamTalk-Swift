@@ -50,7 +50,7 @@ class DDUserDetailInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 return userList
                 
             }else {
-                debugPrint("DDUserDetailInfoAPI analysisReturnData failure")
+                HMPrint("DDUserDetailInfoAPI analysisReturnData failure")
                 return []
             }
         }
@@ -73,7 +73,7 @@ class DDUserDetailInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("DDUserDetailInfoAPI package builded data failure")
+                HMPrint("DDUserDetailInfoAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()

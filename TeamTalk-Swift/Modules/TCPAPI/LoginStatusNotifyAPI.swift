@@ -26,7 +26,7 @@ class LoginStatusNotifyAPI: DDUnrequestSuperAPI ,DDAPIUnrequestScheduleProtocol 
                 dic.updateValue(res.loginStat.rawValue, forKey: "loginStat")
                 return dic
             }else {
-                debugPrint("LoginStatusNotifyAPI analysisReturnData failure")
+                HMPrint("LoginStatusNotifyAPI analysisReturnData failure")
                 return  [:]
             }
         }

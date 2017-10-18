@@ -57,38 +57,38 @@ import UIKit
 let GROUP_PRE:String = "group_"
 
 @objc(MTTGroupEntity)
-class MTTGroupEntity: MTTBaseEntity,HMDBModelDelegate {
+public class MTTGroupEntity: MTTBaseEntity,HMDBModelDelegate {
 
-    func dbFields() -> [String] {
+    public func dbFields() -> [String] {
         return ["lastUpdateTime","objID","objectVersion","groupCreatorId",
                 "name","avatar","lastMsg","isShield","type","users"]
     }
     
-    func dbPrimaryKey() -> String? {
-        return "objID"
+    public func dbPrimaryKeys() -> [String] {
+        return ["objID"]
     }
     
-    var lastUpdateTime:Int32 = 0
-    var objID:String = ""
-    var objectVersion:Int32 = 0
+    public var lastUpdateTime:Int32 = 0
+    public var objID:String = ""
+    public var objectVersion:Int32 = 0
 
-    var groupCreatorId:Int32 = 0
-    var name:String = ""
-    var avatar:String = ""
-    var lastMsg:String = ""
-    var isShield:Bool = false
-    var type:Int32 = 0
+    public var groupCreatorId:Int32 = 0
+    public var name:String = ""
+    public var avatar:String = ""
+    public var lastMsg:String = ""
+    public var isShield:Bool = false
+    public var type:Int32 = 0
     
-    var users:String = ""
+    public var users:String = ""
     
-    var groupType:GroupType_Objc = .groupTypeTmp{
+    public var groupType:GroupType_Objc = .groupTypeTmp{
         didSet{
             type = groupType.rawValue
         }
     }
 
     private var s_groupUserIds:[String] = []
-    var groupUserIds:[String] {
+    public var groupUserIds:[String] {
         get{
             return s_groupUserIds
         }
@@ -107,9 +107,9 @@ class MTTGroupEntity: MTTBaseEntity,HMDBModelDelegate {
             }
         }
     }
-    var fixGroupUserIds:[String] = []  //固定的群用户列表IDS，用户生成群头像
+    public var fixGroupUserIds:[String] = []  //固定的群用户列表IDS，用户生成群头像
     
-    func copyContent(otherGroup:MTTGroupEntity){
+    public func copyContent(otherGroup:MTTGroupEntity){
         self.groupType = otherGroup.groupType
         self.lastUpdateTime = otherGroup.lastUpdateTime
         self.name = otherGroup.name
@@ -117,20 +117,13 @@ class MTTGroupEntity: MTTBaseEntity,HMDBModelDelegate {
         self.groupUserIds = otherGroup.groupUserIds
     }
     
-     
-    
-    class func sessionID(groupID:String)->String{
-        return groupID
-    }
-    
-    
     public func addFixOrderGroupUserIDs(uID:String){
         fixGroupUserIds.append(uID)
     }
 }
 
 
-extension MTTGroupEntity {
+public extension MTTGroupEntity {
     
     public convenience init(DicInfo:[String:Any]){
         self.init()
@@ -157,14 +150,14 @@ extension MTTGroupEntity {
         self.lastMsg = ""
     }
     
-    override class func pbIDFrom(localID:String)->UInt32{
+    public override class func pbIDFrom(localID:String)->UInt32{
         if localID.hasPrefix(GROUP_PRE){
             return  UInt32((localID.replacingOccurrences(of: GROUP_PRE, with: "") as NSString).intValue)
         }else {
             return UInt32((localID as NSString).intValue)
         }
     }
-    override class func localIDFrom(pbID:UInt32)->String {
+    public override class func localIDFrom(pbID:UInt32)->String {
         return "\(GROUP_PRE)\(pbID)"
     }
     

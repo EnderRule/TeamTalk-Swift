@@ -164,7 +164,7 @@ int maxRecordTime = 60;
 }
 
 - (NSTimeInterval)recordedTimeInterval {
-    DDLog(@"record start time %@ \n record stop time %@",dateStartRecording,dateStopRecording);
+
     return (dateStopRecording && dateStartRecording) ? [dateStopRecording timeIntervalSinceDate:dateStartRecording] : 0;
 }
 

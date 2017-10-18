@@ -4,15 +4,55 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>HMSecurity.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>17</integer>
+		</dict>
+		<key>TeamTalk-Swift copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>TeamTalk-Swift.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>TeamTalkSwift copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>TeamTalkSwift.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>66E6D30D1F428700008E9590</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>66FE746C1F97089800EBBB37</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>66FE747A1F9708DD00EBBB37</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>66FE75791F97218200EBBB37</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>66FE76111F97590300EBBB37</key>
 		<dict>
 			<key>primary</key>
 			<true/>

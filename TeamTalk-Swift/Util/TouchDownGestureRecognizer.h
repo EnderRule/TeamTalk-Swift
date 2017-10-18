@@ -11,7 +11,7 @@ typedef void(^DDTouchDown)();
 typedef void(^DDTouchMoveOutside)();
 typedef void(^DDTouchMoveInside)();
 typedef void(^DDTouchEnd)(BOOL inside);
-@class DDCustomButton;
+
 @interface TouchDownGestureRecognizer : UIGestureRecognizer
 @property (nonatomic,copy) DDTouchDown touchDown;
 @property (nonatomic,copy) DDTouchMoveOutside moveOutside;

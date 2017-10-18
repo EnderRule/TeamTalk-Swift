@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B3346E0FF384E330D53EEFA /* Pods_TeamTalkSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEEF1FA38D8B417E7D0F72B7 /* Pods_TeamTalkSwift.framework */; };
 		3D9E9B6E48886D2BEA8E7736 /* Pods_TeamTalk_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B608C7C81C061E2B3F8FED /* Pods_TeamTalk_Swift.framework */; };
 		6635A50C1F580AA700ACDB3A /* HMLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */; };
 		663D8B551F7F3DE500F7A60C /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3371F428922008E9590 /* UIView+Extention.swift */; };
 		663D8B5B1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 663D8B591F7F488A00F7A60C /* M80AttributedLabel+NIMKit.m */; };
 		663D8B5D1F7F4B0800F7A60C /* ZQMediaFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663D8B5C1F7F4B0800F7A60C /* ZQMediaFetch.swift */; };
-		663F0FDD1F5657E10041E3C5 /* HMMediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */; };
 		665615A81F8CB02B00689422 /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 665615241F8CB02B00689422 /* bitwise.c */; };
 		665615A91F8CB02B00689422 /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 665615251F8CB02B00689422 /* framing.c */; };
 		665615AA1F8CB02B00689422 /* bits.c in Sources */ = {isa = PBXBuildFile; fileRef = 6656152C1F8CB02B00689422 /* bits.c */; };
@@ -67,7 +67,6 @@
 		665615DB1F8CB02B00689422 /* CADebugMacros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 665615A01F8CB02B00689422 /* CADebugMacros.cpp */; };
 		665615DC1F8CB02B00689422 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 665615A31F8CB02B00689422 /* CAStreamBasicDescription.cpp */; };
 		665615DD1F8CB02B00689422 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 665615A51F8CB02B00689422 /* CAXException.cpp */; };
-		665615E01F8CB06200689422 /* TouchDownGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 665615DF1F8CB06200689422 /* TouchDownGestureRecognizer.m */; };
 		665615ED1F8CB15800689422 /* HMChatBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665615E31F8CB15800689422 /* HMChatBaseCell.swift */; };
 		665615EE1F8CB15800689422 /* HMChatEmotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665615E41F8CB15800689422 /* HMChatEmotionCell.swift */; };
 		665615EF1F8CB15800689422 /* HMChatImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665615E51F8CB15800689422 /* HMChatImageCell.swift */; };
@@ -111,11 +110,9 @@
 		66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */; };
 		6672CC301F4ECCD000DA46E6 /* HMMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */; };
 		6682061B1F62404D0088BE65 /* HMChattingModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682061A1F62404D0088BE65 /* HMChattingModule.swift */; };
-		6682FE741F4AEB7E0048FA23 /* MTTPromtEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */; };
 		6689B7041F8C9D2E00EC2F61 /* HMLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689B7031F8C9D2E00EC2F61 /* HMLoginViewController.swift */; };
 		668BA1DB1F5F94B6001B786C /* SendPhotoMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668BA1DA1F5F94B6001B786C /* SendPhotoMessageAPI.swift */; };
 		66900F221F54050400B527D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66900F211F54050400B527D9 /* Images.xcassets */; };
-		66A64C341F42979F0089F491 /* DDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A64C331F42979F0089F491 /* DDNotification.swift */; };
 		66B2EC0E1F9489F4005033C1 /* HMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2EC0C1F9489F4005033C1 /* HMDBManager.swift */; };
 		66B2EC0F1F9489F4005033C1 /* NSObject+HMDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2EC0D1F9489F4005033C1 /* NSObject+HMDB.swift */; };
 		66BD029E1F4D290A00131E2D /* ZQFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BD029D1F4D290A00131E2D /* ZQFileManager.swift */; };
@@ -123,7 +120,6 @@
 		66D7F01B1F55006B00977897 /* emotions.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66D7F0181F55006B00977897 /* emotions.bundle */; };
 		66D7F01C1F55006B00977897 /* msg.caf in Resources */ = {isa = PBXBuildFile; fileRef = 66D7F0191F55006B00977897 /* msg.caf */; };
 		66DDD4781F4FF26B0082A69C /* MTTEmotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DDD4771F4FF26B0082A69C /* MTTEmotionManager.swift */; };
-		66DDD47C1F50227D0082A69C /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DDD47B1F50227D0082A69C /* Toast.swift */; };
 		66E437801F4C41BC009D527D /* bk_media_picture_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E4374A1F4C41BC009D527D /* bk_media_picture_normal@2x.png */; };
 		66E437811F4C41BC009D527D /* bk_media_picture_normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E4374B1F4C41BC009D527D /* bk_media_picture_normal@3x.png */; };
 		66E437821F4C41BC009D527D /* bk_media_picture_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66E4374C1F4C41BC009D527D /* bk_media_picture_pressed@2x.png */; };
@@ -161,7 +157,6 @@
 		66E6D3121F428700008E9590 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3111F428700008E9590 /* AppDelegate.swift */; };
 		66E6D3191F428700008E9590 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66E6D3181F428700008E9590 /* Assets.xcassets */; };
 		66E6D31C1F428700008E9590 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E6D31A1F428700008E9590 /* LaunchScreen.storyboard */; };
-		66E6D33E1F428922008E9590 /* DBScrollBannerView+LKExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3251F428922008E9590 /* DBScrollBannerView+LKExtention.swift */; };
 		66E6D33F1F428922008E9590 /* defines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3261F428922008E9590 /* defines.swift */; };
 		66E6D3451F428922008E9590 /* NSObject+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D32C1F428922008E9590 /* NSObject+String.swift */; };
 		66E6D3461F428922008E9590 /* NSObject+UpdateValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D32D1F428922008E9590 /* NSObject+UpdateValues.swift */; };
@@ -182,7 +177,6 @@
 		66E6D39A1F428A33008E9590 /* Im.Other.Imother.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3911F428A33008E9590 /* Im.Other.Imother.proto.swift */; };
 		66E6D39B1F428A33008E9590 /* Im.Server.Imserver.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3921F428A33008E9590 /* Im.Server.Imserver.proto.swift */; };
 		66E6D39C1F428A33008E9590 /* Im.SwitchService.ImswitchService.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3931F428A33008E9590 /* Im.SwitchService.ImswitchService.proto.swift */; };
-		66E6D3A31F428BE8008E9590 /* DBScrollBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3A11F428BE8008E9590 /* DBScrollBannerView.swift */; };
 		66E6D3A41F428BE8008E9590 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3A21F428BE8008E9590 /* SwiftyJSON.swift */; };
 		66E6D3D11F42929B008E9590 /* DDAPISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3CA1F42929B008E9590 /* DDAPISchedule.m */; };
 		66E6D3D21F42929B008E9590 /* DDSendBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3CE1F42929B008E9590 /* DDSendBuffer.m */; };
@@ -222,7 +216,6 @@
 		66F10CBC1F4435430035C888 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CBB1F4435430035C888 /* UIKit.framework */; };
 		66F10CBE1F44354C0035C888 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CBD1F44354C0035C888 /* AudioToolbox.framework */; };
 		66F10CC01F4435900035C888 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CBF1F4435900035C888 /* CoreFoundation.framework */; };
-		66F10CC31F4436140035C888 /* MTTDDNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F10CC21F4436140035C888 /* MTTDDNotification.m */; };
 		66F10CC51F443A510035C888 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10CC41F443A510035C888 /* libstdc++.6.tbd */; };
 		66F10F931F448B710035C888 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F921F448B710035C888 /* CFNetwork.framework */; };
 		66F10F951F448B7E0035C888 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10F941F448B7E0035C888 /* SystemConfiguration.framework */; };
@@ -235,17 +228,147 @@
 		66F10FA31F448BC80035C888 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10FA21F448BC80035C888 /* Accelerate.framework */; };
 		66F10FA71F448FDF0035C888 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10FA51F448FDF0035C888 /* libc++.1.tbd */; };
 		66F10FA81F448FDF0035C888 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F10FA61F448FDF0035C888 /* libc++.tbd */; };
-		66F10FB51F449F710035C888 /* aes_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FAE1F449F710035C888 /* aes_core.cpp */; };
-		66F10FB61F449F710035C888 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB01F449F710035C888 /* base64.cpp */; };
-		66F10FB71F449F710035C888 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB21F449F710035C888 /* md5.cpp */; };
-		66F10FB81F449F710035C888 /* security.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB41F449F710035C888 /* security.cpp */; };
 		66FE74661F94C82500EBBB37 /* HMSessionModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE74651F94C82500EBBB37 /* HMSessionModule.swift */; };
+		66FE74711F97089900EBBB37 /* TeamTalkSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 66FE746F1F97089900EBBB37 /* TeamTalkSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE75751F971F8900EBBB37 /* HMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2EC0C1F9489F4005033C1 /* HMDBManager.swift */; };
+		66FE75761F971F8900EBBB37 /* NSObject+HMDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2EC0D1F9489F4005033C1 /* NSObject+HMDB.swift */; };
+		66FE75771F971F9500EBBB37 /* NSObject+UpdateValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D32D1F428922008E9590 /* NSObject+UpdateValues.swift */; };
+		66FE75781F9720C300EBBB37 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3A21F428BE8008E9590 /* SwiftyJSON.swift */; };
+		66FE75AB1F9749F500EBBB37 /* NSDate+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66686AEC1F45AE71008B26BD /* NSDate+DDAddition.m */; };
+		66FE75AC1F9749F500EBBB37 /* NSDictionary+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F107681F42D3A90035C888 /* NSDictionary+Safe.m */; };
+		66FE75AD1F9749F500EBBB37 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1076E1F42D3A90035C888 /* NSString+Additions.m */; };
+		66FE75AE1F974B0700EBBB37 /* NSString+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D32E1F428922008E9590 /* NSString+Extention.swift */; };
+		66FE75B01F974BCC00EBBB37 /* HMChattingModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682061A1F62404D0088BE65 /* HMChattingModule.swift */; };
+		66FE75B11F974BCC00EBBB37 /* HMSessionModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE74651F94C82500EBBB37 /* HMSessionModule.swift */; };
+		66FE75B21F974BCC00EBBB37 /* MTTBaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107EC1F42F0750035C888 /* MTTBaseEntity.swift */; };
+		66FE75B31F974BCC00EBBB37 /* MTTMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107EE1F42F1DA0035C888 /* MTTMessageEntity.swift */; };
+		66FE75B41F974BCC00EBBB37 /* MTTUserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F01F42FE490035C888 /* MTTUserEntity.swift */; };
+		66FE75B51F974BCC00EBBB37 /* MTTGroupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F21F4308D60035C888 /* MTTGroupEntity.swift */; };
+		66FE75B61F974BCC00EBBB37 /* MTTSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F41F4333720035C888 /* MTTSessionEntity.swift */; };
+		66FE75B71F974BCC00EBBB37 /* MTTDepartmentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */; };
+		66FE75B81F974BCC00EBBB37 /* MTTEmotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DDD4771F4FF26B0082A69C /* MTTEmotionManager.swift */; };
+		66FE75B91F974C5600EBBB37 /* DDDepartmentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */; };
+		66FE75BA1F974C5600EBBB37 /* HeartbeatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107111F42A0F30035C888 /* HeartbeatAPI.swift */; };
+		66FE75BB1F974C5600EBBB37 /* ChangeNightModeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A871F457123008B26BD /* ChangeNightModeAPI.swift */; };
+		66FE75BC1F974C5600EBBB37 /* GetNightModeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A851F456F85008B26BD /* GetNightModeAPI.swift */; };
+		66FE75BD1F974C5600EBBB37 /* SendPushTokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A7F1F456548008B26BD /* SendPushTokenAPI.swift */; };
+		66FE75BE1F974C5600EBBB37 /* LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107141F42A36E0035C888 /* LoginAPI.swift */; };
+		66FE75BF1F974C5600EBBB37 /* LogoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A791F454BC2008B26BD /* LogoutAPI.swift */; };
+		66FE75C01F974C5600EBBB37 /* KickPCClientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A8F1F457788008B26BD /* KickPCClientAPI.swift */; };
+		66FE75C11F974C5600EBBB37 /* RemoveSessionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A7D1F4562B0008B26BD /* RemoveSessionAPI.swift */; };
+		66FE75C21F974C5600EBBB37 /* GetRecentSessionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A771F4540E5008B26BD /* GetRecentSessionAPI.swift */; };
+		66FE75C31F974C5600EBBB37 /* MsgReadACKAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A7B1F454D32008B26BD /* MsgReadACKAPI.swift */; };
+		66FE75C41F974C5600EBBB37 /* GetMsgByMsgIDsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A751F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift */; };
+		66FE75C51F974C5600EBBB37 /* GetLatestMsgIdAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A731F45399E008B26BD /* GetLatestMsgIdAPI.swift */; };
+		66FE75C61F974C5600EBBB37 /* ShakeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107D31F42E0350035C888 /* ShakeAPI.swift */; };
+		66FE75C71F974C5600EBBB37 /* ReceiveMessageACKAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F1071D1F42C3F50035C888 /* ReceiveMessageACKAPI.swift */; };
+		66FE75C81F974C5600EBBB37 /* GetMessageQueueAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A981F458037008B26BD /* GetMessageQueueAPI.swift */; };
+		66FE75C91F974C5600EBBB37 /* GetUnreadMessagesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */; };
+		66FE75CA1F974C5600EBBB37 /* SendMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */; };
+		66FE75CB1F974C5600EBBB37 /* SendPhotoMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668BA1DA1F5F94B6001B786C /* SendPhotoMessageAPI.swift */; };
+		66FE75CC1F974C5600EBBB37 /* AllUserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107D51F42E5560035C888 /* AllUserAPI.swift */; };
+		66FE75CD1F974C5600EBBB37 /* DDUserDetailInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A711F45374C008B26BD /* DDUserDetailInfoAPI.swift */; };
+		66FE75CE1F974C5600EBBB37 /* EditSignatureAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A831F45697A008B26BD /* EditSignatureAPI.swift */; };
+		66FE75CF1F974C5600EBBB37 /* UserStatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A8C1F457457008B26BD /* UserStatAPI.swift */; };
+		66FE75D01F974C5600EBBB37 /* ShieldGroupMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A811F456717008B26BD /* ShieldGroupMessageAPI.swift */; };
+		66FE75D11F974C5600EBBB37 /* AddMemberToGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107D11F42DB520035C888 /* AddMemberToGroupAPI.swift */; };
+		66FE75D21F974C5600EBBB37 /* CreateGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107D71F42EAC30035C888 /* CreateGroupAPI.swift */; };
+		66FE75D31F974C5600EBBB37 /* DeleteMemberFromGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */; };
+		66FE75D41F974C5600EBBB37 /* DDFixedGroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */; };
+		66FE75D51F974C5600EBBB37 /* GetGroupInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A911F457903008B26BD /* GetGroupInfoAPI.swift */; };
+		66FE75D61F974C5600EBBB37 /* LoginStatusNotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107161F42A9D90035C888 /* LoginStatusNotifyAPI.swift */; };
+		66FE75D71F974C5600EBBB37 /* SignNotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107181F42C2330035C888 /* SignNotifyAPI.swift */; };
+		66FE75D81F974C5600EBBB37 /* ReceiveKickOffAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F1071A1F42C3090035C888 /* ReceiveKickOffAPI.swift */; };
+		66FE75D91F974C5600EBBB37 /* ReceiveMessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107251F42CC040035C888 /* ReceiveMessageAPI.swift */; };
+		66FE75DA1F974C5600EBBB37 /* MsgReadNotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F107281F42CD660035C888 /* MsgReadNotifyAPI.swift */; };
+		66FE75DB1F974C5600EBBB37 /* DDReceiveGroupAddMemberAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66686A6F1F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift */; };
+		66FE75DC1F974C5600EBBB37 /* DDTcpClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3E11F4292E4008E9590 /* DDTcpClientManager.m */; };
+		66FE75DD1F974C5600EBBB37 /* DDDataInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3D71F4292CC008E9590 /* DDDataInputStream.m */; };
+		66FE75DE1F974C5600EBBB37 /* DDDataOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3D91F4292CC008E9590 /* DDDataOutputStream.m */; };
+		66FE75DF1F974C5600EBBB37 /* NSStream+NSStreamAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3DB1F4292CC008E9590 /* NSStream+NSStreamAddition.m */; };
+		66FE75E01F974C5600EBBB37 /* DDAPISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3CA1F42929B008E9590 /* DDAPISchedule.m */; };
+		66FE75E11F974C5600EBBB37 /* DDSendBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3CE1F42929B008E9590 /* DDSendBuffer.m */; };
+		66FE75E21F974C5600EBBB37 /* DDTcpProtocolHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3D01F42929B008E9590 /* DDTcpProtocolHeader.m */; };
+		66FE75E31F974C5600EBBB37 /* DDSuperAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1070B1F429CB80035C888 /* DDSuperAPI.m */; };
+		66FE75E41F974C5600EBBB37 /* DDUnrequestSuperAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F1070E1F429D7B0035C888 /* DDUnrequestSuperAPI.m */; };
+		66FE75E51F974C5600EBBB37 /* Im.BaseDefine.ImbaseDefine.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D38B1F428A33008E9590 /* Im.BaseDefine.ImbaseDefine.proto.swift */; };
+		66FE75E61F974C5600EBBB37 /* Im.Buddy.Imbuddy.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D38C1F428A33008E9590 /* Im.Buddy.Imbuddy.proto.swift */; };
+		66FE75E71F974C5600EBBB37 /* Im.File.Imfile.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D38D1F428A33008E9590 /* Im.File.Imfile.proto.swift */; };
+		66FE75E81F974C5600EBBB37 /* Im.Group.Imgroup.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D38E1F428A33008E9590 /* Im.Group.Imgroup.proto.swift */; };
+		66FE75E91F974C5600EBBB37 /* Im.Login.Imlogin.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D38F1F428A33008E9590 /* Im.Login.Imlogin.proto.swift */; };
+		66FE75EA1F974C5600EBBB37 /* Im.Message.Immessage.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3901F428A33008E9590 /* Im.Message.Immessage.proto.swift */; };
+		66FE75EB1F974C5600EBBB37 /* Im.Other.Imother.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3911F428A33008E9590 /* Im.Other.Imother.proto.swift */; };
+		66FE75EC1F974C5600EBBB37 /* Im.Server.Imserver.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3921F428A33008E9590 /* Im.Server.Imserver.proto.swift */; };
+		66FE75ED1F974C5600EBBB37 /* Im.SwitchService.ImswitchService.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6D3931F428A33008E9590 /* Im.SwitchService.ImswitchService.proto.swift */; };
+		66FE75F21F974D8600EBBB37 /* MTTSundriesCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108171F43E7E40035C888 /* MTTSundriesCenter.m */; };
+		66FE75F31F974D8600EBBB37 /* DDReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F108021F43D9DB0035C888 /* DDReachability.m */; };
+		66FE75F41F974D8600EBBB37 /* HMLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */; };
+		66FE75F51F974D8600EBBB37 /* HMMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */; };
+		66FE75F61F974D8600EBBB37 /* HMUsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665615FF1F8CB5AC00689422 /* HMUsersManager.swift */; };
+		66FE75F71F974D8600EBBB37 /* HMGroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665616011F8CBE5900689422 /* HMGroupsManager.swift */; };
+		66FE75FA1F97514200EBBB37 /* NSDate+DDAddition.h in Headers */ = {isa = PBXBuildFile; fileRef = 66686AEB1F45AE71008B26BD /* NSDate+DDAddition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE75FB1F97514200EBBB37 /* NSDictionary+Safe.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F107671F42D3A90035C888 /* NSDictionary+Safe.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE75FC1F97514200EBBB37 /* NSString+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F1076D1F42D3A90035C888 /* NSString+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE75FD1F97514200EBBB37 /* DDTcpClientManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E6D3E01F4292E4008E9590 /* DDTcpClientManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE75FE1F97514200EBBB37 /* DDDataInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E6D3D61F4292CC008E9590 /* DDDataInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE75FF1F97514200EBBB37 /* DDDataOutputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E6D3D81F4292CC008E9590 /* DDDataOutputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE76001F97514200EBBB37 /* NSStream+NSStreamAddition.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E6D3DA1F4292CC008E9590 /* NSStream+NSStreamAddition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE76011F97514200EBBB37 /* DDAPISchedule.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E6D3C91F42929B008E9590 /* DDAPISchedule.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE76021F97514200EBBB37 /* DDSendBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E6D3CD1F42929B008E9590 /* DDSendBuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE76031F97514200EBBB37 /* DDTcpProtocolHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E6D3CF1F42929B008E9590 /* DDTcpProtocolHeader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE76041F97514200EBBB37 /* DDSuperAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F1070A1F429CB80035C888 /* DDSuperAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE76051F97514200EBBB37 /* DDUnrequestSuperAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F1070D1F429D7B0035C888 /* DDUnrequestSuperAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE760B1F97517000EBBB37 /* MTTSundriesCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F108161F43E7E40035C888 /* MTTSundriesCenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE760C1F97517000EBBB37 /* DDReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F108011F43D9DB0035C888 /* DDReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE76161F97590400EBBB37 /* HMSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = 66FE76141F97590400EBBB37 /* HMSecurity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE761A1F97591C00EBBB37 /* security.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F10FB91F449FA60035C888 /* security.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE761B1F97591C00EBBB37 /* aes.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F10FAD1F449F710035C888 /* aes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE761C1F97591C00EBBB37 /* aes_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F10FAF1F449F710035C888 /* aes_locl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE761D1F97591C00EBBB37 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F10FB11F449F710035C888 /* base64.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE761E1F97591C00EBBB37 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F10FB31F449F710035C888 /* md5.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		66FE761F1F97593500EBBB37 /* aes_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FAE1F449F710035C888 /* aes_core.cpp */; };
+		66FE76201F97593500EBBB37 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB01F449F710035C888 /* base64.cpp */; };
+		66FE76211F97593500EBBB37 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB21F449F710035C888 /* md5.cpp */; };
+		66FE76221F97593500EBBB37 /* security.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66F10FB41F449F710035C888 /* security.cpp */; };
+		66FE76271F975AE600EBBB37 /* HMSecurity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66FE76121F97590300EBBB37 /* HMSecurity.framework */; };
+		66FE76281F975B0D00EBBB37 /* HMSecurity.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 66FE76121F97590300EBBB37 /* HMSecurity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		66FE76291F975B5D00EBBB37 /* HMSecurity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66FE76121F97590300EBBB37 /* HMSecurity.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		66FE76231F9759BF00EBBB37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66E6D3061F428700008E9590 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 66FE76111F97590300EBBB37;
+			remoteInfo = HMSecurity;
+		};
+		66FE76251F9759C500EBBB37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66E6D3061F428700008E9590 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 66FE76111F97590300EBBB37;
+			remoteInfo = HMSecurity;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		66FE74791F97089900EBBB37 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				66FE76281F975B0D00EBBB37 /* HMSecurity.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		05032DB8593B37A95869F42F /* Pods-TeamTalkSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TeamTalkSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TeamTalkSwift/Pods-TeamTalkSwift.release.xcconfig"; sourceTree = "<group>"; };
 		5083D9EC8CF004C6706DB66A /* Pods-TeamTalk-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TeamTalk-Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TeamTalk-Swift/Pods-TeamTalk-Swift.debug.xcconfig"; sourceTree = "<group>"; };
-		661372391F6BA8170058280D /* HMDBSQLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMDBSQLManager.swift; sourceTree = "<group>"; };
-		6633BA651F7F93C400FE3B3C /* MTTCDModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MTTCDModels.xcdatamodel; sourceTree = "<group>"; };
 		6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMLoginManager.swift; sourceTree = "<group>"; };
 		663D8B591F7F488A00F7A60C /* M80AttributedLabel+NIMKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "M80AttributedLabel+NIMKit.m"; sourceTree = "<group>"; };
 		663D8B5A1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "M80AttributedLabel+NIMKit.h"; sourceTree = "<group>"; };
@@ -398,11 +521,11 @@
 		665616011F8CBE5900689422 /* HMGroupsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMGroupsManager.swift; sourceTree = "<group>"; };
 		66686A601F4522B5008B26BD /* MTTBubbleModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTBubbleModule.h; sourceTree = "<group>"; };
 		66686A611F4522B5008B26BD /* MTTBubbleModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTBubbleModule.m; sourceTree = "<group>"; };
-		66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteMemberFromGroupAPI.swift; sourceTree = "<group>"; };
+		66686A691F452540008B26BD /* DeleteMemberFromGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DeleteMemberFromGroupAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		66686A6B1F452C12008B26BD /* DDDepartmentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDDepartmentAPI.swift; sourceTree = "<group>"; };
-		66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDFixedGroupAPI.swift; sourceTree = "<group>"; };
+		66686A6D1F453176008B26BD /* DDFixedGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DDFixedGroupAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		66686A6F1F45337E008B26BD /* DDReceiveGroupAddMemberAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDReceiveGroupAddMemberAPI.swift; sourceTree = "<group>"; };
-		66686A711F45374C008B26BD /* DDUserDetailInfoAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDUserDetailInfoAPI.swift; sourceTree = "<group>"; };
+		66686A711F45374C008B26BD /* DDUserDetailInfoAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DDUserDetailInfoAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		66686A731F45399E008B26BD /* GetLatestMsgIdAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLatestMsgIdAPI.swift; sourceTree = "<group>"; };
 		66686A751F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMsgByMsgIDsAPI.swift; sourceTree = "<group>"; };
 		66686A771F4540E5008B26BD /* GetRecentSessionAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetRecentSessionAPI.swift; sourceTree = "<group>"; };
@@ -411,12 +534,12 @@
 		66686A7D1F4562B0008B26BD /* RemoveSessionAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveSessionAPI.swift; sourceTree = "<group>"; };
 		66686A7F1F456548008B26BD /* SendPushTokenAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPushTokenAPI.swift; sourceTree = "<group>"; };
 		66686A811F456717008B26BD /* ShieldGroupMessageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShieldGroupMessageAPI.swift; sourceTree = "<group>"; };
-		66686A831F45697A008B26BD /* EditSignatureAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSignatureAPI.swift; sourceTree = "<group>"; };
+		66686A831F45697A008B26BD /* EditSignatureAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = EditSignatureAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		66686A851F456F85008B26BD /* GetNightModeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetNightModeAPI.swift; sourceTree = "<group>"; };
-		66686A871F457123008B26BD /* ChangeNightModeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeNightModeAPI.swift; sourceTree = "<group>"; };
+		66686A871F457123008B26BD /* ChangeNightModeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ChangeNightModeAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		66686A8C1F457457008B26BD /* UserStatAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStatAPI.swift; sourceTree = "<group>"; };
 		66686A8F1F457788008B26BD /* KickPCClientAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KickPCClientAPI.swift; sourceTree = "<group>"; };
-		66686A911F457903008B26BD /* GetGroupInfoAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetGroupInfoAPI.swift; sourceTree = "<group>"; };
+		66686A911F457903008B26BD /* GetGroupInfoAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GetGroupInfoAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		66686A981F458037008B26BD /* GetMessageQueueAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMessageQueueAPI.swift; sourceTree = "<group>"; };
 		66686A9A1F458525008B26BD /* GetUnreadMessagesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUnreadMessagesAPI.swift; sourceTree = "<group>"; };
 		66686A9C1F4591B0008B26BD /* SendMessageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMessageAPI.swift; sourceTree = "<group>"; };
@@ -427,11 +550,9 @@
 		66686D1E1F4ABB89008B26BD /* HMChattingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMChattingViewController.swift; sourceTree = "<group>"; };
 		6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMMessageManager.swift; sourceTree = "<group>"; };
 		6682061A1F62404D0088BE65 /* HMChattingModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMChattingModule.swift; sourceTree = "<group>"; };
-		6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTPromtEntity.swift; sourceTree = "<group>"; };
 		6689B7031F8C9D2E00EC2F61 /* HMLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HMLoginViewController.swift; path = "TeamTalk-Swift/Viewcontrollers/HMLoginViewController.swift"; sourceTree = SOURCE_ROOT; };
 		668BA1DA1F5F94B6001B786C /* SendPhotoMessageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPhotoMessageAPI.swift; sourceTree = "<group>"; };
 		66900F211F54050400B527D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		66A64C331F42979F0089F491 /* DDNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDNotification.swift; sourceTree = "<group>"; };
 		66B2EC0C1F9489F4005033C1 /* HMDBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMDBManager.swift; sourceTree = "<group>"; };
 		66B2EC0D1F9489F4005033C1 /* NSObject+HMDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+HMDB.swift"; sourceTree = "<group>"; };
 		66BD029D1F4D290A00131E2D /* ZQFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZQFileManager.swift; sourceTree = "<group>"; };
@@ -495,7 +616,7 @@
 		66E4377E1F4C41BC009D527D /* UIView+NIM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+NIM.h"; sourceTree = "<group>"; };
 		66E4377F1F4C41BC009D527D /* UIView+NIM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+NIM.m"; sourceTree = "<group>"; };
 		66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamTalk-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		66E6D3111F428700008E9590 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		66E6D3111F428700008E9590 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		66E6D3181F428700008E9590 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66E6D31B1F428700008E9590 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66E6D31D1F428700008E9590 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -564,10 +685,10 @@
 		66F1078A1F42D3A90035C888 /* UILabel+VerticalAlign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+VerticalAlign.m"; sourceTree = "<group>"; };
 		66F1078B1F42D3A90035C888 /* UIImage+Rotate_Flip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate_Flip.h"; sourceTree = "<group>"; };
 		66F1078C1F42D3A90035C888 /* UIImage+Rotate_Flip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate_Flip.m"; sourceTree = "<group>"; };
-		66F107D11F42DB520035C888 /* AddMemberToGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMemberToGroupAPI.swift; sourceTree = "<group>"; };
+		66F107D11F42DB520035C888 /* AddMemberToGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AddMemberToGroupAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		66F107D31F42E0350035C888 /* ShakeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShakeAPI.swift; sourceTree = "<group>"; };
-		66F107D51F42E5560035C888 /* AllUserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllUserAPI.swift; sourceTree = "<group>"; };
-		66F107D71F42EAC30035C888 /* CreateGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupAPI.swift; sourceTree = "<group>"; };
+		66F107D51F42E5560035C888 /* AllUserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AllUserAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		66F107D71F42EAC30035C888 /* CreateGroupAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CreateGroupAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		66F107EC1F42F0750035C888 /* MTTBaseEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTBaseEntity.swift; sourceTree = "<group>"; };
 		66F107EE1F42F1DA0035C888 /* MTTMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTMessageEntity.swift; sourceTree = "<group>"; };
 		66F107F01F42FE490035C888 /* MTTUserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTUserEntity.swift; sourceTree = "<group>"; };
@@ -576,7 +697,6 @@
 		66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTDepartmentEntity.swift; sourceTree = "<group>"; };
 		66F108011F43D9DB0035C888 /* DDReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDReachability.h; sourceTree = "<group>"; };
 		66F108021F43D9DB0035C888 /* DDReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDReachability.m; sourceTree = "<group>"; };
-		66F108041F43DE4B0035C888 /* MTTConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTConstant.h; sourceTree = "<group>"; };
 		66F108161F43E7E40035C888 /* MTTSundriesCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTSundriesCenter.h; sourceTree = "<group>"; };
 		66F108171F43E7E40035C888 /* MTTSundriesCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTSundriesCenter.m; sourceTree = "<group>"; };
 		66F10A681F43F2D70035C888 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -587,8 +707,6 @@
 		66F10CBB1F4435430035C888 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		66F10CBD1F44354C0035C888 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		66F10CBF1F4435900035C888 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		66F10CC11F4436140035C888 /* MTTDDNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTDDNotification.h; sourceTree = "<group>"; };
-		66F10CC21F4436140035C888 /* MTTDDNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTDDNotification.m; sourceTree = "<group>"; };
 		66F10CC41F443A510035C888 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
 		66F10F921F448B710035C888 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		66F10F941F448B7E0035C888 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -611,7 +729,15 @@
 		66F10FB41F449F710035C888 /* security.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = security.cpp; sourceTree = "<group>"; };
 		66F10FB91F449FA60035C888 /* security.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; path = security.h; sourceTree = "<group>"; };
 		66FE74651F94C82500EBBB37 /* HMSessionModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMSessionModule.swift; sourceTree = "<group>"; };
+		66FE746D1F97089800EBBB37 /* TeamTalkSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TeamTalkSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		66FE746F1F97089900EBBB37 /* TeamTalkSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeamTalkSwift.h; sourceTree = "<group>"; };
+		66FE74701F97089900EBBB37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66FE76121F97590300EBBB37 /* HMSecurity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HMSecurity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		66FE76141F97590400EBBB37 /* HMSecurity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSecurity.h; sourceTree = "<group>"; };
+		66FE76151F97590400EBBB37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7AAD35137B24B0FC1ECDEA30 /* Pods-TeamTalkSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TeamTalkSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TeamTalkSwift/Pods-TeamTalkSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		D2B608C7C81C061E2B3F8FED /* Pods_TeamTalk_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TeamTalk_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEEF1FA38D8B417E7D0F72B7 /* Pods_TeamTalkSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TeamTalkSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF675A68FA0FBFC20F0FB730 /* Pods-TeamTalk-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TeamTalk-Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TeamTalk-Swift/Pods-TeamTalk-Swift.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -620,6 +746,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66FE76271F975AE600EBBB37 /* HMSecurity.framework in Frameworks */,
 				66F10FA71F448FDF0035C888 /* libc++.1.tbd in Frameworks */,
 				66F10FA81F448FDF0035C888 /* libc++.tbd in Frameworks */,
 				66F10FA31F448BC80035C888 /* Accelerate.framework in Frameworks */,
@@ -642,17 +769,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		66FE74691F97089800EBBB37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66FE76291F975B5D00EBBB37 /* HMSecurity.framework in Frameworks */,
+				2B3346E0FF384E330D53EEFA /* Pods_TeamTalkSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66FE760E1F97590300EBBB37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6633BA631F7F92EB00FE3B3C /* CoredataModel */ = {
-			isa = PBXGroup;
-			children = (
-				6633BA641F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld */,
-			);
-			name = CoredataModel;
-			sourceTree = "<group>";
-		};
 		665615201F8CB02B00689422 /* Voice */ = {
 			isa = PBXGroup;
 			children = (
@@ -970,12 +1105,11 @@
 		6672CC2E1F4ECCA900DA46E6 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */,
-				663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */,
 				6635A50B1F580AA700ACDB3A /* HMLoginManager.swift */,
-				661372391F6BA8170058280D /* HMDBSQLManager.swift */,
+				6672CC2F1F4ECCD000DA46E6 /* HMMessageManager.swift */,
 				665615FF1F8CB5AC00689422 /* HMUsersManager.swift */,
 				665616011F8CBE5900689422 /* HMGroupsManager.swift */,
+				663F0FDC1F5657E10041E3C5 /* HMMediaManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1055,6 +1189,8 @@
 			isa = PBXGroup;
 			children = (
 				66E6D3101F428700008E9590 /* TeamTalk-Swift */,
+				66FE746E1F97089900EBBB37 /* TeamTalkSwift */,
+				66FE76131F97590400EBBB37 /* HMSecurity */,
 				66E6D30F1F428700008E9590 /* Products */,
 				66F10A671F43F2D70035C888 /* Frameworks */,
 				DEA2BF57A677A2962456E129 /* Pods */,
@@ -1065,6 +1201,8 @@
 			isa = PBXGroup;
 			children = (
 				66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */,
+				66FE746D1F97089800EBBB37 /* TeamTalkSwift.framework */,
+				66FE76121F97590300EBBB37 /* HMSecurity.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1109,7 +1247,6 @@
 				66E6D3381F428922008E9590 /* UIViewController+Extention.swift */,
 				66E6D3391F428922008E9590 /* ZQEasyAlert.swift */,
 				663D8B5C1F7F4B0800F7A60C /* ZQMediaFetch.swift */,
-				66A64C331F42979F0089F491 /* DDNotification.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -1119,13 +1256,13 @@
 			children = (
 				66B2EC0C1F9489F4005033C1 /* HMDBManager.swift */,
 				66B2EC0D1F9489F4005033C1 /* NSObject+HMDB.swift */,
-				665615201F8CB02B00689422 /* Voice */,
 				66E835921F56899A00F14ED9 /* ZQFileBrowserVC.swift */,
-				66E437481F4C41BC009D527D /* NIMInputView */,
-				66F10FAC1F449F700035C888 /* Security */,
 				66E6D3A11F428BE8008E9590 /* DBScrollBannerView.swift */,
 				66E6D3A21F428BE8008E9590 /* SwiftyJSON.swift */,
 				66DDD47B1F50227D0082A69C /* Toast.swift */,
+				665615201F8CB02B00689422 /* Voice */,
+				66E437481F4C41BC009D527D /* NIMInputView */,
+				66F10FAC1F449F700035C888 /* Security */,
 			);
 			path = ThridPartys;
 			sourceTree = "<group>";
@@ -1256,14 +1393,12 @@
 		66F107D91F42EEF70035C888 /* Entitys */ = {
 			isa = PBXGroup;
 			children = (
-				6633BA631F7F92EB00FE3B3C /* CoredataModel */,
 				66F107EC1F42F0750035C888 /* MTTBaseEntity.swift */,
 				66F107EE1F42F1DA0035C888 /* MTTMessageEntity.swift */,
 				66F107F01F42FE490035C888 /* MTTUserEntity.swift */,
 				66F107F21F4308D60035C888 /* MTTGroupEntity.swift */,
 				66F107F41F4333720035C888 /* MTTSessionEntity.swift */,
 				66F107F61F433C420035C888 /* MTTDepartmentEntity.swift */,
-				6682FE731F4AEB7E0048FA23 /* MTTPromtEntity.swift */,
 				66DDD4771F4FF26B0082A69C /* MTTEmotionManager.swift */,
 			);
 			path = Entitys;
@@ -1273,11 +1408,8 @@
 			isa = PBXGroup;
 			children = (
 				66BD029D1F4D290A00131E2D /* ZQFileManager.swift */,
-				66F108041F43DE4B0035C888 /* MTTConstant.h */,
 				66F108011F43D9DB0035C888 /* DDReachability.h */,
 				66F108021F43D9DB0035C888 /* DDReachability.m */,
-				66F10CC11F4436140035C888 /* MTTDDNotification.h */,
-				66F10CC21F4436140035C888 /* MTTDDNotification.m */,
 			);
 			path = GlobalData;
 			sourceTree = "<group>";
@@ -1304,6 +1436,7 @@
 				66F10A681F43F2D70035C888 /* libsqlite3.0.tbd */,
 				66F10A691F43F2D70035C888 /* libsqlite3.tbd */,
 				D2B608C7C81C061E2B3F8FED /* Pods_TeamTalk_Swift.framework */,
+				FEEF1FA38D8B417E7D0F72B7 /* Pods_TeamTalkSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1324,16 +1457,74 @@
 			path = Security;
 			sourceTree = "<group>";
 		};
+		66FE746E1F97089900EBBB37 /* TeamTalkSwift */ = {
+			isa = PBXGroup;
+			children = (
+				66FE746F1F97089900EBBB37 /* TeamTalkSwift.h */,
+				66FE74701F97089900EBBB37 /* Info.plist */,
+			);
+			path = TeamTalkSwift;
+			sourceTree = "<group>";
+		};
+		66FE76131F97590400EBBB37 /* HMSecurity */ = {
+			isa = PBXGroup;
+			children = (
+				66FE76141F97590400EBBB37 /* HMSecurity.h */,
+				66FE76151F97590400EBBB37 /* Info.plist */,
+			);
+			path = HMSecurity;
+			sourceTree = "<group>";
+		};
 		DEA2BF57A677A2962456E129 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				5083D9EC8CF004C6706DB66A /* Pods-TeamTalk-Swift.debug.xcconfig */,
 				FF675A68FA0FBFC20F0FB730 /* Pods-TeamTalk-Swift.release.xcconfig */,
+				7AAD35137B24B0FC1ECDEA30 /* Pods-TeamTalkSwift.debug.xcconfig */,
+				05032DB8593B37A95869F42F /* Pods-TeamTalkSwift.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		66FE746A1F97089800EBBB37 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66FE74711F97089900EBBB37 /* TeamTalkSwift.h in Headers */,
+				66FE75FA1F97514200EBBB37 /* NSDate+DDAddition.h in Headers */,
+				66FE75FB1F97514200EBBB37 /* NSDictionary+Safe.h in Headers */,
+				66FE75FC1F97514200EBBB37 /* NSString+Additions.h in Headers */,
+				66FE75FD1F97514200EBBB37 /* DDTcpClientManager.h in Headers */,
+				66FE75FE1F97514200EBBB37 /* DDDataInputStream.h in Headers */,
+				66FE75FF1F97514200EBBB37 /* DDDataOutputStream.h in Headers */,
+				66FE76001F97514200EBBB37 /* NSStream+NSStreamAddition.h in Headers */,
+				66FE76011F97514200EBBB37 /* DDAPISchedule.h in Headers */,
+				66FE76021F97514200EBBB37 /* DDSendBuffer.h in Headers */,
+				66FE76031F97514200EBBB37 /* DDTcpProtocolHeader.h in Headers */,
+				66FE76041F97514200EBBB37 /* DDSuperAPI.h in Headers */,
+				66FE76051F97514200EBBB37 /* DDUnrequestSuperAPI.h in Headers */,
+				66FE760B1F97517000EBBB37 /* MTTSundriesCenter.h in Headers */,
+				66FE760C1F97517000EBBB37 /* DDReachability.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66FE760F1F97590300EBBB37 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66FE76161F97590400EBBB37 /* HMSecurity.h in Headers */,
+				66FE761A1F97591C00EBBB37 /* security.h in Headers */,
+				66FE761B1F97591C00EBBB37 /* aes.h in Headers */,
+				66FE761C1F97591C00EBBB37 /* aes_locl.h in Headers */,
+				66FE761D1F97591C00EBBB37 /* base64.h in Headers */,
+				66FE761E1F97591C00EBBB37 /* md5.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		66E6D30D1F428700008E9590 /* TeamTalk-Swift */ = {
@@ -1347,15 +1538,56 @@
 				66F107271F42CCBD0035C888 /* ShellScript */,
 				CC83AD7C352FB064CFDA9958 /* [CP] Embed Pods Frameworks */,
 				12469A1B8F5365F6D525A791 /* [CP] Copy Pods Resources */,
+				66FE74791F97089900EBBB37 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				66FE76261F9759C500EBBB37 /* PBXTargetDependency */,
 			);
 			name = "TeamTalk-Swift";
 			productName = "TeamTalk-Swift";
 			productReference = 66E6D30E1F428700008E9590 /* TeamTalk-Swift.app */;
 			productType = "com.apple.product-type.application";
+		};
+		66FE746C1F97089800EBBB37 /* TeamTalkSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66FE74761F97089900EBBB37 /* Build configuration list for PBXNativeTarget "TeamTalkSwift" */;
+			buildPhases = (
+				7081747CEA8F7580233E3CA4 /* [CP] Check Pods Manifest.lock */,
+				66FE74681F97089800EBBB37 /* Sources */,
+				66FE74691F97089800EBBB37 /* Frameworks */,
+				66FE746A1F97089800EBBB37 /* Headers */,
+				66FE746B1F97089800EBBB37 /* Resources */,
+				2376ECE13FDC55C076BB63CD /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				66FE76241F9759BF00EBBB37 /* PBXTargetDependency */,
+			);
+			name = TeamTalkSwift;
+			productName = TeamTalkSwift;
+			productReference = 66FE746D1F97089800EBBB37 /* TeamTalkSwift.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		66FE76111F97590300EBBB37 /* HMSecurity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66FE76171F97590400EBBB37 /* Build configuration list for PBXNativeTarget "HMSecurity" */;
+			buildPhases = (
+				66FE760D1F97590300EBBB37 /* Sources */,
+				66FE760E1F97590300EBBB37 /* Frameworks */,
+				66FE760F1F97590300EBBB37 /* Headers */,
+				66FE76101F97590300EBBB37 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HMSecurity;
+			productName = HMSecurity;
+			productReference = 66FE76121F97590300EBBB37 /* HMSecurity.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -1371,6 +1603,16 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = F9M2T7SUYF;
 						LastSwiftMigration = 0830;
+						ProvisioningStyle = Automatic;
+					};
+					66FE746C1F97089800EBBB37 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = F9M2T7SUYF;
+						ProvisioningStyle = Automatic;
+					};
+					66FE76111F97590300EBBB37 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = F9M2T7SUYF;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1389,6 +1631,8 @@
 			projectRoot = "";
 			targets = (
 				66E6D30D1F428700008E9590 /* TeamTalk-Swift */,
+				66FE746C1F97089800EBBB37 /* TeamTalkSwift */,
+				66FE76111F97590300EBBB37 /* HMSecurity */,
 			);
 		};
 /* End PBXProject section */
@@ -1426,6 +1670,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		66FE746B1F97089800EBBB37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66FE76101F97590300EBBB37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1442,6 +1700,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TeamTalk-Swift/Pods-TeamTalk-Swift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2376ECE13FDC55C076BB63CD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TeamTalkSwift/Pods-TeamTalkSwift-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3C2E71753AB60F34DD12433C /* [CP] Check Pods Manifest.lock */ = {
@@ -1471,6 +1744,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "TAGS=\"Todo:|Fixme:|Warning:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
+		7081747CEA8F7580233E3CA4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 		CC83AD7C352FB064CFDA9958 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1517,7 +1805,6 @@
 				66E4379D1F4C41BC009D527D /* NIMMediaItem.m in Sources */,
 				665615B71F8CB02B00689422 /* gain_table_lbr.c in Sources */,
 				66E6D34E1F428922008E9590 /* UIScrollView+Extention.swift in Sources */,
-				66E6D3A31F428BE8008E9590 /* DBScrollBannerView.swift in Sources */,
 				665615F21F8CB15800689422 /* HMChatVideoCell.swift in Sources */,
 				66F107D41F42E0350035C888 /* ShakeAPI.swift in Sources */,
 				66E6D3521F428922008E9590 /* ZQEasyAlert.swift in Sources */,
@@ -1529,9 +1816,7 @@
 				66686A721F45374C008B26BD /* DDUserDetailInfoAPI.swift in Sources */,
 				665615EE1F8CB15800689422 /* HMChatEmotionCell.swift in Sources */,
 				665615F41F8CB15800689422 /* HMBaseCell.swift in Sources */,
-				66F10FB61F449F710035C888 /* base64.cpp in Sources */,
 				665615B91F8CB02B00689422 /* hexc_table.c in Sources */,
-				665615E01F8CB06200689422 /* TouchDownGestureRecognizer.m in Sources */,
 				665615B61F8CB02B00689422 /* gain_table.c in Sources */,
 				66686A921F457903008B26BD /* GetGroupInfoAPI.swift in Sources */,
 				66B2EC0E1F9489F4005033C1 /* HMDBManager.swift in Sources */,
@@ -1539,9 +1824,7 @@
 				665615B01F8CB02B00689422 /* exc_5_256_table.c in Sources */,
 				665615C21F8CB02B00689422 /* mdf.c in Sources */,
 				665615DB1F8CB02B00689422 /* CADebugMacros.cpp in Sources */,
-				66DDD47C1F50227D0082A69C /* Toast.swift in Sources */,
 				66E437991F4C41BC009D527D /* NIMInputMoreContainerView.m in Sources */,
-				663F0FDD1F5657E10041E3C5 /* HMMediaManager.swift in Sources */,
 				66E6D3471F428922008E9590 /* NSString+Extention.swift in Sources */,
 				66E6D3941F428A33008E9590 /* Im.BaseDefine.ImbaseDefine.proto.swift in Sources */,
 				665615D91F8CB02B00689422 /* RawAudioDataPlayer.m in Sources */,
@@ -1552,7 +1835,6 @@
 				665615D81F8CB02B00689422 /* PlayerManager.m in Sources */,
 				66E437A01F4C41BC009D527D /* UIImage+NIM.m in Sources */,
 				665615DA1F8CB02B00689422 /* RecorderManager.mm in Sources */,
-				66F10FB71F449F710035C888 /* md5.cpp in Sources */,
 				665615F31F8CB15800689422 /* HMChatVoiceCell.swift in Sources */,
 				66686D1F1F4ABB8A008B26BD /* HMChattingViewController.swift in Sources */,
 				665615F11F8CB15800689422 /* HMChatTextCell.swift in Sources */,
@@ -1582,7 +1864,6 @@
 				66E6D34B1F428922008E9590 /* UIColor+Extentions.swift in Sources */,
 				66F1070F1F429D7B0035C888 /* DDUnrequestSuperAPI.m in Sources */,
 				665615BD1F8CB02B00689422 /* kiss_fftr.c in Sources */,
-				66A64C341F42979F0089F491 /* DDNotification.swift in Sources */,
 				66686A6A1F452540008B26BD /* DeleteMemberFromGroupAPI.swift in Sources */,
 				66B2EC0F1F9489F4005033C1 /* NSObject+HMDB.swift in Sources */,
 				665615C91F8CB02B00689422 /* sb_celp.c in Sources */,
@@ -1599,7 +1880,6 @@
 				66E437951F4C41BC009D527D /* NIMInputEmoticonContainerView.m in Sources */,
 				66E6D3DF1F4292CC008E9590 /* NSStream+NSStreamAddition.m in Sources */,
 				66E4379B1F4C41BC009D527D /* NIMInputToolBar.m in Sources */,
-				6682FE741F4AEB7E0048FA23 /* MTTPromtEntity.swift in Sources */,
 				665615ED1F8CB15800689422 /* HMChatBaseCell.swift in Sources */,
 				66F107F71F433C420035C888 /* MTTDepartmentEntity.swift in Sources */,
 				665615B81F8CB02B00689422 /* hexc_10_32_table.c in Sources */,
@@ -1631,7 +1911,6 @@
 				665615FC1F8CB18D00689422 /* HMDefines.swift in Sources */,
 				66E6D3DD1F4292CC008E9590 /* DDDataInputStream.m in Sources */,
 				66686A761F453EB2008B26BD /* GetMsgByMsgIDsAPI.swift in Sources */,
-				66E6D33E1F428922008E9590 /* DBScrollBannerView+LKExtention.swift in Sources */,
 				665615FB1F8CB18D00689422 /* HMContactsViewController.swift in Sources */,
 				66E437981F4C41BC009D527D /* NIMInputEmoticonTabView.m in Sources */,
 				66686A801F456548008B26BD /* SendPushTokenAPI.swift in Sources */,
@@ -1640,7 +1919,6 @@
 				66E6D3461F428922008E9590 /* NSObject+UpdateValues.swift in Sources */,
 				665615D51F8CB02B00689422 /* SpeexCodec.m in Sources */,
 				66F107191F42C2330035C888 /* SignNotifyAPI.swift in Sources */,
-				66F10FB51F449F710035C888 /* aes_core.cpp in Sources */,
 				66E4379F1F4C41BC009D527D /* NSString+NIMKit.m in Sources */,
 				665615CB1F8CB02B00689422 /* smallft.c in Sources */,
 				665615BA1F8CB02B00689422 /* high_lsp_tables.c in Sources */,
@@ -1667,10 +1945,8 @@
 				665615C51F8CB02B00689422 /* nb_celp.c in Sources */,
 				66E6D3971F428A33008E9590 /* Im.Group.Imgroup.proto.swift in Sources */,
 				66BD029E1F4D290A00131E2D /* ZQFileManager.swift in Sources */,
-				66F10CC31F4436140035C888 /* MTTDDNotification.m in Sources */,
 				663D8B5B1F7F488B00F7A60C /* M80AttributedLabel+NIMKit.m in Sources */,
 				665615A91F8CB02B00689422 /* framing.c in Sources */,
-				66F10FB81F449F710035C888 /* security.cpp in Sources */,
 				66E6D3961F428A33008E9590 /* Im.File.Imfile.proto.swift in Sources */,
 				665615BF1F8CB02B00689422 /* lsp.c in Sources */,
 				665615D21F8CB02B00689422 /* vq.c in Sources */,
@@ -1686,7 +1962,114 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		66FE74681F97089800EBBB37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66FE75F21F974D8600EBBB37 /* MTTSundriesCenter.m in Sources */,
+				66FE75F31F974D8600EBBB37 /* DDReachability.m in Sources */,
+				66FE75F41F974D8600EBBB37 /* HMLoginManager.swift in Sources */,
+				66FE75F51F974D8600EBBB37 /* HMMessageManager.swift in Sources */,
+				66FE75F61F974D8600EBBB37 /* HMUsersManager.swift in Sources */,
+				66FE75F71F974D8600EBBB37 /* HMGroupsManager.swift in Sources */,
+				66FE75B91F974C5600EBBB37 /* DDDepartmentAPI.swift in Sources */,
+				66FE75BA1F974C5600EBBB37 /* HeartbeatAPI.swift in Sources */,
+				66FE75BB1F974C5600EBBB37 /* ChangeNightModeAPI.swift in Sources */,
+				66FE75BC1F974C5600EBBB37 /* GetNightModeAPI.swift in Sources */,
+				66FE75BD1F974C5600EBBB37 /* SendPushTokenAPI.swift in Sources */,
+				66FE75BE1F974C5600EBBB37 /* LoginAPI.swift in Sources */,
+				66FE75BF1F974C5600EBBB37 /* LogoutAPI.swift in Sources */,
+				66FE75C01F974C5600EBBB37 /* KickPCClientAPI.swift in Sources */,
+				66FE75C11F974C5600EBBB37 /* RemoveSessionAPI.swift in Sources */,
+				66FE75C21F974C5600EBBB37 /* GetRecentSessionAPI.swift in Sources */,
+				66FE75C31F974C5600EBBB37 /* MsgReadACKAPI.swift in Sources */,
+				66FE75C41F974C5600EBBB37 /* GetMsgByMsgIDsAPI.swift in Sources */,
+				66FE75C51F974C5600EBBB37 /* GetLatestMsgIdAPI.swift in Sources */,
+				66FE75C61F974C5600EBBB37 /* ShakeAPI.swift in Sources */,
+				66FE75C71F974C5600EBBB37 /* ReceiveMessageACKAPI.swift in Sources */,
+				66FE75C81F974C5600EBBB37 /* GetMessageQueueAPI.swift in Sources */,
+				66FE75C91F974C5600EBBB37 /* GetUnreadMessagesAPI.swift in Sources */,
+				66FE75CA1F974C5600EBBB37 /* SendMessageAPI.swift in Sources */,
+				66FE75CB1F974C5600EBBB37 /* SendPhotoMessageAPI.swift in Sources */,
+				66FE75CC1F974C5600EBBB37 /* AllUserAPI.swift in Sources */,
+				66FE75CD1F974C5600EBBB37 /* DDUserDetailInfoAPI.swift in Sources */,
+				66FE75CE1F974C5600EBBB37 /* EditSignatureAPI.swift in Sources */,
+				66FE75CF1F974C5600EBBB37 /* UserStatAPI.swift in Sources */,
+				66FE75D01F974C5600EBBB37 /* ShieldGroupMessageAPI.swift in Sources */,
+				66FE75D11F974C5600EBBB37 /* AddMemberToGroupAPI.swift in Sources */,
+				66FE75D21F974C5600EBBB37 /* CreateGroupAPI.swift in Sources */,
+				66FE75D31F974C5600EBBB37 /* DeleteMemberFromGroupAPI.swift in Sources */,
+				66FE75D41F974C5600EBBB37 /* DDFixedGroupAPI.swift in Sources */,
+				66FE75D51F974C5600EBBB37 /* GetGroupInfoAPI.swift in Sources */,
+				66FE75D61F974C5600EBBB37 /* LoginStatusNotifyAPI.swift in Sources */,
+				66FE75D71F974C5600EBBB37 /* SignNotifyAPI.swift in Sources */,
+				66FE75D81F974C5600EBBB37 /* ReceiveKickOffAPI.swift in Sources */,
+				66FE75D91F974C5600EBBB37 /* ReceiveMessageAPI.swift in Sources */,
+				66FE75DA1F974C5600EBBB37 /* MsgReadNotifyAPI.swift in Sources */,
+				66FE75DB1F974C5600EBBB37 /* DDReceiveGroupAddMemberAPI.swift in Sources */,
+				66FE75DC1F974C5600EBBB37 /* DDTcpClientManager.m in Sources */,
+				66FE75DD1F974C5600EBBB37 /* DDDataInputStream.m in Sources */,
+				66FE75DE1F974C5600EBBB37 /* DDDataOutputStream.m in Sources */,
+				66FE75DF1F974C5600EBBB37 /* NSStream+NSStreamAddition.m in Sources */,
+				66FE75E01F974C5600EBBB37 /* DDAPISchedule.m in Sources */,
+				66FE75E11F974C5600EBBB37 /* DDSendBuffer.m in Sources */,
+				66FE75E21F974C5600EBBB37 /* DDTcpProtocolHeader.m in Sources */,
+				66FE75E31F974C5600EBBB37 /* DDSuperAPI.m in Sources */,
+				66FE75E41F974C5600EBBB37 /* DDUnrequestSuperAPI.m in Sources */,
+				66FE75E51F974C5600EBBB37 /* Im.BaseDefine.ImbaseDefine.proto.swift in Sources */,
+				66FE75E61F974C5600EBBB37 /* Im.Buddy.Imbuddy.proto.swift in Sources */,
+				66FE75E71F974C5600EBBB37 /* Im.File.Imfile.proto.swift in Sources */,
+				66FE75E81F974C5600EBBB37 /* Im.Group.Imgroup.proto.swift in Sources */,
+				66FE75E91F974C5600EBBB37 /* Im.Login.Imlogin.proto.swift in Sources */,
+				66FE75EA1F974C5600EBBB37 /* Im.Message.Immessage.proto.swift in Sources */,
+				66FE75EB1F974C5600EBBB37 /* Im.Other.Imother.proto.swift in Sources */,
+				66FE75EC1F974C5600EBBB37 /* Im.Server.Imserver.proto.swift in Sources */,
+				66FE75ED1F974C5600EBBB37 /* Im.SwitchService.ImswitchService.proto.swift in Sources */,
+				66FE75B01F974BCC00EBBB37 /* HMChattingModule.swift in Sources */,
+				66FE75B11F974BCC00EBBB37 /* HMSessionModule.swift in Sources */,
+				66FE75B21F974BCC00EBBB37 /* MTTBaseEntity.swift in Sources */,
+				66FE75B31F974BCC00EBBB37 /* MTTMessageEntity.swift in Sources */,
+				66FE75B41F974BCC00EBBB37 /* MTTUserEntity.swift in Sources */,
+				66FE75B51F974BCC00EBBB37 /* MTTGroupEntity.swift in Sources */,
+				66FE75B61F974BCC00EBBB37 /* MTTSessionEntity.swift in Sources */,
+				66FE75B71F974BCC00EBBB37 /* MTTDepartmentEntity.swift in Sources */,
+				66FE75B81F974BCC00EBBB37 /* MTTEmotionManager.swift in Sources */,
+				66FE75AE1F974B0700EBBB37 /* NSString+Extention.swift in Sources */,
+				66FE75AB1F9749F500EBBB37 /* NSDate+DDAddition.m in Sources */,
+				66FE75AC1F9749F500EBBB37 /* NSDictionary+Safe.m in Sources */,
+				66FE75AD1F9749F500EBBB37 /* NSString+Additions.m in Sources */,
+				66FE75781F9720C300EBBB37 /* SwiftyJSON.swift in Sources */,
+				66FE75771F971F9500EBBB37 /* NSObject+UpdateValues.swift in Sources */,
+				66FE75751F971F8900EBBB37 /* HMDBManager.swift in Sources */,
+				66FE75761F971F8900EBBB37 /* NSObject+HMDB.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66FE760D1F97590300EBBB37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66FE761F1F97593500EBBB37 /* aes_core.cpp in Sources */,
+				66FE76201F97593500EBBB37 /* base64.cpp in Sources */,
+				66FE76211F97593500EBBB37 /* md5.cpp in Sources */,
+				66FE76221F97593500EBBB37 /* security.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		66FE76241F9759BF00EBBB37 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 66FE76111F97590300EBBB37 /* HMSecurity */;
+			targetProxy = 66FE76231F9759BF00EBBB37 /* PBXContainerItemProxy */;
+		};
+		66FE76261F9759C500EBBB37 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 66FE76111F97590300EBBB37 /* HMSecurity */;
+			targetProxy = 66FE76251F9759C500EBBB37 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		66E6D31A1F428700008E9590 /* LaunchScreen.storyboard */ = {
@@ -1799,6 +2182,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5083D9EC8CF004C6706DB66A /* Pods-TeamTalk-Swift.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_WARNINGS = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1808,7 +2192,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TeamTalk-Swift/GlobalData/MTTConstant.h";
+				GCC_PREFIX_HEADER = "";
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = "TeamTalk-Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1833,6 +2217,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FF675A68FA0FBFC20F0FB730 /* Pods-TeamTalk-Swift.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_WARNINGS = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1842,7 +2227,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TeamTalk-Swift/GlobalData/MTTConstant.h";
+				GCC_PREFIX_HEADER = "";
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = "TeamTalk-Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1859,6 +2244,100 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TeamTalk-Swift/TeamTalk-Swift-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		66FE74771F97089900EBBB37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AAD35137B24B0FC1ECDEA30 /* Pods-TeamTalkSwift.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = F9M2T7SUYF;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = TeamTalkSwift/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fulladvantage.linking.TeamTalkSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		66FE74781F97089900EBBB37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 05032DB8593B37A95869F42F /* Pods-TeamTalkSwift.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = F9M2T7SUYF;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = TeamTalkSwift/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fulladvantage.linking.TeamTalkSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		66FE76181F97590400EBBB37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = F9M2T7SUYF;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = HMSecurity/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fulladvantage.linking.HMSecurity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		66FE76191F97590400EBBB37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = F9M2T7SUYF;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = HMSecurity/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fulladvantage.linking.HMSecurity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -1883,20 +2362,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-/* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		6633BA641F7F93C400FE3B3C /* MTTCDModels.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				6633BA651F7F93C400FE3B3C /* MTTCDModels.xcdatamodel */,
+		66FE74761F97089900EBBB37 /* Build configuration list for PBXNativeTarget "TeamTalkSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66FE74771F97089900EBBB37 /* Debug */,
+				66FE74781F97089900EBBB37 /* Release */,
 			);
-			currentVersion = 6633BA651F7F93C400FE3B3C /* MTTCDModels.xcdatamodel */;
-			path = MTTCDModels.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-/* End XCVersionGroup section */
+		66FE76171F97590400EBBB37 /* Build configuration list for PBXNativeTarget "HMSecurity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66FE76181F97590400EBBB37 /* Debug */,
+				66FE76191F97590400EBBB37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
 	};
 	rootObject = 66E6D3061F428700008E9590 /* Project object */;
 }

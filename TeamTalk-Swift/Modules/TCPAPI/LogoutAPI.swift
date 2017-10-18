@@ -34,7 +34,7 @@ class LogoutAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let res = try? Im.Login.ImlogoutRsp.parseFrom(data: data ?? Data()) {
                  return res.resultCode
             }else {
-                debugPrint("LogoutAPI analysisReturnData failure")
+                HMPrint("LogoutAPI analysisReturnData failure")
                 return 0
             }
         }
@@ -52,7 +52,7 @@ class LogoutAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let data = try? builder.build().data() {
                 dataOut.directWriteBytes(data)
             }else {
-                debugPrint("LogoutAPI package builded data failure")
+                HMPrint("LogoutAPI package builded data failure")
             }
             dataOut.writeDataCount()
             return dataOut.toByteArray()
