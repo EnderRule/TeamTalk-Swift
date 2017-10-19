@@ -287,6 +287,7 @@ public extension MTTMessageEntity {
 
 public extension MTTMessageEntity {
     
+    static let msgKey:String = "6f1cd98c5655da86d60a73effae355eb"
 //    文本 {"type":10,"data":"{\"text\":\"ghj\"}"}
 //    圖片 {"type":11,"data":"{\"url\":\"http:.......789000.jpg\"}"}
 //    表情 {"type":12,"data":"{\"sticker\":\"xxx\"}"}
@@ -585,40 +586,113 @@ public extension MTTMessageEntity {
     }
 }
 
+
+
 extension String {
     
-    func decrypt()->String {
-
-        let indata = self.cString(using: .utf8)
-        var pout:UnsafeMutablePointer<Int8>?
-        var outLen:UnsafeMutablePointer<UInt32>?
-        let inLen:Int32 = Int32(strlen(self))
+    ///data末尾的非<00> 部分指定了data的有效长度，之间的<00>为填充的
+    func encrypt()->String{
+        if self.characters.count <= 0{ return ""}
         
-        DecryptMsg(indata, inLen, &pout, &outLen)
+        let key = "6f1cd98c5655da86d60a73effae355eb"
         
-        if pout != nil {
-            let deResult = String.init(cString: pout!)
-            return deResult
-        }else{
-            return ""
+        let blockSize:Int = 16
+        let handleData:NSMutableData = NSMutableData.init(data:   self.data(using: .utf8) ?? Data() )
+        
+        let validedDataLenght:Int = handleData.length
+        
+        let lenghtasData :NSData = DataEncode.hexString(toData: DataEncode.getHexByDecimal(validedDataLenght)) as NSData
+        
+        let paddingLenght = blockSize - (validedDataLenght ) % blockSize - lenghtasData.length
+        
+        
+        let paddingData = DataEncode.hexString(toData: "00")
+        for _ in 1...paddingLenght{
+            handleData.append(paddingData)
         }
+        handleData.append(lenghtasData as Data)
+        
+        debugPrint("message encrypt \(validedDataLenght) \(paddingLenght) \(lenghtasData) \(handleData) \(self)")
+        
+        let returnData = DataEncode.handle(handleData as Data, algorithem: CCAlgorithm(kCCAlgorithmAES128), encryptOrDecrypt: CCOperation(kCCEncrypt), key: key)
+        
+        let result = GTMBase64.string(byEncoding: returnData) ?? ""
+        return result
+        
     }
     
-    func encrypt()->String {
-        let tempStr = self
-        let indata = tempStr.cString(using: .utf8)
-        var pout:UnsafeMutablePointer<Int8>?
-        var outLen:UnsafeMutablePointer<UInt32>?
-        let inLen:Int32 = Int32(strlen(tempStr))
+    func decrypt()->String{
+        if self.characters.count <= 0{ return ""}
         
-        EncryptMsg(indata, inLen, &pout, &outLen)
+        let key = "6f1cd98c5655da86d60a73effae355eb"
+        let handleData:NSMutableData = NSMutableData.init(data:GTMBase64.decode( self.data(using: .utf8)!))
         
-        if pout != nil {
-            let enResult = String.init(cString: pout!)
-            return enResult
+        let decodeData = DataEncode.handle(handleData as Data, algorithem: CCAlgorithm(kCCAlgorithmAES128), encryptOrDecrypt: CCOperation(kCCDecrypt), key: key)
+        
+        let tempData = NSData.init(data: decodeData)
+        
+        let paddingData = DataEncode.hexString(toData: "00")
+        var valideDataLenghtInData:Int = 0
+        for index in (0...tempData.length-1).reversed(){
+            let subdata:NSData = tempData.subdata(with: NSRange.init(location: index, length: 1)) as NSData
+            if !subdata.isEqual(to: paddingData){
+                valideDataLenghtInData += 1
+            }else{
+                break
+            }
         }
-        return ""
+        
+        let valideLenghtasData = tempData.subdata(with: NSRange.init(location: tempData.length - valideDataLenghtInData, length: valideDataLenghtInData))
+        
+        var valideLenght = DataEncode.getDecimalByHex( DataEncode.data(toHexString: valideLenghtasData) )
+        
+        
+        if valideLenght > tempData.length {
+            valideLenght = tempData.length
+        }
+        
+        let finalData = tempData.subdata(with: NSRange.init(location: 0, length: valideLenght))
+        
+        let result = String.init(data: finalData, encoding: .utf8) ?? ""
+        
+        debugPrint("message decrypt \(valideLenght) \(tempData as NSData) \(valideLenghtasData as NSData) result:\(result)")
+
+        return result
     }
+    
+//    func decrypt()->String {
+
+//        let indata = self.cString(using: .utf8)
+//        var pout:UnsafeMutablePointer<Int8>?
+//        var outLen:UnsafeMutablePointer<UInt32>?
+//        let inLen:Int32 = Int32(strlen(self))
+//        
+        
+//        DecryptMsg(indata, inLen, &pout, &outLen)
+        
+//        if pout != nil {
+//            let deResult = String.init(cString: pout!)
+//            return deResult
+//        }else{
+//            return ""
+//        }
+//    }
+    
+//    func encrypt()->String {
+//        let tempStr = self
+//        let indata = tempStr.cString(using: .utf8)
+//        var pout:UnsafeMutablePointer<Int8>?
+//        var outLen:UnsafeMutablePointer<UInt32>?
+//        let inLen:Int32 = Int32(strlen(tempStr))
+//        
+////        EncryptMsg(indata, inLen, &pout, &outLen)
+//        
+//        if pout != nil {
+//            let enResult = String.init(cString: pout!)
+//            return enResult
+//        }
+//        return ""
+//    }
 }
 
 

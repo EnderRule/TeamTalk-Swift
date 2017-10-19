@@ -7,22 +7,12 @@
 		<key>HMSecurity.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>17</integer>
-		</dict>
-		<key>TeamTalk-Swift copy.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>4</integer>
 		</dict>
 		<key>TeamTalk-Swift.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
-		</dict>
-		<key>TeamTalkSwift copy.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 		<key>TeamTalkSwift.xcscheme</key>
 		<dict>
@@ -32,6 +22,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>66CE12A61F97643000E8081B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>66CE12FE1F976EBE00E8081B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>66CE13181F9837F200E8081B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>66E6D30D1F428700008E9590</key>
 		<dict>
 			<key>primary</key>

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSDate (DDAddition)
 - (NSString*)transformToFuzzyDate;
 - (NSString*)promptDateString;

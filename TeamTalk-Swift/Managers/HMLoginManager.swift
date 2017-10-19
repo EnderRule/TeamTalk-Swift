@@ -9,6 +9,7 @@
 //import UIKit
 import AFNetworking
 
+
 @objc enum HMLoginState:Int {
     case online = 0
     case kickout            //被挤下线

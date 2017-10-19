@@ -14,6 +14,7 @@
 #import "LCActionSheetCell.h"
 #import "LCActionSheetConfig.h"
 #import "LCActionSheetViewController.h"
+#import "UIDevice+LCActionSheet.h"
 #import "UIImage+LCActionSheet.h"
 
 FOUNDATION_EXPORT double LCActionSheetVersionNumber;

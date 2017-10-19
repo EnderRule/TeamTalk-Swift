@@ -8,7 +8,6 @@
 
 #import "MTTBubbleModule.h"
 
-
 @implementation MTTBubbleModule
 {
     MTTBubbleConfig* _left_config;

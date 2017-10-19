@@ -48,8 +48,6 @@ FOUNDATION_EXPORT const unsigned char TeamTalkSwiftVersionString[];
 
 #import <FMDB/FMDB.h>
 
-//#import <HMSecurity/security.h>
-
 #import <TeamTalkSwift/NSDate+DDAddition.h>
 #import <TeamTalkSwift/NSDictionary+Safe.h>
 #import <TeamTalkSwift/NSString+Additions.h>

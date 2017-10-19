@@ -23,6 +23,7 @@ PODS:
   - Masonry (1.1.0)
   - MJRefresh (3.1.14)
   - ProtocolBuffers-Swift (3.0.24)
+  - ReachabilitySwift (4.1.0)
   - SCLAlertView (0.7.0)
   - SDWebImage (4.1.2):
     - SDWebImage/Core (= 4.1.2)
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - Masonry (~> 1.1.0)
   - MJRefresh (~> 3.1.13)
   - ProtocolBuffers-Swift (~> 3.0.23)
+  - ReachabilitySwift (~> 4.1.0)
   - SCLAlertView (~> 0.7.0)
   - SDWebImage (~> 4.1.0)
   - SVProgressHUD (~> 2.2.1)
@@ -51,11 +53,12 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJRefresh: 6642e35b3227a5447b9fd5e17c552c90196c9859
   ProtocolBuffers-Swift: 42ad3864cb1d09dd544589742d585d553dcdff2c
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   SDWebImage: cb6f9f266a9977741efcbc21e618e8be3734c774
   SVProgressHUD: db27c54e6e18bc903341661fc9feb55e04905cc4
   TZImagePickerController: 079ab986018c22793462e531045a75e366b18252
 
-PODFILE CHECKSUM: 6c7200eb16ef474a5e93fde3831b7390c3207b21
+PODFILE CHECKSUM: 676e06eada5dae150cf8a06a6a94ca5a2ccad1da
 
 COCOAPODS: 1.2.1

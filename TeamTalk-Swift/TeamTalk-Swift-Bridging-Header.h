@@ -26,8 +26,6 @@
 
 //GlobalData
 
-#import "security.h"
-
 //Module
 #import "MTTBubbleModule.h"
 
@@ -37,12 +35,16 @@
 //audio、videos
 #import "Encapsulator.h"
 
+
 //第三方
 //AF network
 #import <AFNetWorking/AFHTTPSessionManager.h>
 
 #import <FMDB/FMDB.h>
 #import <Masonry/Masonry.h>
+
+#import "DataEncode.h"
+#import "GTMBase64.h"
 
 //SDImage
 #import <SDWebImage/SDImageCache.h>
