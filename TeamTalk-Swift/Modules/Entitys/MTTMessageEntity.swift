@@ -594,7 +594,7 @@ extension String {
     func encrypt()->String{
         if self.characters.count <= 0{ return ""}
         
-        let key = "6f1cd98c5655da86d60a73effae355eb"
+
         
         let blockSize:Int = 16
         let handleData:NSMutableData = NSMutableData.init(data:   self.data(using: .utf8) ?? Data() )
@@ -614,7 +614,7 @@ extension String {
         
         debugPrint("message encrypt \(validedDataLenght) \(paddingLenght) \(lenghtasData) \(handleData) \(self)")
         
-        let returnData = DataEncode.handle(handleData as Data, algorithem: CCAlgorithm(kCCAlgorithmAES128), encryptOrDecrypt: CCOperation(kCCEncrypt), key: key)
+        let returnData = DataEncode.handle(handleData as Data, algorithem: CCAlgorithm(kCCAlgorithmAES128), encryptOrDecrypt: CCOperation(kCCEncrypt), key: MTTMessageEntity.msgKey)
         
         let result = GTMBase64.string(byEncoding: returnData) ?? ""
         return result
@@ -624,10 +624,9 @@ extension String {
     func decrypt()->String{
         if self.characters.count <= 0{ return ""}
         
-        let key = "6f1cd98c5655da86d60a73effae355eb"
         let handleData:NSMutableData = NSMutableData.init(data:GTMBase64.decode( self.data(using: .utf8)!))
         
-        let decodeData = DataEncode.handle(handleData as Data, algorithem: CCAlgorithm(kCCAlgorithmAES128), encryptOrDecrypt: CCOperation(kCCDecrypt), key: key)
+        let decodeData = DataEncode.handle(handleData as Data, algorithem: CCAlgorithm(kCCAlgorithmAES128), encryptOrDecrypt: CCOperation(kCCDecrypt), key: MTTMessageEntity.msgKey)
         
         let tempData = NSData.init(data: decodeData)
         
