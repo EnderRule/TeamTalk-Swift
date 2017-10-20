@@ -33,9 +33,8 @@ public class HMDBManager: NSObject {
     public var modelClasses:[AnyClass] = []
     var dbUserID:String = ""
     
-    var classPropertyInfos:[String:[String:String]] = [:]
+
     var tableFieldInfos:[String:[String:String]] = [:]
-    var primarykeyFieldsInfo:[String:[String]] = [:]
     
     public var dataBaseQueue:FMDatabaseQueue!
     public var dataBase:FMDatabase!
@@ -183,7 +182,8 @@ public class HMDBManager: NSObject {
             }
         }
         for column in shouldAddColumns{
-            let sqltype = self.sqlTypeOf(cls: cls, field: column).last!
+            let rawtype = NSObject.cachePropertyTypeOf(theClass: cls , propertyName: column)
+            let sqltype = self.sqlTypeOfProperty(rawType: rawtype)
             if sqltype.characters.count > 0 {
                 if  !self.alertTable(cls: cls , addColumn: column, type: sqltype,database:dataBase){
                     disableHMDBLog ? () : debugPrint("fail to alert table \(tableName) add column \(column) \(sqltype)")
@@ -258,94 +258,83 @@ public class HMDBManager: NSObject {
             }
             
             var realDbFields:[String:String] = [:]
-            var classPropertyTypes:[String:String] = [:]
-            
-            let properties = (obj as! NSObject).getAllPropertys(theClass: cls , includeSupers: true )
             
             for field in storeFields{
+                let rawType = NSObject.cachePropertyTypeOf(theClass: cls , propertyName: field)
                 
-                if properties.contains(field){
+                let sqlType = self.sqlTypeOfProperty(rawType: rawType)
+
+                if sqlType.characters.count > 0 {
+                    colums.append("\(field) \(sqlType),")
                     
-                    let types = self.sqlTypeOf(cls: cls , field: field)
-                    let sqlType = types.last!
-                    let rawType = types.first!
-                    
-                    if sqlType.characters.count > 0 {
-                        colums.append("\(field) \(sqlType),")
-                        
-                        realDbFields.updateValue(sqlType, forKey: field)
-                        classPropertyTypes.updateValue(rawType, forKey: field)
-                    }
+                    realDbFields.updateValue(sqlType, forKey: field)
                 }
             }
             if primaryKeys.first! == "defaultPK"{
                 colums.append("defaultPK integer")
                 realDbFields.updateValue("integer", forKey: "defaultPK")
             }
-            primarykeyFieldsInfo.updateValue(primaryKeys, forKey: tableName)
+            
             tableFieldInfos.updateValue(realDbFields, forKey: tableName)
-            classPropertyInfos.updateValue(classPropertyTypes, forKey: tableName)
-
+            
             if colums.hasSuffix(","){
                 colums = (colums as NSString).substring(to: colums.characters.count - 1)
             }
+            
+            if colums.characters.count == 0 {
+                disableHMDBLog ? () : debugPrint("create table \(tableName) but has no surported dbFields")
+                return ""
+            }
+            var primaryFieldsStr = ""
+            if  primaryKeys.count == 1 {
+                primaryFieldsStr = primaryKeys.first!
+            }else{
+                primaryFieldsStr = (primaryKeys as NSArray).componentsJoined(by: ",")
+            }
+            let createTableSQL =  "CREATE TABLE IF NOT EXISTS \(tableName)(\(colums),primary key(\(primaryFieldsStr)))" //
+            
+            return createTableSQL
         }else{
             disableHMDBLog ? () : debugPrint("class \(cls) is not in db handled ")
-        }
-        
-        if colums.characters.count == 0 {
-            disableHMDBLog ? () : debugPrint("create table \(tableName) but has no surported dbFields")
             return ""
         }
-        var primaryFieldsStr = ""
-        if  primaryKeys.count == 1 {
-            primaryFieldsStr = primaryKeys.first!
-        }else{
-            primaryFieldsStr = (primaryKeys as NSArray).componentsJoined(by: ",")
-        }
-        let createTableSQL =  "CREATE TABLE IF NOT EXISTS \(tableName)(\(colums),primary key(\(primaryFieldsStr)))" //
-
-        return createTableSQL
     }
     
     
-    func sqlTypeOf(cls:AnyClass,field:String)->[String]{
+    func sqlTypeOfProperty(rawType:String)->String{
 
-        let property = class_getProperty(cls, field)
-        let attribute = String.init(utf8String: property_getAttributes(property)) ?? "1,1"
+        let subRawType:String = rawType.components(separatedBy: ",").first ?? ""
         
-        let rawType:String = attribute.components(separatedBy: ",").first!
         var sqlType:String = ""
-        
-        if rawType == "Tq" || rawType == "Ti" || rawType == "Ts" || rawType == "Tl"{
+        if subRawType == "Tq" || subRawType == "Ti" || subRawType == "Ts" || subRawType == "Tl"{
             sqlType = "integer"
-        }else if rawType == "TQ" || rawType == "TI" || rawType == "TS" || rawType == "TL"{
+        }else if subRawType == "TQ" || subRawType == "TI" || subRawType == "TS" || subRawType == "TL"{
             sqlType = "integer"
-        }else if rawType == "Tf"{
+        }else if subRawType == "Tf"{
             sqlType = "single"
-        }else if rawType == "Td"{
+        }else if subRawType == "Td"{
             sqlType = "double"
-        }else if rawType == "TB"  { //bool 值
+        }else if subRawType == "TB"  { //bool 值
             sqlType = "integer"
-        }else if rawType.contains("NSDate"){
+        }else if subRawType.contains("NSDate"){
             sqlType = "double"
-        }else if rawType.contains("NSURL"){
+        }else if subRawType.contains("NSURL"){
             sqlType = "text"
-        }else if rawType.contains("NSData") || rawType.contains("NSMutableData"){
+        }else if subRawType.contains("NSData") || subRawType.contains("NSMutableData"){
             sqlType = "text"
-        }else if rawType.contains("NSString") || rawType.contains("NSMutableString"){
+        }else if subRawType.contains("NSString") || subRawType.contains("NSMutableString"){
             sqlType = "text"
-        }else if rawType.contains("NSArray") || rawType.contains("NSMutableArray"){
+        }else if subRawType.contains("NSArray") || subRawType.contains("NSMutableArray"){
             sqlType = "text"
-        }else if rawType.contains("NSDictionary") || rawType.contains("NSMutableDictionary"){
+        }else if subRawType.contains("NSDictionary") || subRawType.contains("NSMutableDictionary"){
             sqlType = "text"
-        }else if rawType.contains("NSNumber") {
+        }else if subRawType.contains("NSNumber") {
             sqlType = "double"
         }else{
-            disableHMDBLog ? () : debugPrint("database not surport for type of \(field)")
+            disableHMDBLog ? () : debugPrint("database not surport for type of \(subRawType)")
         }
         
-        return [rawType,sqlType]
+        return sqlType
     }
 }
 

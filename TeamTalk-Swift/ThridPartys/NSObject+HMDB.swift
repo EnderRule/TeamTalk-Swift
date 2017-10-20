@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 @objc public  protocol HMDBModelDelegate:NSObjectProtocol {
     func dbFields()->[String]
     func dbPrimaryKeys()->[String]  //返回多个时代表使用联合主键
@@ -18,6 +19,9 @@ import UIKit
 }
 
 
+var cachePropertysDic:[String:[objc_property_t]] = [:]
+
+var cachePropertyTypesDic:[String:String] = [:]
 
 public extension NSObject {
     
@@ -249,7 +253,7 @@ public extension NSObject {
                 
                 let valuetype = "\(type(of: value))"
                 let badType = "NSTaggedPointerString"
-                if valuetype == badType{
+                if valuetype == badType || valuetype == "NSContiguousString"{
                     value = "\(value)"
                 }
                 
@@ -264,13 +268,11 @@ public extension NSObject {
     
     
     private func encodeValueFor(key:String)->Any{
-        
-//        (self.classForCoder as NSObject.Type).se 
-        return NSObject.serialized(value:self.value(forKey: key) ?? "")
+        return (self.classForCoder as! NSObject.Type).serialized(value:self.value(forKey: key) ?? "")
     }
     
     private func decode(dbValue:Any,forkey:String){
-        let value = NSObject.unserialized(dbvalue: dbValue , propertyName: forkey)
+        let value = (self.classForCoder as! NSObject.Type).unserialized(dbvalue: dbValue , propertyName: forkey)
         if (value as? NSNull) == nil {  //不为null 才能设置
             self.setValue(value , forKey: forkey)
         }
@@ -305,12 +307,11 @@ public extension NSObject {
         return value
     }
     class func unserialized(dbvalue:Any,propertyName:String)->Any{
-        let tablename = "\(self.classForCoder())"
-        let classPropertys = HMDBManager.shared.classPropertyInfos[tablename] ?? [:]
-        let type = classPropertys[propertyName] ?? ""
         
-        debugPrint("unserialized \(tableName) \(propertyName) \(dbvalue) \(type)  \(type(of: dbvalue))")
-
+        let type = self.cachePropertyTypeOf(theClass: self.classForCoder(), propertyName: propertyName)
+        
+//        debugPrint("unserialized \(self.classForCoder()) \(propertyName) \(dbvalue) \(type)  \(type(of: dbvalue))")
+ 
         
         if type.contains("NSArray")
             || type.contains("NSMutableArray")
@@ -371,10 +372,95 @@ public extension NSObject {
         return string.data(using: .utf8) ?? Data()
     }
     
+    class func cachePropertyTypeOf(theClass:AnyClass,propertyName:String)->String{
+        let cacheKey = NSStringFromClass(theClass).appending(propertyName)
+        var cacheType = cachePropertyTypesDic[cacheKey]
+    
+        if cacheType?.characters.count ?? 0 <= 0 {
+            var resultType:String?
+
+            let propertys = self.cachePropertysOf(theClass: theClass)
+            for property in propertys{
+                var tempname = ""
+                if let namePointer =  property_getName(property){
+                    tempname = String.init(cString: namePointer)
+                }
+                
+                var tempType = ""
+                if let typePointer = property_getAttributes(property){
+                    tempType = String.init(cString: typePointer)
+                }
+                print(" check 2 ",tempname,tempType)
+                
+                if tempname.characters.count > 0 && tempType.characters.count > 0 {
+                    let tempcacheKey = NSStringFromClass(theClass).appending(tempname)
+                    cachePropertyTypesDic.updateValue(tempType, forKey: tempcacheKey)
+                    
+                    if tempname == propertyName{
+                        resultType = NSString.init(string: tempType) as String
+                    }
+                }
+            }
+            return resultType ?? "NOT_FOUND"
+        }
+        return cacheType ?? "NOT_FOUND"
+    }
+    
+    class func cachePropertysOf(theClass:AnyClass)->[objc_property_t]{
+        let className = NSStringFromClass(theClass)
+        
+        var result = cachePropertysDic[className] ?? []
+        
+        if result.count <= 0 {
+            let temp = self.getAllPropertysOf(theClass: theClass, includeSupers: true )
+            cachePropertysDic.updateValue(temp , forKey: className)
+            result = [objc_property_t].init(temp)
+        }
+        return result
+    }
+    
+    /**
+     获取对象的所有属性名称
+     - includeSupers: 是否包含父类的属性名 ,父类为NSObject 除外
+     - returns: 属性名称数组
+     */
+    public class func getAllPropertysOf(theClass:AnyClass,includeSupers:Bool)->[objc_property_t]{
+        
+        var result = [objc_property_t]()
+        let count = UnsafeMutablePointer<UInt32>.allocate(capacity: 0)
+        let buff = class_copyPropertyList(theClass, count)
+        let countInt = Int(count[0])
+        
+        for i in 0..<countInt{
+            if  let property = buff![i]{
+                result.append(property)
+            }
+        }
+        
+        free(count)
+        free(buff)
+        
+        if includeSupers {
+            if let  superclass = theClass.superclass(){
+                if superclass != NSObject.classForCoder() {
+                    let superresults = self.getAllPropertysOf(theClass: superclass, includeSupers: true)
+                    result.append(contentsOf: superresults)
+                }
+            }
+        }
+        
+        return result
+    }
     
 }
 
 
+func nameOf(property:objc_property_t)->String{
+    if let tempPro = property_getName(property){
+        return  String.init(cString: tempPro)
+    }
+    return ""
+}
 
 
 

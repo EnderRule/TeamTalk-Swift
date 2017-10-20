@@ -13,6 +13,12 @@ import UserNotifications
 let SERVER_Address =  "http://192.168.113.31:8080/msg_server"
 
 
+class Test:MTTUserEntity{
+    var fsfl:String = ""
+    var fsflr3:String = ""
+    var dfs:Int = 0
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -20,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         
         HMDBManager.shared.modelClasses = [MTTUserEntity.classForCoder(),MTTGroupEntity.classForCoder(),MTTMessageEntity.classForCoder(),MTTSessionEntity.classForCoder(),MTTMsgReadState.classForCoder()]
         
