@@ -16,34 +16,6 @@ FOUNDATION_EXPORT const unsigned char TeamTalkSwiftVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <TeamTalkSwift/PublicHeader.h>
 
-
-//#import <CommonCrypto/CommonCrypto.h>
-//
-//#import <sqlite3.h>
-//
-////DDHandler
-//#import "DDTcpClientManager.h"
-//#import "DDSuperAPI.h"
-//#import "DDAPISchedule.h"
-//#import "DDDataInputStream.h"
-//#import "DDDataOutputStream.h"
-//
-//#import "DDTcpProtocolHeader.h"
-//#import "DDUnrequestSuperAPI.h"
-//
-//
-////Categorys from TeamTalk-Objc
-//#import "NSString+Additions.h"
-//#import "NSDate+DDAddition.h"
-//#import "NSDictionary+Safe.h"
-//#import "DDReachability.h"
-//
-//
-//#import "security.h"
-
-
-//第三方
-//AF network
 #import <AFNetWorking/AFHTTPSessionManager.h>
 
 #import <FMDB/FMDB.h>
@@ -60,10 +32,29 @@ FOUNDATION_EXPORT const unsigned char TeamTalkSwiftVersionString[];
 #import <TeamTalkSwift/DDTcpProtocolHeader.h>
 #import <TeamTalkSwift/DDSuperAPI.h>
 #import <TeamTalkSwift/DDUnrequestSuperAPI.h>
-//#import <TeamTalkSwift/security.h>
-//#import <TeamTalkSwift/aes.h>
-//#import <TeamTalkSwift/aes_locl.h>
-//#import <TeamTalkSwift/base64.h>
-//#import <TeamTalkSwift/md5.h>
+
 #import <TeamTalkSwift/MTTSundriesCenter.h>
 #import <TeamTalkSwift/DDReachability.h>
+
+#import <TeamTalkSwift/DataEncode.h>
+#import <TeamTalkSwift/GTMBase64.h>
+
+
+///Users/hzqmac/Desktop/TeamTalk-Swift/TeamTalkSwift/TeamTalkSwift.h
+///NSDate+DDAddition.h
+///NSDictionary+Safe.h
+///NSString+Additions.h
+///DDTcpClientManager.h
+///DDDataInputStream.h
+///DDDataOutputStream.h
+///NSStream+NSStreamAddition.h
+///DDAPISchedule.h
+///DDSendBuffer.h
+///DDTcpProtocolHeader.h
+///DDSuperAPI.h
+/// DataEncode.h
+///DDUnrequestSuperAPI.h
+///Users/hzqmac/Desktop/TeamTalk-Swift/TeamTalk-Swift/ThridPartys/GTMBase64.h
+///Users/hzqmac/Desktop/TeamTalk-Swift/TeamTalk-Swift/Util/MTTSundriesCenter.h
+///Users/hzqmac/Desktop/TeamTalk-Swift/TeamTalk-Swift/ThridPartys/GTMDefines.h
+///Users/hzqmac/Desktop/TeamTalk-Swift/TeamTalk-Swift/GlobalData/DDReachability.h

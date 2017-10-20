@@ -187,13 +187,13 @@ public class HMSessionModule: NSObject {
                 session.timeInterval = TimeInterval(message.msgTime)
                 session.lastMessage = message
                 
-                if let chattingVC:HMChattingViewController = UIApplication.shared.keyWindow?.rootViewController?.topVC() as? HMChattingViewController{
-                    if chattingVC.chattingModule.sessionEntity.sessionID != message.sessionId {
-                        session.unReadMsgCount += 1
-                    }
-                }else{
+//                if let chattingVC:HMChattingViewController = UIApplication.shared.keyWindow?.rootViewController?.topVC() as? HMChattingViewController{
+//                    if chattingVC.chattingModule.sessionEntity.sessionID != message.sessionId {
+//                        session.unReadMsgCount += 1
+//                    }
+//                }else{
                     session.unReadMsgCount += 1
-                }
+//                }
                 
                 session.dbUpdate(completion: nil)
                 

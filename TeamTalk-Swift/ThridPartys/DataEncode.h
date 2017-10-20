@@ -8,10 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-#import <CommonCrypto/CommonCrypto.h>
-#import <CommonCrypto/CommonCryptor.h>
 
- 
+typedef enum :NSInteger {
+    
+    DEAlgrithmAES128 = 0,
+    DEAlgrithmAES = 0,
+    DEAlgrithmDES,
+    DEAlgrithm3DES,
+}DEAlgrithm;
+
+typedef enum :NSInteger{
+    DEActionEncrypt = 0,
+    DEActionDecrypt
+}DEAction;
+
+
 extern const NSString *__nonnull DataEncodeDefaultKey;
 
 @interface DataEncode : NSObject
@@ -45,9 +56,9 @@ extern const NSString *__nonnull DataEncodeDefaultKey;
  @param key default is DataEncodeDefaultKey
  @return handled result
  */
-+(NSString *__nonnull)handleText:(NSString *__nonnull)plainText algorithem:(CCAlgorithm)algorithm encryptOrDecrypt:(CCOperation)action key:(NSString *__nullable)key;
++(NSString *__nonnull)handleText:(NSString *__nonnull)plainText algorithem:(DEAlgrithm)algorithm encryptOrDecrypt:(DEAction)action key:(NSString *__nullable)key;
 
-+(NSData *__nonnull)handleData:(NSData *__nonnull)theData algorithem:(CCAlgorithm)algorithm encryptOrDecrypt:(CCOperation)action key:(NSString *__nullable)key;
++(NSData *__nonnull)handleData:(NSData *__nonnull)theData algorithem:(DEAlgrithm)algorithm encryptOrDecrypt:(DEAction)action key:(NSString *__nullable)key;
 
 +(void)runExample;
 

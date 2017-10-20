@@ -42,7 +42,7 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         avatarImgv.top = 15
         avatarImgv.addCommonTap(target: self , sel: #selector(self.changeAvatarAction))
         
-        nameLabel.font = fontTitle
+        nameLabel.font = UIFont.systemFont(ofSize: 16)
         nameLabel.backgroundColor = UIColor.clear
         nameLabel.width = headerView.width
         nameLabel.height = 50

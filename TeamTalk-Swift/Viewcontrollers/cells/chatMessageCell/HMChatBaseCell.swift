@@ -18,6 +18,12 @@ let HMAvatarGap:CGFloat       = 8   // //头像到边缘的距离
 let HMBubbleUpDownGap:CGFloat = 8  // 气泡到上下边缘的距离
 let HMBubbleAvatarGap:CGFloat = 5  // 头像和气泡之间的距离
 
+let maxChatContentWidth:CGFloat = (SCREEN_WIDTH() - 70.0 * 2.0)   //聊天cell的内容view的最大宽度
+//字体大小
+let fontTitle  = UIFont.systemFont(ofSize: 16)
+let fontNormal = UIFont.systemFont(ofSize: 14)
+let fontDetail = UIFont.systemFont(ofSize: 12)
+
 @objc public  enum HMChatCellActionType:Int{
     case none       = 0
     case sendAgain  = 1

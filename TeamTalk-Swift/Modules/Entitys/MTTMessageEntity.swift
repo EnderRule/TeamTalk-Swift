@@ -508,7 +508,7 @@ public extension MTTMessageEntity {
     }
     
     private class func saveDownloadVoice(data:Data, compeletion: @escaping ((_ voiceFilePath:String,_ voiceLength:Int32) ->Void)){
-        var filePath = ZQFileManager.shared.docPath(folder: "voice",fileName: "voice_\(TIMESTAMP()).spx")
+        var filePath = self.newVoicePath()
         let tempData:NSData = data as NSData
         let realVoiceData:NSData = tempData.subdata(with: .init(location: 4, length: tempData.length - 4)) as NSData
         if realVoiceData.write(toFile: filePath, atomically: true){
@@ -534,6 +534,28 @@ public extension MTTMessageEntity {
         let voiceLength:Int32 = ((ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4 << 0))
         
         compeletion(filePath,voiceLength)
+    }
+    
+    private class func newVoicePath()->String{
+        
+        let folderName = "voice"
+        let fileName = "voice_\(TIMESTAMP()).spx"
+        
+        let docpath = NSSearchPathForDirectoriesInDomains( .documentDirectory,  .userDomainMask, true).first ?? ""
+        
+        let folderPath = (docpath as NSString).appendingPathComponent(folderName)
+        if !FileManager.default.fileExists(atPath: folderPath){
+            do {
+                try FileManager.default.createDirectory(atPath: folderPath, withIntermediateDirectories: false , attributes: nil)
+            }catch{
+                HMPrint("fail to create dir :\(folderPath)  error:\(error.localizedDescription)")
+            }
+        }
+        let filePath = (folderPath as NSString).appendingPathComponent(fileName)
+        if !FileManager.default.fileExists(atPath: filePath){
+            FileManager.default.createFile(atPath: filePath, contents: nil , attributes: nil)
+        }
+        return filePath
     }
     
     public func getUploadVoiceData()->Data{
@@ -612,10 +634,11 @@ extension String {
         }
         handleData.append(lenghtasData as Data)
         
-        debugPrint("message encrypt \(validedDataLenght) \(paddingLenght) \(lenghtasData) \(handleData) \(self)")
+//        debugPrint("message encrypt \(validedDataLenght) \(paddingLenght) \(lenghtasData) \(handleData) \(self)")
         
-        let returnData = DataEncode.handle(handleData as Data, algorithem: CCAlgorithm(kCCAlgorithmAES128), encryptOrDecrypt: CCOperation(kCCEncrypt), key: MTTMessageEntity.msgKey)
+        let returnData = DataEncode.handle(handleData as Data, algorithem: DEAlgrithmAES128, encryptOrDecrypt: DEActionEncrypt, key: MTTMessageEntity.msgKey)
         
+    
         let result = GTMBase64.string(byEncoding: returnData) ?? ""
         return result
         
@@ -626,7 +649,7 @@ extension String {
         
         let handleData:NSMutableData = NSMutableData.init(data:GTMBase64.decode( self.data(using: .utf8)!))
         
-        let decodeData = DataEncode.handle(handleData as Data, algorithem: CCAlgorithm(kCCAlgorithmAES128), encryptOrDecrypt: CCOperation(kCCDecrypt), key: MTTMessageEntity.msgKey)
+        let decodeData = DataEncode.handle(handleData as Data, algorithem: DEAlgrithmAES128, encryptOrDecrypt: DEActionDecrypt, key: MTTMessageEntity.msgKey)
         
         let tempData = NSData.init(data: decodeData)
         
@@ -654,7 +677,7 @@ extension String {
         
         let result = String.init(data: finalData, encoding: .utf8) ?? ""
         
-        debugPrint("message decrypt \(valideLenght) \(tempData as NSData) \(valideLenghtasData as NSData) result:\(result)")
+//        debugPrint("message decrypt \(valideLenght) \(tempData as NSData) \(valideLenghtasData as NSData) result:\(result)")
 
         return result
     }

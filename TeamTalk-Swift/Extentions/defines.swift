@@ -115,3 +115,39 @@ import ObjectiveC
         method_exchangeImplementations(originalMethod, swizzledMethod)
     }
 }
+
+
+extension UIView {
+    func subLayerFor(name:String)->CALayer?{
+        for sublayer in self.layer.sublayers ?? [] {
+            if sublayer.name == name{
+                return sublayer
+            }
+        }
+        return nil
+    }
+}
+
+extension String {
+    func safeLocalPath()->String{
+        
+        let range:NSRange = (self as NSString).range(of: "/var/mobile/Containers/Data/Application/")
+        if range.length > 0{
+            
+            var newfilePath = self
+            if FileManager.default.fileExists(atPath: newfilePath){
+                return newfilePath
+            }else {
+                newfilePath  = (newfilePath as NSString).substring(from: range.location+range.length+36)
+                
+                newfilePath = NSHomeDirectory().appending(newfilePath)
+                
+                return newfilePath
+            }
+        }else{
+            return self
+        }
+        
+    }
+}
+

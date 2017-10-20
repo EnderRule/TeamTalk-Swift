@@ -9,20 +9,24 @@
 import UIKit
 import Foundation
 
+
+
 extension String {
     
     var md5 : String{
 
-        let digestLen = Int(CC_MD5_DIGEST_LENGTH)
-        let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen);
-        CC_MD5(self.cString(using: String.Encoding.utf8)!, CC_LONG(self.lengthOfBytes(using: String.Encoding.utf8)), result);
+        return (self as NSString).md5()
         
-        var hash2:String = ""
-        for i in 0 ..< digestLen {
-            hash2 = hash2.appendingFormat("%02x", result[i])
-        }
-        free(result) //释放內存
-        return hash2
+//        let digestLen = Int(CC_MD5_DIGEST_LENGTH)
+//        let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen);
+//        CC_MD5(self.cString(using: String.Encoding.utf8)!, CC_LONG(self.lengthOfBytes(using: String.Encoding.utf8)), result);
+//        
+//        var hash2:String = ""
+//        for i in 0 ..< digestLen {
+//            hash2 = hash2.appendingFormat("%02x", result[i])
+//        }
+//        free(result) //释放內存
+//        return hash2
     }
     
     var length:Int{

@@ -10,7 +10,7 @@
 import AFNetworking
 
 
-@objc enum HMLoginState:Int {
+@objc public enum HMLoginState:Int {
     case online = 0
     case kickout            //被挤下线
     case offLine
@@ -18,20 +18,20 @@ import AFNetworking
     case logining           //正在连线
 }
 
-@objc enum HMNetworkState:Int{
+@objc public enum HMNetworkState:Int{
     case wifi
     case G3
     case G2
     case disconnect
 }
-@objc enum HMSocketState:Int{
+@objc public enum HMSocketState:Int{
     case linkingLoginServer
     case linkingMessageServer
     case disconnect
 }
 
 
-@objc protocol HMLoginManagerDelegate {
+@objc public protocol HMLoginManagerDelegate {
     
     func loginSuccess(user:MTTUserEntity)
     func loginFailure(error:String)
@@ -63,7 +63,7 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         }
     }
     
-    var loginState:HMLoginState{
+    public var loginState:HMLoginState{
         get{
             return s_loginState
         }
@@ -71,7 +71,7 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             self.s_loginState = newValue
         }
     }
-    var networkState:HMNetworkState{
+    public var networkState:HMNetworkState{
         get {
             return s_networkState
         }
@@ -198,7 +198,14 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     }
     private func getMsgIP(success:@escaping (([AnyHashable:Any])->Void),failure:@escaping ((String)->Void)){
         
-        self.getMsgIPManager.get(SERVER_Address, parameters: nil , progress: nil , success: { (task , responseObject ) in
+        let serveraddress = HMConfigs.MsgServerAddress
+        
+        if serveraddress.characters.count < 5{
+            failure("HMConfigs：消息服務器地址無效 ")
+            return
+        }
+        
+        self.getMsgIPManager.get(serveraddress, parameters: nil , progress: nil , success: { (task , responseObject ) in
             
             let json = JSON.init(responseObject ?? [:])
             let dic = json.dictionaryObject ?? [:]
@@ -246,6 +253,8 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     }
     
     public func tcpClientConnectSuccess() {
+        
+        
         if self.tcpIsConnecting{
             self.tcpIsConnecting = false
             
@@ -255,6 +264,8 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                 self.tcpConnectFailure = nil
             })
         }
+        self.s_loginState = .online
+        
     }
     public func tcpClientConnectFailure() {
         if self.tcpIsConnecting{
@@ -266,6 +277,8 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                 self.tcpConnectSuccess = nil
             })
         }
+        self.s_loginState = .offLine
+        
     }
     public  func tcpClientReceiveServerHeartBeat() {
         self.n_receiveServerHeartBeat()
@@ -326,10 +339,7 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                     }
                                 })
                             }else{
-                                var rstr = json[LoginAPI.kResultMessage].stringValue
-                                if rstr.length <= 0 {
-                                    rstr = "登入失敗：code = \(json2[LoginAPI.kResultCode])"
-                                }
+                                let rstr = "登入失敗：code = \(json2[LoginAPI.kResultCode]),\(json[LoginAPI.kResultMessage].stringValue)"
                                 failure(rstr)
                             }
                         }else{
@@ -513,8 +523,6 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     
     @objc private func relogin(timer:Timer){
         reloginTimeN += 1
-        
-        HMPrint("HMloginmanager relogin")
         
         if reloginTimeN >= self.reloginInterval {
             

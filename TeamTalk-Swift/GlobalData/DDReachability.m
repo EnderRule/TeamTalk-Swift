@@ -27,6 +27,7 @@
 
 #import "DDReachability.h"
 
+#import <ifaddrs.h>
 
 NSString *const kDDReachabilityChangedNotification = @"kDDReachabilityChangedNotification";
 

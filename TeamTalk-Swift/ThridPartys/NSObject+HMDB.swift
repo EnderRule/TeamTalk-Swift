@@ -73,19 +73,6 @@ public extension NSObject {
         }
     }
     
-    @objc func setValuesWith(fieldValues:[AnyHashable:Any]){
-        let tableName:String = "\(self.classForCoder)"
-
-        let fields:[String:String] = HMDBManager.shared.tableFieldInfos[tableName] ?? [:]
-        for obj in fieldValues{
-            if fields[obj.key as? String ?? ""]?.characters.count ?? 0 > 0 {
-                self.decode(dbValue: obj.value, forkey: obj.key as! String)
-            }
-        }
-        if fieldValues["defaultPK"] as? Int != nil {
-            self.defaultPK = fieldValues["defaultPK"] as! Int
-        }
-    }
     
     func getMaxDefaultPK()->Int{
         let tableName:String = "\(self.classForCoder)"
@@ -237,7 +224,9 @@ public extension NSObject {
             var objs:[AnyObject] = []
             while rs!.next() {
                 let obj = (self.classForCoder() as! NSObject.Type).init()
-                obj.setValuesWith(fieldValues: rs!.resultDictionary ?? [:])
+                
+                let dic = ((rs!.resultDictionary ?? [:]) as NSDictionary).copy() as! [String:Any]
+                obj.setValuesWith(fieldValues: dic)// rs!.resultDictionary ?? [:])
                 objs.append(obj)
             }
             completion(objs,nil)
@@ -247,12 +236,41 @@ public extension NSObject {
     }
     
     //MARK:赋值取值、值的序列化与反序列化
+    @objc func setValuesWith(fieldValues:[AnyHashable:Any]){
+        let tableName:String = "\(self.classForCoder)"
+        
+        let fields:[String:String] = HMDBManager.shared.tableFieldInfos[tableName] ?? [:]
+        for obj in fieldValues{
+            
+            let property = obj.key as? String ?? ""
+            if (fields[property] ?? "").characters.count > 0 {
+                
+                var value = obj.value
+                
+                let valuetype = "\(type(of: value))"
+                let badType = "NSTaggedPointerString"
+                if valuetype == badType{
+                    value = "\(value)"
+                }
+                
+                
+                self.decode(dbValue: value, forkey: property)
+            }
+        }
+        if fieldValues["defaultPK"] as? Int != nil {
+            self.defaultPK = fieldValues["defaultPK"] as! Int
+        }
+    }
+    
+    
     private func encodeValueFor(key:String)->Any{
-        return self.classForCoder.serialized(value:self.value(forKey: key) ?? "")
+        
+//        (self.classForCoder as NSObject.Type).se 
+        return NSObject.serialized(value:self.value(forKey: key) ?? "")
     }
     
     private func decode(dbValue:Any,forkey:String){
-        let value = self.classForCoder.unserialized(dbvalue: dbValue , propertyName: forkey)
+        let value = NSObject.unserialized(dbvalue: dbValue , propertyName: forkey)
         if (value as? NSNull) == nil {  //不为null 才能设置
             self.setValue(value , forKey: forkey)
         }
@@ -291,11 +309,15 @@ public extension NSObject {
         let classPropertys = HMDBManager.shared.classPropertyInfos[tablename] ?? [:]
         let type = classPropertys[propertyName] ?? ""
         
+        debugPrint("unserialized \(tableName) \(propertyName) \(dbvalue) \(type)  \(type(of: dbvalue))")
+
+        
         if type.contains("NSArray")
             || type.contains("NSMutableArray")
             || type.contains("NSDictionary")
             || type.contains("NSMutableDictionary"){
             let str = dbvalue as? String ?? ""
+            
             
             let data = self.dataFrom(string: str)
             do {
@@ -345,6 +367,7 @@ public extension NSObject {
         return String.init(data: data , encoding: .utf8) ?? ""
     }
     class  func dataFrom(string:String)->Data{
+        
         return string.data(using: .utf8) ?? Data()
     }
     

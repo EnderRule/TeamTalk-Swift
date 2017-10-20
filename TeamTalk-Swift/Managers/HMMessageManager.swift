@@ -18,6 +18,9 @@ extension Notification.Name {
 
 public typealias HMSendMessageCompletion = ((MTTMessageEntity,NSError?)->Void)
 
+public typealias HMSendImageProgress = ((MTTMessageEntity,CGFloat)->Void)
+
+public typealias HMWillSendMessage = ((MTTMessageEntity)->Void)
 
 @objc public  protocol HMMessageDelegate:NSObjectProtocol {
     
@@ -105,6 +108,7 @@ public class HMMessageManager: NSObject {
                     message.state = .SendSuccess
                     session.lastMsgID = message.msgID
                     session.timeInterval = TimeInterval(message.msgTime)
+                    
                     message.dbDelete(completion: { (success ) in
                         if success {
                             message.msgID = resultIDs[0]
@@ -126,6 +130,11 @@ public class HMMessageManager: NSObject {
     }
     
     
+    public func sendText(content:String,chattingModule:HMChattingModule,completion:@escaping HMSendMessageCompletion){
+        let messageEntity = MTTMessageEntity.initWith(content: content, module: chattingModule, msgContentType: .Text)
+        self.sendNormal(message: messageEntity, session: chattingModule.sessionEntity, completion: completion)
+    }
+    
     public func sendVoice(voicePath:String, message:MTTMessageEntity,session:MTTSessionEntity,completion:@escaping HMSendMessageCompletion){
         
         message.msgType = .msgTypeSingleAudio
@@ -138,15 +147,54 @@ public class HMMessageManager: NSObject {
         }
     }
     
-    public func sendImage(imagePath:String,message:MTTMessageEntity,session:MTTSessionEntity,completion:HMSendMessageCompletion){
-        message.msgContentType = .Image
-        
-        //Fixme:Here
+    public func sendImage(image:UIImage,chattingModule:HMChattingModule,willSend:@escaping HMWillSendMessage,progress:@escaping HMSendImageProgress,completion:@escaping HMSendMessageCompletion){
+        let imagePath = ZQFileManager.shared.tempPathFor(image: image )
+        self.sendImage(imagePath: imagePath, chattingModule: chattingModule,willSend:willSend, progress: progress, completion: completion)
     }
     
-    
-    
-    
+    public func sendImage(imagePath:String,chattingModule:HMChattingModule,willSend:@escaping HMWillSendMessage,progress:@escaping HMSendImageProgress,completion:@escaping HMSendMessageCompletion){
+        
+        var scale:CGFloat = 1.618
+        if let image:UIImage = UIImage.init(contentsOfFile: imagePath){
+            scale = image.size.width/image.size.height
+        }
+        
+        let newMessage:MTTMessageEntity = MTTMessageEntity.initWith(content: "[圖片]", module: chattingModule, msgContentType: DDMessageContentType.Image)
+        newMessage.imageLocalPath = imagePath
+        newMessage.imageScale = scale
+        newMessage.msgContentType = .Image
+        newMessage.dbSave(completion: nil)
+        
+        willSend(newMessage)
+        
+        //先上传图片、再发送含有图片URL 的消息。
+        SendPhotoMessageAPI.shared.uploadPhoto(imagePath: imagePath, to: chattingModule.sessionEntity, progress: { (pro ) in
+            
+            let floatProgress = CGFloat(pro.completedUnitCount)/CGFloat(pro.totalUnitCount)
+            progress(newMessage,floatProgress)
+            
+        }, success: {[weak self] (imageURL ) in
+            HMPrint("upload success url: \(imageURL)")
+            
+            if imageURL.length > 0 {
+                newMessage.state = .Sending
+                
+                newMessage.imageUrl = imageURL
+                
+                newMessage.updateToDB(compeletion: nil)
+                
+                self?.sendNormal(message: newMessage, session: chattingModule.sessionEntity, completion: { (message , error ) in
+                    completion(message,error)
+                })
+            }
+        }) {  (errorString ) in
+            
+            newMessage.state = .SendFailure
+            newMessage.updateToDB(compeletion: { (success ) in })
+            
+            completion(newMessage,NSError.init(domain: "image upload failure", code: 0, userInfo: nil))
+        }
+    }
     
     
     //MARK: UnAckQueue and Timer func

@@ -9,6 +9,10 @@
 import UIKit
 import UserNotifications
 
+//let SERVER_Address = "https://aitlg.linking.im/msg_server"
+let SERVER_Address =  "http://192.168.113.31:8080/msg_server"
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         HMDBManager.shared.modelClasses = [MTTUserEntity.classForCoder(),MTTGroupEntity.classForCoder(),MTTMessageEntity.classForCoder(),MTTSessionEntity.classForCoder(),MTTMsgReadState.classForCoder()]
+        
+        HMConfigs.MsgServerAddress = SERVER_Address
         
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (issuccess , error ) in

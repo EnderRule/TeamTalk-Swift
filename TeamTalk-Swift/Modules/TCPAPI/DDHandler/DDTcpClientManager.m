@@ -15,7 +15,12 @@
 #import "DDDataOutputStream.h"
 #import "DDAPISchedule.h"
 
-#import "TeamTalk_Swift-Swift.h"
+
+//#ifdef BUILD_TT_FRAMEWORK
+//    #import <TeamTalkSwift/TeamTalkSwift-Swift.h>
+//#else
+//    #import "TeamTalk_Swift-Swift.h"
+//#endif
 
 @interface DDTcpClientManager(PrivateAPI)
 
@@ -174,8 +179,6 @@
         if(self.delegate && [self.delegate respondsToSelector:@selector(tcpClientConnectSuccess)]){
             [self.delegate tcpClientConnectSuccess];
         }
-        
-        [HMLoginManager shared].loginState = HMLoginStateOnline;
     }
 }
 
@@ -229,8 +232,9 @@
 
 - (void)p_handleEventErrorOccurredStream:(NSStream *)aStream
 {
+    NSLog(@"DDTcpClientManager handleEventErrorOccurredStream %@ ,will be disconnect",aStream.debugDescription);
+    
     [self disconnect];
-    [HMLoginManager shared].loginState = HMLoginStateOffLine;
 }
 
 - (void)p_handleEventEndEncounteredStream:(NSStream *)aStream

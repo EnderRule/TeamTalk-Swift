@@ -4,10 +4,10 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>HMSecurity.xcscheme</key>
+		<key>TeamTalk-Swift copy.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>16</integer>
 		</dict>
 		<key>TeamTalk-Swift.xcscheme</key>
 		<dict>
@@ -33,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>66CE13181F9837F200E8081B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>66D6D67C1F9999F2009F3E97</key>
 		<dict>
 			<key>primary</key>
 			<true/>

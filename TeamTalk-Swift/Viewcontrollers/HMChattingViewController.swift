@@ -279,13 +279,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         
         HMMessageManager.shared.sendNormal(message: msgEntity, session: self.chattingModule.sessionEntity) {[weak self] (message , error ) in
             if error != nil {
-                
                 HMPrint("HMChatting send message \(message.msgContent) \n error: \(error!.localizedDescription)")
-                msgEntity.state = .SendFailure
-            }else{
-                msgEntity.state = message.state
             }
-            msgEntity.dbSave(completion: nil)
             
             dispatch(after: 0.0, task: { 
                 self?.tableView.reloadData()
@@ -322,45 +317,60 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     
     private func sendLocalImage(imagePath:String){
         
-        HMPrint("ready to upload messageImage:\(imagePath)")
         
-        var scale:CGFloat = 1.618
-        if let image:UIImage = UIImage.init(contentsOfFile: imagePath){
-            scale = image.size.width/image.size.height
-         }
-
-        let newMessage:MTTMessageEntity = MTTMessageEntity.initWith(content: "[圖片]", module: self.chattingModule, msgContentType: DDMessageContentType.Image)
-        newMessage.imageLocalPath = imagePath
-        newMessage.imageScale = scale
         
-        newMessage.dbSave(completion: nil)
-        
-        //先上传图片、再发送含有图片URL 的消息。
-        SendPhotoMessageAPI.shared.uploadPhoto(imagePath: imagePath, to: self.chattingModule.sessionEntity, progress: { (progress ) in
-            HMPrint("upload progress \(progress.completedUnitCount)/\(progress.totalUnitCount)  \(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))")
-        }, success: {[weak self] (imageURL ) in
-            HMPrint("upload success url: \(imageURL)")
-            if imageURL.length > 0 {
-                newMessage.state = .Sending
-                
-                newMessage.imageUrl = imageURL
-                
-                self?.sendMessage(msgEntity: newMessage)
-                newMessage.updateToDB(compeletion: nil)
+        HMMessageManager.shared.sendImage(imagePath: imagePath, chattingModule: self.chattingModule, willSend: { (message ) in
+                self.tableView.reloadData()
+        }, progress: { (message , progress ) in
+            HMPrint("send image to \(self.chattingModule.sessionEntity.sessionID) progress:\(progress)")
+            
+        }) { (message , error ) in
+            if (error != nil ){
+                HMPrint("send image error:\(error!.localizedDescription)")
             }
-        }) {[weak self ] (errorString ) in
-            
-            HMPrint("upload error :\(errorString)")
-            
-            newMessage.state = .SendFailure
-            newMessage.updateToDB(compeletion: { (success ) in
-                if success {
-                    dispatch(after: 0, task: {
-                        self?.tableView.reloadData()
-                    })
-                }
-            })
+            self.tableView.reloadData()
         }
+        
+        
+//        HMPrint("ready to upload messageImage:\(imagePath)")
+//        
+//        var scale:CGFloat = 1.618
+//        if let image:UIImage = UIImage.init(contentsOfFile: imagePath){
+//            scale = image.size.width/image.size.height
+//         }
+//
+//        let newMessage:MTTMessageEntity = MTTMessageEntity.initWith(content: "[圖片]", module: self.chattingModule, msgContentType: DDMessageContentType.Image)
+//        newMessage.imageLocalPath = imagePath
+//        newMessage.imageScale = scale
+//        
+//        newMessage.dbSave(completion: nil)
+//        
+//        //先上传图片、再发送含有图片URL 的消息。
+//        SendPhotoMessageAPI.shared.uploadPhoto(imagePath: imagePath, to: self.chattingModule.sessionEntity, progress: { (progress ) in
+//            HMPrint("upload progress \(progress.completedUnitCount)/\(progress.totalUnitCount)  \(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))")
+//        }, success: {[weak self] (imageURL ) in
+//            HMPrint("upload success url: \(imageURL)")
+//            if imageURL.length > 0 {
+//                newMessage.state = .Sending
+//                
+//                newMessage.imageUrl = imageURL
+//                
+//                self?.sendMessage(msgEntity: newMessage)
+//                newMessage.updateToDB(compeletion: nil)
+//            }
+//        }) {[weak self ] (errorString ) in
+//            
+//            HMPrint("upload error :\(errorString)")
+//            
+//            newMessage.state = .SendFailure
+//            newMessage.updateToDB(compeletion: { (success ) in
+//                if success {
+//                    dispatch(after: 0, task: {
+//                        self?.tableView.reloadData()
+//                    })
+//                }
+//            })
+//        }
     
         
     }
