@@ -298,6 +298,7 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         var existUserID:String = ""
         let oldPairs = self.getAutoLoginUserPairs()
         for obj in oldPairs{
+            print("old pair:\(obj)")
             let pair = obj.components(separatedBy: " ")
             if pair.count == 3{
                 if ID == pair[0] && pwd == pair[1]{
@@ -308,6 +309,11 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         }
         
         if existUserID.characters.count > 0 {
+            
+            DispatchQueue.global().sync {
+                self.openDB(userid: existUserID)
+            }
+            
             if let user = HMUsersManager.shared.userFor(ID: existUserID) {
                 
                 self.s_currentUser = user
@@ -316,7 +322,16 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                 self.currentLoginPwd = pwd
                 self.shouldAutoLogin = true
                 
-                self.openDB(userid: user.userId)
+                self.reloginning = true
+                
+                if self.reachability.isReachable(){
+                
+                    self.loginWith(loginID: ID, password: pwd, success: { (user ) in
+                        
+                    }, failure: { (error ) in
+                        
+                    })
+                }
             }
         }
         
@@ -384,18 +399,20 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                 
                                 HMSessionModule.shared.loadLocalSession(completion: nil)
                                 
-                                self.delegate?.loginSuccess?(user: user)
-                                HMNotification.userLoginSuccess.postWith(obj: user , userInfo: nil )
                                 
                                 self.sendPushtoken()
                                 
-                                success(user)
                                 
                                 HMUsersManager.shared.loadAllUser(completion: { 
                                     if let user = HMUsersManager.shared.userFor(ID: user.objID){
                                         self.s_currentUser = user
                                     }
                                 })
+                                
+                                success(user)
+                                self.delegate?.loginSuccess?(user: user)
+                                HMNotification.userLoginSuccess.postWith(obj: user , userInfo: nil )
+
                             }else{
                                 let error = "登入失敗：code = \(json2[LoginAPI.kResultCode]),\(json[LoginAPI.kResultMessage].stringValue)"
                                 HMPrint(error)

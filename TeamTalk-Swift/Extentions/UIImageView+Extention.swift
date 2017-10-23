@@ -103,8 +103,8 @@ extension UIImageView{
             let width:CGFloat = self.frame.size.width * 0.4
             let imgv = UIImageView.init(frame: .init(x:0, y:0, width: width, height: width))
             imgv.image = #imageLiteral(resourceName: "forbidden")
-            imgv.center.x = coverView.width/2
-            imgv.center.y = coverView.height/2
+            imgv.center.x = coverView.fr_width/2
+            imgv.center.y = coverView.fr_height/2
             
             coverView.addSubview(imgv)
             coverView.isHidden = false
@@ -132,7 +132,7 @@ extension UIImageView{
                 imgv.isHidden = false
                 self.addSubview(imgv)
             }
-            self.viewWithTag(10111)?.center  = CGPoint.init(x: self.width - width/2, y: self.height - height/2) //右下角
+            self.viewWithTag(10111)?.center  = CGPoint.init(x: self.fr_width - width/2, y: self.fr_height - height/2) //右下角
         }else{
             self.removeGifTag()
         }

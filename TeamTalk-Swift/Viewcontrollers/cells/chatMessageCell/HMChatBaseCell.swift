@@ -221,7 +221,7 @@ public class HMChatBaseCell: HMBaseCell {
     
     public func cellHeightFor(message:MTTMessageEntity)->CGFloat{
         // 昵称高度 + 实际内容高度 + 气泡与cell的间隔 + 气泡与内容的间隔。 总高度必须 >= 头像高度 + 头像与cell的间隔
-        var nameHeight:CGFloat = nameLabel.height
+        var nameHeight:CGFloat = nameLabel.fr_height
         if message.sessionType == .sessionTypeSingle || message.senderId == HMLoginManager.shared.currentUser.userId {
             nameHeight = 0
         }
@@ -244,7 +244,7 @@ public class HMChatBaseCell: HMBaseCell {
         
         let totalHeight = nameHeight + contentSize.height + self.bubbleTopEdge() + self.bubbleBottomEdge() + HMBubbleUpDownGap * 2.0
         
-        return max(totalHeight, avatarImgv.height + HMAvatarGap * 2)
+        return max(totalHeight, avatarImgv.fr_height + HMAvatarGap * 2)
     }
     
     

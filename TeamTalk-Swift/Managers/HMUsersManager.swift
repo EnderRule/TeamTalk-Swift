@@ -112,7 +112,10 @@ public class HMUsersManager: NSObject {
                 
                 let users:[MTTUserEntity] = dic[ AllUserAPI.kResultUserList] as? [MTTUserEntity] ?? []
                 for obj in  users.enumerated(){
-                    self.add(user: obj.element)
+                    if obj.element.isValided{
+                        obj.element.dbSave(completion: nil)
+                        self.add(user: obj.element)
+                    }
                 }
                 completion?()
             }

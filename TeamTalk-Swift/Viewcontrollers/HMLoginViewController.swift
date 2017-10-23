@@ -34,29 +34,40 @@ class HMLoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        HMLoginManager.shared.autoLogin(ID: "qing", pwd: "qing")
+        
+        if HMLoginManager.shared.currentUser.intUserID > 0 {
+            self.loginSuccessHandler()
+        }
+    }
+    
     func setupSubviews(){
         logoImgv.frame = .init(x: 0, y: 100, width: 120, height: 120)
         logoImgv.image = #imageLiteral(resourceName: "logo")
         
-        nameTf.frame = .init(x: 0, y: self.logoImgv.bottom + 25, width: self.view.width * 0.5, height: 40)
+        nameTf.frame = .init(x: 0, y: self.logoImgv.fr_bottom + 25, width: self.view.fr_width * 0.5, height: 40)
         nameTf.placeholder = "内网花名"
         nameTf.borderStyle = .roundedRect
         
-        pwdTf.frame = .init(x: 0, y: self.nameTf.bottom + 25, width: self.view.width * 0.5, height: 40)
+        pwdTf.frame = .init(x: 0, y: self.nameTf.fr_bottom + 25, width: self.view.fr_width * 0.5, height: 40)
         pwdTf.placeholder = "密码"
         pwdTf.borderStyle = .roundedRect
         pwdTf.isSecureTextEntry = true
         
-        loginBt.frame = .init(x: 0, y: self.pwdTf.bottom + 50, width: self.view.width * 0.5, height: 45)
+        loginBt.frame = .init(x: 0, y: self.pwdTf.fr_bottom + 50, width: self.view.fr_width * 0.5, height: 45)
         loginBt.setTitle("登入", for: .normal)
         loginBt.setTitleColor(colorTitle, for: .normal)
         loginBt.addTarget(self , action: #selector(self.loginBtClick(_:)), for: .touchUpInside)
         loginBt.backgroundColor = colorDefaultBlue
         
-        logoImgv.centerX = self.view.centerX
-        nameTf.centerX = self.view.centerX
-        pwdTf.centerX = self.view.centerX
-        loginBt.centerX = self.view.centerX
+        logoImgv.fr_centerX = self.view.fr_centerX
+        nameTf.fr_centerX = self.view.fr_centerX
+        pwdTf.fr_centerX = self.view.fr_centerX
+        loginBt.fr_centerX = self.view.fr_centerX
         
         self.view.addSubview(logoImgv)
         self.view.addSubview(nameTf)

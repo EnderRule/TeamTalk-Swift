@@ -48,8 +48,8 @@ extension UIScrollView{
         self.isScrollEnabled = true
         self.isUserInteractionEnabled = true
         
-        if contentSize.height < self.height{
-            self.contentSize = CGSize.init(width: contentSize.width, height: self.height+1)
+        if contentSize.height < self.fr_height{
+            self.contentSize = CGSize.init(width: contentSize.width, height: self.fr_height+1)
         }else{
             self.contentSize = contentSize
         }
@@ -58,16 +58,16 @@ extension UIScrollView{
     public func createInfoItemView(title:String,detail:String,itemFrame:CGRect)->UIView{
         let itemview = UIView.init(frame: .init(x: itemFrame.origin.x, y: itemFrame.origin.y, width: itemFrame.size.width, height: 100))
         itemview.backgroundColor = UIColor.white
-        let lineview = UIView.init(frame: .init(x: 0, y: 0, width: itemview.width, height: 10))
+        let lineview = UIView.init(frame: .init(x: 0, y: 0, width: itemview.fr_width, height: 10))
         lineview.backgroundColor = colorPrimary
         
-        let titleLb = UILabel.init(frame: .init(x: 20, y: lineview.bottom, width: itemview.width - 40, height: 30))
+        let titleLb = UILabel.init(frame: .init(x: 20, y: lineview.fr_bottom, width: itemview.fr_width - 40, height: 30))
         titleLb.backgroundColor = UIColor.clear
         titleLb.text = title
         titleLb.textColor = colorTitle
         titleLb.font = mainTipTitleFont
         
-        let detailTV = UITextView.init(frame: .init(x: 15, y: titleLb.bottom, width: itemview.width - 30, height: 30))
+        let detailTV = UITextView.init(frame: .init(x: 15, y: titleLb.fr_bottom, width: itemview.fr_width - 30, height: 30))
         detailTV.isEditable = false
         detailTV.showsVerticalScrollIndicator = false
         detailTV.showsHorizontalScrollIndicator = false
@@ -89,10 +89,10 @@ extension UIScrollView{
         let attriStr = NSAttributedString.init(string: detail, attributes: attrtbutes)
         detailTV.attributedText = attriStr
         
-        let newSize = detailTV.sizeThatFits(CGSize.init(width: detailTV.width, height: CGFloat(MAXFLOAT)))
+        let newSize = detailTV.sizeThatFits(CGSize.init(width: detailTV.fr_width, height: CGFloat(MAXFLOAT)))
         detailTV.frame.size.height = newSize.height + 5
         
-        itemview.frame.size.height = detailTV.bottom
+        itemview.frame.size.height = detailTV.fr_bottom
         itemview.addSubview(lineview)
         itemview.addSubview(titleLb)
         itemview.addSubview(detailTV)
@@ -104,15 +104,15 @@ extension UIScrollView{
         let itemview = UIView.init(frame: .init(x: itemFrame.origin.x, y: itemFrame.origin.y, width: itemFrame.size.width, height: 100))
         itemview.backgroundColor = UIColor.white
         
-        let titleLb = UILabel.init(frame: .init(x: 20, y: 15, width: itemview.width - 40, height: 35))
+        let titleLb = UILabel.init(frame: .init(x: 20, y: 15, width: itemview.fr_width - 40, height: 35))
         titleLb.backgroundColor = UIColor.clear
         titleLb.attributedText = title
         titleLb.textColor = colorTitle
         titleLb.font = mainTipTitleFont
         
-        subView.top = titleLb.bottom
+        subView.fr_top = titleLb.fr_bottom
         
-        itemview.frame.size.height = subView.bottom + 10
+        itemview.frame.size.height = subView.fr_bottom + 10
         
         itemview.addSubview(titleLb)
         itemview.addSubview(subView)

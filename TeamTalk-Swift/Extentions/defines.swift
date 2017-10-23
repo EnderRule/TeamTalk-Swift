@@ -117,17 +117,6 @@ import ObjectiveC
 }
 
 
-extension UIView {
-    func subLayerFor(name:String)->CALayer?{
-        for sublayer in self.layer.sublayers ?? [] {
-            if sublayer.name == name{
-                return sublayer
-            }
-        }
-        return nil
-    }
-}
-
 extension String {
     func safeLocalPath()->String{
         

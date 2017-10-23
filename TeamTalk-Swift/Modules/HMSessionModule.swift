@@ -94,6 +94,8 @@ public class HMSessionModule: NSObject {
     
     public func loadLocalSession(completion:((Bool)->Void)?){
         MTTSessionEntity.dbQuery(whereStr: nil , orderFields: "timeInterval asc", offset: 0, limit: 0, args: []) { (sessions , error ) in
+
+            HMPrint("load local Sessions:\(sessions.count) \(error.debugDescription )")
             for obj in sessions{
                 if let session = obj as? MTTSessionEntity {
                     self.add(sessions: [session])

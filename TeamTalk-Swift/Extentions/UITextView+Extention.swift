@@ -12,8 +12,8 @@ extension UITextView {
 
     func setVerticallyCenteredText(text:String){
         self.text = text
-        let newSize:CGSize = self.sizeThatFits(.init(width: self.width, height: CGFloat.greatestFiniteMagnitude))
-        let topInset:CGFloat = (self.height - newSize.height)/2.0
+        let newSize:CGSize = self.sizeThatFits(.init(width: self.fr_width, height: CGFloat.greatestFiniteMagnitude))
+        let topInset:CGFloat = (self.fr_height - newSize.height)/2.0
         
         if topInset > 0{
             self.contentInset = .init(top: topInset, left: self.contentInset.left, bottom: topInset, right: self.contentInset.right)
@@ -22,8 +22,8 @@ extension UITextView {
     
     func setVerticallyCenteredAttributeText(attText:NSAttributedString){
         self.attributedText = attText
-        let newSize:CGSize = self.sizeThatFits(.init(width: self.width, height: CGFloat.greatestFiniteMagnitude))
-        let topInset:CGFloat = (self.height - newSize.height)/2.0
+        let newSize:CGSize = self.sizeThatFits(.init(width: self.fr_width, height: CGFloat.greatestFiniteMagnitude))
+        let topInset:CGFloat = (self.fr_height - newSize.height)/2.0
         
         if topInset > 0{
             self.contentInset = .init(top: topInset, left: self.contentInset.left, bottom: topInset, right: self.contentInset.right)
@@ -108,6 +108,6 @@ extension UITextView{
     }
     
     func attributeContentHeight()->CGFloat{
-        return UITextView.contentSizeWith(attributeString: self.attributedText, staticWith: self.width, maxHeight: nil).height
+        return UITextView.contentSizeWith(attributeString: self.attributedText, staticWith: self.fr_width, maxHeight: nil).height
     }
 }

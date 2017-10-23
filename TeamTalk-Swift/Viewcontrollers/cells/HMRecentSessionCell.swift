@@ -80,9 +80,9 @@ public class HMRecentSessionCell: HMBaseCell {
         super.layoutSubviews()
         
         if !unreadMsgLabel.isHidden{
-            unreadMsgLabel.height = 16
-            unreadMsgLabel.centerY = self.contentView.centerY + 8
-            unreadMsgLabel.right = self.contentView.right - 10
+            unreadMsgLabel.fr_height = 16
+            unreadMsgLabel.fr_centerY = self.contentView.fr_centerY + 8
+            unreadMsgLabel.fr_right = self.contentView.fr_right - 10
             
             //Warning:使用这种方式设置圆角、将不能用 masnory 约束布局
             unreadMsgLabel.add(corners: .allCorners, radius: CGSize.init(width: 8, height: 8))
@@ -166,7 +166,7 @@ public class HMRecentSessionCell: HMBaseCell {
             self.unreadMsgLabel.text = "99+"
             width = 34
         }
-        unreadMsgLabel.width = width
+        unreadMsgLabel.fr_width = width
     }
     
 }

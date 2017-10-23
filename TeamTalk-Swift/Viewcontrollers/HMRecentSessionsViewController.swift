@@ -47,6 +47,11 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         NotificationCenter.default.addObserver(self , selector: #selector(self.n_receiveReLoginSuccessNotification(notification:)), name: HMNotification.userReloginSuccess.notificationName(), object: nil )
         
         HMSessionModule.shared.delegate = self
+        HMSessionModule.shared.loadLocalSession { (success ) in
+            if success  {
+                self.refreshData()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

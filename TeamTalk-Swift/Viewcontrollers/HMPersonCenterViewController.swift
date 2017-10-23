@@ -36,18 +36,18 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
         headerView.frame = .init(x: 0, y: 0, width: SCREEN_WIDTH(), height: 150)
         
         avatarImgv.contentMode = .scaleAspectFit
-        avatarImgv.width = 80
-        avatarImgv.height = 80
-        avatarImgv.centerX = headerView.centerX
-        avatarImgv.top = 15
+        avatarImgv.fr_width = 80
+        avatarImgv.fr_height = 80
+        avatarImgv.fr_centerX = headerView.fr_centerX
+        avatarImgv.fr_top = 15
         avatarImgv.addCommonTap(target: self , sel: #selector(self.changeAvatarAction))
         
         nameLabel.font = UIFont.systemFont(ofSize: 16)
         nameLabel.backgroundColor = UIColor.clear
-        nameLabel.width = headerView.width
-        nameLabel.height = 50
-        nameLabel.top = avatarImgv.bottom + 15
-        nameLabel.left = 0
+        nameLabel.fr_width = headerView.fr_width
+        nameLabel.fr_height = 50
+        nameLabel.fr_top = avatarImgv.fr_bottom + 15
+        nameLabel.fr_left = 0
         nameLabel.textAlignment = .center
         
         headerView.addSubview(avatarImgv)
@@ -136,7 +136,7 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return headerView.height
+        return headerView.fr_height
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

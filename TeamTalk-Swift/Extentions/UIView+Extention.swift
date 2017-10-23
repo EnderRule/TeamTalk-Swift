@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension UIView{
-    var top:CGFloat{
+    var fr_top:CGFloat{
         set{
             self.frame.origin.y = newValue
         }
@@ -18,7 +18,7 @@ extension UIView{
             return self.frame.origin.y
         }
     }
-    var left:CGFloat{
+    var fr_left:CGFloat{
         set{
             self.frame.origin.x = newValue
         }
@@ -26,7 +26,7 @@ extension UIView{
             return self.frame.origin.x
         }
     }
-    var bottom:CGFloat{
+    var fr_bottom:CGFloat{
         set{
             self.frame.origin.y = newValue - self.frame.size.height
         }
@@ -34,7 +34,7 @@ extension UIView{
             return self.frame.origin.y + self.frame.size.height
         }
     }
-    var right:CGFloat{
+    var fr_right:CGFloat{
         set{
             self.frame.origin.x = newValue - self.frame.size.width
         }
@@ -42,7 +42,7 @@ extension UIView{
             return self.frame.origin.x + self.frame.size.width
         }
     }
-    var centerX:CGFloat{
+    var fr_centerX:CGFloat{
         set{
             self.center = CGPoint.init(x: newValue, y: self.center.y)
         }
@@ -50,7 +50,7 @@ extension UIView{
             return self.center.x
         }
     }
-    var centerY:CGFloat{
+    var fr_centerY:CGFloat{
         set{
             self.center = CGPoint.init(x: self.center.x, y: newValue)
         }
@@ -58,7 +58,7 @@ extension UIView{
             return self.center.y
         }
     }
-    var width:CGFloat{
+    var fr_width:CGFloat{
         set{
             self.frame.size.width = newValue
         }
@@ -66,7 +66,7 @@ extension UIView{
             return self.frame.size.width
         }
     }
-    var height:CGFloat{
+    var fr_height:CGFloat{
         set{
             self.frame.size.height = newValue
         }
@@ -74,7 +74,7 @@ extension UIView{
             return self.frame.size.height
         }
     }
-    var origin:CGPoint{
+    var fr_origin:CGPoint{
         set{
             self.frame.origin = newValue
         }
@@ -82,7 +82,7 @@ extension UIView{
             return self.frame.origin
         }
     }
-    var size:CGSize{
+    var fr_size:CGSize{
         set{
             self.frame.size = newValue
         }
@@ -118,7 +118,7 @@ extension UIView{
             return
         }else if self.isKind(of: UIScrollView.classForCoder()){
             let scrollview:UIScrollView = self as! UIScrollView
-            scrollview.scrollRectToVisible(.init(x: 0, y: scrollview.contentSize.height - 1, width: scrollview.frame.size.width, height: 1), animated: true)
+            scrollview.scrollRectToVisible(.init(x: 0, y: scrollview.contentSize.height - 3, width: 2, height: 2), animated: true)
         }else{
             for subview in self.subviews{
                 subview.checkScrollToBottom()
@@ -150,18 +150,6 @@ extension UIView{
         }
     }
     
-//    func genarateImage()->UIImage? {
-//        let size = self.bounds.size
-//        
-//        UIGraphicsBeginImageContextWithOptions(size , false , UIScreen.main.scale)
-//        self.layer.render(in: UIGraphicsGetCurrentContext()!)
-//        let image = UIGraphicsGetImageFromCurrentImageContext()
-//        
-//        UIGraphicsEndImageContext()
-//        
-//        return image
-//    }
-    
 //    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        self.next?.touchesBegan(touches, with: event)
 //        self.superview?.touchesBegan(touches, with: event)
@@ -180,7 +168,16 @@ extension UIView{
 //        self.superview?.touchesCancelled(touches, with: event)
 //    }
 }
-
+extension UIView {
+    func subLayerFor(name:String)->CALayer?{
+        for sublayer in self.layer.sublayers ?? [] {
+            if sublayer.name == name{
+                return sublayer
+            }
+        }
+        return nil
+    }
+}
 
 public enum ZQSeperateLinePosition:Int  {
     case top = 0
@@ -240,47 +237,47 @@ extension UIView{
         
         switch position {
         case .top:
-            xx = self.width*(1 - tempScaleRate)/2
+            xx = self.fr_width*(1 - tempScaleRate)/2
             yy = lineInset
             
-            ww = self.width * (tempScaleRate > 1 ? 1:tempScaleRate)
+            ww = self.fr_width * (tempScaleRate > 1 ? 1:tempScaleRate)
             hh = lineWidth
             
             break
         case .left:
-            yy = self.height * (1 - tempScaleRate)/2
+            yy = self.fr_height * (1 - tempScaleRate)/2
             xx = lineInset
             
-            hh = self.height * (tempScaleRate > 1 ? 1:tempScaleRate)
+            hh = self.fr_height * (tempScaleRate > 1 ? 1:tempScaleRate)
             ww = lineWidth
             break
         case .bottom:
             
-            xx = self.width*(1 - tempScaleRate)/2
-            yy = self.height - lineInset - lineWidth
+            xx = self.fr_width*(1 - tempScaleRate)/2
+            yy = self.fr_height - lineInset - lineWidth
             
-            ww = self.width * (tempScaleRate > 1 ? 1:tempScaleRate)
+            ww = self.fr_width * (tempScaleRate > 1 ? 1:tempScaleRate)
             hh = lineWidth
             break
         case .right:
-            yy = self.height * (1 - tempScaleRate)/2
-            xx = self.width - lineInset - lineWidth
+            yy = self.fr_height * (1 - tempScaleRate)/2
+            xx = self.fr_width - lineInset - lineWidth
             
-            hh = self.height * (tempScaleRate > 1 ? 1:tempScaleRate)
+            hh = self.fr_height * (tempScaleRate > 1 ? 1:tempScaleRate)
             ww = lineWidth
             break
         case .centerVertical:
-            yy = self.height * (1 - tempScaleRate)/2
-            xx = self.width/2 - lineWidth/2
+            yy = self.fr_height * (1 - tempScaleRate)/2
+            xx = self.fr_width/2 - lineWidth/2
             
-            hh = self.height * (tempScaleRate > 1 ? 1:tempScaleRate)
+            hh = self.fr_height * (tempScaleRate > 1 ? 1:tempScaleRate)
             ww = lineWidth
             break
         case .centerHorizontal:
-            xx = self.width*(1 - tempScaleRate)/2
-            yy = self.height/2 - lineWidth/2
+            xx = self.fr_width*(1 - tempScaleRate)/2
+            yy = self.fr_height/2 - lineWidth/2
              
-            ww = self.width * (tempScaleRate > 1 ? 1:tempScaleRate)
+            ww = self.fr_width * (tempScaleRate > 1 ? 1:tempScaleRate)
             hh = lineWidth
             break
         default:
@@ -326,7 +323,26 @@ extension UIView{
         return image
     }
     
+    func findFirstResponderIn(view:UIView)->UIView?{
+        if view.isFirstResponder{
+            return view
+        }
+        for subview in view.subviews{
+            if subview .isFirstResponder{
+                return subview
+            }else{
+                let view = self.findFirstResponderIn(view: subview)
+                if view?.isFirstResponder ?? false{
+                    return view
+                }
+            }
+        }
+        return nil
+    }
     
+    func findFirstResponder()->UIView?{
+        return self.findFirstResponderIn(view: self)
+    }
 }
 
 
