@@ -34,6 +34,11 @@ let USER_PRE:String = "user_"
 
 @objc(MTTUserEntity)
 public  class MTTUserEntity: MTTBaseEntity,HMDBModelDelegate {
+    
+    public func db()->Any{
+        return HMLoginManager.shared.myDBManager.dataBaseQueue
+    }
+    
     public func dbFields() -> [String] {
         return ["lastUpdateTime","objID","objectVersion","name","nick","avatar",
                 "department","departId","signature","position","sex","telphone",

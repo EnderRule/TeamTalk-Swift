@@ -61,7 +61,9 @@ public class HMChattingModule: NSObject {
                                  orderFields: "msgTime desc",
                                  offset: offset,
                                  limit: pageCount,
-                                 args: [self.sessionEntity.sessionID]) { (messages , error ) in
+                                 args: [self.sessionEntity.sessionID])
+        { (messages , error ) in
+            
             if error != nil {
                 completion(0,error! as NSError)
             }else{
@@ -78,28 +80,34 @@ public class HMChattingModule: NSObject {
                     }
                 }
                 
-                disableHMLog ? () : HMPrint("session \(self.sessionEntity.sessionID) load history: limit:\(offset)/\(pageCount) resultCount:\(tempMessages.count)")
+                HMPrint("session \(self.sessionEntity.sessionID) load history: limit:\(offset)/\(pageCount) resultCount:\(tempMessages.count)")
                 
-                if HMLoginManager.shared.networkState == .disconnect{
-                    self.p_addHistory(messages: tempMessages, completion: completion)
-                }else{
+//                if HMLoginManager.shared.networkState == .disconnect{
+//                    self.p_addHistory(messages: tempMessages, completion: completion)
+//                }else{
                     if tempMessages.count > 0 {
-                        let ismissing = self.isHaveMissMsg(messages: messages)
-                        let minID:UInt32 = self.getMinMsgID()
-                        let maxID:UInt32 =  self.getMaxMsgID(messages: messages)
-                        let diff = minID - maxID
-                        if ismissing || diff != 0 {
-                            self.loadHistoryFromServerBegin(msgID: minID, loadCount: Int(diff) , completion: { (addcount , error ) in
-                                if addcount > 0 {
-                                    completion(addcount,error)
-                                }else{
-                                    self.p_addHistory(messages: messages, completion: completion)
-                                }
-                            })
-                        }else{
-                        
-                            self.p_addHistory(messages: messages, completion: completion)
-                        }
+                        self.p_addHistory(messages: messages, completion: completion)
+
+//                        let ismissing = self.isHaveMissMsg(messages: messages)
+//                        let minID:UInt32 = self.getMinMsgID()
+//                        let maxID:UInt32 =  self.getMaxMsgID(messages: messages)
+//                        let diff = minID - maxID
+//                        
+//                        HMPrint("db message ismissing \(ismissing),minID:\(minID) maxID:\(maxID),diff:\(diff)")
+//                        
+//                        if ismissing || diff != 0 {
+//                            self.loadHistoryFromServerBegin(msgID: minID, loadCount: Int(diff) , completion: { (addcount , error ) in
+//                                if addcount > 0 {
+//                                    
+//                                    HMPrint("load missing message count \(addcount)")
+//                                    completion(addcount,error)
+//                                }else{
+//                                    self.p_addHistory(messages: messages, completion: completion)
+//                                }
+//                            })
+//                        }else{
+//                            self.p_addHistory(messages: messages, completion: completion)
+//                        }
                     }else{
                         ////数据库中已获取不到消息
                         //拿出当前最小的msgid去服务端取
@@ -107,7 +115,7 @@ public class HMChattingModule: NSObject {
                             completion(count,error)
                         })
                     }
-                }
+//                }
                 
             }
         }
@@ -126,7 +134,17 @@ public class HMChattingModule: NSObject {
     }
     
     func getNewMsg(completion:@escaping HMLoadMoreHistoryMessageCompletion){
-        HMMessageManager.shared.getMsgFromServer(beginMsgID: 0, forSession: self.sessionEntity, count: 20) { (messages , error ) in
+        self.loadHistoryFromServerBegin(msgID: 0, loadCount: HM_Message_Page_Item_Count) { (count , error ) in
+            completion(count ,error)
+        }
+    }
+    func loadHistoryFromServerBegin(msgID:UInt32 ,completion:@escaping HMLoadMoreHistoryMessageCompletion){
+        self.loadHistoryFromServerBegin(msgID: msgID, loadCount: HM_Message_Page_Item_Count) { (count , error ) in
+            completion(count ,error)
+        }
+    }
+    func loadHistoryFromServerBegin(msgID:UInt32,loadCount:Int ,completion:@escaping HMLoadMoreHistoryMessageCompletion){
+        HMMessageManager.shared.getMsgFromServer(beginMsgID: msgID, forSession: self.sessionEntity, count: HM_Message_Page_Item_Count) { (messages , error ) in
             let maxmsgID:UInt32 = self.getMaxMsgID(messages: messages)
             if maxmsgID == 0 {
                 completion(0,error as NSError?)
@@ -146,12 +164,6 @@ public class HMChattingModule: NSObject {
                 completion(sortedMessages.count,nil )
             }
         }
-    }
-    func loadHistoryFromServerBegin(msgID:UInt32 ,completion:@escaping HMLoadMoreHistoryMessageCompletion){
-        
-    }
-    func loadHistoryFromServerBegin(msgID:UInt32,loadCount:Int ,completion:@escaping HMLoadMoreHistoryMessageCompletion){
-        
     }
     
     public func addShow(prompt:String){
@@ -223,7 +235,7 @@ public class HMChattingModule: NSObject {
         for obj in messages.reversed().enumerated(){
             if let message = obj.element as? MTTMessageEntity {
                 if self.msgIDs.contains(message.msgID){
-                    disableHMLog ? () : HMPrint("p_add history check msgID exist:\(message.msgID) \(message.msgContent)")
+                    HMPrint("p_add history check msgID exist:\(message.msgID) \(message.msgContent)")
                 }else{
                     if message.msgTime - tempLastestDate > showPromtGap {
                         let promt = HMPromptEntity.init()
@@ -237,14 +249,14 @@ public class HMChattingModule: NSObject {
                     
                     self.msgIDs.append(message.msgID)
                     tempMessages.append(message)
-//                    disableHMLog ? () : HMPrint("p_add history add msg ID:\(message.msgID) \(message.msgContent)")
+//                    HMPrint("p_add history add msg ID:\(message.msgID) \(message.msgContent)")
 
                 }
             }
         }
         
         
-        disableHMLog ? () : HMPrint("p_add history rawCount:\(messages.count) checkCount:\(tempMessages.count)")
+        HMPrint("p_add history rawCount:\(messages.count) checkCount:\(tempMessages.count)")
         
         if self.showingMessages.count == 0 {
             self.showingMessages.append(contentsOf: tempMessages)
@@ -264,7 +276,10 @@ public class HMChattingModule: NSObject {
         
         let addCount = newItemCount - itemCount
         
-        completion(addCount,nil)
+        dispatch(after: 0) {
+            completion(addCount,nil)
+        }
+        
     }
     
     func getMinMsgID()->UInt32 {

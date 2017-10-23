@@ -45,7 +45,10 @@ import AFNetworking
 
 public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
 
+    
     public static let shared:HMLoginManager = HMLoginManager()
+    
+    
     
     public var currentUser:MTTUserEntity{
         get{
@@ -313,10 +316,20 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                 self.currentLoginPwd = pwd
                 self.shouldAutoLogin = true
                 
-                HMDBManager.shared.openDB(userID: user.userId)
+                self.openDB(userid: user.userId)
             }
         }
         
+    }
+    
+    var myDBManager:HMDBManager = HMDBManager.init()
+
+    private func openDB(userid:String){
+        myDBManager.modelClasses = [MTTUserEntity.classForCoder(),MTTGroupEntity.classForCoder(),MTTMessageEntity.classForCoder(),MTTSessionEntity.classForCoder(),MTTMsgReadState.classForCoder()]
+        myDBManager.openDB(userID: userid)
+    }
+    private func closeDB(){
+        myDBManager.dataBaseQueue.close()
     }
     
     public  func loginWith(loginID:String,password:String,success:@escaping ((MTTUserEntity)->Void),failure:@escaping ((String)->Void)){
@@ -367,8 +380,8 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
 
                                 self.reloginning = true
                                 
-                                HMDBManager.shared.openDB(userID: user.userId)
-                                                                
+                                self.openDB(userid: user.userId)
+                                
                                 HMSessionModule.shared.loadLocalSession(completion: nil)
                                 
                                 self.delegate?.loginSuccess?(user: user)

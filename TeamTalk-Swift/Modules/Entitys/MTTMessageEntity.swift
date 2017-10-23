@@ -83,7 +83,9 @@ import UIKit
 
 @objc(MTTMessageEntity)
 public class MTTMessageEntity: MTTBaseEntity,HMDBModelDelegate {
-    
+    public func db()->Any{
+        return HMLoginManager.shared.myDBManager.dataBaseQueue
+    }
     public func dbFields() -> [String] {
         return ["msgID","msgTime","seqNo",
                 "sessionId","senderId","toUserID",
@@ -719,7 +721,9 @@ extension String {
 
 
 public class MTTMsgReadState:NSObject,HMDBModelDelegate{
-    
+    public func db()->Any{
+        return HMLoginManager.shared.myDBManager.dataBaseQueue
+    }
     public func dbFields() -> [String] {
         return ["msgID","stateInt","sessionID"]
     }

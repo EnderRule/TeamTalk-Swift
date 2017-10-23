@@ -14,7 +14,7 @@ import Foundation
 
 import FMDB
 
-let disableHMDBLog:Bool = true
+let disableHMDBLog:Bool = false 
 
 extension NSObject{
     class func newObjFor(subCls:AnyClass) ->AnyObject{
@@ -23,7 +23,7 @@ extension NSObject{
     }
 }
 
-
+var tableFieldInfos:[String:[String:String]] = [:]
 
 
 public class HMDBManager: NSObject {
@@ -33,17 +33,17 @@ public class HMDBManager: NSObject {
     public var modelClasses:[AnyClass] = []
     var dbUserID:String = ""
     
-
-    var tableFieldInfos:[String:[String:String]] = [:]
-    
     public var dataBaseQueue:FMDatabaseQueue!
-    public var dataBase:FMDatabase!
     
     public func addDBModelClass(cls:AnyClass){
 
         self.modelClasses.append(cls)
-        if dataBase.open(){
-            let _ = self.createTableFor(cls: cls,database: dataBase)
+        
+        dataBaseQueue.inDatabase { (db ) in
+            if db.open(){
+                let _ = self.createTableFor(cls: cls,database: db)
+
+            }
         }
     }
     
@@ -71,16 +71,10 @@ public class HMDBManager: NSObject {
         if dataBaseQueue != nil{
             dataBaseQueue.close()
         }
-        if dataBase != nil {
-            dataBase.close()
-        }
         
         dataBaseQueue = FMDatabaseQueue.init(path: dbPath)
-        dataBase = FMDatabase.init(path: dbPath)
-        
-        if dataBase.open(){
-            dataBaseQueue.inDatabase({ (db ) in
-                
+        dataBaseQueue.inDatabase({ (db ) in
+
 //                var lastDBVersion:Int = 0
 //                let rs = db.executeQuery("PRAGMA user_version", withArgumentsIn: [])
 //                if rs?.next() ?? false {
@@ -95,30 +89,14 @@ public class HMDBManager: NSObject {
 //                        disableHMDBLog ? () : debugPrint("update DB user_version \(newversion) failure ")
 //                    }
 //                }
-                
-                //创建表
-                for cls in self.modelClasses{
-                    let _ = self.createTableFor(cls: cls,database: db )
-                }
-            })
-        }else{
-            disableHMDBLog ? () : debugPrint("fail to open db at :\(dbPath)")
-        }
-        
-        
-//        dataBaseQueue.inDatabase { (database) in
-//            var schemeVersion:Int32 = 0
-//            let set = database.executeQuery("PRAGMA user_version", withArgumentsIn: [])
-//            if set?.next() ?? false {
-//                schemeVersion = set!.int(forColumnIndex: 0)
-//            }
-//            set?.close()
-//            
-//            database.beginTransaction()
-//            
-//        }
-        
+            
+        //创建表
+            for cls in self.modelClasses{
+                let _ = self.createTableFor(cls: cls,database: db )
+            }
+        })
     }
+    
     private func createTableFor(cls:AnyClass,database:FMDatabase)->Bool{
         let tableName = "\(cls)"
         
@@ -138,6 +116,7 @@ public class HMDBManager: NSObject {
                 currentColumns.append(column)
             }
         }
+        rs.close()
         
         //检查主键是否改变，如果有改变，需将原有的table删除
         if let obj = (cls as! NSObject.Type).init() as? HMDBModelDelegate{
@@ -185,7 +164,7 @@ public class HMDBManager: NSObject {
             let rawtype = NSObject.cachePropertyTypeOf(theClass: cls , propertyName: column)
             let sqltype = self.sqlTypeOfProperty(rawType: rawtype)
             if sqltype.characters.count > 0 {
-                if  !self.alertTable(cls: cls , addColumn: column, type: sqltype,database:dataBase){
+                if  !self.alertTable(cls: cls , addColumn: column, type: sqltype,database:database){
                     disableHMDBLog ? () : debugPrint("fail to alert table \(tableName) add column \(column) \(sqltype)")
                 }
             }
@@ -230,16 +209,16 @@ public class HMDBManager: NSObject {
     }
     
     func clearAllTables(){
-        debugPrint("clearAllTables :\(self.modelClasses)")
         for cls in self.modelClasses{
             let tableName:String = "\(cls.class())"
-            let result = self.clearTable(name: tableName)
-            disableHMDBLog ? () : debugPrint("clear table \(tableName) \(result)")
+            self.clearTable(name: tableName)
         }
     }
-    func clearTable(name:String)->Bool{
-        dataBase.shouldCacheStatements = true
-        return dataBase.executeUpdate("delete from \(name)", withArgumentsIn: [])
+    func clearTable(name:String){
+        dataBaseQueue.inDatabase { (db ) in
+            db.shouldCacheStatements = true
+            db.executeUpdate("delete from \(name)", withArgumentsIn: [])
+        }
     }
     
     func sqlOfCreateTable(cls:AnyClass)->String{
@@ -282,7 +261,7 @@ public class HMDBManager: NSObject {
             }
             
             if colums.characters.count == 0 {
-                disableHMDBLog ? () : debugPrint("create table \(tableName) but has no surported dbFields")
+                debugPrint("create table \(tableName) but has no surported dbFields")
                 return ""
             }
             var primaryFieldsStr = ""
@@ -295,7 +274,7 @@ public class HMDBManager: NSObject {
             
             return createTableSQL
         }else{
-            disableHMDBLog ? () : debugPrint("class \(cls) is not in db handled ")
+            debugPrint("class \(cls) is not in db handled ")
             return ""
         }
     }
@@ -331,7 +310,7 @@ public class HMDBManager: NSObject {
         }else if subRawType.contains("NSNumber") {
             sqlType = "double"
         }else{
-            disableHMDBLog ? () : debugPrint("database not surport for type of \(subRawType)")
+            debugPrint("database not surport for type of \(subRawType)")
         }
         
         return sqlType

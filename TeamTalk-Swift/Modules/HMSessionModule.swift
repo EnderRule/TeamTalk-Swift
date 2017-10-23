@@ -71,7 +71,7 @@ public class HMSessionModule: NSObject {
             }
             self.add(sessions: sessions)
             
-            self.getHadUnReadMsg(completion: nil )
+//            self.getHadUnReadMsg(completion: nil )
             
             completion?(sessions.count)
         }

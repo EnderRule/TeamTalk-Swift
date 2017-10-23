@@ -58,7 +58,9 @@ import UIKit
 
 
 public class MTTSessionEntity: NSObject,HMDBModelDelegate {
-    
+    public func db()->Any{
+        return HMLoginManager.shared.myDBManager.dataBaseQueue
+    }
     public func dbFields() -> [String] {
         return ["sessionID","avatar","s_name","lastMsg","lastMsgID","sessionTypeInt","timeInterval","unReadMsgCount","isShield","isFixedTop"]
     }

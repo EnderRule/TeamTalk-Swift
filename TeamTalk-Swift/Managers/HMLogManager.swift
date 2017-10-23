@@ -24,8 +24,6 @@ func dateFor(str:String)->Date?{
     return defaultDateFormater.date(from: str)
 }
 
-let disableHMLog:Bool = false
-
 func HMPrint(_ items: Any...,file: String = #file, line: Int = #line , function: String = #function) {
     if !HMConfigs.disableLog{
         let time = stringFor(date: Date())

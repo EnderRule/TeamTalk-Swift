@@ -58,7 +58,9 @@ let GROUP_PRE:String = "group_"
 
 @objc(MTTGroupEntity)
 public class MTTGroupEntity: MTTBaseEntity,HMDBModelDelegate {
-
+    public func db()->Any{
+        return HMLoginManager.shared.myDBManager.dataBaseQueue
+    }
     public func dbFields() -> [String] {
         return ["lastUpdateTime","objID","objectVersion","groupCreatorId",
                 "name","avatar","lastMsg","isShield","type","users"]

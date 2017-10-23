@@ -277,7 +277,7 @@ public class HMMessageManager: NSObject {
     private func p_registerReceiveMessageAPI(){
         receiveMsgApi.registerAPI { (obj , error ) in
             if let message = obj as? MTTMessageEntity {
-//                message.state = .SendSuccess
+                message.state = .SendSuccess
                 
                 //发送收到消息的回执
                 self.sendReceiveACK(message: message)

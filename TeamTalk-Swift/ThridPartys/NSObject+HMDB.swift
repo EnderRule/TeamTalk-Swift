@@ -11,12 +11,14 @@ import FMDB
 
 @objc public  protocol HMDBModelDelegate:NSObjectProtocol {
     
-    func db()->FMDatabase
+    
+    /// 返回一个 FMDatabaseQueue 实例，数据库的操作将在此实例queue中进行
+    ///
+    /// - Returns: FMDatabaseQueue 实例
+    func db()->Any
     func dbFields()->[String]
     func dbPrimaryKeys()->[String]  //返回多个时代表使用联合主键
     
-//    @objc optional func valueHaveChangedForKeys()->[String]
-//    @objc optional func changedValueHaveSaved()
 }
 
 
@@ -51,9 +53,9 @@ public extension NSObject {
         }
     }
     
-    private func handleInDB()->FMDatabase?{
-        let db = (self as? HMDBModelDelegate)?.db()
-        return db
+    private func handleInDBqueue()->FMDatabaseQueue?{
+        let dbqueue = (self as? HMDBModelDelegate)?.db() as? FMDatabaseQueue
+        return dbqueue
     }
     
     public convenience init(primaryValue:Any,createIfNoneExist:Bool){
@@ -66,8 +68,10 @@ public extension NSObject {
         
         var fieldValues:[AnyHashable:Any ] = [primaryKey:pkvalue]
 
-        if let db = self.handleInDB(){
-            
+        
+        
+        self.handleInDBqueue()?.inDatabase({ (db ) in
+          
             let rs =  db.executeQuery(sql , withArgumentsIn: [pkvalue])
             if rs?.next() ?? false{
                 if rs!.resultDictionary != nil {
@@ -83,28 +87,31 @@ public extension NSObject {
                 self.isExistInDB = true
                 self.dbAdd(completion: nil)
             }
-        }
+            
+        })
     }
     
     
     func getMaxDefaultPK()->Int{
-        if let db = self.handleInDB(){
-            let tableName:String = "\(self.classForCoder)"
-            let sql = "SELECT MAX(defaultPK) as defaultPK  FROM \(tableName)"
-            
-            let rs = db.executeQuery(sql , withArgumentsIn: [])
-            if rs?.next() ?? false {
+        
+        var pk:Int = 0
+        
+        DispatchQueue.global().sync {
+            self.handleInDBqueue()?.inDatabase({ (db ) in
+                let tableName:String = "\(self.classForCoder)"
+                let sql = "SELECT MAX(defaultPK) as defaultPK  FROM \(tableName)"
                 
-                let maxPK = rs!.int(forColumn: "defaultPK")
-                disableHMDBLog ? () : debugPrint("HMDB max defaultPK of \(tableName) \(maxPK) ")
-                rs?.close()
-                return Int(maxPK)
-            }else{
-                return 0
-            }
-        }else{
-            return 0
+                let rs = db.executeQuery(sql , withArgumentsIn: [])
+                if rs?.next() ?? false {
+                    
+                    let maxPK = rs!.int(forColumn: "defaultPK")
+                    disableHMDBLog ? () : debugPrint("HMDB max defaultPK of \(tableName) \(maxPK) ")
+                    rs?.close()
+                    pk = Int(maxPK)
+                }
+            })
         }
+        return pk
     }
     
     //MARK:增删改查
@@ -121,14 +128,14 @@ public extension NSObject {
     
     private func dbSave(insert:Bool? ,completion:((Bool)->Void)?){
         
-        if let db = self.handleInDB(){
+        self.handleInDBqueue()?.inDatabase({ (db ) in
         
             let tableName:String = "\(self.classForCoder)"
             let primaryKeys = (self as! HMDBModelDelegate).dbPrimaryKeys()
             
             var dbvalues:[Any] = []
             
-            var fields:[String] = ((HMDBManager.shared.tableFieldInfos[tableName] ?? [:]) as NSDictionary).allKeys as? [String] ?? []
+            var fields:[String] = ((tableFieldInfos[tableName] ?? [:]) as NSDictionary).allKeys as? [String] ?? []
             for field in fields{
                 let dbvalue = self.encodeValueFor(key: field) // NSObject.serialized(value: self.value(forKey: field) ?? "")
                 dbvalues.append(dbvalue)
@@ -174,47 +181,47 @@ public extension NSObject {
                 self.isExistInDB = true
             }
             completion?(result)
-        }else{
-            completion?(false )
-        }
+        })
         
     }
     
     
     
     @objc func dbDelete(completion:((Bool)->Void)?){
-        let tableName:String = "\(self.classForCoder)"
-        
-        var primaryKeys = (self as! HMDBModelDelegate).dbPrimaryKeys()
-        for obj in primaryKeys{
-            if obj.characters.count <= 0 {
-                primaryKeys.remove(at: primaryKeys.index(of: obj)!)
-            }
-        }
-        if primaryKeys.count <= 0{
-            primaryKeys = ["defaultPK"]
-        }
-        
-        var sql:String = ""
-        var primaryValues:[Any] = []
-
-        if primaryKeys.count == 1 {
-            let primaryKey = primaryKeys.first!
-            let primaryValue = primaryKey == "defaultPK" ? self.defaultPK : self.encodeValueFor(key: primaryKey)
-            primaryValues.append(primaryValue)
-            sql = "delete from \(tableName) where \(primaryKey) = ? "
-        }else{
-            for pkobj in primaryKeys{
-                primaryValues.append(self.encodeValueFor(key: pkobj))
-            }
-            var valuesHolders = ("" as NSString).padding(toLength: primaryValues.count * 2, withPad: "?,", startingAt: 0)
-            valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.characters.count - 1)
+        self.handleInDBqueue()?.inDatabase({ (db ) in
+            let tableName:String = "\(self.classForCoder)"
             
-            sql = "delete from \(tableName) where (\((primaryKeys as NSArray).componentsJoined(by: ","))) = (\(valuesHolders)) "
-        }
-        disableHMDBLog ? () : debugPrint("HMDB  delete sql:\(sql) values:\(primaryValues)")
-        let result =  HMDBManager.shared.dataBase.executeUpdate(sql , withArgumentsIn: primaryValues)
-        completion?(result)
+            var primaryKeys = (self as! HMDBModelDelegate).dbPrimaryKeys()
+            for obj in primaryKeys{
+                if obj.characters.count <= 0 {
+                    primaryKeys.remove(at: primaryKeys.index(of: obj)!)
+                }
+            }
+            if primaryKeys.count <= 0{
+                primaryKeys = ["defaultPK"]
+            }
+            
+            var sql:String = ""
+            var primaryValues:[Any] = []
+
+            if primaryKeys.count == 1 {
+                let primaryKey = primaryKeys.first!
+                let primaryValue = primaryKey == "defaultPK" ? self.defaultPK : self.encodeValueFor(key: primaryKey)
+                primaryValues.append(primaryValue)
+                sql = "delete from \(tableName) where \(primaryKey) = ? "
+            }else{
+                for pkobj in primaryKeys{
+                    primaryValues.append(self.encodeValueFor(key: pkobj))
+                }
+                var valuesHolders = ("" as NSString).padding(toLength: primaryValues.count * 2, withPad: "?,", startingAt: 0)
+                valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.characters.count - 1)
+                
+                sql = "delete from \(tableName) where (\((primaryKeys as NSArray).componentsJoined(by: ","))) = (\(valuesHolders)) "
+            }
+            disableHMDBLog ? () : debugPrint("HMDB  delete sql:\(sql) values:\(primaryValues)")
+            let result =  db.executeUpdate(sql , withArgumentsIn: primaryValues)
+            completion?(result)
+        })
     }
     
     /// query
@@ -228,7 +235,7 @@ public extension NSObject {
     @objc class func dbQuery(whereStr:String?,orderFields:String?,offset:Int,limit:Int,args:[Any],completion:@escaping (([Any],Error?)->Void)){
 
         let obj = (self.classForCoder() as! NSObject.Type).init()
-        if let db = obj.handleInDB() {
+        obj.handleInDBqueue()?.inDatabase({ (db ) in
         
             let tableName:String = "\(self.classForCoder())"
             var sql:String = "select * from \(tableName) "
@@ -241,42 +248,34 @@ public extension NSObject {
             if offset > 0 || limit > 0 {
                 sql.append(" limit \(offset),\(limit) ")
             }
-            disableHMDBLog ? () : debugPrint("db query sql:\(sql)")
-            
+//            disableHMDBLog ? () : debugPrint("db query sql:\(sql) values:\(args)")
+        
             let rs =  db.executeQuery(sql , withArgumentsIn: args)
             if rs != nil  {
+                
                 var objs:[AnyObject] = []
                 while rs!.next() {
-                    let obj = (self.classForCoder() as! NSObject.Type).init()
-                    
                     let dic = ((rs!.resultDictionary ?? [:]) as NSDictionary).copy() as! [String:Any]
-                    obj.setValuesWith(fieldValues: dic)// rs!.resultDictionary ?? [:])
+                    let obj = (self.classForCoder() as! NSObject.Type).init()
+                    obj.setValuesWith(fieldValues: dic) 
                     objs.append(obj)
                 }
+                rs?.close()
                 completion(objs,nil)
             }else{
                 completion([],db.lastError())
             }
-        }else{
-            completion([],NSError.init(domain: "\(self.classForCoder()) 不处于数据库管理中", code: 0, userInfo: nil ))
-        
-        }
+        })
     }
     
     //MARK:赋值取值、值的序列化与反序列化
     @objc func setValuesWith(fieldValues:[AnyHashable:Any]){
-        let tableName:String = "\(self.classForCoder)"
-        
-        let fields:[String:String] = HMDBManager.shared.tableFieldInfos[tableName] ?? [:]
         for obj in fieldValues{
-            
             let propertyName = obj.key as? String ?? ""
             let type  = NSObject.cachePropertyTypeOf(theClass: self.classForCoder, propertyName: propertyName )
-            
             if type != "NOT_FOUND"{
                 self.decode(dbValue: obj.value, forkey: propertyName)
             }
-            
         }
         if fieldValues["defaultPK"] as? Int != nil {
             self.defaultPK = fieldValues["defaultPK"] as! Int
