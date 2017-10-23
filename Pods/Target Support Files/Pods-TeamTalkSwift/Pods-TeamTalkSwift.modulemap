@@ -1,0 +1,6 @@
+framework module Pods_TeamTalkSwift {
+  umbrella header "Pods-TeamTalkSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
