@@ -9,7 +9,7 @@
 import UIKit
 
 
-class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,HMSessionModuleDelegate {
+class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,HMSessionModuleDelegate,HMLoginManagerDelegate {
 
     static let shared = HMRecentSessionsViewController()
     
@@ -146,6 +146,17 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
     
     
     //MARK:receive notifications
+    
+    func loginFailure(error: String) {
+        
+    }
+    func loginSuccess(user: MTTUserEntity) {
+        
+    }
+    func loginStateChanged(state: HMLoginState) {
+        
+    }
+    
     func n_receiveLoginFailureNotification(notification:Notification){
         self.title = "未鏈接"
     }

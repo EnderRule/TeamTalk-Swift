@@ -313,14 +313,35 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     }
     func onTapMediaItemShoot(){
         HMPrint("相机拍照片")
+        
+        ZQMediaFetch.shared.fetchPhoto(maxCount: 1, configPicker: { (imagePickvc ) in
+            imagePickvc.allowPreview = true
+            imagePickvc.allowTakePicture = true
+            imagePickvc.allowPickingVideo = false
+            imagePickvc.allowPickingGif = false
+            imagePickvc.allowCrop = true
+
+        }, finish: { (photos , assets, isoriginal, infos) in
+            guard  photos.count >  0 else { return }
+            let image = photos.first!
+            
+            let imagePath = ZQFileManager.shared.tempPathFor(image: image)
+            guard imagePath.length > 0 else {
+                return
+            }
+            self.sendLocalImage(imagePath: imagePath)
+        }) {
+            //cancel
+        }
     }
+
     
     private func sendLocalImage(imagePath:String){
         
-        
-        
         HMMessageManager.shared.sendImage(imagePath: imagePath, chattingModule: self.chattingModule, willSend: { (message ) in
-                self.tableView.reloadData()
+            self.tableView.reloadData()
+            self.tableView.checkScrollToBottom()
+            
         }, progress: { (message , progress ) in
             HMPrint("send image to \(self.chattingModule.sessionEntity.sessionID) progress:\(progress)")
             

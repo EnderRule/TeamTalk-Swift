@@ -24,26 +24,14 @@ class HMLoginViewController: UIViewController {
         
         self.view.addCommonTap(target: self , sel: #selector(self.hideKeyboard))
         // Do any additional setup after loading the view.
+        
+        self.nameTf.text = "qing"
+        self.pwdTf.text = "qing"
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if HMLoginManager.shared.currentUserName.length > 0 {
-            nameTf.text = HMLoginManager.shared.currentUserName
-        }
-        if HMLoginManager.shared.currentPassword.length > 0 {
-            pwdTf.text = HMLoginManager.shared.currentPassword
-        }
-        
-        if nameTf.text?.length ?? 0 > 0 && pwdTf.text?.length ?? 0 > 0 && HMLoginManager.shared.shouldAutoLogin {
-            self.loginBt.sendActions(for: .touchUpInside)
-        }
     }
     
     func setupSubviews(){
@@ -94,7 +82,7 @@ class HMLoginViewController: UIViewController {
             SVProgressHUD.show(withStatus: "正在登录...")
             HMPrint("click login : \(userName) \(userPwd)")
             
-            HMLoginManager.shared.loginWith(userName: userName, password: userPwd, success: {[weak self ] (user ) in
+            HMLoginManager.shared.loginWith(loginID: userName, password: userPwd, success: {[weak self ] (user ) in
                 HMPrint("click login success : \(userName) ")
                 
                 SVProgressHUD.dismiss()

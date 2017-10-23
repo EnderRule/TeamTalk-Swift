@@ -92,7 +92,7 @@ public class HMMessageManager: NSObject {
                 self.unAckQueueAdd(message: message)
             }
             
-            let fromid = UInt32(HMCurrentUser().intUserID)
+            let fromid = UInt32(HMLoginManager.shared.currentUser.intUserID)
             let toid = MTTBaseEntity.pbIDFrom(localID: session.sessionID)
             let sendAPI = SendMessageAPI.init(fromUID: fromid, toUID: toid, type: message.msgType, data: msgData)
             sendAPI.request(withParameters: [:], completion: { (respone , error ) in
@@ -147,10 +147,10 @@ public class HMMessageManager: NSObject {
         }
     }
     
-    public func sendImage(image:UIImage,chattingModule:HMChattingModule,willSend:@escaping HMWillSendMessage,progress:@escaping HMSendImageProgress,completion:@escaping HMSendMessageCompletion){
-        let imagePath = ZQFileManager.shared.tempPathFor(image: image )
-        self.sendImage(imagePath: imagePath, chattingModule: chattingModule,willSend:willSend, progress: progress, completion: completion)
-    }
+//    public func sendImage(image:UIImage,chattingModule:HMChattingModule,willSend:@escaping HMWillSendMessage,progress:@escaping HMSendImageProgress,completion:@escaping HMSendMessageCompletion){
+//        let imagePath = ZQFileManager.shared.tempPathFor(image: image )
+//        self.sendImage(imagePath: imagePath, chattingModule: chattingModule,willSend:willSend, progress: progress, completion: completion)
+//    }
     
     public func sendImage(imagePath:String,chattingModule:HMChattingModule,willSend:@escaping HMWillSendMessage,progress:@escaping HMSendImageProgress,completion:@escaping HMSendMessageCompletion){
         
@@ -174,7 +174,7 @@ public class HMMessageManager: NSObject {
             progress(newMessage,floatProgress)
             
         }, success: {[weak self] (imageURL ) in
-            HMPrint("upload success url: \(imageURL)")
+//            HMPrint("upload success url: \(imageURL)")
             
             if imageURL.length > 0 {
                 newMessage.state = .Sending

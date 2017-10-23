@@ -233,6 +233,19 @@
 - (void)p_handleEventErrorOccurredStream:(NSStream *)aStream
 {
     NSLog(@"DDTcpClientManager handleEventErrorOccurredStream %@ ,will be disconnect",aStream.debugDescription);
+
+    if ([aStream isKindOfClass:[NSInputStream class]]){
+        uint8_t buf[1024];
+        NSInteger len = [(NSInputStream *)aStream read:buf maxLength:1024];
+
+        if (len > 0) {
+            NSMutableData *data = [NSMutableData dataWithBytes:buf  length:len];
+            
+            NSString *str  = [[NSString alloc]initWithData:data  encoding:NSUTF8StringEncoding];
+            
+            NSLog(@"DDTcpClientManager error :%@",str);
+        }
+    }
     
     [self disconnect];
 }
@@ -249,7 +262,6 @@
         uint8_t buf[1024];
         NSInteger len = [(NSInputStream *)aStream read:buf maxLength:1024];
         if (len > 0) {
-            
             
             [_receiveLock lock];
             [_receiveBuffer appendBytes:(const void *)buf length:len];
@@ -282,7 +294,7 @@
                 NSData *remainData = [_receiveBuffer subdataWithRange:range];
                 [_receiveBuffer setData:remainData];
                 ServerDataType dataType = DDMakeServerDataType(tcpHeader.serviceId, tcpHeader.commandId, tcpHeader.reserved);
-                NSLog(@"***********收到服务端sid:%i cid:%i",tcpHeader.serviceId,tcpHeader.commandId);
+//                NSLog(@"***********收到服务端sid:%i cid:%i",tcpHeader.serviceId,tcpHeader.commandId);
                 if (payloadData.length >0) {
                     [[DDAPISchedule instance] receiveServerData:payloadData forDataType:dataType];
                 }

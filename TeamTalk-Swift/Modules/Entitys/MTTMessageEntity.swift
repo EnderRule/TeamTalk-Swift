@@ -165,7 +165,7 @@ public class MTTMessageEntity: MTTBaseEntity,HMDBModelDelegate {
         return self.msgContentType == .Image
     }
     public var isSendBySelf:Bool {
-       return  self.senderId == HMCurrentUser().userId
+       return  self.senderId == HMLoginManager.shared.currentUser.userId
     }
     public var isEmotionMsg:Bool{
         return   self.msgContentType == .Emotion
@@ -405,7 +405,7 @@ public extension MTTMessageEntity {
         newMsg.msgID = MTTMessageEntity.getNewLocalMsgID()
         newMsg.sessionId = module.sessionEntity.sessionID
         newMsg.toUserID = module.sessionEntity.sessionID
-        newMsg.senderId = HMCurrentUser().userId
+        newMsg.senderId = HMLoginManager.shared.currentUser.userId
         newMsg.state = .Sending
         newMsg.msgTime = UInt32(Date().timeIntervalSince1970)
         
@@ -431,7 +431,7 @@ public extension MTTMessageEntity {
             newMsg.sessionId = MTTGroupEntity.localIDFrom(pbID: msgInfo.fromSessionId)
         }
         if newMsg.senderId == newMsg.sessionId{
-            newMsg.toUserID =  HMCurrentUser().userId
+            newMsg.toUserID =  HMLoginManager.shared.currentUser.userId
         }else{
             newMsg.toUserID = newMsg.sessionId
         }
@@ -478,7 +478,7 @@ public extension MTTMessageEntity {
         newMsg.senderId = MTTUserEntity.localIDFrom(pbID: msgData.fromUserId)
         
         if newMsg.senderId == newMsg.sessionId{
-            newMsg.toUserID = HMCurrentUser().userId
+            newMsg.toUserID = HMLoginManager.shared.currentUser.userId
         }else{
             newMsg.toUserID = newMsg.sessionId
         }

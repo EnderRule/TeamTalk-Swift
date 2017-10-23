@@ -67,7 +67,6 @@ class ZQMediaFetch: NSObject,TZImagePickerControllerDelegate {
         UIApplication.shared.keyWindow?.rootViewController!.present(picker, animated: true , completion: nil )
     }
     
-    
     func imagePickerController(_ picker: TZImagePickerController!, didFinishPickingVideo coverImage: UIImage!, sourceAssets asset: Any!) {
         self.videoFinishBlock?(coverImage,asset)
         self.videoFinishBlock = nil

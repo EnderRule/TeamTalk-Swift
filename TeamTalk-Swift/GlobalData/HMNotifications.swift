@@ -48,7 +48,7 @@ import Foundation
     
     case sessionShieldAndFixed          //最近联系人置顶或者屏蔽
     
-    func notificationName()->Notification.Name{
+    public func notificationName()->Notification.Name{
         var nameStr = ""
         switch self  {
         case .tcpLinkDisconnect:
@@ -135,7 +135,7 @@ import Foundation
         return Notification.Name.init(nameStr)
     }
     
-    func postWith(obj:Any?,userInfo:[AnyHashable:Any]?){
+    public func postWith(obj:Any?,userInfo:[AnyHashable:Any]?){
         NotificationCenter.default.post(name: self.notificationName(), object: obj, userInfo: userInfo)
     }
 }

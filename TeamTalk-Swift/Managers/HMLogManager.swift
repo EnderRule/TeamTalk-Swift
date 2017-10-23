@@ -27,7 +27,7 @@ func dateFor(str:String)->Date?{
 let disableHMLog:Bool = false
 
 func HMPrint(_ items: Any...,file: String = #file, line: Int = #line , function: String = #function) {
-    if !disableHMLog{
+    if !HMConfigs.disableLog{
         let time = stringFor(date: Date())
         let filename = (file as NSString).lastPathComponent
         

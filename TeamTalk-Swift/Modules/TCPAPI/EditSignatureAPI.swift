@@ -57,7 +57,8 @@ class EditUserInfoAPI: DDSuperAPI,DDAPIScheduleProtocol {
 //            let avatarData:Data = ((object as! [String:Any])["avatar"]) as? Data ?? Data()
             
             let builder = Im.Buddy.ImchangeSignInfoReq.Builder()
-            builder.setUserId(MTTUserEntity.pbIDFrom(localID: HMCurrentUser().userId))
+
+            builder.setUserId(MTTUserEntity.pbIDFrom(localID: HMLoginManager.shared.currentUser.userId))
             
             if self.edit_signature != nil {
                 builder.setSignInfo(self.edit_signature!)

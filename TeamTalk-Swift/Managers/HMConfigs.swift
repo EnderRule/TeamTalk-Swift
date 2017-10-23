@@ -20,5 +20,20 @@ public class HMConfigs: NSObject {
             UserDefaults.standard.synchronize()
         }
     }
-    
+
+  
+    /// default is true to not print out debug logs.
+    public class var disableLog:Bool{
+        get{
+            if UserDefaults.standard.object(forKey: "HMConfigs_disableLog") != nil {
+                return UserDefaults.standard.bool(forKey: "HMConfigs_disableLog")
+            }else{
+                return true
+            }
+        }
+        set{
+            UserDefaults.standard.setValue(newValue, forKey: "HMConfigs_disableLog")
+            UserDefaults.standard.synchronize()
+        }
+    }
 }
