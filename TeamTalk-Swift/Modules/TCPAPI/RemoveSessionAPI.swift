@@ -45,7 +45,17 @@ class RemoveSessionAPI: DDSuperAPI,DDAPIScheduleProtocol {
     
     func analysisReturnData() -> Analysis! {
         let analysis:Analysis = { (data) in
-            return nil
+            
+            do{
+                let rs = try  Im.Buddy.ImremoveSessionRsp.parseFrom(data: data ?? Data())
+                
+                HMPrint("RemoveSessionAPI parse data:\(rs.resultCode) \(rs.userId) \(rs.sessionId) \(rs.sessionType)")
+                return [:]
+            }catch{
+                HMPrint("RemoveSessionAPI parse data error:\(error.localizedDescription)" )
+
+                return ["m":error.localizedDescription]
+            }
         }
         return analysis
     }

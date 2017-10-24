@@ -301,7 +301,6 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         var existUserID:String = ""
         let oldPairs = self.getAutoLoginUserPairs()
         for obj in oldPairs{
-            print("old pair:\(obj)")
             let pair = obj.components(separatedBy: " ")
             if pair.count == 3{
                 if ID == pair[0] && pwd == pair[1]{
@@ -318,23 +317,17 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             }
             
             if let user = HMUsersManager.shared.userFor(ID: existUserID) {
-                
                 self.s_currentUser = user
-
                 self.currentLoginID = ID
                 self.currentLoginPwd = pwd
                 self.shouldAutoLogin = true
+            }
+
+            if self.reachability.isReachable(){
                 
-                self.reloginning = true
-                
-                if self.reachability.isReachable(){
-                
-                    self.loginWith(loginID: ID, password: pwd, success: { (user ) in
-                        
-                    }, failure: { (error ) in
-                        
-                    })
-                }
+                self.loginWith(loginID: ID, password: pwd, success: { (user ) in
+                }, failure: { (error ) in
+                })
             }
         }
         
