@@ -195,6 +195,80 @@ public class MTTMessageEntity: MTTBaseEntity,HMDBModelDelegate {
 //
 //    }
     
+    static let msgKey:String = "6f1cd98c5655da86d60a73effae355eb"
+
+    
+    ///data末尾的非<00> 部分指定了data的有效长度，之间的<00>为填充的
+    class func secuEncrypt(content:String)->String{
+        
+        if content.characters.count <= 0{ return ""}
+        
+        let blockSize:Int = 16
+        let handleData:NSMutableData = NSMutableData.init(data:   content.data(using: .utf8) ?? Data() )
+        
+        let validedDataLenght:Int = handleData.length
+        
+        let lenghtasData :NSData = DataEncode.hexString(toData: DataEncode.getHexByDecimal(validedDataLenght)) as NSData
+        
+        let paddingLenght = blockSize - (validedDataLenght ) % blockSize - lenghtasData.length
+        
+        
+        let paddingData = DataEncode.hexString(toData: "00")
+        for _ in 1...paddingLenght{
+            handleData.append(paddingData)
+        }
+        handleData.append(lenghtasData as Data)
+        
+        //        debugPrint("message encrypt \(validedDataLenght) \(paddingLenght) \(lenghtasData) \(handleData) \(self)")
+        
+        let returnData = DataEncode.handle(handleData as Data, algorithem: DEAlgrithmAES128, encryptOrDecrypt: DEActionEncrypt, key: MTTMessageEntity.msgKey)
+        
+        
+        let result = GTMBase64.string(byEncoding: returnData) ?? ""
+        return result
+        
+    }
+    
+    class func secuDecrypt(content:String)->String{
+        
+        if content.characters.count <= 0{ return ""}
+        
+        let handleData:NSMutableData = NSMutableData.init(data:GTMBase64.decode( content.data(using: .utf8)!))
+        
+        let decodeData = DataEncode.handle(handleData as Data, algorithem: DEAlgrithmAES128, encryptOrDecrypt: DEActionDecrypt, key: MTTMessageEntity.msgKey)
+        
+        let tempData = NSData.init(data: decodeData)
+        
+        let paddingData = DataEncode.hexString(toData: "00")
+        var valideDataLenghtInData:Int = 0
+        for index in (0...tempData.length-1).reversed(){
+            let subdata:NSData = tempData.subdata(with: NSRange.init(location: index, length: 1)) as NSData
+            if !subdata.isEqual(to: paddingData){
+                valideDataLenghtInData += 1
+            }else{
+                break
+            }
+        }
+        
+        let valideLenghtasData = tempData.subdata(with: NSRange.init(location: tempData.length - valideDataLenghtInData, length: valideDataLenghtInData))
+        
+        var valideLenght = DataEncode.getDecimalByHex( DataEncode.data(toHexString: valideLenghtasData) )
+        
+        
+        if valideLenght > tempData.length {
+            valideLenght = tempData.length
+        }
+        
+        let finalData = tempData.subdata(with: NSRange.init(location: 0, length: valideLenght))
+        
+        let result = String.init(data: finalData, encoding: .utf8) ?? ""
+        
+        //        debugPrint("message decrypt \(valideLenght) \(tempData as NSData) \(valideLenghtasData as NSData) result:\(result)")
+        
+        return result
+        
+    }
+    
 }
 
 public extension MTTMessageEntity {
@@ -289,15 +363,16 @@ public extension MTTMessageEntity {
 
 public extension MTTMessageEntity {
     
-    static let msgKey:String = "6f1cd98c5655da86d60a73effae355eb"
 //    文本 {"type":10,"data":"{\"text\":\"ghj\"}"}
 //    圖片 {"type":11,"data":"{\"url\":\"http:.......789000.jpg\"}"}
 //    表情 {"type":12,"data":"{\"sticker\":\"xxx\"}"}
     
+    
+    
     public class func pb_decode(content:String)->String{
         var msgContent:String = ""
 
-        let realConent = content.decrypt()
+        let realConent = self.secuDecrypt(content: content) // content.decrypt()
         let dic = NSDictionary.initWithJsonString(realConent) ?? [:]
         let json = JSON.init(dic)
         let type = json["type"].intValue
@@ -315,7 +390,7 @@ public extension MTTMessageEntity {
     
      func decode(content:String){
         
-        let realConent = content.decrypt()
+        let realConent = MTTMessageEntity.secuDecrypt(content: content)// content.decrypt()
         let dic = NSDictionary.initWithJsonString(realConent) ?? [:]
         
 //        NSLog("MTTMessageEntity decode \ndic:%@",realConent,dic as NSDictionary )
@@ -374,7 +449,7 @@ public extension MTTMessageEntity {
         HMPrint("MTTMessageEntity encode ",dic as NSDictionary)
         
         let contentStr:String = (dic as NSDictionary).jsonString() ?? ""
-        let encryptContent:String = contentStr.encrypt()
+        let encryptContent:String = MTTMessageEntity.secuEncrypt(content: contentStr) // contentStr.encrypt()
         
         return encryptContent
     }
@@ -612,77 +687,76 @@ public extension MTTMessageEntity {
 
 
 
-extension String {
-    
+//extension String {
     ///data末尾的非<00> 部分指定了data的有效长度，之间的<00>为填充的
-    func encrypt()->String{
-        if self.characters.count <= 0{ return ""}
-        
-
-        
-        let blockSize:Int = 16
-        let handleData:NSMutableData = NSMutableData.init(data:   self.data(using: .utf8) ?? Data() )
-        
-        let validedDataLenght:Int = handleData.length
-        
-        let lenghtasData :NSData = DataEncode.hexString(toData: DataEncode.getHexByDecimal(validedDataLenght)) as NSData
-        
-        let paddingLenght = blockSize - (validedDataLenght ) % blockSize - lenghtasData.length
-        
-        
-        let paddingData = DataEncode.hexString(toData: "00")
-        for _ in 1...paddingLenght{
-            handleData.append(paddingData)
-        }
-        handleData.append(lenghtasData as Data)
-        
-//        debugPrint("message encrypt \(validedDataLenght) \(paddingLenght) \(lenghtasData) \(handleData) \(self)")
-        
-        let returnData = DataEncode.handle(handleData as Data, algorithem: DEAlgrithmAES128, encryptOrDecrypt: DEActionEncrypt, key: MTTMessageEntity.msgKey)
-        
-    
-        let result = GTMBase64.string(byEncoding: returnData) ?? ""
-        return result
-        
-    }
-    
-    func decrypt()->String{
-        if self.characters.count <= 0{ return ""}
-        
-        let handleData:NSMutableData = NSMutableData.init(data:GTMBase64.decode( self.data(using: .utf8)!))
-        
-        let decodeData = DataEncode.handle(handleData as Data, algorithem: DEAlgrithmAES128, encryptOrDecrypt: DEActionDecrypt, key: MTTMessageEntity.msgKey)
-        
-        let tempData = NSData.init(data: decodeData)
-        
-        let paddingData = DataEncode.hexString(toData: "00")
-        var valideDataLenghtInData:Int = 0
-        for index in (0...tempData.length-1).reversed(){
-            let subdata:NSData = tempData.subdata(with: NSRange.init(location: index, length: 1)) as NSData
-            if !subdata.isEqual(to: paddingData){
-                valideDataLenghtInData += 1
-            }else{
-                break
-            }
-        }
-        
-        let valideLenghtasData = tempData.subdata(with: NSRange.init(location: tempData.length - valideDataLenghtInData, length: valideDataLenghtInData))
-        
-        var valideLenght = DataEncode.getDecimalByHex( DataEncode.data(toHexString: valideLenghtasData) )
-        
-        
-        if valideLenght > tempData.length {
-            valideLenght = tempData.length
-        }
-        
-        let finalData = tempData.subdata(with: NSRange.init(location: 0, length: valideLenght))
-        
-        let result = String.init(data: finalData, encoding: .utf8) ?? ""
-        
-//        debugPrint("message decrypt \(valideLenght) \(tempData as NSData) \(valideLenghtasData as NSData) result:\(result)")
-
-        return result
-    }
+//    func encrypt()->String{
+//        if self.characters.count <= 0{ return ""}
+//        
+//
+//        
+//        let blockSize:Int = 16
+//        let handleData:NSMutableData = NSMutableData.init(data:   self.data(using: .utf8) ?? Data() )
+//        
+//        let validedDataLenght:Int = handleData.length
+//        
+//        let lenghtasData :NSData = DataEncode.hexString(toData: DataEncode.getHexByDecimal(validedDataLenght)) as NSData
+//        
+//        let paddingLenght = blockSize - (validedDataLenght ) % blockSize - lenghtasData.length
+//        
+//        
+//        let paddingData = DataEncode.hexString(toData: "00")
+//        for _ in 1...paddingLenght{
+//            handleData.append(paddingData)
+//        }
+//        handleData.append(lenghtasData as Data)
+//        
+////        debugPrint("message encrypt \(validedDataLenght) \(paddingLenght) \(lenghtasData) \(handleData) \(self)")
+//        
+//        let returnData = DataEncode.handle(handleData as Data, algorithem: DEAlgrithmAES128, encryptOrDecrypt: DEActionEncrypt, key: MTTMessageEntity.msgKey)
+//        
+//    
+//        let result = GTMBase64.string(byEncoding: returnData) ?? ""
+//        return result
+//        
+//    }
+//    
+//    func decrypt()->String{
+//        if self.characters.count <= 0{ return ""}
+//        
+//        let handleData:NSMutableData = NSMutableData.init(data:GTMBase64.decode( self.data(using: .utf8)!))
+//        
+//        let decodeData = DataEncode.handle(handleData as Data, algorithem: DEAlgrithmAES128, encryptOrDecrypt: DEActionDecrypt, key: MTTMessageEntity.msgKey)
+//        
+//        let tempData = NSData.init(data: decodeData)
+//        
+//        let paddingData = DataEncode.hexString(toData: "00")
+//        var valideDataLenghtInData:Int = 0
+//        for index in (0...tempData.length-1).reversed(){
+//            let subdata:NSData = tempData.subdata(with: NSRange.init(location: index, length: 1)) as NSData
+//            if !subdata.isEqual(to: paddingData){
+//                valideDataLenghtInData += 1
+//            }else{
+//                break
+//            }
+//        }
+//        
+//        let valideLenghtasData = tempData.subdata(with: NSRange.init(location: tempData.length - valideDataLenghtInData, length: valideDataLenghtInData))
+//        
+//        var valideLenght = DataEncode.getDecimalByHex( DataEncode.data(toHexString: valideLenghtasData) )
+//        
+//        
+//        if valideLenght > tempData.length {
+//            valideLenght = tempData.length
+//        }
+//        
+//        let finalData = tempData.subdata(with: NSRange.init(location: 0, length: valideLenght))
+//        
+//        let result = String.init(data: finalData, encoding: .utf8) ?? ""
+//        
+////        debugPrint("message decrypt \(valideLenght) \(tempData as NSData) \(valideLenghtasData as NSData) result:\(result)")
+//
+//        return result
+//    }
     
 //    func decrypt()->String {
 
@@ -717,7 +791,7 @@ extension String {
 //        }
 //        return ""
 //    }
-}
+//}
 
 
 public class MTTMsgReadState:NSObject,HMDBModelDelegate{

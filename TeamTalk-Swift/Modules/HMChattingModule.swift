@@ -80,8 +80,10 @@ public class HMChattingModule: NSObject {
                     }
                 }
                 
-                HMPrint("session \(self.sessionEntity.sessionID) load history: limit:\(offset)/\(pageCount) resultCount:\(tempMessages.count)")
                 
+//                HMPrint("session \(self.sessionEntity.sessionID) load history: limit:\(offset)/\(pageCount) resultCount:\(tempMessages.count)")
+                
+                //Fixme:需检查消息是否连续，不连续的话要从服务器加载
 //                if HMLoginManager.shared.networkState == .disconnect{
 //                    self.p_addHistory(messages: tempMessages, completion: completion)
 //                }else{
@@ -256,7 +258,7 @@ public class HMChattingModule: NSObject {
         }
         
         
-        HMPrint("p_add history rawCount:\(messages.count) checkCount:\(tempMessages.count)")
+//        HMPrint("p_add history rawCount:\(messages.count) checkCount:\(tempMessages.count)")
         
         if self.showingMessages.count == 0 {
             self.showingMessages.append(contentsOf: tempMessages)

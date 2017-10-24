@@ -27,9 +27,7 @@ var tableFieldInfos:[String:[String:String]] = [:]
 
 
 public class HMDBManager: NSObject {
-    
-    public static let shared = HMDBManager()
-    
+        
     public var modelClasses:[AnyClass] = []
     var dbUserID:String = ""
     
@@ -60,10 +58,6 @@ public class HMDBManager: NSObject {
             FileManager.default.createFile(atPath: path, contents: nil , attributes: nil )
         }
         return path
-    }
-    
-    override init() {
-        super.init()
     }
     
     public func openDB(userID:String){
@@ -309,7 +303,7 @@ public class HMDBManager: NSObject {
             sqlType = "text"
         }else if subRawType.contains("NSNumber") {
             sqlType = "double"
-        }else{
+        }else if subRawType != "NOT_FOUND"{
             debugPrint("database not surport for type of \(subRawType)")
         }
         

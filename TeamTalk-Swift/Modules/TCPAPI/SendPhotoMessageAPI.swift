@@ -9,7 +9,6 @@
 import UIKit
 import AFNetworking
 
-
 class SendPhotoMessageAPI: NSObject {
     static let shared:SendPhotoMessageAPI =  SendPhotoMessageAPI()
     
@@ -37,7 +36,7 @@ class SendPhotoMessageAPI: NSObject {
         
         let authDic:[String : Any] = ["msg_type":msgType,"from_user_id":fromUserID,"to_session_id":"","time":time]
         let authString:String  = (authDic as NSDictionary).jsonString()
-        let auth:String = authString.encrypt()
+        let auth:String = MTTMessageEntity.secuEncrypt(content: authString)
         
         self.uploadPhoto(imagePath: imagePath, auth: auth, progress: { (pro ) in
             progress(pro)
@@ -62,7 +61,7 @@ class SendPhotoMessageAPI: NSObject {
         let authDic:[String : Any] = ["msg_type":msgType,"from_user_id":fromUserID,"to_session_id":toSessionID,"time":time]
         let authString:String  = (authDic as NSDictionary).jsonString()
         
-        let auth:String = authString.encrypt()
+        let auth:String = MTTMessageEntity.secuEncrypt(content: authString)
         
         self.uploadPhoto(imagePath: imagePath, auth: auth, progress: { (pro ) in
             progress(pro)

@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-TeamTalk-Swift copy.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-TeamTalk-Swift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -103,6 +108,11 @@
 			<true/>
 		</dict>
 		<key>39877690A53A1E0E54F565715574B781</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4E7B5FFF34E242BC2C05429172D7CF04</key>
 		<dict>
 			<key>primary</key>
 			<true/>

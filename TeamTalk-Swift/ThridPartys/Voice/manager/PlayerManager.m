@@ -62,6 +62,8 @@ static PlayerManager *mPlayerManager = nil;
         UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
         AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(audioRouteOverride), &audioRouteOverride);
         
+        
+        
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         //默认情况下扬声器播放
         [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];

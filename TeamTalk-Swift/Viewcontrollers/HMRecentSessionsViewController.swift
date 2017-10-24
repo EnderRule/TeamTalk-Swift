@@ -117,7 +117,6 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
         
         if indexPath.row < self.sessions.count{
             let session = self.sessions[indexPath.row]
-            HMPrint("select session:",session.sessionID)
 
             let chattingVC:HMChattingViewController = HMChattingViewController.init(session: session)
             chattingVC.hidesBottomBarWhenPushed = true
@@ -231,7 +230,6 @@ class HMRecentSessionsViewController: UIViewController,UITableViewDataSource,UIT
             }
         }
     }
-    
 }
 
 extension MTTMessageEntity {

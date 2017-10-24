@@ -109,21 +109,13 @@ public class HMMessageManager: NSObject {
                     session.lastMsgID = message.msgID
                     session.timeInterval = TimeInterval(message.msgTime)
                     
-                    message.dbDelete(completion: { (success ) in
-                        if success {
-                            message.msgID = resultIDs[0]
-                            message.dbAdd(completion: nil)
-                            
-                            completion(message,nil )
-                        }else{
-                            message.dbDelete(completion: { (success ) in
-                                message.msgID = resultIDs[0]
-                                message.dbAdd(completion: nil)
-                                
-                                completion(message,nil )
-                            })
-                        }
-                    })
+                    DispatchQueue.global().sync {
+                        message.dbDelete(completion: nil)
+                    }
+                    message.msgID = resultIDs[0]
+                    message.dbAdd(completion: nil)
+                    
+                    completion(message,nil)
                 }
             })
         }

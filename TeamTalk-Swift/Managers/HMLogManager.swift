@@ -9,7 +9,7 @@
 import UIKit
 
 public class HMLogManager: NSObject {
-    public static  let shared  = HMLoginManager()
+    public static  let shared  = HMLogManager()
 
 }
 

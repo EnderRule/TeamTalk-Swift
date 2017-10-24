@@ -92,47 +92,47 @@ class HMPersonCenterViewController: UIViewController,UITableViewDataSource,UITab
     
     func changeAvatarAction(){
         
-        ZQMediaFetch.shared.fetchPhoto(maxCount: 1, configPicker: { (imagePickvc ) in
-            imagePickvc.allowPreview = true
-            imagePickvc.allowTakePicture = true
-            imagePickvc.allowPickingVideo = false
-            imagePickvc.allowPickingGif = false
-            imagePickvc.allowCrop = true
-        }, finish: { (photos , assets, isoriginal, infos) in
-            guard  photos.count >  0 else { return }
-            let image = photos.first!
-            
-            let imagePath = ZQFileManager.shared.tempPathFor(image: image)
-            guard imagePath.length > 0 else {
-                return
-            }
-            HMPrint("ready to upload avatar Image:\(imagePath)")
-            
-            let progressView:UIProgressView = UIProgressView.init()
-            progressView.frame = .init(x: 0, y: 0, width: SCREEN_WIDTH()/2, height: 30)
-            progressView.setProgress(0, animated: true )
-            
-            SendPhotoMessageAPI.shared.uploadAvatar(imagePath: imagePath, progress: { (progress ) in
-                dispatch(after: 0, task: {
-                    let floatPro = Float(progress.completedUnitCount)/Float(progress.totalUnitCount)
-                    SVProgressHUD.showProgress(floatPro, status: "上传中...")
-                })
-            }, success: { (imageurl ) in
-                dispatch(after: 0, task: {
-                    progressView.removeFromSuperview()
-                    self.avatarImgv.setImage(str: imageurl)
-                    HMLoginManager.shared.currentUser.avatar = imageurl
-                    HMLoginManager.shared.currentUser.dbSave(completion: nil )
-                })
-            }) { (error ) in
-                dispatch(after: 0, task: {
-                    progressView.removeFromSuperview()
-                    SVProgressHUD.showError(withStatus: error)
-                })
-            }
-        }) {
-            //cancel
-        }
+//        ZQMediaFetch.shared.fetchPhoto(maxCount: 1, configPicker: { (imagePickvc ) in
+//            imagePickvc.allowPreview = true
+//            imagePickvc.allowTakePicture = true
+//            imagePickvc.allowPickingVideo = false
+//            imagePickvc.allowPickingGif = false
+//            imagePickvc.allowCrop = true
+//        }, finish: { (photos , assets, isoriginal, infos) in
+//            guard  photos.count >  0 else { return }
+//            let image = photos.first!
+//            
+//            let imagePath = ZQFileManager.shared.tempPathFor(image: image)
+//            guard imagePath.length > 0 else {
+//                return
+//            }
+//            HMPrint("ready to upload avatar Image:\(imagePath)")
+//            
+//            let progressView:UIProgressView = UIProgressView.init()
+//            progressView.frame = .init(x: 0, y: 0, width: SCREEN_WIDTH()/2, height: 30)
+//            progressView.setProgress(0, animated: true )
+//            
+//            SendPhotoMessageAPI.shared.uploadAvatar(imagePath: imagePath, progress: { (progress ) in
+//                dispatch(after: 0, task: {
+//                    let floatPro = Float(progress.completedUnitCount)/Float(progress.totalUnitCount)
+//                    SVProgressHUD.showProgress(floatPro, status: "上传中...")
+//                })
+//            }, success: { (imageurl ) in
+//                dispatch(after: 0, task: {
+//                    progressView.removeFromSuperview()
+//                    self.avatarImgv.setImage(str: imageurl)
+//                    HMLoginManager.shared.currentUser.avatar = imageurl
+//                    HMLoginManager.shared.currentUser.dbSave(completion: nil )
+//                })
+//            }) { (error ) in
+//                dispatch(after: 0, task: {
+//                    progressView.removeFromSuperview()
+//                    SVProgressHUD.showError(withStatus: error)
+//                })
+//            }
+//        }) {
+//            //cancel
+//        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

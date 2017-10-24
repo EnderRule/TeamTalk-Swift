@@ -66,7 +66,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.navigationItem.title = self.chattingModule.sessionEntity.name
+        self.navigationItem.title = self.chattingModule.currentSession?.name
         self.navigationController?.setNavigationBarHidden(false , animated: true )
         
         self.noMoreRecords = false
@@ -87,8 +87,8 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
         self.refreshMessagesData(scrollToBottom: true )
 
         //清空未读 = 0
-        self.chattingModule.sessionEntity.unReadMsgCount = 0
-        self.chattingModule.sessionEntity.dbUpdate(completion: nil)
+        self.chattingModule.currentSession?.unReadMsgCount = 0
+        self.chattingModule.currentSession?.dbUpdate(completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -162,7 +162,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
                 let contentOffsetYNew:CGFloat = contentSizeHeightNew - contentSizeHeightOld + contentOffsetYOld
                 self?.tableView.setContentOffset(CGPoint.init(x: 0, y: contentOffsetYNew), animated: false )
             }else {
-                HMPrint("load more history messages for session \(self?.chattingModule.sessionEntity.sessionID ?? "") ,but no more")
+                HMPrint("load more history messages for session \(self?.chattingModule.currentSession?.sessionID ?? "") ,but no more")
 
                 self?.noMoreRecords = true
                 self?.tableView.mj_headerEndRefreshing()
@@ -277,7 +277,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
     func sendMessage(msgEntity:MTTMessageEntity){
         self.tableView.checkScrollToBottom()
         
-        HMMessageManager.shared.sendNormal(message: msgEntity, session: self.chattingModule.sessionEntity) {[weak self] (message , error ) in
+        HMMessageManager.shared.sendNormal(message: msgEntity, session: self.chattingModule.currentSession!) {[weak self] (message , error ) in
             if error != nil {
                 HMPrint("HMChatting send message \(message.msgContent) \n error: \(error!.localizedDescription)")
             }
@@ -343,7 +343,7 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             self.tableView.checkScrollToBottom()
             
         }, progress: { (message , progress ) in
-            HMPrint("send image to \(self.chattingModule.sessionEntity.sessionID) progress:\(progress)")
+            HMPrint("send image to \(self.chattingModule.currentSession!.sessionID) progress:\(progress)")
             
         }) { (message , error ) in
             if (error != nil ){
@@ -403,10 +403,10 @@ NIMInputDelegate,NIMInputViewConfig,NIMInputActionDelegate,HMChatCellActionDeleg
             return
         }
         
-        if message.sessionId == self.chattingModule.sessionEntity.sessionID {
+        if message.sessionId == self.chattingModule.currentSession?.sessionID {
             self.chattingModule.addShow(message: message)
             self.chattingModule.updateSession(updateTime: TimeInterval(message.msgTime))
-            self.chattingModule.sessionEntity.lastMsg = message.msgContent
+            self.chattingModule.currentSession?.lastMsg = message.msgContent
 
             self.refreshMessagesData(scrollToBottom: true )
          

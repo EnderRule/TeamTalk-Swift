@@ -116,7 +116,7 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             return  UserDefaults.standard.bool(forKey: "im.HMShouldAutoLogin")
         }
     }
-    var msfsUrl:String {  //消息服务器之文件服务器的地址 ，用于上传图片、文件
+    public var msfsUrl:String {  //消息服务器之文件服务器的地址 ，用于上传图片、文件
         set{
             UserDefaults.standard.setValue(newValue, forKey: "im.HMMessageServerFileServer")
             UserDefaults.standard.synchronize()
@@ -194,6 +194,7 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         let serveraddress = HMConfigs.MsgServerAddress
         
         if serveraddress.characters.count < 5{
+            HMPrint("get msgIP error: HMConfigs：消息服務器地址無效-\(serveraddress)")
             failure("HMConfigs：消息服務器地址無效 ")
             return
         }
@@ -203,6 +204,9 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             let json = JSON.init(responseObject ?? [:])
             let dic = json.dictionaryObject ?? [:]
             if dic.count > 0{
+                
+                HMPrint("get msgIP:\(dic)")
+                
                 success(dic)
             }else{
                 failure("连接消息服务器失败 code:-1")
@@ -226,8 +230,7 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
             tcpIsConnecting = true
             self.tcpConnectSuccess = success
             self.tcpConnectFailure = failure
- 
-            DDTcpClientManager.instance().disconnect()
+            
             DDTcpClientManager.instance().delegate = self
             DDTcpClientManager.instance().connect(ip , port: port, status: 1)
             

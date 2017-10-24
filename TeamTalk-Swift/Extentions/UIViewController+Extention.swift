@@ -142,7 +142,7 @@ extension UIViewController{
 //MARK:當設置透明導航欄、過渡時會有黑條，添加一個背景view
 extension UIViewController{
     func addClearBarFixView(){
-        let fixView = UIView.init(frame: .init(x: 0, y: -64, width: self.view.width, height: 64))
+        let fixView = UIView.init(frame: .init(x: 0, y: -64, width: self.view.fr_width, height: 64))
         fixView.backgroundColor = self.view.backgroundColor
         fixView.tag = 814814
         self.view.addSubview(fixView)

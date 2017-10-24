@@ -11,13 +11,7 @@ import UserNotifications
 
 //let SERVER_Address = "https://aitlg.linking.im/msg_server"
 let SERVER_Address =  "http://192.168.113.31:8080/msg_server"
-
-
-class Test:MTTUserEntity{
-    var fsfl:String = ""
-    var fsflr3:String = ""
-    var dfs:Int = 0
-}
+ 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

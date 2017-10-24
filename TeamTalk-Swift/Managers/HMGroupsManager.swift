@@ -51,6 +51,7 @@ public class HMGroupsManager: NSObject {
                     if let group = (response as? [MTTGroupEntity] ?? []).first{
                         self.add(group: group)
                         target = group
+                        group.dbSave(completion: nil)
                     }
                 })
             }

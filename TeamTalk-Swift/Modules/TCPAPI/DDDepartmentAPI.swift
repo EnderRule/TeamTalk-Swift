@@ -36,6 +36,8 @@ class DDDepartmentAPI: DDSuperAPI,DDAPIScheduleProtocol {
                 var array:[[String:Any]] = []
                 let departcount = bodyData.readInt()
                 
+                
+                
                 //Fixme: should fix departcount or not?
                 for _ in 0..<departcount {
                     let departID = bodyData.readUTF() ?? ""       // [bodyData readUTF];

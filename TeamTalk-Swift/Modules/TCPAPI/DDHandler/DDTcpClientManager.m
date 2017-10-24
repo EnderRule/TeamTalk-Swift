@@ -38,8 +38,37 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         g_tcpClientManager = [[DDTcpClientManager alloc] init];
+        
+//        dispatch_queue_t queue = dispatch_queue_create("fsfsfs.test", NULL);
+//        dispatch_queue_t queue2 = dispatch_queue_create("fsfsfs.test2", NULL);
+//
+//        NSCondition * lock = [[NSCondition alloc]init];
+//        
+//        dispatch_async(queue2, ^{
+//        for(int index = 0 ;index < 15;index ++ ){
+//            NSLog(@"start: %f %zd",[[NSDate date]timeIntervalSince1970],index);
+//           
+//            [lock lock];
+//            dispatch_async(queue, ^{
+//                int sleeptime = arc4random()%5;
+//                sleep(sleeptime);
+//                NSLog(@"ended: %zd %f %zd",sleeptime,[[NSDate date]timeIntervalSince1970],index);
+//               
+//                [lock signal];
+//            });
+//
+//            [lock wait];
+//            [lock unlock];
+//
+//            NSLog(@"ended 2: %f %zd",[[NSDate date]timeIntervalSince1970],index);
+//        }
+//        });
+        
     });
+    
     return g_tcpClientManager;
+    
+    
 }
 
 #pragma mark - PublicAPI
@@ -58,7 +87,10 @@
     NSInputStream  *tempInput  = nil;
     NSOutputStream *tempOutput = nil;
     
-    [NSStream getStreamsToHostNamed:ipAdr port:port inputStream:&tempInput outputStream:&tempOutput];
+//    [NSStream getStreamsToHostNamed:ipAdr port:port inputStream:&tempInput outputStream:&tempOutput];
+    
+    [NSStream getStreamsToHostWithName:ipAdr port:port inputStream:&tempInput outputStream:&tempOutput];
+    
     _inStream  = tempInput;
     _outStream = tempOutput;
     
@@ -234,7 +266,7 @@
 {
     NSLog(@"DDTcpClientManager handleEventErrorOccurredStream %@ ,will be disconnect",aStream.debugDescription);
 
-    if ([aStream isKindOfClass:[NSInputStream class]]){
+    if ([aStream isKindOfClass:[NSInputStream class]] || [aStream isKindOfClass:NSClassFromString(@"NSCFInputStream")]){
         uint8_t buf[1024];
         NSInteger len = [(NSInputStream *)aStream read:buf maxLength:1024];
 

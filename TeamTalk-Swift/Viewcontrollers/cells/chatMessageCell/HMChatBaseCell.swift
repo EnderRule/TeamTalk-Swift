@@ -213,6 +213,16 @@ public class HMChatBaseCell: HMBaseCell {
             self.msgStateLb.textAlignment = .left
         }
         
+        //很小的消息超过两分钟还在发送，默认为发送失败
+        if message.state == .Sending && !message.isImageMessage{
+            
+            let timeDiff = UInt32(Date().timeIntervalSince1970) - message.msgTime
+            if timeDiff  > 120 {
+                message.state = .SendFailure
+                message.dbUpdate(completion: nil )
+            }
+        }
+        
         self.updateSendState(state:message.state)
         
         //内容位置
