@@ -94,30 +94,36 @@ public class HMMessageManager: NSObject {
             
             let fromid = UInt32(HMLoginManager.shared.currentUser.intUserID)
             let toid = MTTBaseEntity.pbIDFrom(localID: session.sessionID)
-            let sendAPI = SendMessageAPI.init(fromUID: fromid, toUID: toid, type: message.msgType, data: msgData)
-            sendAPI.request(withParameters: [:], completion: { (respone , error ) in
-                if error != nil {
-                    message.state = .SendFailure
-                    
-                    let error = NSError.init(domain: "發送消息失敗", code: 0, userInfo: nil )
-                    completion(message,error)
-                }else if let resultIDs = respone as? [UInt32] {
-                    
-                    self.unAckQueueRemove(message: message)
-                    
-                    message.state = .SendSuccess
-                    session.lastMsgID = message.msgID
-                    session.timeInterval = TimeInterval(message.msgTime)
-                    
-                    DispatchQueue.global().sync {
-                        message.dbDelete(completion: nil)
+            
+            if HMLoginManager.shared.loginState == .online{
+
+                let sendAPI = SendMessageAPI.init(fromUID: fromid, toUID: toid, type: message.msgType, data: msgData)
+                sendAPI.request(withParameters: [:], completion: { (respone , error ) in
+                    if error != nil {
+                        message.state = .SendFailure
+                        
+                        let error = NSError.init(domain: "發送消息失敗", code: 0, userInfo: nil )
+                        completion(message,error)
+                    }else if let resultIDs = respone as? [UInt32] {
+                        
+                        self.unAckQueueRemove(message: message)
+                        
+                        message.state = .SendSuccess
+                        session.lastMsgID = message.msgID
+                        session.timeInterval = TimeInterval(message.msgTime)
+                        
+                        DispatchQueue.global().sync {
+                            message.dbDelete(completion: nil)
+                        }
+                        message.msgID = resultIDs[0]
+                        message.dbAdd(completion: nil)
+                        
+                        completion(message,nil)
                     }
-                    message.msgID = resultIDs[0]
-                    message.dbAdd(completion: nil)
-                    
-                    completion(message,nil)
-                }
-            })
+                })
+            }else{
+                completion(message,NSError.init(domain: "已掉线", code: 0, userInfo: nil))
+            }
         }
     }
     
@@ -201,9 +207,9 @@ public class HMMessageManager: NSObject {
     }
     
     private func unAckQueueRemove(message:MTTMessageEntity){
-        for obj in self.unAckQueueMessages{
-            if obj.msg.msgID == message.msgID {
-                let index = self.unAckQueueMessages.index(of: obj)
+        for obj in self.unAckQueueMessages.enumerated(){
+            if obj.element.msg.msgID == message.msgID {
+                let index = self.unAckQueueMessages.index(of: obj.element)
                 if index != nil {
                     self.unAckQueueMessages.remove(at: index!)
                 }
@@ -213,8 +219,8 @@ public class HMMessageManager: NSObject {
         }
     }
     private func isInUnAckQueue(message:MTTMessageEntity)->Bool {
-        for obj in self.unAckQueueMessages{
-            if obj.msg.msgID == message.msgID {
+        for obj in self.unAckQueueMessages.enumerated(){
+            if obj.element.msg.msgID == message.msgID {
                 return true
             }
         }
@@ -257,11 +263,17 @@ public class HMMessageManager: NSObject {
     
     
     public  func getMsgFromServer(beginMsgID:UInt32,forSession:MTTSessionEntity,count:Int,completion:@escaping (([MTTMessageEntity],Error?)->Void)){
-        let sessionID = MTTBaseEntity.pbIDFrom(localID: forSession.sessionID)
         
-        let api:GetMessageQueueAPI = GetMessageQueueAPI.init(sessionID: sessionID, sessionType:forSession.sessionType, msgIDBegin: beginMsgID, count: count)
-        api.request(withParameters: [:]) { (messages , error ) in
-            completion(messages as? [MTTMessageEntity] ?? [],error)
+        if HMLoginManager.shared.loginState == .online{
+
+            let sessionID = MTTBaseEntity.pbIDFrom(localID: forSession.sessionID)
+            
+            let api:GetMessageQueueAPI = GetMessageQueueAPI.init(sessionID: sessionID, sessionType:forSession.sessionType, msgIDBegin: beginMsgID, count: count)
+            api.request(withParameters: [:]) { (messages , error ) in
+                completion(messages as? [MTTMessageEntity] ?? [],error)
+                }
+        }else{
+            completion([],NSError.init(domain: "已掉线", code: 0 , userInfo: nil ))
         }
     }
     
@@ -321,18 +333,23 @@ public class HMMessageManager: NSObject {
     ///
     /// - Parameter message: 消息实体
     public func sendReceiveACK(message:MTTMessageEntity){
-        let sessionID = MTTBaseEntity.pbIDFrom(localID: message.sessionId)
-        let api:ReceiveMessageACKAPI = ReceiveMessageACKAPI.init(msgID: message.msgID, sessionID: sessionID, sessionType: message.sessionType)
-        api.request(withParameters: [:]) { (obj , error ) in
+        if HMLoginManager.shared.loginState == .online{
+
+            let sessionID = MTTBaseEntity.pbIDFrom(localID: message.sessionId)
+            let api:ReceiveMessageACKAPI = ReceiveMessageACKAPI.init(msgID: message.msgID, sessionID: sessionID, sessionType: message.sessionType)
+            api.request(withParameters: [:]) { (obj , error ) in
+            }
         }
     }
     public func sendReceiveACK(msgID:UInt32,sessionID:String,sessionType:SessionType_Objc){
-        let sessionID = MTTBaseEntity.pbIDFrom(localID: sessionID)
-        let type:Im.BaseDefine.SessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
-        let api:ReceiveMessageACKAPI = ReceiveMessageACKAPI.init(msgID: msgID, sessionID: sessionID, sessionType: type)
-        api.request(withParameters: [:]) { (obj , error ) in
-        }
+        if HMLoginManager.shared.loginState == .online{
 
+            let sessionID = MTTBaseEntity.pbIDFrom(localID: sessionID)
+            let type:Im.BaseDefine.SessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
+            let api:ReceiveMessageACKAPI = ReceiveMessageACKAPI.init(msgID: msgID, sessionID: sessionID, sessionType: type)
+            api.request(withParameters: [:]) { (obj , error ) in
+            }
+        }
     }
     
     
@@ -340,22 +357,28 @@ public class HMMessageManager: NSObject {
     ///
     /// - Parameter message: 消息实体
     public func sendReadACK(message:MTTMessageEntity){
-        let sessionID = MTTBaseEntity.pbIDFrom(localID: message.sessionId)
-        let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionID, msgID: message.msgID, sessionType: message.sessionType)
-        api.request(withParameters: [:]) { (obj , error ) in
-            
-            if obj as? Bool ?? false {
-                MTTMsgReadState.save(message:message, state: .Readed)
+        if HMLoginManager.shared.loginState == .online{
+
+            let sessionID = MTTBaseEntity.pbIDFrom(localID: message.sessionId)
+            let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionID, msgID: message.msgID, sessionType: message.sessionType)
+            api.request(withParameters: [:]) { (obj , error ) in
+                
+                if obj as? Bool ?? false {
+                    MTTMsgReadState.save(message:message, state: .Readed)
+                }
             }
         }
     }
     public func sendReadACK(msgID:UInt32,sessionID:String,sessionType:SessionType_Objc){
-        let sessionIDInt = MTTBaseEntity.pbIDFrom(localID: sessionID)
-        let type:Im.BaseDefine.SessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
-        let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionIDInt, msgID: msgID, sessionType: type)
-        api.request(withParameters: [:]) { (obj , error ) in
-            if obj as? Bool ?? false {
-                MTTMsgReadState.save(msgID: msgID, sessionID: sessionID, state: .Readed)
+        if HMLoginManager.shared.loginState == .online{
+
+            let sessionIDInt = MTTBaseEntity.pbIDFrom(localID: sessionID)
+            let type:Im.BaseDefine.SessionType = sessionType == .sessionTypeSingle ? .sessionTypeSingle : .sessionTypeGroup
+            let api:MsgReadACKAPI = MsgReadACKAPI.init(sessionID: sessionIDInt, msgID: msgID, sessionType: type)
+            api.request(withParameters: [:]) { (obj , error ) in
+                if obj as? Bool ?? false {
+                    MTTMsgReadState.save(msgID: msgID, sessionID: sessionID, state: .Readed)
+                }
             }
         }
     }

@@ -35,7 +35,7 @@ let USER_PRE:String = "user_"
 @objc(MTTUserEntity)
 public  class MTTUserEntity: MTTBaseEntity,HMDBModelDelegate {
     
-    public func db()->Any{
+    public func db()->MyFMDBQueue{
         return HMLoginManager.shared.myDBManager.dataBaseQueue
     }
     

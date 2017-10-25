@@ -39,7 +39,6 @@ class HMLoginViewController: UIViewController {
         super.viewDidAppear(animated)
         
         HMLoginManager.shared.autoLogin(ID: "qing", pwd: "qing")
-        
         if HMLoginManager.shared.currentUser.intUserID > 0 {
             self.loginSuccessHandler()
         }

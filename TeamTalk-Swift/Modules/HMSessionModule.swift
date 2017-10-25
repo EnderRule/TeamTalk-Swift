@@ -62,29 +62,36 @@ public class HMSessionModule: NSObject {
         let allsessions = self.getAllSessions()
         let maxTime = self.getMaxTime(sessions: allsessions)
         
-        let api = GetRecentSessionAPI.init(latestUpdateTime: UInt32(maxTime))
-        api.request(withParameters: [:]) { (responde , error ) in
-            let sessions:[MTTSessionEntity] = responde as? [MTTSessionEntity] ?? []
-            for session in sessions{
+        if HMLoginManager.shared.loginState == .online{
+            let api = GetRecentSessionAPI.init(latestUpdateTime: UInt32(maxTime))
+            api.request(withParameters: [:]) { (responde , error ) in
+                let sessions:[MTTSessionEntity] = responde as? [MTTSessionEntity] ?? []
+                for session in sessions{
+                    
+                    session.dbSave(completion: nil )
+                }
+                self.add(sessions: sessions)
                 
-                session.dbSave(completion: nil )
+    //            self.getHadUnReadMsg(completion: nil )
+                
+                completion?(sessions.count)
             }
-            self.add(sessions: sessions)
-            
-//            self.getHadUnReadMsg(completion: nil )
-            
-            completion?(sessions.count)
+        }else{
+            completion?(0)
         }
     }
     
     
     
     public func removeSessionFromServer(session:MTTSessionEntity){
-        session.dbDelete(completion: nil )
         
-        let api = RemoveSessionAPI.init(ID: session.sessionIntID, type: session.sessionType)
-        api.request(withParameters: [:]) { (obj , error ) in
-            
+        if HMLoginManager.shared.loginState == .online{
+            session.dbDelete(completion: nil )
+
+            let api = RemoveSessionAPI.init(ID: session.sessionIntID, type: session.sessionType)
+            api.request(withParameters: [:]) { (obj , error ) in
+                
+            }
         }
     }
     
@@ -95,9 +102,9 @@ public class HMSessionModule: NSObject {
     public func loadLocalSession(completion:((Bool)->Void)?){
         MTTSessionEntity.dbQuery(whereStr: nil , orderFields: "timeInterval asc", offset: 0, limit: 0, args: []) { (sessions , error ) in
 
-//            HMPrint("load local Sessions:\(sessions.count) \(error.debugDescription )")
-            for obj in sessions{
-                if let session = obj as? MTTSessionEntity {
+            HMPrint("load local Sessions:\(sessions.count) \(error.debugDescription )")
+            for obj in sessions.enumerated(){
+                if let session = obj.element as? MTTSessionEntity {
                     self.add(sessions: [session])
                 }
             }
@@ -250,25 +257,31 @@ public class HMSessionModule: NSObject {
     }
     
     private func  getHadUnReadMsg(completion:((Int)->Void)?){
-        let api = GetUnreadMessagesAPI.init()
-        api.request(withParameters: [:]) { (response, error ) in
-            let dic = response as? [String:Any] ?? [:]
-            let totalUnread = dic["m_total_cnt"] as? Int ?? 0
-            let sessions:[MTTSessionEntity] = dic["sessions"] as? [MTTSessionEntity] ?? []
-            
-            for session in sessions {
-                if let  localsession = self.sessionFor(sessionID: session.sessionID){
-                    localsession.lastMsg = session.lastMsg
-                    localsession.timeInterval = session.timeInterval
-                    localsession.lastMsgID = session.lastMsgID
-                    localsession.unReadMsgCount = session.unReadMsgCount
-                    localsession.dbSave(completion: nil )
-                    self.delegate?.sessionUpdate(session: localsession, action: .refresh)
-                    
-                    HMPrint("get Had UnRead Msg:\(session.sessionID) \(session.name) \(session.unReadMsgCount)")
+        
+        if HMLoginManager.shared.loginState == .online{
+
+            let api = GetUnreadMessagesAPI.init()
+            api.request(withParameters: [:]) { (response, error ) in
+                let dic = response as? [String:Any] ?? [:]
+                let totalUnread = dic["m_total_cnt"] as? Int ?? 0
+                let sessions:[MTTSessionEntity] = dic["sessions"] as? [MTTSessionEntity] ?? []
+                
+                for session in sessions {
+                    if let  localsession = self.sessionFor(sessionID: session.sessionID){
+                        localsession.lastMsg = session.lastMsg
+                        localsession.timeInterval = session.timeInterval
+                        localsession.lastMsgID = session.lastMsgID
+                        localsession.unReadMsgCount = session.unReadMsgCount
+                        localsession.dbSave(completion: nil )
+                        self.delegate?.sessionUpdate(session: localsession, action: .refresh)
+                        
+                        HMPrint("get Had UnRead Msg:\(session.sessionID) \(session.name) \(session.unReadMsgCount)")
+                    }
                 }
+                completion?(totalUnread)
             }
-            completion?(totalUnread)
+        }else{
+            completion?(0)
         }
     }
 }

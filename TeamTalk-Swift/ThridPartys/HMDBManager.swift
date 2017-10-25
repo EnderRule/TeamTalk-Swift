@@ -14,7 +14,7 @@ import Foundation
 
 import FMDB
 
-let disableHMDBLog:Bool = false 
+let disableHMDBLog:Bool = false
 
 extension NSObject{
     class func newObjFor(subCls:AnyClass) ->AnyObject{
@@ -31,18 +31,24 @@ public class HMDBManager: NSObject {
     public var modelClasses:[AnyClass] = []
     var dbUserID:String = ""
     
-    public var dataBaseQueue:FMDatabaseQueue!
+    public var dataBaseQueue:MyFMDBQueue!
     
     public func addDBModelClass(cls:AnyClass){
 
         self.modelClasses.append(cls)
         
-        dataBaseQueue.inDatabase { (db ) in
+        dataBaseQueue?.inDatabase { (db ) in
             if db.open(){
                 let _ = self.createTableFor(cls: cls,database: db)
 
             }
         }
+    }
+    
+    public override init() {
+        super.init()
+        
+        dataBaseQueue = MyFMDBQueue.init(path: dbPath)
     }
     
     public var currentDBPath:String{
@@ -63,11 +69,11 @@ public class HMDBManager: NSObject {
     public func openDB(userID:String){
         
         if dataBaseQueue != nil{
-            dataBaseQueue.close()
+            dataBaseQueue?.close()
         }
         
-        dataBaseQueue = FMDatabaseQueue.init(path: dbPath)
-        dataBaseQueue.inDatabase({ (db ) in
+        dataBaseQueue = MyFMDBQueue.init(path: dbPath)
+        dataBaseQueue?.inDatabase({ (db ) in
 
 //                var lastDBVersion:Int = 0
 //                let rs = db.executeQuery("PRAGMA user_version", withArgumentsIn: [])
@@ -149,9 +155,9 @@ public class HMDBManager: NSObject {
         var shouldAddColumns:[String] = []
         
         let expectedColumns = ((tableFieldInfos[tableName] ?? [:]) as NSDictionary).allKeys as! [String]
-        for obj in expectedColumns{
-            if !currentColumns.contains(obj){
-                shouldAddColumns.append(obj)
+        for obj in expectedColumns.enumerated(){
+            if !currentColumns.contains(obj.element){
+                shouldAddColumns.append(obj.element)
             }
         }
         for column in shouldAddColumns{
@@ -209,7 +215,7 @@ public class HMDBManager: NSObject {
         }
     }
     func clearTable(name:String){
-        dataBaseQueue.inDatabase { (db ) in
+        dataBaseQueue?.inDatabase { (db ) in
             db.shouldCacheStatements = true
             db.executeUpdate("delete from \(name)", withArgumentsIn: [])
         }

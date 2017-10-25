@@ -58,7 +58,7 @@ import UIKit
 
 
 public class MTTSessionEntity: NSObject,HMDBModelDelegate {
-    public func db()->Any{
+    public func db()->MyFMDBQueue{
         return HMLoginManager.shared.myDBManager.dataBaseQueue
     }
     public func dbFields() -> [String] {

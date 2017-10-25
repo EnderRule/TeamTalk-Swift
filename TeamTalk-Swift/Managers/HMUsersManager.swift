@@ -45,13 +45,13 @@ public class HMUsersManager: NSObject {
             var temp:[MTTUserEntity] = []
 
             if self.allUsers.count == 0 {
-                DispatchQueue.global().sync {
-                    self.loadAllUser(completion: { 
+//                DispatchQueue.global().sync {
+                    self.loadAllUser(completion: {
                         for obj in self.allUsers.values{
                             temp.append(obj)
                         }
                     })
-                }
+//                }
             }else{
                 for obj in allUsers.values{
                     temp.append(obj)
@@ -66,18 +66,15 @@ public class HMUsersManager: NSObject {
         let kLastUpdate:String = AllUserAPI.kResultLastUpdateTime
         var localUpdateTime:Int = UserDefaults.standard.integer(forKey: kLastUpdate)
         
-        let lock = NSCondition.init()
-        lock.lock()
-        
-        var dbfinish:Bool = false
-        
+//        let lock = NSCondition.init()
+//        lock.lock()
         MTTUserEntity.dbQuery(whereStr: nil, orderFields: "objID asc ", offset: 0, limit: 0, args: []) { (users , error ) in
             if error != nil {
                 HMPrint("db load all user error: ",error!.localizedDescription )
                 
                 localUpdateTime = 0
-                dbfinish = true
-                
+
+//                lock .signal()
             }else{
                 HMPrint("db load all user count \(users.count)")
 
@@ -96,29 +93,34 @@ public class HMUsersManager: NSObject {
                     localUpdateTime = 0
                 }
                 
-                dbfinish = true
+//                lock.signal()
             }
         }
-        while !dbfinish {
-            lock.wait()
-        }
-        lock.unlock()
-        
-        let api2 = AllUserAPI.init(lastUpdateTime: localUpdateTime)
-        api2.request(withParameters: [:]) { (response , error ) in
-            if let dic = response as? [String:Any] {
-                let rsversion:Int = dic[kLastUpdate] as? Int ?? 0
-                UserDefaults.standard.set(rsversion, forKey: kLastUpdate)
-                
-                let users:[MTTUserEntity] = dic[ AllUserAPI.kResultUserList] as? [MTTUserEntity] ?? []
-                for obj in  users.enumerated(){
-                    if obj.element.isValided{
-                        obj.element.dbSave(completion: nil)
-                        self.add(user: obj.element)
+//        lock.wait()
+//        lock.unlock()
+        if HMLoginManager.shared.loginState == .online{
+//            DispatchQueue.global().async {
+                let api2 = AllUserAPI.init(lastUpdateTime: localUpdateTime)
+                api2.request(withParameters: [:]) { (response , error ) in
+                    if let dic = response as? [String:Any] {
+                        let rsversion:Int = dic[kLastUpdate] as? Int ?? 0
+                        UserDefaults.standard.set(rsversion, forKey: kLastUpdate)
+                        
+                        let users:[MTTUserEntity] = dic[ AllUserAPI.kResultUserList] as? [MTTUserEntity] ?? []
+                        for obj in  users.enumerated(){
+                            if obj.element.isValided{
+                                obj.element.dbSave(completion: nil)
+                                self.add(user: obj.element)
+                            }
+                        }
+                        dispatch(after: 0, task: { 
+                            completion?()
+                        })
                     }
                 }
-                completion?()
-            }
+//            }
+        }else{
+            completion?()
         }
         
     }

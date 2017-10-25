@@ -65,25 +65,9 @@ import UIKit
     }
 }
 
-
-//messageID integer,
-//sessionId text ,
-//fromUserId text,
-//toUserId text,
-//content text,
-//status integer,
-//msgTime real,
-//sessionType integer,
-//messageContentType integer,
-//messageType integer,
-//info text,
-//reserve1 integer,
-//reserve2 text,
-//primary key (messageID,sessionId)
-
 @objc(MTTMessageEntity)
 public class MTTMessageEntity: MTTBaseEntity,HMDBModelDelegate {
-    public func db()->Any{
+    public func db()->MyFMDBQueue{
         return HMLoginManager.shared.myDBManager.dataBaseQueue
     }
     public func dbFields() -> [String] {
@@ -795,7 +779,7 @@ public extension MTTMessageEntity {
 
 
 public class MTTMsgReadState:NSObject,HMDBModelDelegate{
-    public func db()->Any{
+    public func db()->MyFMDBQueue{
         return HMLoginManager.shared.myDBManager.dataBaseQueue
     }
     public func dbFields() -> [String] {

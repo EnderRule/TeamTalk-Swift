@@ -34,8 +34,8 @@ class DDFixedGroupAPI: DDSuperAPI,DDAPIScheduleProtocol {
             if let res = try? Im.Group.ImnormalGroupListRsp.parseFrom(data: data ?? Data()) {
                 var array:[[String:Any]] = []
                 
-                for obj in res.groupVersionList {
-                    let groupInfo:[String:Any] = ["groupid":obj.groupId,"version":obj.version]
+                for obj in res.groupVersionList.enumerated() {
+                    let groupInfo:[String:Any] = ["groupid":obj.element.groupId,"version":obj.element.version]
                     array.append(groupInfo)
                 }
                 

@@ -43,17 +43,19 @@ public class HMGroupsManager: NSObject {
         }else{
             
             var target:MTTGroupEntity?
-            DispatchQueue.global().sync {
-                
-                let groupid = MTTGroupEntity.pbIDFrom(localID: ID)
-                let request = GetGroupInfoAPI.init(groupID: groupid, groupVersion: 0)
-                request.request(withParameters: [:], completion: { (response, error ) in
-                    if let group = (response as? [MTTGroupEntity] ?? []).first{
-                        self.add(group: group)
-                        target = group
-                        group.dbSave(completion: nil)
-                    }
-                })
+            
+            if HMLoginManager.shared.loginState == .online{
+                DispatchQueue.global().sync {
+                    let groupid = MTTGroupEntity.pbIDFrom(localID: ID)
+                    let request = GetGroupInfoAPI.init(groupID: groupid, groupVersion: 0)
+                    request.request(withParameters: [:], completion: { (response, error ) in
+                        if let group = (response as? [MTTGroupEntity] ?? []).first{
+                            self.add(group: group)
+                            target = group
+                            group.dbSave(completion: nil)
+                        }
+                    })
+                }
             }
             return target
         }
@@ -67,15 +69,15 @@ public class HMGroupsManager: NSObject {
             if self.allGroups.count == 0 {
                 DispatchQueue.global().sync {
                     self.loadAllLocalGroup(completion: {
-                        for obj in self.allGroups.values{
-                            temp.append(obj)
+                        for obj in self.allGroups.values.enumerated(){
+                            temp.append(obj.element)
                         }
                     })
                     
                 }
             }else{
-                for obj in allGroups.values{
-                    temp.append(obj)
+                for obj in allGroups.values.enumerated(){
+                    temp.append(obj.element)
                 }
             }
             return temp

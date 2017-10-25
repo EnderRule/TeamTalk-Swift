@@ -9,13 +9,17 @@
 import UIKit
 import FMDB
 
+public class MyFMDBQueue:FMDatabaseQueue{
+
+}
+
 @objc public  protocol HMDBModelDelegate:NSObjectProtocol {
     
     
     /// 返回一个 FMDatabaseQueue 实例，数据库的操作将在此实例queue中进行
     ///
     /// - Returns: FMDatabaseQueue 实例
-    func db()->Any
+    func db()->MyFMDBQueue
     func dbFields()->[String]
     func dbPrimaryKeys()->[String]  //返回多个时代表使用联合主键
     
@@ -53,8 +57,8 @@ public extension NSObject {
         }
     }
     
-    private func handleInDBqueue()->FMDatabaseQueue?{
-        let dbqueue = (self as? HMDBModelDelegate)?.db() as? FMDatabaseQueue
+    private func handleInDBqueue()->FMDatabaseQueue{
+        let dbqueue = (self as! HMDBModelDelegate).db()
         return dbqueue
     }
     
@@ -70,7 +74,7 @@ public extension NSObject {
 
         
         
-        self.handleInDBqueue()?.inDatabase({ (db ) in
+        self.handleInDBqueue().inDatabase({ (db ) in
           
             let rs =  db.executeQuery(sql , withArgumentsIn: [pkvalue])
             if rs?.next() ?? false{
@@ -97,7 +101,7 @@ public extension NSObject {
         var pk:Int = 0
         
         DispatchQueue.global().sync {
-            self.handleInDBqueue()?.inDatabase({ (db ) in
+            self.handleInDBqueue().inDatabase({ (db ) in
                 let tableName:String = "\(self.classForCoder)"
                 let sql = "SELECT MAX(defaultPK) as defaultPK  FROM \(tableName)"
                 
@@ -128,7 +132,7 @@ public extension NSObject {
     
     private func dbSave(insert:Bool? ,completion:((Bool)->Void)?){
         
-        self.handleInDBqueue()?.inDatabase({ (db ) in
+        self.handleInDBqueue().inDatabase({ (db ) in
         
             let tableName:String = "\(self.classForCoder)"
             let primaryKeys = (self as! HMDBModelDelegate).dbPrimaryKeys()
@@ -169,18 +173,27 @@ public extension NSObject {
                 action = "replace"
             }
             
-            let columns = (fields as NSArray).componentsJoined(by: "\",\"")
-            var valuesHolders = ("" as NSString).padding(toLength: fields.count * 2, withPad: "?,", startingAt: 0)
-            valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.characters.count - 1)
-            let sql:String = "\(action) into \"\(tableName)\" (\"\(columns)\") values (\(valuesHolders))"
+            if fields.count > 0 {
+                let columns = (fields as NSArray).componentsJoined(by: "\",\"")
+                var valuesHolders = ""
+
+                valuesHolders = ("" as NSString).padding(toLength: fields.count * 2, withPad: "?,", startingAt: 0)
+                valuesHolders = (valuesHolders as NSString).substring(to: valuesHolders.characters.count - 1)
             
-    //        disableHMDBLog ? () : debugPrint("HMDB save sql:\(sql) values:\(dbvalues)")
-            
-            let result = db.executeUpdate(sql , withArgumentsIn: dbvalues)
-            if result{
-                self.isExistInDB = true
+                let sql:String = "\(action) into \"\(tableName)\" (\"\(columns)\") values (\(valuesHolders))"
+                
+                
+                let result = db.executeUpdate(sql , withArgumentsIn: dbvalues)
+                if result{
+                    self.isExistInDB = true
+                }
+                
+//                disableHMDBLog ? () : debugPrint("HMDB save sql \(result):\(sql) values:\(dbvalues)")
+
+                completion?(result)
+            }else{
+                completion?(false)
             }
-            completion?(result)
         })
         
     }
@@ -188,13 +201,13 @@ public extension NSObject {
     
     
     @objc func dbDelete(completion:((Bool)->Void)?){
-        self.handleInDBqueue()?.inDatabase({ (db ) in
+        self.handleInDBqueue().inDatabase({ (db ) in
             let tableName:String = "\(self.classForCoder)"
             
             var primaryKeys = (self as! HMDBModelDelegate).dbPrimaryKeys()
-            for obj in primaryKeys{
-                if obj.characters.count <= 0 {
-                    primaryKeys.remove(at: primaryKeys.index(of: obj)!)
+            for obj in primaryKeys.enumerated(){
+                if obj.element.characters.count <= 0 {
+                    primaryKeys.remove(at: primaryKeys.index(of: obj.element)!)
                 }
             }
             if primaryKeys.count <= 0{
@@ -235,7 +248,7 @@ public extension NSObject {
     @objc class func dbQuery(whereStr:String?,orderFields:String?,offset:Int,limit:Int,args:[Any],completion:@escaping (([Any],Error?)->Void)){
 
         let obj = (self.classForCoder() as! NSObject.Type).init()
-        obj.handleInDBqueue()?.inDatabase({ (db ) in
+        obj.handleInDBqueue().inDatabase({ (db ) in
         
             let tableName:String = "\(self.classForCoder())"
             var sql:String = "select * from \(tableName) "

@@ -340,7 +340,7 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
         myDBManager.openDB(userID: userid)
     }
     private func closeDB(){
-        myDBManager.dataBaseQueue.close()
+        myDBManager.dataBaseQueue?.close()
     }
     
     public  func loginWith(loginID:String,password:String,success:@escaping ((MTTUserEntity)->Void),failure:@escaping ((String)->Void)){
@@ -410,7 +410,19 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
                                 HMNotification.userLoginSuccess.postWith(obj: user , userInfo: nil )
 
                             }else{
-                                let error = "登入失敗：code = \(json2[LoginAPI.kResultCode]),\(json[LoginAPI.kResultMessage].stringValue)"
+                                
+                                let code = json2[LoginAPI.kResultCode]
+                                
+                                if code == 6 {//密码错误时不需要重登
+                                    self .currentLoginID = ""
+                                    self.currentLoginPwd = ""
+                                    self.shouldAutoLogin = false
+                                    self.reloginning = false
+                                    
+                                    self.s_loginState = .offLine
+                                }
+                                
+                                let error = "登入失敗：code = \(code),\(json[LoginAPI.kResultMessage].stringValue)"
                                 HMPrint(error)
                                 
                                 self.delegate?.loginFailure?(error: error)
@@ -482,7 +494,7 @@ public class HMLoginManager: NSObject,DDTcpClientManagerDelegate {
     
     public  func sendPushtoken(){
 //        HMPrint(" Send PushToken :\(self.pushTtoken) ")
-        if self.pushTtoken.length > 0 {
+        if self.pushTtoken.length > 0 && self.loginState == .online {
             let api =  SendPushTokenAPI.init(pushToken: self.pushTtoken)
             api.request(withParameters: [:], completion: { (obj , error ) in
             })

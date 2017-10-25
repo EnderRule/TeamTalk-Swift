@@ -68,8 +68,8 @@ public class HMChattingModule: NSObject {
                 completion(0,error! as NSError)
             }else{
                 var tempMessages:[MTTMessageEntity] = []
-                for obj in messages{
-                    if let message = obj as? MTTMessageEntity{
+                for obj in messages.enumerated(){
+                    if let message = obj.element as? MTTMessageEntity{
                         //判断有效性，将无效的从数据库移除
 
                         if message.isValide {
@@ -331,8 +331,8 @@ public class HMChattingModule: NSObject {
         let maxMsgID:UInt32 = self.getMaxMsgID(messages: messages)
         var minMsgID:UInt32 = self.getMinMsgID()
         
-        for obj in messages{
-            if let msg = obj as? MTTMessageEntity{
+        for obj in messages.enumerated(){
+            if let msg = obj.element as? MTTMessageEntity{
                 if msg.msgID > maxMsgID && msg.msgID < HM_Local_message_beginID {
                 }else{
                     minMsgID = msg.msgID
